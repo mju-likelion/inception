@@ -2,7 +2,7 @@
 import 'jest-styled-components';
 import { ThemeProvider } from 'styled-components';
 import { render } from '@testing-library/react';
-import { theme } from '../globalStyle';
+import { theme } from '@/globalStyle';
 
 type WrapperProps = {
   children: JSX.Element | JSX.Element[];

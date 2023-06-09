@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components';
-import { InitStyle, theme } from './globalStyle';
+import { InitStyle, theme } from '@/globalStyle';
 import { Outlet } from 'react-router-dom';
 
 /** @Note 모든 페이지에 적용할 설정 및 컴포넌트를 지정한다. */

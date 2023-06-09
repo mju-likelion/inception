@@ -1,5 +1,5 @@
-import { render } from '../../lib';
-import { Home } from '../Home';
+import { render } from '@/lib';
+import { Home } from '@/pages';
 
 test('Home 화면 렌더링 확인', () => {
   const { getByText } = render(<Home />);

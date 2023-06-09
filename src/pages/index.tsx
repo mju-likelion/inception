@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { App } from '../App';
+import { App } from '@/App';
 import { Home } from './Home';
 
-export * from '../App';
+export * from '@/App';
 export * from './Home';
 
 /** @Note 라우팅 정보를 가지고있습니다. */

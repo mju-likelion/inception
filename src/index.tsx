@@ -1,8 +1,7 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { pages } from './pages';
-import reportWebVitals from './reportWebVitals';
 import { RouterProvider } from 'react-router-dom';
+import { pages } from '@/pages';
+import reportWebVitals from '@/reportWebVitals';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
