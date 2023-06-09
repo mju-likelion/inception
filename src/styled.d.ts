@@ -1,10 +1,9 @@
 import 'styled-components';
+import { Colors, Size } from './globalStyle';
 
-// and extend them!
 declare module 'styled-components' {
   export interface DefaultTheme {
-    colors: {
-      black: string;
-    };
+    colors: Colors;
+    size: Size;
   }
 }
