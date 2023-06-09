@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 export const Home = () => {
-  return <Wrapper>메인 페이지입니다</Wrapper>;
+  return <Wrapper>메인페이지입니다</Wrapper>;
 };
 
 const Wrapper = styled.p`
