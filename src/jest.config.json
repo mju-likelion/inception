@@ -1,0 +1,16 @@
+{
+  "moduleFileExtensions": ["js", "json", "jsx", "ts", "tsx", "json"],
+  "transform": {
+    "^.+\\.(js|jsx)?$": "babel-jest"
+  },
+  "moduleNameMapper": {
+    "@/(.*)": "<rootDir>/src/*"
+  },
+  "testMatch": [
+    "<rootDir>/**/*.test.(js|jsx|ts|tsx)",
+    "<rootDir>/(tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))"
+  ],
+  "transformIgnorePatterns": ["<rootDir>/node_modules/"],
+  "setupFilesAfterEnv": ["...yours", "jest-styled-components"],
+  "moduleDirectories": ["node_modules", "src"]
+}
