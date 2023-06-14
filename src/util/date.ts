@@ -9,11 +9,12 @@ export const getCalendarData = (
   month: string
 ): CalendarData[] => {
   const days = calcDaysByYearMonth(year, month);
+  const paddingMonth = +month < 10 ? `0${month}` : month;
 
   const datas = days.map((date) => {
     const day = new Date(+year, +month - 1, +date).getDay();
     return {
-      date: `${year}${month}${date}`,
+      date: `${year}${paddingMonth}${date}`,
       day: convertDayNumberToString(day),
     };
   });

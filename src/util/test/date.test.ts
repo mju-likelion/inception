@@ -34,7 +34,7 @@ test('2023년 6월 달력 정보를 제대로 가져오는지 확인', () => {
     { date: '20230630', day: '금' },
   ];
 
-  const act = getCalendarData('2023', '06');
+  const act = getCalendarData('2023', '6');
 
   expect(act).toEqual(expectData);
 });
