@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { App } from '@/App';
 import { Home } from './Home';
+import { CalendarTest } from './CalendarTest';
 
 export * from '@/App';
 export * from './Home';
@@ -17,8 +18,8 @@ export const pages = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'about', // ex) localhost:3000/about
-        element: <>나는 어바웃</>,
+        path: 'calendar', // ex) localhost:3000/calendar
+        element: <CalendarTest />,
       },
     ],
   },
