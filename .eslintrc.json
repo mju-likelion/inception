@@ -28,6 +28,7 @@
     "@typescript-eslint/no-empty-interface": [
       "warn",
       { "allowSingleExtends": false }
-    ]
+    ],
+    "@typescript-eslint/no-empty-function": "warn"
   }
 }
