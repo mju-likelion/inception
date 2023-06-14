@@ -18,11 +18,16 @@
   "rules": {
     "require-await": "error",
     "no-unused-vars": "warn",
-    "react/prop-types": "off",
     "no-use-before-define": "off",
+    "no-empty-function": "warn",
+    "react/prop-types": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-props-no-spreading": "off",
     "react/react-in-jsx-scope": "off",
-    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "@typescript-eslint/no-empty-interface": [
+      "warn",
+      { "allowSingleExtends": false }
+    ]
   }
 }
