@@ -6,7 +6,7 @@ export const InitStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
   }
-  p {
+  p, h1, h2, h3 {
     padding: 0;
     margin: 0;
   }
