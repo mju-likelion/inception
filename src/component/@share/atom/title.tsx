@@ -18,7 +18,7 @@ const Text = styled.h1<{ ag: string }>`
       font-size: 26px;
       font-weight: 700;
       line-height: 28px;
-      letter-spacing: 0px;
+      letter-spacing: 0;
       text-align: left;
     `}
 
@@ -29,7 +29,7 @@ const Text = styled.h1<{ ag: string }>`
       font-size: 20px;
       font-weight: 700;
       line-height: 24px;
-      letter-spacing: 0px;
+      letter-spacing: 0;
       text-align: left;
     `}
 `;
