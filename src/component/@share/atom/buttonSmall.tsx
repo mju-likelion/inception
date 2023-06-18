@@ -4,7 +4,6 @@ interface Props {
   text: string;
 }
 
-/** @Note Figma 기준 Typography가 Title인 컴포넌트를 다룹니다.  */
 export const ButtonSmall = ({ text }: Props) => {
   return <Button>{text}</Button>;
 };
