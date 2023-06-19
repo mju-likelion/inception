@@ -54,7 +54,7 @@ const Icon = styled.img`
 `;
 
 const TextBlock = styled.div<{ isEnabled: boolean }>`
-  width: ${({ isEnabled }) => isEnabled && '192px'};
+  flex: ${({ isEnabled }) => isEnabled && 1};
   display: flex;
   flex-direction: column;
   align-items: flex-start;
