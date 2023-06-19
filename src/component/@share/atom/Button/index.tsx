@@ -14,12 +14,10 @@ type ButtonProps =
 export const Button = ({ size, ...props }: ButtonProps) => {
   switch (size) {
     case 'small': {
-      const { text } = props as ButtonSmallProps;
-      return <ButtonSmall text={text} />;
+      return <ButtonSmall {...(props as ButtonSmallProps)} />;
     }
     case 'large': {
-      const { text, isDisabled } = props as ButtonLargeProps;
-      return <ButtonLarge text={text} isDisabled={isDisabled} />;
+      return <ButtonLarge {...(props as ButtonLargeProps)} />;
     }
   }
 };
