@@ -5,7 +5,6 @@ interface Props {
   isDisabled: boolean;
 }
 
-/** @Note Figma 기준 Typography가 Title인 컴포넌트를 다룹니다.  */
 export const ButtonLarge = ({ text, isDisabled }: Props) => {
   return (
     <Button disabled={isDisabled}>
@@ -31,7 +30,7 @@ const Button = styled.button`
   }
 
   &:hover {
-    background-color: #32d3ad;
+    background-color: ${({ theme }) => theme.colors.mint3};
   }
 
   &:disabled {

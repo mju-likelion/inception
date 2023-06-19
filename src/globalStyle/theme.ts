@@ -6,6 +6,7 @@ export type Colors = {
   white: string;
   mint1: string;
   mint2: string;
+  mint3: string;
   red: string;
   gray1: string;
   gray2: string;
@@ -26,6 +27,7 @@ export const theme: DefaultTheme = {
     white: '#fff',
     mint1: '#50E3C0',
     mint2: '#C1FBED',
+    mint3: '#32D3AD',
     red: '#FF6E65',
     gray1: '#656669',
     gray2: '#8E8E93',
