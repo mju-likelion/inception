@@ -1,25 +1,23 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import { TabBarButton } from '@/component/@share/molecules';
 
-export const TabBar = () => {
-  const [barState, setBarState] = useState<'Default' | 'Result'>('Default');
+type TabBarProps = {
+  barState: 'Default' | 'Result';
+  onClick: (state: 'Default' | 'Result') => void;
+};
 
+export const TabBar = ({ barState, onClick }: TabBarProps) => {
   return (
     <Container>
       <TabBarButton
         text="약속 잡기"
         isActive={barState === 'Default' && true}
-        onClick={() => {
-          setBarState('Default');
-        }}
+        onClick={() => onClick('Default')}
       />
       <TabBarButton
         text="결과 보기"
         isActive={barState === 'Result' && true}
-        onClick={() => {
-          setBarState('Result');
-        }}
+        onClick={() => onClick('Result')}
       />
     </Container>
   );
