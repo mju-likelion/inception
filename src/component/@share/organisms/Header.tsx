@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { HeaderTitle } from '../atom';
-import { Helper } from '../atom';
+import { HeaderTitle, Helper } from '@/component/@share/atom';
 
 export const Header = () => {
   return (
