@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { TabBar } from '@/component';
+import { TabBar } from '@/component/@share/organisms';
 
 export const Home = () => {
   return (

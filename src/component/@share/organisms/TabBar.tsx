@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { TabBarButton } from '../molecules';
+import { TabBarButton } from '@/component/@share/molecules';
 
 export const TabBar = () => {
   const [barState, setBarState] = useState<'Default' | 'Result'>('Default');

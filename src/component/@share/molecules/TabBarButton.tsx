@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Title } from '../atom';
-import { ActiveBar } from '../atom';
+import { Title } from '@/component/@share/atom';
+import { ActiveBar } from '@/component/@share/atom';
 
 type TabBarButtonProps = {
   text: '약속 잡기' | '결과 보기';
