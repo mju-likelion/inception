@@ -1,7 +1,11 @@
 import { styled } from 'styled-components';
 
-export const Input = () => {
-  return <InputField placeholder="약속방 입장 코드" />;
+interface Props {
+  text: string;
+}
+
+export const Input = ({ text }: Props) => {
+  return <InputField placeholder={text}></InputField>;
 };
 
 const InputField = styled.input`
