@@ -34,7 +34,7 @@ const Container = styled.button<{ isChecked: boolean }>`
 
 const CheckIcon = styled(CheckSvg)`
   flex-shrink: 0;
-  &:hover .check {
+  &:hover path {
     fill: ${({ theme }) => theme.colors.gray1};
   }
 `;
