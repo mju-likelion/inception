@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { HeaderTitle, Helper } from '@/component/@share/atom';
+import { Logo, Helper } from '@/component/@share/atom';
 
 export const Header = () => {
   return (
     <HeaderBox>
-      <HeaderTitle />
+      <Logo />
       <Helper />
     </HeaderBox>
   );
