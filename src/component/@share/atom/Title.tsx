@@ -28,6 +28,7 @@ export const Text = styled.h1<{ ag: string; color: keyof typeof theme.colors }>`
       letter-spacing: 0;
       text-align: left;
     `}
+
   ${(props) =>
     props.ag === 'Title2' &&
     css`
