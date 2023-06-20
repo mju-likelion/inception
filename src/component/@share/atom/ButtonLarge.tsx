@@ -1,11 +1,11 @@
 import { styled } from 'styled-components';
 
-export interface ButtonLargeProps {
+interface Props {
   text: string;
   isDisabled: boolean;
 }
 
-export const ButtonLarge = ({ text, isDisabled }: ButtonLargeProps) => {
+export const ButtonLarge = ({ text, isDisabled }: Props) => {
   return (
     <Button disabled={isDisabled}>
       <p>{text}</p>

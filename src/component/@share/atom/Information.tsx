@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { ButtonSmall } from '@/component/@share/atom/Button/ButtonSmall';
+import { ButtonSmall } from '@/component/@share/atom/ButtonSmall';
 
 interface Props {
   icon: string;

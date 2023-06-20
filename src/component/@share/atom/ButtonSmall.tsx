@@ -1,10 +1,10 @@
 import { styled } from 'styled-components';
 
-export interface ButtonSmallProps {
+interface Props {
   text: string;
 }
 
-export const ButtonSmall = ({ text }: ButtonSmallProps) => {
+export const ButtonSmall = ({ text }: Props) => {
   return <Button>{text}</Button>;
 };
 
