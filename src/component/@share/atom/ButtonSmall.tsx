@@ -9,14 +9,13 @@ export const ButtonSmall = ({ text }: Props) => {
 };
 
 const Button = styled.button`
+  ${({ theme }) => theme.font.Body3};
   width: 92px;
   height: 40px;
   border: 1px solid ${({ theme }) => theme.colors.gray4};
   border-radius: 50px;
   color: ${({ theme }) => theme.colors.gray4};
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 18px;
+  font-family: 'Pretendard';
 
   &:hover {
     border: 1px solid ${({ theme }) => theme.colors.mint1};
