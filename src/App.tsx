@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components';
-import { InitStyle, theme } from '@/globalStyle';
+import { InitStyle, theme, GlobalFont } from '@/globalStyle';
 import { Outlet } from 'react-router-dom';
 import { Header } from '@/component/@share/organisms';
 
@@ -8,6 +8,7 @@ export function App() {
   return (
     <>
       <InitStyle />
+      <GlobalFont />
       <ThemeProvider theme={theme}>
         {/* 여기에 header, footer를 추가할 수 있다. */}
         <Header />
