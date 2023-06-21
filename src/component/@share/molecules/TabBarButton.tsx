@@ -3,19 +3,21 @@ import { Title } from '@/component/@share/atom';
 import { ActiveBar } from '@/component/@share/atom';
 
 type TabBarButtonProps = {
-  text: '약속 잡기' | '결과 보기';
+  children: string;
   isActive: boolean;
   onClick: () => void;
 };
 
 export const TabBarButton = ({
-  text,
+  children,
   isActive,
   onClick,
 }: TabBarButtonProps) => {
   return (
     <Container onClick={onClick}>
-      <Title ag="Title2" text={text} color={isActive ? 'mint1' : 'gray3'} />
+      <Title ag="Title2" color={isActive ? 'mint1' : 'gray3'}>
+        {children}
+      </Title>
       {isActive && <ActiveBar />}
     </Container>
   );

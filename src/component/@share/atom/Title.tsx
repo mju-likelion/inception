@@ -1,26 +1,23 @@
+import { theme } from '@/globalStyle';
 import { styled, css } from 'styled-components';
 
 interface Props {
   ag: string;
-  text: string;
-  color?: 'mint1' | 'gray3' | 'gray1' | 'black'; // string대신 리터럴 타입으로 명확히해주고 싶었는데 이게 더 확장성면에서 별로일까용,,?
+  color?: keyof typeof theme.colors;
+  children: string;
 }
 
 /** @Note Figma 기준 Typography가 Title인 컴포넌트를 다룹니다.  */
-export const Title = ({ ag, text, color }: Props) => {
+export const Title = ({ ag, color = 'black', children }: Props) => {
   return (
     <Text ag={ag} color={color}>
-      {text}
+      {children}
     </Text>
   );
 };
 
-const Text = styled.h1<{
-  ag: string;
-  color?: 'mint1' | 'gray3' | 'gray1' | 'black';
-}>`
-  color: ${({ theme, color = 'black' }) => theme.colors[color]};
-
+export const Text = styled.h1<{ ag: string; color: keyof typeof theme.colors }>`
+  color: ${({ theme, color }) => theme.colors[color] || theme.colors.black};
   ${(props) =>
     props.ag === 'Title1' &&
     css`

@@ -10,15 +10,17 @@ export const TabBar = ({ barState, onClick }: TabBarProps) => {
   return (
     <Container>
       <TabBarButton
-        text="약속 잡기"
         isActive={barState === 'Default' && true}
         onClick={() => onClick('Default')}
-      />
+      >
+        약속 잡기
+      </TabBarButton>
       <TabBarButton
-        text="결과 보기"
         isActive={barState === 'Result' && true}
         onClick={() => onClick('Result')}
-      />
+      >
+        결과 보기
+      </TabBarButton>
     </Container>
   );
 };

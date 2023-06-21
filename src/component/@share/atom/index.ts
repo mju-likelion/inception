@@ -1,4 +1,5 @@
 export * from './Title';
-export * from './buttonLarge';
-export * from './buttonSmall';
+export * from './ButtonLarge';
+export * from './ButtonSmall';
+export * from './Information';
 export * from './ActiveBar';
