@@ -2,22 +2,22 @@ import styled from 'styled-components';
 import { TabBarButton } from '@/component/@share/molecules';
 
 type TabBarProps = {
-  barState: 'Default' | 'Result';
-  onClick: (state: 'Default' | 'Result') => void;
+  selectedTab: 'default' | 'result';
+  onClick: (tab: 'default' | 'result') => void;
 };
 
-export const TabBar = ({ barState, onClick }: TabBarProps) => {
+export const TabBar = ({ selectedTab, onClick }: TabBarProps) => {
   return (
     <Container>
       <TabBarButton
-        isActive={barState === 'Default' && true}
-        onClick={() => onClick('Default')}
+        isActive={selectedTab === 'default'}
+        onClick={() => onClick('default')}
       >
         약속 잡기
       </TabBarButton>
       <TabBarButton
-        isActive={barState === 'Result' && true}
-        onClick={() => onClick('Result')}
+        isActive={selectedTab === 'result'}
+        onClick={() => onClick('result')}
       >
         결과 보기
       </TabBarButton>
