@@ -1,4 +1,5 @@
 import { DefaultTheme } from 'styled-components';
+import { css } from 'styled-components';
 
 /** @Note theme에 color요소를 추가한다면 여기에 타입을 추가해주세요 */
 export type Colors = {
@@ -37,5 +38,54 @@ export const theme: DefaultTheme = {
   },
   size: {
     pc: '1920px',
+  },
+  font: {
+    Title1: css`
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 28px;
+    `,
+    Title2: css`
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 24px;
+    `,
+    Subtitle: css`
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 28px;
+    `,
+    Body1: {
+      Regular: css`
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+      `,
+      Semibold: css`
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+      `,
+    },
+    Body2: css`
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 22px;
+    `,
+    Body3: css`
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+    `,
+    Body4: css`
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 16px;
+    `,
+    Body5: css`
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 12px;
+    `,
   },
 };

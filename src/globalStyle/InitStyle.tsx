@@ -47,4 +47,8 @@ button {
   padding: 0;
   cursor: pointer;
 }
+
+body{
+  font-family: 'Pretendard', sans-serif;
+}
 `;

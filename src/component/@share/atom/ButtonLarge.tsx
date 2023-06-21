@@ -22,11 +22,10 @@ const Button = styled.button`
   background-color: ${({ theme }) => theme.colors.mint1};
 
   p {
+    ${({ theme }) => theme.font.Title1};
+    font-family: 'Pretendard';
     width: 160px;
     color: ${({ theme }) => theme.colors.white};
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 24px;
   }
 
   &:hover {
