@@ -39,7 +39,7 @@ export const theme: DefaultTheme = {
   size: {
     pc: '1920px',
   },
-  font: {
+  typographies: {
     title1: css`
       font-size: 26px;
       font-weight: 700;

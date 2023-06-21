@@ -6,7 +6,7 @@ export const ButtonSmall = ({ children }: PropsWithChildren) => {
 };
 
 const Button = styled.button`
-  ${({ theme }) => theme.font.body3};
+  ${({ theme }) => theme.typographies.body3};
   width: 92px;
   height: 40px;
   border: 1px solid ${({ theme }) => theme.colors.gray4};
