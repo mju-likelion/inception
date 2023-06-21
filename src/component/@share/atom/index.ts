@@ -5,3 +5,4 @@ export * from './Information';
 export * from './Logo';
 export * from './Helper';
 export * from './CheckBox';
+export * from './Body';
