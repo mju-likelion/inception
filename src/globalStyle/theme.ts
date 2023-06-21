@@ -56,7 +56,7 @@ export const theme: DefaultTheme = {
       line-height: 28px;
     `,
     body1: {
-      Regular: css`
+      regular: css`
         font-size: 16px;
         font-weight: 400;
         line-height: 20px;
