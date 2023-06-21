@@ -6,7 +6,9 @@ import { ReactComponent as Next } from '@/assets/images/Next.svg';
 export const CalendarHeader = () => {
   return (
     <Header>
-      <Title ag="Title2" text="2023년 6월" color="gray1" />
+      <Title ag="Title2" color="gray1">
+        2023년 6월
+      </Title>
       <ButtonWrapper>
         <Back />
         <Next />

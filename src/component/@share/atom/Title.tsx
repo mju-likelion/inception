@@ -3,15 +3,15 @@ import { styled, css } from 'styled-components';
 
 interface Props {
   ag: string;
-  text: string;
+  children: React.ReactNode;
   color?: keyof typeof theme.colors;
 }
 
 /** @Note Figma 기준 Typography가 Title인 컴포넌트를 다룹니다.  */
-export const Title = ({ ag, text, color = 'black' }: Props) => {
+export const Title = ({ ag, children, color = 'black' }: Props) => {
   return (
     <Text ag={ag} color={color}>
-      {text}
+      {children}
     </Text>
   );
 };

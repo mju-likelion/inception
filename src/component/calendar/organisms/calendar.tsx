@@ -1,23 +1,19 @@
-import { CalendarHeader } from '@/component/calendar/molecules';
+import {
+  CalendarHeader,
+  Date,
+  DateHeader,
+} from '@/component/calendar/molecules';
 import { getCalendarData } from '@/util';
 import { styled } from 'styled-components';
 
 export const Calendar = () => {
-  const date = getCalendarData('2023', '6');
+  const calendarData = getCalendarData('2023', '6');
+
   return (
     <Grid>
       <CalendarHeader />
-      <GridItem>SUN</GridItem>
-      <GridItem>MON</GridItem>
-      <GridItem>TUE</GridItem>
-      <GridItem>WED</GridItem>
-      <GridItem>THU</GridItem>
-      <GridItem>FRI</GridItem>
-      <GridItem>SAT</GridItem>
-      <GridItem>B</GridItem>
-      <GridItem>C</GridItem>
-      <GridItem>D</GridItem>
-      <GridItem>E</GridItem>
+      <DateHeader />
+      <Date calendarData={calendarData} />
     </Grid>
   );
 };
@@ -25,7 +21,7 @@ export const Calendar = () => {
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 40px);
-  grid-template-rows: 54px;
+  grid-template-rows: 54px 50px repeat(5, 40px);
 
   width: 320px;
   height: 370px;
@@ -34,11 +30,5 @@ const Grid = styled.div`
   :nth-child(1) {
     grid-column-start: 1;
     grid-column-end: 8;
-    height: 54px;
   }
-`;
-
-const GridItem = styled.div`
-  width: 40px;
-  border: 1px solid black;
 `;

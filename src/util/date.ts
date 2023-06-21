@@ -1,8 +1,6 @@
 /* date = 일자 데이터, day = 요일 데이터 */
-interface CalendarData {
-  date: string;
-  day: string;
-}
+
+import { CalendarData } from '@/types';
 
 export const getCalendarData = (
   year: string,
@@ -14,7 +12,7 @@ export const getCalendarData = (
   const datas = days.map((date) => {
     const day = new Date(+year, +month - 1, +date).getDay();
     return {
-      date: `${year}${paddingMonth}${date}`,
+      date: `${year}-${paddingMonth}-${date}`,
       day: convertDayNumberToString(day),
     };
   });
