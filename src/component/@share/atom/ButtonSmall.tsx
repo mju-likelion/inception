@@ -12,7 +12,6 @@ const Button = styled.button`
   border: 1px solid ${({ theme }) => theme.colors.gray4};
   border-radius: 50px;
   color: ${({ theme }) => theme.colors.gray4};
-  font-family: 'Pretendard';
 
   &:hover {
     border: 1px solid ${({ theme }) => theme.colors.mint1};
