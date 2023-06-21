@@ -1,14 +1,17 @@
+import { PropsWithChildren } from 'react';
 import { styled } from 'styled-components';
 
 interface Props {
-  text: string;
-  isDisabled: boolean;
+  isDisabled?: boolean;
 }
 
-export const ButtonLarge = ({ text, isDisabled }: Props) => {
+export const ButtonLarge = ({
+  children,
+  isDisabled,
+}: PropsWithChildren<Props>) => {
   return (
     <Button disabled={isDisabled}>
-      <p>{text}</p>
+      <ButtonText>{children}</ButtonText>
     </Button>
   );
 };
@@ -21,13 +24,6 @@ const Button = styled.button`
   border-radius: 30px;
   background-color: ${({ theme }) => theme.colors.mint1};
 
-  p {
-    ${({ theme }) => theme.font.Title1};
-    font-family: 'Pretendard';
-    width: 160px;
-    color: ${({ theme }) => theme.colors.white};
-  }
-
   &:hover {
     background-color: ${({ theme }) => theme.colors.mint3};
   }
@@ -36,4 +32,10 @@ const Button = styled.button`
     background-color: ${({ theme }) => theme.colors.gray4};
     color: ${({ theme }) => theme.colors.gray3};
   }
+`;
+
+const ButtonText = styled.p`
+  ${({ theme }) => theme.font.title1};
+  width: 160px;
+  color: ${({ theme }) => theme.colors.white};
 `;

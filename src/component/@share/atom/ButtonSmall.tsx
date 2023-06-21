@@ -1,15 +1,12 @@
+import { PropsWithChildren } from 'react';
 import { styled } from 'styled-components';
 
-interface Props {
-  text: string;
-}
-
-export const ButtonSmall = ({ text }: Props) => {
-  return <Button>{text}</Button>;
+export const ButtonSmall = ({ children }: PropsWithChildren) => {
+  return <Button>{children}</Button>;
 };
 
 const Button = styled.button`
-  ${({ theme }) => theme.font.Body3};
+  ${({ theme }) => theme.font.body3};
   width: 92px;
   height: 40px;
   border: 1px solid ${({ theme }) => theme.colors.gray4};
