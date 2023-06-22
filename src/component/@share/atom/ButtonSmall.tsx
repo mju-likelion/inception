@@ -1,22 +1,17 @@
+import { PropsWithChildren } from 'react';
 import { styled } from 'styled-components';
 
-interface Props {
-  text: string;
-}
-
-export const ButtonSmall = ({ text }: Props) => {
-  return <Button>{text}</Button>;
+export const ButtonSmall = ({ children }: PropsWithChildren) => {
+  return <Button>{children}</Button>;
 };
 
 const Button = styled.button`
+  ${({ theme }) => theme.typographies.body3};
   width: 92px;
   height: 40px;
   border: 1px solid ${({ theme }) => theme.colors.gray4};
   border-radius: 50px;
   color: ${({ theme }) => theme.colors.gray4};
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 18px;
 
   &:hover {
     border: 1px solid ${({ theme }) => theme.colors.mint1};
