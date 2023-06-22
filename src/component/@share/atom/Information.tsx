@@ -24,7 +24,7 @@ export const Information = ({
           <Title isEnabled={isEnabled}>{title}</Title>
           {isNull || <Content isEnabled={isEnabled}>{content}</Content>}
         </TextBlock>
-        {isEnabled && <ButtonSmall text="복사하기" />}
+        {isEnabled && <ButtonSmall>복사하기</ButtonSmall>}
       </ContentBlock>
     </InformationBlock>
   );
