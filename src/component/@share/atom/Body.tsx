@@ -24,4 +24,10 @@ const Text = styled.p<{ ag: string; color: keyof typeof theme.colors }>`
       letter-spacing: 0px;
       text-align: center;
     `}
+  ${({ ag }) =>
+    ag === 'Body5' &&
+    css`
+      ${({ theme }) => theme.typographies.body5};
+      letter-spacing: 0px;
+    `}
 `;
