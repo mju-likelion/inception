@@ -1,4 +1,4 @@
-import { DefaultTheme } from 'styled-components';
+import { DefaultTheme, RuleSet } from 'styled-components';
 import { css } from 'styled-components';
 
 /** @Note theme에 color요소를 추가한다면 여기에 타입을 추가해주세요 */
@@ -19,6 +19,20 @@ export type Colors = {
 /** @Note theme에 size요소를 추가한다면 여기에 타입을 추가해주세요 */
 export type Size = {
   pc: string;
+};
+
+export type TypoGraphies = {
+  title1: RuleSet<object>;
+  title2: RuleSet<object>;
+  subTitle: RuleSet<object>;
+  body1: {
+    regular: RuleSet<object>;
+    semiBold: RuleSet<object>;
+  };
+  body2: RuleSet<object>;
+  body3: RuleSet<object>;
+  body4: RuleSet<object>;
+  body5: RuleSet<object>;
 };
 
 /** @Note theme에 요소를 추가하려면 DefaultTheme에서 타입 프로퍼티를 추가해주세요 */
@@ -50,7 +64,7 @@ export const theme: DefaultTheme = {
       font-weight: 700;
       line-height: 24px;
     `,
-    subtitle: css`
+    subTitle: css`
       font-size: 18px;
       font-weight: 600;
       line-height: 28px;
