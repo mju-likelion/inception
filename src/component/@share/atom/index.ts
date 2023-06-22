@@ -8,3 +8,4 @@ export * from './CheckBox';
 export * from './Body';
 export * from './Line';
 export * from './Dot';
+export * from './SubTitle';
