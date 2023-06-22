@@ -4,22 +4,29 @@ import { TabBarButton } from '@/component/@share/molecules';
 type TabBarProps = {
   selectedTab: 'default' | 'result';
   onClick: (tab: 'default' | 'result') => void;
+  firstTabTitle: string;
+  secondTabTitle: string;
 };
 
-export const TabBar = ({ selectedTab, onClick }: TabBarProps) => {
+export const TabBar = ({
+  selectedTab,
+  onClick,
+  firstTabTitle,
+  secondTabTitle,
+}: TabBarProps) => {
   return (
     <Container>
       <TabBarButton
         isActive={selectedTab === 'default'}
         onClick={() => onClick('default')}
       >
-        약속 잡기
+        {firstTabTitle}
       </TabBarButton>
       <TabBarButton
         isActive={selectedTab === 'result'}
         onClick={() => onClick('result')}
       >
-        결과 보기
+        {secondTabTitle}
       </TabBarButton>
     </Container>
   );

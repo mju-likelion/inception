@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Title } from '@/component/@share/atom';
-import { ActiveBar } from '@/component/@share/atom';
 
 type TabBarButtonProps = {
   children: string;
@@ -18,7 +17,7 @@ export const TabBarButton = ({
       <Title ag="Title2" color={isActive ? 'mint1' : 'gray3'}>
         {children}
       </Title>
-      {isActive && <ActiveBar />}
+      {isActive && <Bar />}
     </Container>
   );
 };
@@ -29,4 +28,10 @@ const Container = styled.button`
   flex-direction: column;
   gap: 15px;
   height: 41px;
+`;
+
+const Bar = styled.div`
+  background-color: ${({ theme }) => theme.colors.mint1};
+  width: 100%;
+  height: 2px;
 `;
