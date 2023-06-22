@@ -1,19 +1,20 @@
 import styled from 'styled-components';
 import { Dot, Line } from '@/component/@share/atom';
+import { Fragment } from 'react';
 interface ProgressBarProps {
   total: number;
   step: number;
 }
 
 export const ProgressBar = ({ total, step }: ProgressBarProps) => {
-  const rendering = () => {
+  const render = () => {
     const result = [];
     for (let i = 1; i < total; i++) {
       result.push(
-        <>
-          <Line isActice={step > i && true} />
-          <Dot isActice={step > i && true} />
-        </>
+        <Fragment key={i}>
+          <Line isActice={step > i} />
+          <Dot isActice={step > i} />
+        </Fragment>
       );
     }
 
@@ -23,7 +24,7 @@ export const ProgressBar = ({ total, step }: ProgressBarProps) => {
   return (
     <Container>
       <Dot isActice={true} />
-      {rendering()}
+      {render()}
     </Container>
   );
 };
