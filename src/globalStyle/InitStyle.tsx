@@ -47,7 +47,7 @@ button {
   cursor: pointer;
 }
 
-*{
+body{
   font-family: 'Pretendard', sans-serif;
 }
 `;
