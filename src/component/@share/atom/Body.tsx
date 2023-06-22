@@ -1,13 +1,17 @@
+import { PropsWithChildren } from 'react';
 import { theme } from '@/globalStyle';
 import { css, styled } from 'styled-components';
 
 interface Props {
   ag: string;
-  children: React.ReactNode;
   color?: keyof typeof theme.colors;
 }
 
-export const Body = ({ ag, children, color = 'black' }: Props) => {
+export const Body = ({
+  ag,
+  children,
+  color = 'black',
+}: PropsWithChildren<Props>) => {
   return (
     <Text ag={ag} color={color}>
       {children}
