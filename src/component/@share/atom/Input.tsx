@@ -1,11 +1,23 @@
 import { styled } from 'styled-components';
+import React, { useState } from 'react';
 
 interface Props {
   text: string;
 }
 
+const onChange = (event: any) => {
+  setMemo(event.target.value);
+};
+const [memo, setMemo] = useState('');
+
 export const Input = ({ text }: Props) => {
-  return <InputField placeholder={text}></InputField>;
+  return (
+    <InputField
+      placeholder={text}
+      onChange={onChange}
+      value={memo}
+    ></InputField>
+  );
 };
 
 const InputField = styled.input`
