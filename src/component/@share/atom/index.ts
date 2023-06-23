@@ -8,3 +8,6 @@ export * from './Body';
 export * from './Line';
 export * from './Dot';
 export * from './SubTitle';
+export * from './LineModal';
+export * from './DotModal';
+export * from './Check';
