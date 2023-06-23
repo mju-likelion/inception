@@ -6,7 +6,7 @@ interface ProgressBarModalProps {
   total: number;
 }
 
-export const PrgoressBarModal = ({ step, total }: ProgressBarModalProps) => {
+export const ProgressBarModal = ({ step, total }: ProgressBarModalProps) => {
   const render = () => {
     const result = [];
     for (let i = 1; i < total; i++) {
