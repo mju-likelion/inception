@@ -5,12 +5,12 @@ interface Props {
   text: string;
 }
 
-const onChange = (event: any) => {
-  setMemo(event.target.value);
-};
-const [memo, setMemo] = useState('');
-
 export const Input = ({ text }: Props) => {
+  const onChange = (event: any) => {
+    setMemo(event.target.value);
+  };
+  const [memo, setMemo] = useState('');
+
   return (
     <InputField
       placeholder={text}

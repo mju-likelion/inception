@@ -12,6 +12,7 @@ export function App() {
       <GlobalFont />
       <ThemeProvider theme={theme}>
         {/* 여기에 header, footer를 추가할 수 있다. */}
+        <Input text="f" />
         <Header />
         {/* 라우터들이 Outlet에서 작동한다. */}
         <Outlet />
