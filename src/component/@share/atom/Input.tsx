@@ -1,16 +1,12 @@
 import { styled } from 'styled-components';
-import React, { useState } from 'react';
 
 interface Props {
   text: string;
+  onChange: any;
+  memo: any;
 }
 
-export const Input = ({ text }: Props) => {
-  const onChange = (event: any) => {
-    setMemo(event.target.value);
-  };
-  const [memo, setMemo] = useState('');
-
+export const Input = ({ text, onChange, memo }: Props) => {
   return (
     <InputField
       placeholder={text}
@@ -27,7 +23,7 @@ const InputField = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.gray4};
   border-radius: 8px;
   background-color: none;
-  color: ${({ theme }) => theme.colors.gray2};
+  color: ${({ theme }) => theme.colors.gray1};
   font-size: 16px;
 
   &::placeholder {

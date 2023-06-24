@@ -3,16 +3,21 @@ import { InitStyle, theme, GlobalFont } from '@/globalStyle';
 import { Outlet } from 'react-router-dom';
 import { Header } from '@/component/@share/organisms';
 import { Input } from './component/@share/atom/Input';
+import React, { useState } from 'react';
 
 /**@Note 모든 페이지에 적용할 설정 및 컴포넌트를 지정한다. */
 export function App() {
+  const onChange = (event: any) => {
+    setMemo(event.target.value);
+  };
+  const [memo, setMemo] = useState('');
   return (
     <>
       <InitStyle />
       <GlobalFont />
       <ThemeProvider theme={theme}>
         {/* 여기에 header, footer를 추가할 수 있다. */}
-        <Input text="f" />
+        <Input text="입력하세요" onChange={onChange} memo={memo} />
         <Header />
         {/* 라우터들이 Outlet에서 작동한다. */}
         <Outlet />
