@@ -24,6 +24,7 @@ const Text = styled.p<{ ag: string; color: keyof typeof theme.colors }>`
       font-size: 12px;
       font-weight: 600;
       line-height: 16px;
+      ${({ theme }) => theme.typographies.body4};
       letter-spacing: 0px;
       text-align: center;
     `}

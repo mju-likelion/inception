@@ -8,7 +8,7 @@ interface Props {
 }
 
 /** @Note Figma 기준 Typography가 Title인 컴포넌트를 다룹니다.  */
-export const Title = ({ ag, children, color = 'black' }: Props) => {
+export const Title = ({ ag, color = 'black', children }: Props) => {
   return (
     <Text ag={ag} color={color}>
       {children}
@@ -21,10 +21,7 @@ export const Text = styled.h1<{ ag: string; color: keyof typeof theme.colors }>`
   ${(props) =>
     props.ag === 'Title1' &&
     css`
-      /* font-family: Pretendard; */
-      font-size: 26px;
-      font-weight: 700;
-      line-height: 28px;
+      ${({ theme }) => theme.typographies.title1};
       letter-spacing: 0;
       text-align: left;
     `}
@@ -32,10 +29,7 @@ export const Text = styled.h1<{ ag: string; color: keyof typeof theme.colors }>`
   ${(props) =>
     props.ag === 'Title2' &&
     css`
-      /* font-family: Pretendard; */
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 24px;
+      ${({ theme }) => theme.typographies.title2};
       letter-spacing: 0;
       text-align: left;
     `};
