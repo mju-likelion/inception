@@ -1,19 +1,16 @@
 import styled from 'styled-components';
 import { Mail, Privacy, CopyRight } from '@/component/Footer/atoms';
+import { OrganizationInfo } from '@/component/Footer/data/OrganizationInfo';
 
 export const Footer = () => {
   return (
     <Container>
-      <Mail email="53791@naver.com" />
-
+      <Mail email={OrganizationInfo.email} />
       <Privacy
         firstContent="개인정보 처리 방침"
         secondContent="서비스 이용약관"
       />
-      <CopyRight
-        content="© 2023. LIKELION MJU All pictures
-cannot be copied without permission."
-      />
+      <CopyRight content={OrganizationInfo.copyRight} />
     </Container>
   );
 };
@@ -26,4 +23,5 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   bottom: 0;
+  padding-right: 150px;
 `;
