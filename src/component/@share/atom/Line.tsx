@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { ReactComponent as LineSVG } from '@/assets/images/Line.svg';
 
 interface LineProps {
-  isActice?: boolean;
+  isActive?: boolean;
 }
 
-export const Line = ({ isActice }: LineProps) => {
-  return <>{isActice ? <MintLineSVG /> : <LineSVG />}</>;
+export const Line = ({ isActive }: LineProps) => {
+  return <>{isActive ? <MintLineSVG /> : <LineSVG />}</>;
 };
 
 const MintLineSVG = styled(LineSVG)`

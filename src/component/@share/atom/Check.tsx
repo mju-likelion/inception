@@ -2,11 +2,11 @@ import { ReactComponent as CheckSVG } from '@/assets/images/Check.svg';
 import styled from 'styled-components';
 
 interface CheckProps {
-  isActice?: boolean;
+  isActive?: boolean;
 }
 
-export const Check = ({ isActice }: CheckProps) => {
-  return <>{isActice ? <MintCheckSVG /> : <Mint2CheckSVG />}</>;
+export const Check = ({ isActive }: CheckProps) => {
+  return <>{isActive ? <MintCheckSVG /> : <Mint2CheckSVG />}</>;
 };
 
 const MintCheckSVG = styled(CheckSVG)`
