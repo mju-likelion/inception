@@ -2,7 +2,7 @@ import { ReactComponent as CheckSVG } from '@/assets/images/Check.svg';
 import styled from 'styled-components';
 
 interface CheckProps {
-  isActive?: boolean;
+  isActive: boolean;
 }
 
 export const Check = ({ isActive }: CheckProps) => {

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ReactComponent as LineSVG } from '@/assets/images/LineModal.svg';
 
 interface LineModalProps {
-  isPass?: boolean;
+  isPass: boolean;
 }
 
 export const LineModal = ({ isPass }: LineModalProps) => {

@@ -3,15 +3,15 @@ import { ReactComponent as CheckSVG } from '@/assets/images/Check.svg';
 import styled from 'styled-components';
 
 interface DotModalProps {
-  isActive?: boolean;
-  isPass?: boolean;
+  isActive: boolean;
+  isPass: boolean;
 }
 
 export const DotModal = ({ isActive, isPass }: DotModalProps) => {
   return <>{isPass ? <MintCheckSVG isActive={isActive} /> : <DotSVG />}</>;
 };
 
-const MintCheckSVG = styled(CheckSVG)<{ isActive?: boolean }>`
+const MintCheckSVG = styled(CheckSVG)<{ isActive: boolean }>`
   path {
     fill: ${({ isActive }) =>
       isActive

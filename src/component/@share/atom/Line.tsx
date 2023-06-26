@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ReactComponent as LineSVG } from '@/assets/images/Line.svg';
 
 interface LineProps {
-  isActive?: boolean;
+  isActive: boolean;
 }
 
 export const Line = ({ isActive }: LineProps) => {

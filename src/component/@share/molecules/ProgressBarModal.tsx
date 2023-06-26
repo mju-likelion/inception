@@ -23,7 +23,11 @@ export const ProgressBarModal = ({ step, total }: ProgressBarModalProps) => {
 
   return (
     <Container>
-      {step === 0 ? <DotModal /> : <Check isActive={step === 1} />}
+      {step === 0 ? (
+        <DotModal isActive={false} isPass={false} />
+      ) : (
+        <Check isActive={step === 1} />
+      )}
       {onProgressRender()}
     </Container>
   );
