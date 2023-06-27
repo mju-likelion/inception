@@ -12,8 +12,8 @@ export const ProgressBarModal = ({ step, total }: ProgressBarModalProps) => {
     for (let i = 1; i < total; i++) {
       result.push(
         <Fragment key={i}>
-          <LineModal isPass={step > i} />
-          <DotModal isActive={step === i + 1} isPass={step > i} />
+          <LineModal $isPass={step > i} />
+          <DotModal $isActive={step === i + 1} $isPass={step > i} />
         </Fragment>
       );
     }
@@ -24,9 +24,9 @@ export const ProgressBarModal = ({ step, total }: ProgressBarModalProps) => {
   return (
     <Container>
       {step === 0 ? (
-        <DotModal isActive={false} isPass={false} />
+        <DotModal $isActive={false} $isPass={false} />
       ) : (
-        <Check isActive={step === 1} />
+        <Check $isActive={step === 1} />
       )}
       {onProgressRender()}
     </Container>

@@ -2,11 +2,11 @@ import { ReactComponent as DotSVG } from '@/assets/images/Dot.svg';
 import styled from 'styled-components';
 
 interface DotProps {
-  isActive: boolean;
+  $isActive: boolean;
 }
 
-export const Dot = ({ isActive }: DotProps) => {
-  return <>{isActive ? <MintDotSVG /> : <DotSVG />}</>;
+export const Dot = ({ $isActive }: DotProps) => {
+  return <>{$isActive ? <MintDotSVG /> : <DotSVG />}</>;
 };
 
 const MintDotSVG = styled(DotSVG)`
