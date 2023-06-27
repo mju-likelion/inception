@@ -24,12 +24,16 @@ export type Size = {
 export type TypoGraphies = {
   title1: RuleSet<object>;
   title2: RuleSet<object>;
+  title3: RuleSet<object>;
   subTitle: RuleSet<object>;
   body1: {
     regular: RuleSet<object>;
     semiBold: RuleSet<object>;
   };
-  body2: RuleSet<object>;
+  body2: {
+    regular: RuleSet<object>;
+    semiBold: RuleSet<object>;
+  };
   body3: RuleSet<object>;
   body4: RuleSet<object>;
   body5: RuleSet<object>;
@@ -64,6 +68,11 @@ export const theme: DefaultTheme = {
       font-weight: 700;
       line-height: 24px;
     `,
+    title3: css`
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 42px;
+    `,
     subTitle: css`
       font-size: 18px;
       font-weight: 600;
@@ -81,11 +90,18 @@ export const theme: DefaultTheme = {
         line-height: 20px;
       `,
     },
-    body2: css`
-      font-size: 15px;
-      font-weight: 400;
-      line-height: 22px;
-    `,
+    body2: {
+      regular: css`
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 22px;
+      `,
+      semiBold: css`
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 18px;
+      `,
+    },
     body3: css`
       font-size: 14px;
       font-weight: 400;

@@ -43,4 +43,12 @@ export const Text = styled.h1<{
       letter-spacing: 0;
       text-align: ${props.align};
     `}
+
+  ${(props) =>
+    props.ag === 'Title3' &&
+    css`
+      ${({ theme }) => theme.typographies.title3};
+      letter-spacing: 0;
+      text-align: ${props.align};
+    `}
 `;
