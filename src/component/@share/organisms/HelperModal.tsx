@@ -31,8 +31,8 @@ export const HelperModal = ({ step }: HelperModalProps) => {
           key={i}
           title={helpText[i].title}
           content={helpText[i].content}
-          isActive={step === i + 1}
-          isPass={step > i}
+          $isActive={step === i + 1}
+          $isPass={step > i}
         />
       );
     }
