@@ -19,7 +19,6 @@ export const Mail = ({ email }: MailProps) => {
 const Container = styled.div`
   display: flex;
   gap: 8px;
-  margin-bottom: 16px;
 `;
 
 const Email = styled.button`

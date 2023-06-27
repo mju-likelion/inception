@@ -17,7 +17,6 @@ export const Privacy = ({ firstContent, secondContent }: PrivacyProps) => {
 const Container = styled.div`
   display: flex;
   gap: 16px;
-  margin-bottom: 8px;
 `;
 
 const PrivacyContent = styled.button`
