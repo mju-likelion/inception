@@ -3,19 +3,18 @@ import { ReactComponent as SuccessIcon } from '@/assets/images/Success.svg';
 import { ReactComponent as ErrorIcon } from '@/assets/images/Error.svg';
 import { Body } from '@/component/@share/atom';
 
-type ToastProps = {
+interface ToastProps {
   type: 'success' | 'error';
-  successMsg: string;
-  errorMsg: string;
-};
+  message: string;
+}
 
-export const Toast = ({ type, successMsg, errorMsg }: ToastProps) => {
+export const Toast = ({ type, message }: ToastProps) => {
   return (
     <Container>
       {type === 'success' ? <SuccessIcon /> : <ErrorIcon />}
       <MessageBox>
         <Body ag="Body1" color="white">
-          {type === 'success' ? successMsg : errorMsg}
+          {message}
         </Body>
         {type === 'error' && (
           <Body ag="Body3" color="gray3">
