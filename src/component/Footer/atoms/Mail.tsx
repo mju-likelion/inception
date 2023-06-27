@@ -1,9 +1,9 @@
 import { Body } from '@/component/@share';
 import styled from 'styled-components';
 
-type MailProps = {
+interface MailProps {
   email: string;
-};
+}
 
 export const Mail = ({ email }: MailProps) => {
   return (

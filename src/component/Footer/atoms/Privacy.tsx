@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-type PrivacyProps = {
+interface PrivacyProps {
   firstContent: string;
   secondContent: string;
-};
+}
 
 export const Privacy = ({ firstContent, secondContent }: PrivacyProps) => {
   return (

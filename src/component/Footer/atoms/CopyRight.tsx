@@ -1,8 +1,8 @@
 import { Body } from '@/component/@share';
 
-type CopyRightProps = {
+interface CopyRightProps {
   content: string;
-};
+}
 
 export const CopyRight = ({ content }: CopyRightProps) => {
   return (
