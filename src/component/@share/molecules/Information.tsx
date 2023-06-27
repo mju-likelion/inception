@@ -23,7 +23,7 @@ export const Information = ({
         {isEnabled || <Icon src={icon} />}
         <TextBlock $isEnabled={isEnabled}>
           {isEnabled ? (
-            <Body ag={'Body1'} color="gray1">
+            <Body ag={'Body1SemiBold'} color="gray1">
               {title}
             </Body>
           ) : (
@@ -37,7 +37,7 @@ export const Information = ({
                 {content}
               </Body>
             ) : (
-              <Body ag={'Body1'} color="gray1">
+              <Body ag={'Body1SemiBold'} color="gray1">
                 {content}
               </Body>
             ))}

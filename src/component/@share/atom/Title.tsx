@@ -3,7 +3,7 @@ import { theme } from '@/globalStyle';
 import { styled, css } from 'styled-components';
 
 interface Props {
-  ag: string;
+  ag: 'Title1' | 'Title2' | 'Title3';
   color?: keyof typeof theme.colors;
   align?: string;
 }
@@ -23,7 +23,7 @@ export const Title = ({
 };
 
 export const Text = styled.h1<{
-  ag: string;
+  ag: 'Title1' | 'Title2' | 'Title3';
   color: keyof typeof theme.colors;
   align: string;
 }>`

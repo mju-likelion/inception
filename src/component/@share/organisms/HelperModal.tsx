@@ -3,7 +3,7 @@ import { ButtonLarge } from '@/component/@share/atom';
 import { ProgressBarModal, TitleBox } from '../molecules';
 
 interface HelperModalProps {
-  step: number;
+  step: 0 | 1 | 2 | 3;
 }
 
 const helpText = [

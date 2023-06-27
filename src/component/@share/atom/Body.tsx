@@ -3,7 +3,14 @@ import { theme } from '@/globalStyle';
 import { css, styled } from 'styled-components';
 
 interface Props {
-  ag: string;
+  ag:
+    | 'Body1Regular'
+    | 'Body1SemiBold'
+    | 'Body2Regular'
+    | 'Body2SemiBold'
+    | 'Body3'
+    | 'Body4'
+    | 'Body5';
   color?: keyof typeof theme.colors;
   align?: string;
 }
@@ -22,7 +29,14 @@ export const Body = ({
 };
 
 const Text = styled.p<{
-  ag: string;
+  ag:
+    | 'Body1Regular'
+    | 'Body1SemiBold'
+    | 'Body2Regular'
+    | 'Body2SemiBold'
+    | 'Body3'
+    | 'Body4'
+    | 'Body5';
   color: keyof typeof theme.colors;
   align: string;
 }>`
