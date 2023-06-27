@@ -17,13 +17,13 @@ export const TitleBox = ({
   return (
     <Container>
       <Title
-        ag={'Title2'}
+        ag="Title2"
         color={$isActive ? 'mint1' : $isPass ? 'mint2' : 'gray3'}
       >
         {title}
       </Title>
       <BodyBlock>
-        <Body ag={'Body3'} color={$isActive ? 'gray1' : 'gray3'}>
+        <Body ag="Body3" color={$isActive ? 'gray1' : 'gray3'}>
           {content}
         </Body>
       </BodyBlock>

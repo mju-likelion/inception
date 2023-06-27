@@ -23,21 +23,21 @@ export const Information = ({
         {isEnabled || <Icon src={icon} />}
         <TextBlock $isEnabled={isEnabled}>
           {isEnabled ? (
-            <Body ag={'Body1SemiBold'} color="gray1">
+            <Body ag="Body1SemiBold" color="gray1">
               {title}
             </Body>
           ) : (
-            <Body ag={'Body3'} color="gray2">
+            <Body ag="Body3" color="gray2">
               {title}
             </Body>
           )}
           {isNull ||
             (isEnabled ? (
-              <Body ag={'Body3'} color="gray2">
+              <Body ag="Body3" color="gray2">
                 {content}
               </Body>
             ) : (
-              <Body ag={'Body1SemiBold'} color="gray1">
+              <Body ag="Body1SemiBold" color="gray1">
                 {content}
               </Body>
             ))}
