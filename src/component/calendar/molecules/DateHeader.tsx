@@ -8,7 +8,7 @@ export const DateHeader = () => {
     <>
       {Dates.current.map((date) => {
         return (
-          <GridItem key={date}>
+          <GridItem key={date} disabled>
             <Body ag="Body4" color="gray3">
               {date}
             </Body>

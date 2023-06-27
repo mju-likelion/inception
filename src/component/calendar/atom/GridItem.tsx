@@ -2,35 +2,55 @@ import { theme } from '@/globalStyle';
 import { css, styled } from 'styled-components';
 
 interface Props {
-  children: React.ReactNode;
-  isDate?: boolean;
-  dateColor?: keyof typeof theme.colors;
+  children?: React.ReactNode;
+  disabled?: boolean;
+  dateOptions?: {
+    $isDate: boolean;
+    dateColor: keyof typeof theme.colors;
+    date: string;
+  };
+  handleClickDate?: (date?: string) => void;
 }
 
-export const GridItem = ({ children, isDate, dateColor }: Props) => {
+export const GridItem = ({
+  children,
+  disabled,
+  dateOptions,
+  handleClickDate,
+}: Props) => {
+  const onClick = () => {
+    handleClickDate?.(dateOptions?.date);
+  };
+
   return (
-    <Wrapper isDate={isDate} dateColor={dateColor}>
+    <Wrapper
+      disabled={disabled}
+      $isDate={dateOptions?.$isDate}
+      color={dateOptions?.dateColor}
+      onClick={onClick}
+    >
       {children}
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div<{
-  isDate?: boolean;
-  dateColor?: keyof typeof theme.colors;
+const Wrapper = styled.button<{
+  $isDate?: boolean;
+  color?: keyof typeof theme.colors;
+  disabled?: boolean;
 }>`
-  /* border: 1px solid black; */
-
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: ${({ disabled }) => disabled && 'default'};
+
   p {
     display: flex;
     align-items: center;
   }
 
-  ${({ isDate }) =>
-    isDate &&
+  ${({ $isDate }) =>
+    $isDate &&
     css`
       div {
         width: 40px;
@@ -48,10 +68,10 @@ const Wrapper = styled.div<{
       border-top: 2px solid ${({ theme }) => theme.colors.gray1};
     `}
 
-  ${({ dateColor = 'gray1' }) => {
+  ${({ color = 'gray1' }) => {
     return css`
-      color: ${({ theme }) => theme.colors[dateColor]};
-      border-color: ${({ theme }) => theme.colors[dateColor]};
+      color: ${({ theme }) => theme.colors[color]};
+      border-color: ${({ theme }) => theme.colors[color]};
     `;
   }}
 `;
