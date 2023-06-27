@@ -35,7 +35,7 @@ const Button = styled.button`
 `;
 
 const ButtonText = styled.p`
-  ${({ theme }) => theme.typographies.title1};
+  ${({ theme }) => theme.typographies.subTitle};
   width: 160px;
   color: ${({ theme }) => theme.colors.white};
 `;
