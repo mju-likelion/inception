@@ -18,8 +18,6 @@ const Container = styled.button`
   all: unset;
   width: 24px;
   height: 24px;
-  top: 20px;
-  left: 20px;
   svg {
     pointer-events: none;
   }
