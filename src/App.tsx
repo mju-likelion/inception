@@ -3,7 +3,6 @@ import { InitStyle, theme, GlobalFont } from '@/globalStyle';
 import { Outlet } from 'react-router-dom';
 import { Header } from '@/component/@share/organisms';
 import { Back } from './component/@share/atom/Back';
-import { CheckBox } from './component/@share';
 
 /**@Note 모든 페이지에 적용할 설정 및 컴포넌트를 지정한다. */
 export function App() {
