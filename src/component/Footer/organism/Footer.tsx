@@ -2,25 +2,14 @@ import styled from 'styled-components';
 import { Mail, Privacy, CopyRight } from '@/component/Footer/atoms';
 import { OrganizationInfo } from '@/component/Footer/data/OrganizationInfo';
 import { devices } from '@/globalStyle';
-import { useEffect, useState } from 'react';
+import { useWindowResize } from '@/hooks';
 
 export const Footer = () => {
-  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
-
-  const handleResize = () => {
-    setInnerWidth(window.innerWidth);
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  });
+  const windowSize = useWindowResize();
 
   return (
     <Container>
-      {innerWidth < devices.web ? (
+      {windowSize.width < devices.web ? (
         <>
           <Mail email={OrganizationInfo.email} />
           <Privacy
