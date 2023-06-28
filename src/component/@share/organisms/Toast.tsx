@@ -2,13 +2,19 @@ import styled from 'styled-components';
 import { ReactComponent as SuccessIcon } from '@/assets/images/Success.svg';
 import { ReactComponent as ErrorIcon } from '@/assets/images/Error.svg';
 import { Body } from '@/component/@share/atom';
+import { useEffect } from 'react';
 
 interface ToastProps {
   type: 'success' | 'error';
   message: string;
+  timer: () => void;
 }
 
-export const Toast = ({ type, message }: ToastProps) => {
+export const Toast = ({ type, message, timer }: ToastProps) => {
+  useEffect(() => {
+    timer();
+  }, []);
+
   return (
     <Container>
       {type === 'success' ? <SuccessIcon /> : <ErrorIcon />}
@@ -34,8 +40,33 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   padding: 18px 12px;
-  margin: auto;
   gap: 12px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 1;
+
+  animation: slideUp 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55) both,
+    slideDown 400ms 2000ms cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(70px);
+    }
+    to {
+      transform: translateY(-70px);
+    }
+  }
+  @keyframes slideDown {
+    from {
+      transform: translateY(-70px);
+    }
+    to {
+      transform: translateY(69px);
+    }
+  }
 `;
 
 const MessageBox = styled.div`
