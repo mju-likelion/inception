@@ -1,3 +1,4 @@
+import { ButtonSmall } from '@/component/@share';
 import {
   CalendarHeader,
   Date as DateComponent,
@@ -49,33 +50,53 @@ export const Calendar = () => {
     }
   };
 
+  /** @TODO GridFooter는 result === on 일때만 보여준다. GridHeader, GridFooter는 molecules로 관리해야될 것 같다. */
   return (
     <Grid>
-      <CalendarHeader
-        currentDate={currentDate}
-        handleChangeCalendar={handleChangeCalendar}
-      />
-      <DateHeader />
-      <DateComponent
-        calendarData={calendar}
-        currentDate={currentDate}
-        handleClickDate={handleClickDate}
-      />
+      <GridHeader>
+        <CalendarHeader
+          currentDate={currentDate}
+          handleChangeCalendar={handleChangeCalendar}
+        />
+      </GridHeader>
+      <GridBody>
+        <DateHeader />
+        <DateComponent
+          calendarData={calendar}
+          currentDate={currentDate}
+          handleClickDate={handleClickDate}
+        />
+      </GridBody>
+      <GridFooter>
+        <ButtonSmall>약속 수정</ButtonSmall>
+      </GridFooter>
     </Grid>
   );
 };
 
 const Grid = styled.div`
+  border: 1px solid red;
+  width: 320px;
+`;
+
+const GridHeader = styled.div`
+  height: 54px;
+  display: flex;
+  align-items: center;
+`;
+
+const GridBody = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 40px);
-  grid-template-rows: 54px 50px repeat(6, 40px);
-
+  grid-template-rows: 50px auto;
   width: 320px;
-  height: 370px;
-  border: 1px solid red;
   gap: 6px;
-  :nth-child(1) {
-    grid-column-start: 1;
-    grid-column-end: 8;
-  }
+`;
+
+const GridFooter = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  height: 71px;
+  align-items: center;
 `;

@@ -14,7 +14,7 @@ export const CalendarHeader = ({
 }: Props) => {
   /** @TODO currentDate가 이동 가능한 범위 제한에 걸릴 시 prev, next 버튼 비활성화 하는 기능 추가하기 */
   return (
-    <Header>
+    <Wrapper>
       <Title ag="Title2" color="gray1">
         {`${currentDate[0]}년 ${currentDate[1]}월`}
       </Title>
@@ -26,11 +26,11 @@ export const CalendarHeader = ({
           <Next />
         </button>
       </ButtonWrapper>
-    </Header>
+    </Wrapper>
   );
 };
 
-const Header = styled.div`
+const Wrapper = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
