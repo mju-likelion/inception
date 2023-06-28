@@ -4,68 +4,51 @@ import {
   DateHeader,
 } from '@/component/calendar/molecules';
 import { CalendarData } from '@/types';
-import { getCalendarData } from '@/util';
-import { useEffect, useState } from 'react';
+import { getCalendarData, isDuplicatedDate } from '@/util';
+import { useState } from 'react';
 import { styled } from 'styled-components';
 
-export interface DateInfo extends CalendarData {
-  activeStatus: ActiveStatus;
-}
-
-export type ActiveStatus = 'disabled' | 'default' | 'active';
-
 export const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState(['2023', '6']);
-  const [calendarData, setCalendarData] = useState(() =>
+  // 방장이 신규 등록 시에는 항상 default, 약속시간을 선택할 때는 서버에서 내려온 데이터에 따라 default, disable 상태가 다르다.
+  const [currentDate, setCurrentDate] = useState(['2023', '6']); // 항상 현재 년,월을 보여주는가??
+  const [calendar, setCalendar] = useState<CalendarData[]>(() =>
     getCalendarData(currentDate[0], currentDate[1])
-  );
-  const [dates, setDates] = useState<DateInfo[]>(
-    calendarData.map((date) => {
-      return { ...date, activeStatus: 'default' };
-    })
   );
 
   const handleClickDate = (date?: string) => {
     if (!date) return null;
 
-    const changedDateColor = dates.map((value) => {
-      if (value.date === date) {
-        return {
-          ...value,
-          activeStatus: value.activeStatus === 'active' ? 'default' : 'active',
-        } as DateInfo;
-      } else {
-        return value;
-      }
-    });
+    const changedDateColor = calendar.map((value) =>
+      value.date === date
+        ? ({
+            ...value,
+            activeStatus:
+              value.activeStatus === 'active' ? 'default' : 'active',
+          } as CalendarData)
+        : value
+    );
 
-    setDates(changedDateColor);
-    console.log(changedDateColor);
+    setCalendar(changedDateColor);
   };
 
   const handleChangeCalendar = (type: 'prev' | 'next') => {
-    const [year, month] = currentDate;
-    const date = new Date(+year, +month - 1); // Date 객체에선 month는 제로베이스임
-    if (type === 'prev') {
-      date.setMonth(date.getMonth() - 1);
-    } else {
-      date.setMonth(date.getMonth() + 1);
+    const date = new Date(+currentDate[0], +currentDate[1] - 1); // Date 객체에선 month는 제로베이스임
+
+    date.setMonth(type === 'prev' ? date.getMonth() - 1 : date.getMonth() + 1);
+
+    const changedYear = `${date.getFullYear()}`;
+    const changedMonth = `${date.getMonth() + 1}`;
+    const changedCalendar = getCalendarData(changedYear, changedMonth);
+
+    setCurrentDate([changedYear, changedMonth]);
+
+    if (
+      !isDuplicatedDate(calendar, { year: changedYear, month: changedMonth })
+    ) {
+      setCalendar((prev) => prev.concat(changedCalendar));
     }
-    setCurrentDate([`${date.getFullYear()}`, `${date.getMonth() + 1}`]);
   };
 
-  useEffect(() => {
-    const [year, month] = currentDate;
-    const changedCalendar = getCalendarData(year, month);
-    setCalendarData(changedCalendar);
-    setDates(
-      changedCalendar.map((date) => {
-        return { ...date, activeStatus: 'default' } as DateInfo;
-      })
-    );
-  }, [currentDate]);
-
-  /** @TODO 현재 달력 옮길 시 기존에 선택한 정보가 없어지고 있다. 이를 유지할 수 있도록 방법 고안 필요 */
   return (
     <Grid>
       <CalendarHeader
@@ -73,7 +56,11 @@ export const Calendar = () => {
         handleChangeCalendar={handleChangeCalendar}
       />
       <DateHeader />
-      <DateComponent calendarData={dates} handleClickDate={handleClickDate} />
+      <DateComponent
+        calendarData={calendar}
+        currentDate={currentDate}
+        handleClickDate={handleClickDate}
+      />
     </Grid>
   );
 };

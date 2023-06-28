@@ -1,20 +1,34 @@
+import { useMemo } from 'react';
 import { GridItem } from '@/component/calendar/atom';
 import { theme } from '@/globalStyle';
-import { ActiveStatus, DateInfo } from '@/component/calendar/organisms';
+import { ActiveStatus, CalendarData } from '@/types';
 
 interface DateProps {
-  calendarData: DateInfo[];
+  calendarData: CalendarData[];
+  currentDate: string[];
   handleClickDate: (date?: string) => void;
 }
 
-const DateComponent = ({ calendarData, handleClickDate }: DateProps) => {
+const DateComponent = ({
+  calendarData,
+  currentDate,
+  handleClickDate,
+}: DateProps) => {
+  const showDates = useMemo(() => {
+    const filterdCalendarData = calendarData.filter((data) => {
+      const date = data.date.split('-');
+      return +date[0] === +currentDate[0] && +date[1] === +currentDate[1];
+    });
+    return filterdCalendarData;
+  }, [calendarData, currentDate]);
+
   return (
     <>
-      {blankGrid(calendarData).map((blank) => {
+      {blankGrid(showDates).map((blank) => {
         return blank;
       })}
 
-      {calendarData.map((data) => {
+      {showDates.map((data) => {
         const date = data.date.split('-')[2];
         const removeZeroPadDate = +date < 10 ? date[1] : date;
         const dateOptions = {
@@ -40,7 +54,7 @@ const DateComponent = ({ calendarData, handleClickDate }: DateProps) => {
 };
 export { DateComponent as Date };
 
-const blankGrid = (calendarData: DateInfo[]) => {
+const blankGrid = (calendarData: CalendarData[]) => {
   const startDay = new Date(calendarData[0].date).getDay();
   const blankGrids = [];
 

@@ -1,5 +1,4 @@
 /* date = 일자 데이터, day = 요일 데이터 */
-
 import { CalendarData } from '@/types';
 
 export const getCalendarData = (
@@ -14,10 +13,26 @@ export const getCalendarData = (
     return {
       date: `${year}-${paddingMonth}-${date}`,
       day: convertDayNumberToString(day),
-    };
+      activeStatus: 'default',
+    } as CalendarData;
   });
 
   return datas;
+};
+
+export const isDuplicatedDate = (
+  calendarData: CalendarData[],
+  changedDate: { year: string; month: string }
+) => {
+  const isExist = calendarData.some((calendar) => {
+    const splitDate = calendar.date.split('-');
+    return (
+      +splitDate[0] === +changedDate.year &&
+      +splitDate[1] === +changedDate.month
+    );
+  });
+
+  return isExist;
 };
 
 const calcDaysByYearMonth = (year: string, month: string): string[] => {

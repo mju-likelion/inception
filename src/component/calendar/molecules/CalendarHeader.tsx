@@ -12,12 +12,12 @@ export const CalendarHeader = ({
   currentDate,
   handleChangeCalendar,
 }: Props) => {
+  /** @TODO currentDate가 이동 가능한 범위 제한에 걸릴 시 prev, next 버튼 비활성화 하는 기능 추가하기 */
   return (
     <Header>
       <Title ag="Title2" color="gray1">
         {`${currentDate[0]}년 ${currentDate[1]}월`}
       </Title>
-      {/* @TODO 특정 날짜 범위 넘어가면 버튼 hidden 하도록 기능 개발 필요 */}
       <ButtonWrapper>
         <button onClick={() => handleChangeCalendar('prev')}>
           <Back />
@@ -38,7 +38,6 @@ const Header = styled.div`
   gap: 52px;
   h1 {
     width: 180px;
-    /* background-color: red; */
     display: flex;
     align-items: center;
   }
