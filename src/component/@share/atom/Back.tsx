@@ -8,13 +8,13 @@ type BackProp = {
 
 export const Back = ({ isDisabled, onClick }: BackProp) => {
   return (
-    <Container onClick={onClick} isDisabled={isDisabled}>
-      <BackArrow />
+    <Container onClick={onClick}>
+      <BackArrow isDisabled={isDisabled} />
     </Container>
   );
 };
 
-const Container = styled.button<{ isDisabled: boolean }>`
+const Container = styled.button`
   all: unset;
   width: 24px;
   height: 24px;
@@ -25,7 +25,7 @@ const Container = styled.button<{ isDisabled: boolean }>`
   }
 `;
 
-const BackArrow = styled(BackSVG)`
+const BackArrow = styled(BackSVG)<{ isDisabled: boolean }>`
   path {
     fill: ${({ theme, isDisabled }) =>
       isDisabled ? theme.colors.gray2 : theme.colors.gray4};
