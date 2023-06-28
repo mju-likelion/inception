@@ -1,18 +1,33 @@
 import { ReactComponent as BackSVG } from '@/assets/images/Back.svg';
 import styled from 'styled-components';
 
-export const Back = () => {
+type BackProp = {
+  isDisabled: boolean;
+  onClick: () => void;
+};
+
+export const Back = ({ isDisabled, onClick }: BackProp) => {
   return (
-    <Container>
-      <BackButton />
+    <Container onClick={onClick} isDisabled={isDisabled}>
+      <BackArrow />
     </Container>
   );
 };
 
-const Container = styled.button``;
+const Container = styled.button<{ isDisabled: boolean }>`
+  all: unset;
+  width: 24px;
+  height: 24px;
+  top: 20px;
+  left: 20px;
+  svg {
+    pointer-events: none;
+  }
+`;
 
-const BackButton = styled(BackSVG)`
+const BackArrow = styled(BackSVG)`
   path {
-    fill: ${({ theme }) => theme.colors.gray2};
+    fill: ${({ theme, isDisabled }) =>
+      isDisabled ? theme.colors.gray2 : theme.colors.gray4};
   }
 `;
