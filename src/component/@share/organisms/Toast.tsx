@@ -13,7 +13,7 @@ export const Toast = ({ type, message }: ToastProps) => {
     <Container>
       {type === 'success' ? <SuccessIcon /> : <ErrorIcon />}
       <MessageBox>
-        <Body ag="Body1" color="white">
+        <Body ag="Body1Regular" color="white">
           {message}
         </Body>
         {type === 'error' && (
