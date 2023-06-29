@@ -16,18 +16,20 @@ export const TabBar = ({
 }: TabBarProps) => {
   return (
     <Container>
-      <TabBarButton
-        isActive={selectedTab === 'default'}
-        onClick={() => onClick('default')}
-      >
-        {firstTabTitle}
-      </TabBarButton>
-      <TabBarButton
-        isActive={selectedTab === 'result'}
-        onClick={() => onClick('result')}
-      >
-        {secondTabTitle}
-      </TabBarButton>
+      <InnerContainer>
+        <TabBarButton
+          isActive={selectedTab === 'default'}
+          onClick={() => onClick('default')}
+        >
+          {firstTabTitle}
+        </TabBarButton>
+        <TabBarButton
+          isActive={selectedTab === 'result'}
+          onClick={() => onClick('result')}
+        >
+          {secondTabTitle}
+        </TabBarButton>
+      </InnerContainer>
     </Container>
   );
 };
@@ -36,9 +38,19 @@ const Container = styled.div`
   width: 100%;
   height: 60px;
   display: flex;
-  gap: 20px;
   align-items: flex-end;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray5};
-  box-sizing: border-box;
   padding-left: 20px;
+  @media ${({ theme }) => theme.size.web} {
+    justify-content: center;
+    padding-right: 20px;
+  }
+`;
+
+const InnerContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  @media ${({ theme }) => theme.size.web} {
+    width: 1200px;
+  }
 `;
