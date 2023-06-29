@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { ReactComponent as CheckSvg } from '@/assets/images/Check.svg';
 
-type CheckBoxProp = {
+interface CheckBoxProp {
   isChecked: boolean;
   onClick: () => void;
-};
+}
 
 export const CheckBox = ({ isChecked, onClick }: CheckBoxProp) => {
   return (
