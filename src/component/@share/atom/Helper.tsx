@@ -10,5 +10,6 @@ export const Helper = () => {
 };
 
 const HelperIcon = styled.button`
-  all: unset;
+  width: 24px;
+  height: 24px;
 `;
