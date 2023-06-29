@@ -8,8 +8,8 @@ type BackProp = {
 
 export const Back = ({ isDisabled, onClick }: BackProp) => {
   return (
-    <Container onClick={onClick} disabled={isDisabled ? false : true}>
-      <BackArrow isDisabled={isDisabled} />
+    <Container onClick={onClick} disabled={isDisabled}>
+      <BackArrow $isDisabled={isDisabled} />
     </Container>
   );
 };
@@ -17,11 +17,15 @@ export const Back = ({ isDisabled, onClick }: BackProp) => {
 const Container = styled.button`
   width: 24px;
   height: 24px;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
-const BackArrow = styled(BackSVG)<{ isDisabled: boolean }>`
+const BackArrow = styled(BackSVG)<{ $isDisabled: boolean }>`
   path {
-    fill: ${({ theme, isDisabled }) =>
-      isDisabled ? theme.colors.gray2 : theme.colors.gray4};
+    fill: ${({ theme, $isDisabled }) =>
+      $isDisabled ? theme.colors.gray4 : theme.colors.gray2};
   }
 `;
