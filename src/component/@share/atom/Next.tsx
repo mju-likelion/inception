@@ -8,19 +8,15 @@ type NextProp = {
 
 export const Next = ({ isDisabled, onClick }: NextProp) => {
   return (
-    <Container onClick={onClick}>
+    <Container onClick={onClick} disabled={isDisabled ? false : true}>
       <NextArrow isDisabled={isDisabled} />
     </Container>
   );
 };
 
 const Container = styled.button`
-  all: unset;
   width: 24px;
   height: 24px;
-  svg {
-    pointer-events: none;
-  }
 `;
 
 const NextArrow = styled(NextSVG)<{ isDisabled: boolean }>`
