@@ -9,8 +9,14 @@ import { getCalendarData, isDuplicatedDate } from '@/util';
 import { useState } from 'react';
 import { styled } from 'styled-components';
 
+// 방장이 신규 등록 시에는 항상 default, 약속시간을 선택할 때는 서버에서 내려온 데이터에 따라 default, disable 상태가 다르다.
 export const Calendar = () => {
-  // 방장이 신규 등록 시에는 항상 default, 약속시간을 선택할 때는 서버에서 내려온 데이터에 따라 default, disable 상태가 다르다.
+  /*
+    view: 결과 보기화면, 버튼 비활성화, 날짜 선택한 사람들을 count로 보여주도록
+    create: 방장이 새로운 방을 생성할 때
+    use: 유저가 가용 가능한 시간을 선택
+  */
+  const [mode, setMode] = useState('create');
   const [currentDate, setCurrentDate] = useState(['2023', '6']); // 항상 현재 년,월을 보여주는가??
   const [calendar, setCalendar] = useState<CalendarData[]>(() =>
     getCalendarData(currentDate[0], currentDate[1])

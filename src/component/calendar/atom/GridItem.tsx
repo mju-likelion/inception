@@ -53,6 +53,7 @@ const Wrapper = styled.button<{
     $isDate &&
     css`
       div {
+        position: relative;
         width: 40px;
         height: 40px;
         align-items: start;

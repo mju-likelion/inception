@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { GridItem } from '@/component/calendar/atom';
+import { Count, GridItem } from '@/component/calendar/atom';
 import { theme } from '@/globalStyle';
 import { ActiveStatus, CalendarData } from '@/types';
 
@@ -45,6 +45,8 @@ const DateComponent = ({
           >
             <div>
               <p>{removeZeroPadDate}</p>
+              {/* 결과 보기 화면에서만 Count 출력하기 */}
+              <Count count={3} activeStatus={data.activeStatus} />
             </div>
           </GridItem>
         );
