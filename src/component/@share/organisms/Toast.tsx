@@ -3,17 +3,25 @@ import { ReactComponent as SuccessIcon } from '@/assets/images/Success.svg';
 import { ReactComponent as ErrorIcon } from '@/assets/images/Error.svg';
 import { Body } from '@/component/@share/atom';
 import { useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { toastState } from '@/store';
 
 interface ToastProps {
   type: 'success' | 'error';
   message: string;
-  timer: () => void;
 }
 
-export const Toast = ({ type, message, timer }: ToastProps) => {
+export const Toast = ({ type, message }: ToastProps) => {
+  const setToast = useSetRecoilState(toastState);
+
   useEffect(() => {
-    timer();
-  }, []);
+    const timer = setTimeout(() => {
+      setToast(false);
+    }, 2500);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [setToast]);
 
   return (
     <Container>
