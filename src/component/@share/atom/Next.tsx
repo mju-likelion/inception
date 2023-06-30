@@ -17,6 +17,9 @@ export const Next = ({ isDisabled, onClick }: NextProp) => {
 const Container = styled.button`
   width: 24px;
   height: 24px;
+  &:disabled {
+    cursor: default;
+  }
 `;
 
 const NextArrow = styled(NextSVG)<{ isDisabled: boolean }>`
