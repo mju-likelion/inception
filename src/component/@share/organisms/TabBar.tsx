@@ -1,19 +1,20 @@
 import styled from 'styled-components';
 import { TabBarButton } from '@/component/@share/molecules';
+import { useRecoilValue } from 'recoil';
+import { tabState } from '@/store/atoms';
 
 type TabBarProps = {
-  selectedTab: 'default' | 'result';
   onClick: (tab: 'default' | 'result') => void;
   firstTabTitle: string;
   secondTabTitle: string;
 };
 
 export const TabBar = ({
-  selectedTab,
   onClick,
   firstTabTitle,
   secondTabTitle,
 }: TabBarProps) => {
+  const selectedTab = useRecoilValue(tabState);
   return (
     <Container>
       <InnerContainer>
