@@ -8,8 +8,8 @@ type NextProp = {
 
 export const Next = ({ isDisabled, onClick }: NextProp) => {
   return (
-    <Container onClick={onClick} disabled={isDisabled ? false : true}>
-      <NextArrow isDisabled={isDisabled} />
+    <Container onClick={onClick} disabled={isDisabled}>
+      <NextArrow $isDisabled={isDisabled} />
     </Container>
   );
 };
@@ -22,9 +22,9 @@ const Container = styled.button`
   }
 `;
 
-const NextArrow = styled(NextSVG)<{ isDisabled: boolean }>`
+const NextArrow = styled(NextSVG)<{ $isDisabled: boolean }>`
   path {
-    fill: ${({ theme, isDisabled }) =>
-      isDisabled ? theme.colors.gray2 : theme.colors.gray4};
+    fill: ${({ theme, $isDisabled }) =>
+      $isDisabled ? theme.colors.gray4 : theme.colors.gray2};
   }
 `;
