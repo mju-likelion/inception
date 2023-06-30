@@ -19,7 +19,7 @@ const Container = styled.button`
   height: 24px;
 
   &:disabled {
-    cursor: not-allowed;
+    cursor: default;
   }
 `;
 
