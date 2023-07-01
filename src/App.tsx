@@ -1,7 +1,7 @@
 import { ThemeProvider } from 'styled-components';
 import { InitStyle, theme, GlobalFont } from '@/globalStyle';
 import { Outlet } from 'react-router-dom';
-import { Header } from '@/component/@share/organisms';
+import { Header } from '@/component/@share';
 import { Footer } from '@/component/Footer';
 import { RecoilRoot } from 'recoil';
 
