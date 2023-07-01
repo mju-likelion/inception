@@ -3,10 +3,10 @@ import styled from 'styled-components';
 
 type NextProp = {
   isDisabled: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
-export const Next = ({ isDisabled, onClick }: NextProp) => {
+export const NextButton = ({ isDisabled, onClick }: NextProp) => {
   return (
     <Container onClick={onClick} disabled={isDisabled}>
       <NextArrow $isDisabled={isDisabled} />
