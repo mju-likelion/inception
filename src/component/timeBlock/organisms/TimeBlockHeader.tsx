@@ -1,16 +1,22 @@
 import { styled } from 'styled-components';
 import { SelectDate, DateList } from '../molecules';
+import { useState } from 'react';
 
-interface DateListProps {
-  page: number;
-}
+export const TimeBlockHeader = () => {
+  const [nowPage, setNowPage] = useState(1);
 
-export const TimeBlockHeader = ({ page }: DateListProps) => {
+  const onClickBackButton = () => setNowPage((prev) => prev - 1);
+  const onClickNextButton = () => setNowPage((prev) => prev + 1);
+
   return (
     <TimeBlockHeaderBlock>
       <DateBlock>
-        <SelectDate />
-        <DateList page={1} />
+        <SelectDate
+          page={nowPage}
+          onClickBack={onClickBackButton}
+          onClickNext={onClickNextButton}
+        />
+        <DateList page={nowPage} />
       </DateBlock>
     </TimeBlockHeaderBlock>
   );
@@ -22,11 +28,11 @@ const TimeBlockHeaderBlock = styled.div`
   height: 70px;
   padding: 10px 53px;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   border-radius: 16px 16px 0px 0px;
   border: 1px solid ${({ theme }) => theme.colors.gray5};
-  background: #fff;
+  background: ${({ theme }) => theme.colors.white};
 `;
 
 const DateBlock = styled.div`
