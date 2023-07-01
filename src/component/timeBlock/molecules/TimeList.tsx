@@ -3,11 +3,11 @@ import { Time } from '@/component/timeBlock/atom';
 import { styled } from 'styled-components';
 
 interface TimeListProps {
-  start?: string;
-  end?: string;
+  start: string;
+  end: string;
 }
 
-export const TimeList = ({ start = '9:00', end = '17:00' }: TimeListProps) => {
+export const TimeList = ({ start, end }: TimeListProps) => {
   const [timeList, setTimeList] = useState<string[]>([]);
 
   useEffect(() => {
