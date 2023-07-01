@@ -10,6 +10,7 @@ import {
   DateList,
   SelectDate,
 } from './component/timeBlock/molecules';
+import { TimeBlockHeader } from './component/timeBlock/organisms';
 
 /**@Note 모든 페이지에 적용할 설정 및 컴포넌트를 지정한다. */
 export function App() {
@@ -22,9 +23,7 @@ export function App() {
           {/* 여기에 header, footer를 추가할 수 있다. */}
           <Header />
           <TimeList start="12:00" end="15:30" />
-          <DateList page={1} />
-          <DateList page={2} />
-          <SelectDate />
+          <TimeBlockHeader page={1} />
           {/* 라우터들이 Outlet에서 작동한다. */}
           <Outlet />
           <Footer />
