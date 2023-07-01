@@ -7,17 +7,17 @@ interface TimeBlockProps {
 export const TimeBlock = ({ $isActive }: TimeBlockProps) => {
   return (
     <>
-      <TimeBlockAtom $isActive={$isActive} />
+      <TimeBlockAtom isActive={$isActive} />
     </>
   );
 };
 
-const TimeBlockAtom = styled.div<{ $isActive: boolean }>`
+const TimeBlockAtom = styled.div<{ isActive: boolean }>`
   width: 52px;
   height: 46px;
   border-radius: 8px;
-  background-color: ${({ $isActive, theme }) =>
-    $isActive ? theme.colors.mint1 : theme.colors.gray5};
+  background-color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.mint1 : theme.colors.gray5};
   &:hover {
     background-color: ${({ theme }) => theme.colors.mint2};
   }
