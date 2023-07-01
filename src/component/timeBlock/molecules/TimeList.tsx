@@ -8,11 +8,11 @@ interface TimeListProps {
 }
 
 export const TimeList = ({ start = '9:00', end = '17:00' }: TimeListProps) => {
-  const [timeList, setTimeList] = useState(['']);
+  const [timeList, setTimeList] = useState<string[]>([]);
 
   useEffect(() => {
     calculateTime();
-  }, []);
+  }, [start, end]);
 
   const calculateTime = () => {
     const calculatedTimeLine: Array<string> = [];

@@ -1,21 +1,21 @@
 import { Dates } from '@/component/timeBlock/atom';
 import { usePaginationDate } from '@/hooks/usePaginationDate';
+import { useRecoilValue } from 'recoil';
+import { DateListAtom } from '@/store/atoms';
 import { styled } from 'styled-components';
 
 interface DateListProps {
-  dateList: Array<string>;
   page: number;
 }
 
-export const DateList = ({ dateList, page }: DateListProps) => {
+export const DateList = ({ page }: DateListProps) => {
+  const dateList = useRecoilValue(DateListAtom);
   const newDateList = usePaginationDate({ page: page, dateList: dateList });
   return (
     <DateListBlock>
       {newDateList.map((date, index) => (
         <Dates key={index}>
-          {String(
-            new Date(date).getMonth() + 1 + '/' + new Date(date).getDate()
-          )}
+          {new Date(date).getMonth() + 1 + '/' + new Date(date).getDate()}
         </Dates>
       ))}
     </DateListBlock>
