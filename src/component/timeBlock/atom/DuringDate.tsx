@@ -6,10 +6,12 @@ interface DuringDateProps {
 }
 
 export const DuringDate = ({ start, end }: DuringDateProps) => {
+  const startDate =
+    new Date(start).getMonth() + 1 + '/' + new Date(start).getDate();
+  const endDAte = new Date(end).getMonth() + 1 + '/' + new Date(end).getDate();
   return (
     <Body ag="Body4" color="gray2" align="center">
-      {new Date(start).getMonth() + 1 + '/' + new Date(start).getDate()} -
-      {new Date(end).getMonth() + 1 + '/' + new Date(end).getDate()}
+      {startDate} - {endDAte}
     </Body>
   );
 };
