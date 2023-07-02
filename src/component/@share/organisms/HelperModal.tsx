@@ -33,6 +33,7 @@ export const HelperModal = ({ step }: HelperModalProps) => {
           content={helpText[i].content}
           $isActive={step === i + 1}
           $isPass={step > i}
+          defaultColor={step === 0 ? 'gray1' : 'gray3'}
         />
       );
     }
