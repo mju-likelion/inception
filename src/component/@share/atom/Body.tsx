@@ -101,4 +101,10 @@ const Text = styled.p<{
       letter-spacing: 0;
       text-align: ${props.align};
     `}
+  ${({ ag }) =>
+    ag === 'Body5' &&
+    css`
+      ${({ theme }) => theme.typographies.body5};
+      letter-spacing: 0px;
+    `}
 `;
