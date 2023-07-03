@@ -15,10 +15,10 @@ export const TimeBlockGroup = ({ page }: TimeBlockGroupProps) => {
 
   return (
     <TimeBlockGroupBlock columns={newDateList.length}>
-      {newDateList.map((date) => (
+      {timeList.map((time) => (
         <>
-          {timeList.map((time) => (
-            <TimeBlock $isActive={false} key={time}></TimeBlock>
+          {newDateList.map((date, index) => (
+            <TimeBlock key={index} time={time} date={date}></TimeBlock>
           ))}
         </>
       ))}

@@ -1,13 +1,26 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+import { isatty } from 'tty';
 
 interface TimeBlockProps {
-  $isActive: boolean;
+  time: string;
+  date: string;
 }
 
-export const TimeBlock = ({ $isActive }: TimeBlockProps) => {
+export const TimeBlock = ({ time, date }: TimeBlockProps) => {
+  const [data, setData] = useState({});
+  const [isActive, setIsActive] = useState(false);
+
+  const onClickEvent = () => {
+    {
+      isActive ? setData({}) : setData({ time: { time }, date: { date } });
+    }
+    setIsActive(!isActive);
+  };
+
   return (
     <>
-      <TimeBlockAtom $isActive={$isActive} />
+      <TimeBlockAtom $isActive={isActive} onClick={() => onClickEvent()} />
     </>
   );
 };
