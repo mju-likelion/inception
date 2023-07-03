@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
-import { Time } from '@/component/timeBlock/atom';
+import { useEffect } from 'react';
+import { Time } from '@/component/timeBlock/atoms';
 import { styled } from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { TimeListAtom } from '@/store';
 
 interface TimeListProps {
   start: string;
@@ -8,7 +10,7 @@ interface TimeListProps {
 }
 
 export const TimeList = ({ start, end }: TimeListProps) => {
-  const [timeList, setTimeList] = useState<string[]>([]);
+  const [timeList, setTimeList] = useRecoilState(TimeListAtom);
 
   useEffect(() => {
     calculateTime();

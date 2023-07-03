@@ -1,22 +1,24 @@
 import { styled } from 'styled-components';
 import { SelectDate, DateList } from '../molecules';
-import { useState } from 'react';
 
-export const TimeBlockHeader = () => {
-  const [nowPage, setNowPage] = useState(1);
+interface HeaderProps {
+  page: number;
+  onSetPage: React.Dispatch<React.SetStateAction<number>>;
+}
 
-  const onClickBackButton = () => setNowPage((prev) => prev - 1);
-  const onClickNextButton = () => setNowPage((prev) => prev + 1);
+export const TimeBlockHeader = ({ page, onSetPage }: HeaderProps) => {
+  const onClickBackButton = () => onSetPage((page) => page - 1);
+  const onClickNextButton = () => onSetPage((page) => page + 1);
 
   return (
     <TimeBlockHeaderBlock>
       <DateBlock>
         <SelectDate
-          page={nowPage}
+          page={page}
           onClickBack={onClickBackButton}
           onClickNext={onClickNextButton}
         />
-        <DateList page={nowPage} />
+        <DateList page={page} />
       </DateBlock>
     </TimeBlockHeaderBlock>
   );

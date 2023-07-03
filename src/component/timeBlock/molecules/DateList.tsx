@@ -1,4 +1,4 @@
-import { Dates } from '@/component/timeBlock/atom';
+import { Dates } from '@/component/timeBlock/atoms';
 import { usePaginationDate } from '@/hooks/usePaginationDate';
 import { useRecoilValue } from 'recoil';
 import { DateListAtom } from '@/store/atoms';

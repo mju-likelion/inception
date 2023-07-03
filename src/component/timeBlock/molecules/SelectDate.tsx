@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { DuringDate } from '../atom/DuringDate';
+import { DuringDate } from '../atoms/DuringDate';
 import { useRecoilValue } from 'recoil';
 import { DateListAtom } from '@/store/atoms';
 
