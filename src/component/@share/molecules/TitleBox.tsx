@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import { Body, Title } from '../atom';
+import { theme } from '@/globalStyle';
 
 interface TitleBoxProps {
   title: string;
   content: string;
   $isActive: boolean;
   $isPass: boolean;
+  defaultColor?: keyof typeof theme.colors;
 }
 
 export const TitleBox = ({
@@ -13,12 +15,13 @@ export const TitleBox = ({
   content,
   $isActive,
   $isPass,
+  defaultColor = 'black',
 }: TitleBoxProps) => {
   return (
     <Container>
       <Title
         ag="Title2"
-        color={$isActive ? 'mint1' : $isPass ? 'mint2' : 'gray3'}
+        color={$isActive ? 'mint1' : $isPass ? 'mint2' : defaultColor}
       >
         {title}
       </Title>
