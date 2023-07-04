@@ -21,6 +21,7 @@ const Container = styled.button<{ isSelected: boolean }>`
   border-radius: 8px;
   ${({ theme }) => theme.typographies.body1.regular};
   color: ${({ theme }) => theme.colors.gray1};
+  text-align: left;
   font-weight: ${({ isSelected }) => isSelected && 700};
   &:hover {
     background-color: ${({ theme }) => theme.colors.gray5};
