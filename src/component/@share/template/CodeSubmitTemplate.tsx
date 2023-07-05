@@ -10,19 +10,22 @@ export const CodeSubmitTemlplate = () => {
     setMemo(event.target.value);
   };
 
-  const onClick = () => {
+  const handleTabBar = () => {
     console.log('클릭된다!!');
+    setClickTabBar(true);
   };
 
   const [memo, setMemo] = useState('');
+  const [clickTabBar, setClickTabBar] = useState(false);
 
   return (
     <>
       <TabBar
         selectedTab={'result'}
-        onClick={onClick}
+        onClick={handleTabBar}
         firstTabTitle={'약속 잡기'}
         secondTabTitle={'결과 보기'}
+        // 탭바를 누르면 - ---- 되고, true면 결과보기/false면 약속잡기 활성화
       />
       <WrapTitleBox>
         <TitleBox
