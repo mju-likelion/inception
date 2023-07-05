@@ -4,6 +4,7 @@ import { DateListAtom, TimeListAtom } from '@/store/atoms';
 import { TimeBlock } from '@/component/timeBlock/atoms';
 import { usePaginationDate } from '@/hooks/usePaginationDate';
 import { useState } from 'react';
+import { useTableDragSelect } from '@/hooks/useTableDragSelect';
 interface TimeBlockGroupProps {
   page: number;
 }
@@ -12,35 +13,34 @@ export const TimeBlockGroup = ({ page }: TimeBlockGroupProps) => {
   const dateList = useRecoilValue(DateListAtom);
   const timeList = useRecoilValue(TimeListAtom);
   const newDateList = usePaginationDate({ page: page, dateList: dateList });
-  console.log(newDateList);
 
-  const [state, setState] = useState(
-    Array(newDateList.length * timeList.length).fill(false) //datelist * timelist 개의 빈 배열 생성
+  const initialTable = Array.from(Array(timeList.length), () =>
+    new Array(newDateList.length).fill(false)
   );
 
-  const handleClick = (i: number) => {
-    const updateArray = [...state];
-    updateArray[i] = !updateArray[i];
-    setState(updateArray);
-  };
+  const [tableRef, tableValue] = useTableDragSelect(initialTable);
 
-  console.log(state);
+  console.log(tableValue);
 
   return (
-    <TimeBlockGroupBlock columns={newDateList.length}>
-      {state.map((data, index) => (
-        <TimeBlock
-          key={index + page * 1000}
-          active={data}
-          onClick={() => handleClick(index)}
-        ></TimeBlock>
-      ))}
+    <TimeBlockGroupBlock ref={tableRef}>
+      <tbody>
+        {tableValue.map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            {row.map((_, columnIndex) => (
+              <TimeBlock
+                key={columnIndex}
+                active={tableValue[rowIndex][columnIndex] ? true : false}
+              />
+            ))}
+          </tr>
+        ))}
+      </tbody>
     </TimeBlockGroupBlock>
   );
 };
 
-const TimeBlockGroupBlock = styled.div<{ columns: number }>`
-  display: grid;
-  grid-template-columns: repeat(${({ columns }) => columns}, 1fr);
+const TimeBlockGroupBlock = styled.table`
   gap: 2px;
+  cursor: pointer;
 `;

@@ -3,37 +3,14 @@ import { useEffect, useState } from 'react';
 import { isatty } from 'tty';
 
 interface TimeBlockProps {
-  // time: string;
-  // date: string;
   active: boolean;
-  onClick: () => void;
 }
 
-export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
-  const [isActive, setIsActive] = useState(true);
-
-  // const onClickEvent = () => {
-  //   {
-  //     isActive ? setData({}) : setData({ time: { time }, date: { date } });
-  //   }
-  //   setIsActive(!isActive);
-  // };
-
-  useEffect(() => {
-    setIsActive(!isActive);
-  }, [active]);
-
-  return (
-    <>
-      <TimeBlockAtom
-        $isActive={isActive}
-        onClick={() => onClick()}
-      ></TimeBlockAtom>
-    </>
-  );
+export const TimeBlock = ({ active }: TimeBlockProps) => {
+  return <TimeBlockAtom $isActive={active} />;
 };
 
-const TimeBlockAtom = styled.div<{ $isActive: boolean }>`
+const TimeBlockAtom = styled.td<{ $isActive: boolean }>`
   width: 52px;
   height: 46px;
   border-radius: 8px;
