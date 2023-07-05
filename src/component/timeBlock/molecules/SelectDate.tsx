@@ -2,6 +2,8 @@ import { styled } from 'styled-components';
 import { DuringDate } from '../atoms/DuringDate';
 import { useRecoilValue } from 'recoil';
 import { DateListAtom } from '@/store/atoms';
+import { BackButton } from '@/component/@share/atom/BackButton';
+import { NextButton } from '@/component/@share/atom/NextButton';
 
 interface DateListProps {
   page: number;
@@ -22,16 +24,15 @@ export const SelectDate = ({
 
   return (
     <SelectDateBlock>
-      <button onClick={() => onClickBack()} disabled={page === 1 && true}>
-        이전
-      </button>
+      <BackButton
+        onClick={() => onClickBack()}
+        isDisabled={page === 1 && true}
+      />
       <DuringDate start={start} end={end} />
-      <button
+      <NextButton
         onClick={() => onClickNext()}
-        disabled={page === Math.trunc(dateList.length / size + 1) && true}
-      >
-        다음
-      </button>
+        isDisabled={page === Math.trunc(dateList.length / size + 1) && true}
+      />
     </SelectDateBlock>
   );
 };
