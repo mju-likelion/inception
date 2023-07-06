@@ -3,7 +3,6 @@ import { useRecoilValue } from 'recoil';
 import { DateListAtom, TimeListAtom } from '@/store/atoms';
 import { TimeBlock } from '@/component/timeBlock/atoms';
 import { usePaginationDate } from '@/hooks/usePaginationDate';
-import { useState } from 'react';
 import { useTableDragSelect } from '@/hooks/useTableDragSelect';
 interface TimeBlockGroupProps {
   page: number;
@@ -19,8 +18,6 @@ export const TimeBlockGroup = ({ page }: TimeBlockGroupProps) => {
   );
 
   const [tableRef, tableValue] = useTableDragSelect(initialTable);
-
-  console.log(tableValue);
 
   return (
     <TimeBlockGroupBlock ref={tableRef}>

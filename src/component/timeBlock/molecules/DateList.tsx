@@ -14,7 +14,7 @@ export const DateList = ({ page }: DateListProps) => {
   return (
     <DateListBlock>
       {newDateList.map((date, index) => (
-        <Dates key={index}>
+        <Dates key={index} isActive={false}>
           {new Date(date).getMonth() + 1 + '/' + new Date(date).getDate()}
         </Dates>
       ))}

@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
-import { isatty } from 'tty';
 
 interface TimeBlockProps {
   active: boolean;
