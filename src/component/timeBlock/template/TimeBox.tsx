@@ -1,20 +1,24 @@
 import { styled } from 'styled-components';
 import { TimeBlockHeader } from '@/component/timeBlock/organisms';
 import { TimeBlockGroup, TimeList } from '@/component/timeBlock/molecules';
-import { TimeBlock } from '../atoms';
 import { useState } from 'react';
 
 export const TimeBox = () => {
   const [nowPage, setNowPage] = useState(1);
+  const [activeDate, setActiveDate] = useState<boolean[]>([]);
 
   return (
     <>
-      <TimeBlockHeader page={nowPage} onSetPage={setNowPage} />
+      <TimeBlockHeader
+        page={nowPage}
+        onSetPage={setNowPage}
+        activeDate={activeDate}
+      />
       <TimeBoxBlock>
         <div>
           <TimeList start="9:00" end="17:00" />
         </div>
-        <TimeBlockGroup page={nowPage} />
+        <TimeBlockGroup page={nowPage} onSetActiveDate={setActiveDate} />
       </TimeBoxBlock>
     </>
   );

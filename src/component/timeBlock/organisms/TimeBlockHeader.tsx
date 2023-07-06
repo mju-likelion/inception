@@ -4,9 +4,14 @@ import { SelectDate, DateList } from '../molecules';
 interface HeaderProps {
   page: number;
   onSetPage: React.Dispatch<React.SetStateAction<number>>;
+  activeDate: boolean[];
 }
 
-export const TimeBlockHeader = ({ page, onSetPage }: HeaderProps) => {
+export const TimeBlockHeader = ({
+  page,
+  onSetPage,
+  activeDate,
+}: HeaderProps) => {
   const onClickBackButton = () => onSetPage((page) => page - 1);
   const onClickNextButton = () => onSetPage((page) => page + 1);
 
@@ -18,7 +23,7 @@ export const TimeBlockHeader = ({ page, onSetPage }: HeaderProps) => {
           onClickBack={onClickBackButton}
           onClickNext={onClickNextButton}
         />
-        <DateList page={page} />
+        <DateList page={page} activeDate={activeDate} />
       </DateBlock>
     </TimeBlockHeaderBlock>
   );

@@ -4,11 +4,16 @@ import { DateListAtom, TimeListAtom } from '@/store/atoms';
 import { TimeBlock } from '@/component/timeBlock/atoms';
 import { usePaginationDate } from '@/hooks/usePaginationDate';
 import { useTableDragSelect } from '@/hooks/useTableDragSelect';
+import { useEffect } from 'react';
 interface TimeBlockGroupProps {
   page: number;
+  onSetActiveDate: React.Dispatch<React.SetStateAction<boolean[]>>;
 }
 
-export const TimeBlockGroup = ({ page }: TimeBlockGroupProps) => {
+export const TimeBlockGroup = ({
+  page,
+  onSetActiveDate,
+}: TimeBlockGroupProps) => {
   const dateList = useRecoilValue(DateListAtom);
   const timeList = useRecoilValue(TimeListAtom);
   const newDateList = usePaginationDate({ page: page, dateList: dateList });
@@ -18,6 +23,20 @@ export const TimeBlockGroup = ({ page }: TimeBlockGroupProps) => {
   );
 
   const [tableRef, tableValue] = useTableDragSelect(initialTable);
+
+  useEffect(() => {
+    {
+      const DateBooleanArray = new Array(dateList.length).fill(false);
+
+      tableValue.map((row, rowIndex) => {
+        row.map((_, columnIndex) => {
+          tableValue[rowIndex][columnIndex] &&
+            (DateBooleanArray[columnIndex] = true);
+        });
+      });
+      onSetActiveDate(DateBooleanArray);
+    }
+  }, [tableValue]);
 
   return (
     <TimeBlockGroupBlock ref={tableRef}>
