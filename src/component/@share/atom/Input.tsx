@@ -1,4 +1,4 @@
-import { styled, CSSProp } from 'styled-components';
+import { styled } from 'styled-components';
 
 interface Props {
   placeholder?: string;
@@ -15,16 +15,6 @@ export const Input = ({ placeholder, onChange, value, maxLength }: Props) => {
       value={value}
       maxLength={maxLength}
     />
-=======
-  placeholder?: string;
-  onChange: () => void;
-  value: string;
-}
-
-export const Input = ({ placeholder, onChange, value }: Props) => {
-  return (
-    <InputField placeholder={placeholder} onChange={onChange} value={value} />
->>>>>>> 08959fd (refactor: props 타입명시)
   );
 };
 
@@ -36,7 +26,6 @@ const InputField = styled.input`
   padding: 12px;
   border: 1px solid ${({ theme }) => theme.colors.gray4};
   border-radius: 8px;
-  background-color: none;
   color: ${({ theme }) => theme.colors.gray1};
   font-size: ${({ theme }) => theme.typographies.body1.regular};
 
