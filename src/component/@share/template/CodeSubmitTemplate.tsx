@@ -15,18 +15,12 @@ export const CodeSubmitTemlplate = () => {
   const onChange = (event: any) => {
     setMemo(event.target.value);
 
-    checkCodeEnter;
     const index = memo.length;
     console.log(index);
-
-    function checkCodeEnter(index: number) {
-      // inputValue index가 5가 되면 세터함수 실행
-
-      if ((index = 5)) {
-        setButtonActive(false);
-      } else {
-        setButtonActive(true);
-      }
+    if (index > 4) {
+      setButtonActive(false);
+    } else {
+      setButtonActive(true);
     }
   };
 
@@ -59,7 +53,12 @@ export const CodeSubmitTemlplate = () => {
         />
       </WrapTitleBox>
       <WrapInput>
-        <Input text={'약속방 입력 코드'} onChange={onChange} memo={memo} />
+        <Input
+          text={'약속방 입력 코드'}
+          onChange={onChange}
+          memo={memo}
+          maxLength="6"
+        />
       </WrapInput>
       <WrapButton>
         <ButtonLarge isDisabled={buttonActive}>입력 완료</ButtonLarge>
