@@ -10,8 +10,21 @@ import { useRecoilState } from 'recoil';
 export const CodeSubmitTemlplate = () => {
   const [memo, setMemo] = useState('');
 
+  const [buttonActive, setButtonActive] = useState(true);
+
   const onChange = (event: any) => {
     setMemo(event.target.value);
+    console.log('입력완료');
+
+    checkCodeEnter;
+
+    function checkCodeEnter() {
+      const inputValue = event.target.value;
+
+      // if inputValue // inputValue index가 7이상이 되면 세터함수 실행
+
+      setButtonActive(false);
+    }
   };
 
   const [clickTabBar, setClickTabBar] = useRecoilState(tabState);
@@ -46,7 +59,7 @@ export const CodeSubmitTemlplate = () => {
         <Input text={'약속방 입력 코드'} onChange={onChange} memo={memo} />
       </WrapInput>
       <WrapButton>
-        <ButtonLarge>입력 완료</ButtonLarge>
+        <ButtonLarge isDisabled={buttonActive}>입력 완료</ButtonLarge>
       </WrapButton>
     </>
   );
