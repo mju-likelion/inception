@@ -1,18 +1,14 @@
 import { styled } from 'styled-components';
 
 interface Props {
-  text: string;
-  onChange: any;
-  memo: any;
+  placeholder?: string;
+  onChange: () => void;
+  value: string;
 }
 
-export const Input = ({ text, onChange, memo }: Props) => {
+export const Input = ({ placeholder, onChange, value }: Props) => {
   return (
-    <InputField
-      placeholder={text}
-      onChange={onChange}
-      value={memo}
-    ></InputField>
+    <InputField placeholder={placeholder} onChange={onChange} value={value} />
   );
 };
 
@@ -42,6 +38,6 @@ const InputField = styled.input`
   }
 
   &:focus::placeholder {
-    color: transparent;
+    visibility: hidden;
   }
 `;
