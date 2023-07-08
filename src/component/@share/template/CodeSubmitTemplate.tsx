@@ -14,16 +14,19 @@ export const CodeSubmitTemlplate = () => {
 
   const onChange = (event: any) => {
     setMemo(event.target.value);
-    console.log('입력완료');
 
     checkCodeEnter;
+    const index = memo.length;
+    console.log(index);
 
-    function checkCodeEnter() {
-      const inputValue = event.target.value;
+    function checkCodeEnter(index: number) {
+      // inputValue index가 5가 되면 세터함수 실행
 
-      // if inputValue // inputValue index가 7이상이 되면 세터함수 실행
-
-      setButtonActive(false);
+      if ((index = 5)) {
+        setButtonActive(false);
+      } else {
+        setButtonActive(true);
+      }
     }
   };
 
