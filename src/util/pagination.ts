@@ -4,6 +4,12 @@ interface PaginationDateProps {
   dateList: string[];
 }
 
+interface PaginationActiveDateProps {
+  page: number;
+  size?: number;
+  activeDate: boolean[];
+}
+
 interface PaginationTableProps {
   page: number;
   size?: number;
@@ -15,7 +21,15 @@ export const getPaginationDate = ({
   size = 4,
   dateList,
 }: PaginationDateProps) => {
-  return dateList && dateList.slice(size * (page - 1), size * page);
+  return dateList.slice(size * (page - 1), size * page);
+};
+
+export const getPaginationActiveDate = ({
+  page,
+  size = 4,
+  activeDate,
+}: PaginationActiveDateProps) => {
+  return activeDate.slice(size * (page - 1), size * page);
 };
 
 export const getPaginationTable = ({
