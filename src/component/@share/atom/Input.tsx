@@ -2,13 +2,19 @@ import { styled } from 'styled-components';
 
 interface Props {
   placeholder?: string;
-  onChange: () => void;
-  value: string;
+  onChange?: () => void;
+  value?: string;
+  maxLength?: any;
 }
 
-export const Input = ({ placeholder, onChange, value }: Props) => {
+export const Input = ({ placeholder, onChange, value, maxLength }: Props) => {
   return (
-    <InputField placeholder={placeholder} onChange={onChange} value={value} />
+    <InputField
+      placeholder={placeholder}
+      onChange={onChange}
+      value={value}
+      maxLength={maxLength}
+    />
   );
 };
 
