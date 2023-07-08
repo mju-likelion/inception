@@ -24,7 +24,7 @@ export const TimeBlockGroup = ({
         new Array(dateList.length).fill(false)
       )
     );
-  }, []);
+  }, [timeList, dateList]);
 
   const newDateList = usePaginationDate({ page, dateList });
   const nowTimeTable = usePaginationTable({ page, timeTable });

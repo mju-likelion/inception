@@ -15,9 +15,7 @@ export const TimeBox = () => {
         activeDate={activeDate}
       />
       <TimeBoxBlock>
-        <div>
-          <TimeList start="9:00" end="17:00" />
-        </div>
+        <TimeList start="9:00" end="17:00" />
         <TimeBlockGroup page={nowPage} onSetActiveDate={setActiveDate} />
       </TimeBoxBlock>
     </>
@@ -26,17 +24,17 @@ export const TimeBox = () => {
 
 const TimeBoxBlock = styled.div`
   display: inline-flex;
-  justify-content: center;
   align-items: flex-start;
   gap: 9px;
-  flex: 1 0 0;
   width: 320px;
-  height: 238px;
+  height: 256px;
   border-radius: 0px 0px 16px 16px;
-  border: 1px solid ${({ theme }) => theme.colors.gray5};
+  border-left: 1px solid ${({ theme }) => theme.colors.gray5};
+  border-right: 1px solid ${({ theme }) => theme.colors.gray5};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray5};
   background: ${({ theme }) => theme.colors.white};
   overflow-y: auto;
-  padding: 8px 53px 0 2px;
+  padding: 8px 2px 0px 2px;
 
   &::-webkit-scrollbar {
     width: 6px;
