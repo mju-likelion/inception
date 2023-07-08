@@ -2,13 +2,14 @@ import styled from 'styled-components';
 
 interface TimeBlockProps {
   active: boolean;
+  onClick?: () => void;
 }
 
-export const TimeBlock = ({ active }: TimeBlockProps) => {
-  return <TimeBlockAtom $isActive={active} />;
+export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
+  return <TimeBlockAtom $isActive={active} onClick={onClick} />;
 };
 
-const TimeBlockAtom = styled.td<{ $isActive: boolean }>`
+const TimeBlockAtom = styled.div<{ $isActive: boolean }>`
   width: 52px;
   height: 46px;
   border-radius: 8px;
