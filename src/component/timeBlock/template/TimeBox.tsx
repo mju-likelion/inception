@@ -33,6 +33,7 @@ export const TimeBox = () => {
 
 const TimeBoxBlock = styled.div`
   display: inline-flex;
+  justify-content: center;
   align-items: flex-start;
   gap: 9px;
   width: 320px;
@@ -43,7 +44,8 @@ const TimeBoxBlock = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray5};
   background: ${({ theme }) => theme.colors.white};
   overflow-y: auto;
-  padding: 8px 2px 0px 2px;
+  overflow-x: hidden;
+  padding: 8px 53px 0px 2px;
 
   &::-webkit-scrollbar {
     width: 6px;
