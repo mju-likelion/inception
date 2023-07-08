@@ -16,8 +16,7 @@ export const TimeBlockGroup = ({
 }: TimeBlockGroupProps) => {
   const dateList = useRecoilValue(DateListAtom);
   const timeList = useRecoilValue(TimeListAtom);
-  const newDateList = usePaginationDate({ page: page, dateList: dateList });
-
+  const newDateList = usePaginationDate({ page, dateList });
   const initialTable = Array.from(Array(timeList.length), () =>
     new Array(newDateList.length).fill(false)
   );

@@ -7,16 +7,20 @@ import {
   isTouchEvent,
 } from './utils';
 
-export function useTableDragSelect(
-  initialTable?: boolean[][]
-): [React.RefObject<HTMLTableElement>, boolean[][]] {
+export const useTableDragSelect = (
+  initialTable: boolean[][]
+): [React.RefObject<HTMLTableElement>, boolean[][]] => {
   const startIndex = useRef<string>('');
   const currentIndex = useRef<string>('');
   const startTable = useRef<boolean[][]>([]);
   const mode = useRef<boolean>(false);
 
   const tableRef = useRef<HTMLTableElement>(null);
-  const [tableValue, setTableValue] = useState<boolean[][]>(initialTable ?? []);
+  const [tableValue, setTableValue] = useState<boolean[][]>(initialTable);
+
+  useEffect(() => {
+    // setTableValue(initialTable);
+  }, [initialTable]);
 
   const handlePointerStart = useCallback(
     (e: Event) => {
@@ -146,4 +150,4 @@ export function useTableDragSelect(
   }, [handlePointerStart, handlePointerMove, handlePointerEnd]);
 
   return [tableRef, tableValue];
-}
+};

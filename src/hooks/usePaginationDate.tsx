@@ -9,11 +9,5 @@ export const usePaginationDate = ({
   size = 4,
   dateList,
 }: PaginationProps) => {
-  const pageList: Array<string> = [];
-
-  for (let i = (page - 1) * size; i < (page - 1) * size + size; i++) {
-    dateList[i] && pageList.push(dateList[i]);
-  }
-
-  return pageList;
+  return dateList.slice(size * (page - 1), size * page);
 };

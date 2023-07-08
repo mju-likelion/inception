@@ -1,4 +1,3 @@
-import { Body } from '@/component/@share';
 import styled from 'styled-components';
 import { PropsWithChildren } from 'react';
 
