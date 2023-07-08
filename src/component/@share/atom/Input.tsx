@@ -40,4 +40,8 @@ const InputField = styled.input`
     outline: ${({ theme }) => theme.colors.gray2};
     border: 1px solid ${({ theme }) => theme.colors.gray2};
   }
+
+  &:focus::placeholder {
+    color: transparent;
+  }
 `;
