@@ -21,6 +21,7 @@ export const SelectDate = ({
   const dateList = useRecoilValue(DateListAtom);
   const start = dateList[0];
   const end = dateList[dateList.length - 1];
+  const totalPageLength = Math.trunc(dateList.length / size + 1);
 
   return (
     <SelectDateBlock>
@@ -31,7 +32,7 @@ export const SelectDate = ({
       <DuringDate start={start} end={end} />
       <NextButton
         onClick={() => onClickNext()}
-        isDisabled={page === Math.trunc(dateList.length / size + 1) && true}
+        isDisabled={page === totalPageLength && true}
       />
     </SelectDateBlock>
   );
