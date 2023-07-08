@@ -4,8 +4,7 @@ import { DateListAtom, TimeListAtom, TimeTableListAtom } from '@/store/atoms';
 import { TimeBlock } from '@/component/timeBlock/atoms';
 import { usePaginationDate } from '@/hooks/usePaginationDate';
 import { usePaginationTable } from '@/hooks/usePaginationTable';
-// import { useTableDragSelect } from '@/hooks/useTableDragSelect';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 interface TimeBlockGroupProps {
   page: number;
   onSetActiveDate: React.Dispatch<React.SetStateAction<boolean[]>>;
@@ -28,14 +27,7 @@ export const TimeBlockGroup = ({
   }, []);
 
   const newDateList = usePaginationDate({ page, dateList });
-  //여기에 timtTable로 customhook으로 page별로 자르는 함수 선언해야됨.
   const nowTimeTable = usePaginationTable({ page, timeTable });
-
-  // const [state, setState] = useState(
-  //   Array.from(Array(timeList.length), () =>
-  //     new Array(newDateList.length).fill(false)
-  //   ) //datelist * timelist 개의 빈 배열 생성
-  // );
 
   const handleClick = (x: number, y: number) => {
     const updateArray = timeTable.map((value) => [...value]);
