@@ -15,6 +15,16 @@ export const Input = ({ placeholder, onChange, value, maxLength }: Props) => {
       value={value}
       maxLength={maxLength}
     />
+=======
+  placeholder?: string;
+  onChange: () => void;
+  value: string;
+}
+
+export const Input = ({ placeholder, onChange, value }: Props) => {
+  return (
+    <InputField placeholder={placeholder} onChange={onChange} value={value} />
+>>>>>>> 08959fd (refactor: props 타입명시)
   );
 };
 
