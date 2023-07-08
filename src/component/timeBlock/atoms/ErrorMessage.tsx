@@ -2,20 +2,19 @@ import { Body } from '@/component/@share';
 import styled from 'styled-components';
 import { PropsWithChildren } from 'react';
 
-export const Time = ({ children }: PropsWithChildren) => {
+export const ErrorMessage = ({ children }: PropsWithChildren) => {
   return (
-    <TimeBlock>
-      <Body ag="Body3" color="gray3" align="right">
+    <ErrorMessageBlock>
+      <Body ag="Body3" color="red" align="right">
         {children}
       </Body>
-    </TimeBlock>
+    </ErrorMessageBlock>
   );
 };
 
-const TimeBlock = styled.div`
+const ErrorMessageBlock = styled.div`
   display: flex;
-  width: 42px;
-  height: 46px;
+  width: 220px;
   flex-direction: column;
-  justify-content: center;
+  margin-top: 12px;
 `;

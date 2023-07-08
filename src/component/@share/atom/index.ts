@@ -12,3 +12,5 @@ export * from './LineModal';
 export * from './DotModal';
 export * from './Check';
 export * from './Input';
+export * from './NextButton';
+export * from './BackButton';

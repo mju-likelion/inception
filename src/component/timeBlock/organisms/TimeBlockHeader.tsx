@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { SelectDate, DateList } from '../molecules';
+import { SelectDate, DateList } from '@/component/timeBlock/molecules';
 
 interface HeaderProps {
   page: number;

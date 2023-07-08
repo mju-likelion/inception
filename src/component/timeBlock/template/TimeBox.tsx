@@ -1,8 +1,12 @@
 import { styled } from 'styled-components';
+import { ErrorMessage } from '@/component/timeBlock/atoms/ErrorMessage';
+import {
+  TimeBlockGroup,
+  TimeList,
+  SelectAllButton,
+} from '@/component/timeBlock/molecules';
 import { TimeBlockHeader } from '@/component/timeBlock/organisms';
-import { TimeBlockGroup, TimeList } from '@/component/timeBlock/molecules';
 import { useState } from 'react';
-import { SelectAllButton } from '../molecules/SelectAllButton';
 
 export const TimeBox = () => {
   const [nowPage, setNowPage] = useState(1);
@@ -19,6 +23,9 @@ export const TimeBox = () => {
         <TimeList start="9:00" end="17:00" />
         <TimeBlockGroup page={nowPage} onSetActiveDate={setActiveDate} />
       </TimeBoxBlock>
+      {activeDate.includes(false) ? (
+        <ErrorMessage>시간이 선택되지 않은 날짜가 있습니다</ErrorMessage>
+      ) : null}
       <SelectAllButton>모든 시간 선택하기</SelectAllButton>
     </>
   );
