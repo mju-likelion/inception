@@ -1,8 +1,9 @@
 import { styled } from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { DateListAtom, TimeListAtom } from '@/store/atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { DateListAtom, TimeListAtom, TimeTableListAtom } from '@/store/atoms';
 import { TimeBlock } from '@/component/timeBlock/atoms';
 import { usePaginationDate } from '@/hooks/usePaginationDate';
+import { usePaginationTable } from '@/hooks/usePaginationTable';
 // import { useTableDragSelect } from '@/hooks/useTableDragSelect';
 import { useEffect, useState } from 'react';
 interface TimeBlockGroupProps {
@@ -16,47 +17,53 @@ export const TimeBlockGroup = ({
 }: TimeBlockGroupProps) => {
   const dateList = useRecoilValue(DateListAtom);
   const timeList = useRecoilValue(TimeListAtom);
+  const [timeTable, setTimeTable] = useRecoilState(TimeTableListAtom);
+
+  useEffect(() => {
+    setTimeTable(
+      Array.from(Array(timeList.length), () =>
+        new Array(dateList.length).fill(false)
+      )
+    );
+  }, []);
+
   const newDateList = usePaginationDate({ page, dateList });
-  // const initialTable = Array.from(Array(timeList.length), () =>
-  //   new Array(newDateList.length).fill(false)
+  //여기에 timtTable로 customhook으로 page별로 자르는 함수 선언해야됨.
+  const nowTimeTable = usePaginationTable({ page, timeTable });
+
+  // const [state, setState] = useState(
+  //   Array.from(Array(timeList.length), () =>
+  //     new Array(newDateList.length).fill(false)
+  //   ) //datelist * timelist 개의 빈 배열 생성
   // );
 
-  // const [tableRef, tableValue] = useTableDragSelect(initialTable);
-
-  const [state, setState] = useState(
-    Array.from(Array(timeList.length), () =>
-      new Array(newDateList.length).fill(false)
-    ) //datelist * timelist 개의 빈 배열 생성
-  );
-
   const handleClick = (x: number, y: number) => {
-    const updateArray = [...state];
-    updateArray[x][y] = !updateArray[x][y];
-    console.log(updateArray);
-    setState(updateArray);
+    const updateArray = timeTable.map((value) => [...value]);
+    updateArray[x][y + (page - 1) * 4] = !updateArray[x][y + (page - 1) * 4];
+    setTimeTable(updateArray);
   };
 
   useEffect(() => {
     {
       const DateBooleanArray = new Array(dateList.length).fill(false);
 
-      state.map((row, rowIndex) => {
+      timeTable.map((row, rowIndex) => {
         row.map((_, columnIndex) => {
-          state[rowIndex][columnIndex] &&
+          timeTable[rowIndex][columnIndex] &&
             (DateBooleanArray[columnIndex] = true);
         });
       });
       onSetActiveDate(DateBooleanArray);
     }
-  }, [state]);
+  }, [timeTable]);
 
   return (
     <TimeBlockGroupBlock columns={newDateList.length}>
-      {state.map((row, rowIndex) =>
+      {nowTimeTable.map((row, rowIndex) =>
         row.map((_, columnIndex) => (
           <TimeBlock
             key={columnIndex}
-            active={state[rowIndex][columnIndex] ? true : false}
+            active={nowTimeTable[rowIndex][columnIndex] ? true : false}
             onClick={() => handleClick(rowIndex, columnIndex)}
           />
         ))
@@ -64,11 +71,6 @@ export const TimeBlockGroup = ({
     </TimeBlockGroupBlock>
   );
 };
-
-// const TimeBlockGroupBlock = styled.table`
-//   gap: 2px;
-//   cursor: pointer;
-// `;
 
 const TimeBlockGroupBlock = styled.div<{ columns: number }>`
   display: grid;
