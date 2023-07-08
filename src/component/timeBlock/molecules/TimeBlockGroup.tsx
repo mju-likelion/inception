@@ -2,8 +2,7 @@ import { styled } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { DateListAtom, TimeListAtom, TimeTableListAtom } from '@/store/atoms';
 import { TimeBlock } from '@/component/timeBlock/atoms';
-import { usePaginationDate } from '@/hooks/usePaginationDate';
-import { usePaginationTable } from '@/hooks/usePaginationTable';
+import { getPaginationDate, getPaginationTable } from '@/util';
 import { useEffect } from 'react';
 interface TimeBlockGroupProps {
   page: number;
@@ -26,8 +25,8 @@ export const TimeBlockGroup = ({
     );
   }, [timeList, dateList]);
 
-  const newDateList = usePaginationDate({ page, dateList });
-  const nowTimeTable = usePaginationTable({ page, timeTable });
+  const newDateList = getPaginationDate({ page, dateList });
+  const nowTimeTable = getPaginationTable({ page, timeTable });
 
   const handleClick = (x: number, y: number) => {
     const updateArray = timeTable.map((value) => [...value]);
