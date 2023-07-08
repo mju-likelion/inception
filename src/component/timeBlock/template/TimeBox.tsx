@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import { TimeBlockHeader } from '@/component/timeBlock/organisms';
 import { TimeBlockGroup, TimeList } from '@/component/timeBlock/molecules';
 import { useState } from 'react';
+import { SelectAllButton } from '../molecules/SelectAllButton';
 
 export const TimeBox = () => {
   const [nowPage, setNowPage] = useState(1);
@@ -18,6 +19,7 @@ export const TimeBox = () => {
         <TimeList start="9:00" end="17:00" />
         <TimeBlockGroup page={nowPage} onSetActiveDate={setActiveDate} />
       </TimeBoxBlock>
+      <SelectAllButton>모든 시간 선택하기</SelectAllButton>
     </>
   );
 };
