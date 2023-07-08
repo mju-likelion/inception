@@ -22,7 +22,6 @@ export const DateList = ({ page, activeDate }: DateListProps) => {
       {newDateList &&
         newDateList.map((date, index) => (
           <Dates key={index} isActive={newActiveDateList[index]}>
-            {/* 현재 사이즈값 하드코딩으로 받고 배열도 index 사용하고 있음 개선 필요 */}
             {new Date(date).getMonth() + 1 + '/' + new Date(date).getDate()}
           </Dates>
         ))}
