@@ -14,7 +14,6 @@ export function App() {
       <ThemeProvider theme={theme}>
         {/* 여기에 header, footer를 추가할 수 있다. */}
         <Header />
-        <TitleBox title="d" content="d" $isActive={false} $isPass={false} />
         {/* 라우터들이 Outlet에서 작동한다. */}
         <Outlet />
         <Footer />
