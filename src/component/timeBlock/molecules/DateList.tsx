@@ -2,7 +2,11 @@ import { Dates } from '@/component/timeBlock/atoms';
 import { useRecoilValue } from 'recoil';
 import { DateListAtom } from '@/store/atoms';
 import { styled } from 'styled-components';
-import { getPaginationDate, getPaginationActiveDate } from '@/util';
+import {
+  getPaginationDate,
+  getPaginationActiveDate,
+  getDateTypeToString,
+} from '@/util';
 
 interface DateListProps {
   page: number;
@@ -22,7 +26,7 @@ export const DateList = ({ page, activeDate }: DateListProps) => {
       {newDateList &&
         newDateList.map((date, index) => (
           <Dates key={index} isActive={newActiveDateList[index]}>
-            {new Date(date).getMonth() + 1 + '/' + new Date(date).getDate()}
+            {getDateTypeToString({ date })}
           </Dates>
         ))}
     </DateListBlock>

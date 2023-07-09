@@ -1,4 +1,5 @@
 import { Body } from '@/component/@share';
+import { getDateTypeToString } from '@/util';
 
 interface DuringDateProps {
   start: string;
@@ -6,14 +7,11 @@ interface DuringDateProps {
 }
 
 export const DuringDate = ({ start, end }: DuringDateProps) => {
-  const startDate = new Date(start);
-  const endDate = new Date(end);
-
-  const stringStartDate = startDate.getMonth() + 1 + '/' + startDate.getDate();
-  const stringEndDate = endDate.getMonth() + 1 + '/' + endDate.getDate();
+  const startDate = getDateTypeToString({ date: start });
+  const endDate = getDateTypeToString({ date: end });
   return (
     <Body ag="Body4" color="gray2" align="center">
-      {stringStartDate} - {stringEndDate}
+      {startDate} - {endDate}
     </Body>
   );
 };
