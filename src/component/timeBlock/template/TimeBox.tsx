@@ -20,8 +20,10 @@ export const TimeBox = () => {
         activeDate={activeDate}
       />
       <TimeBoxBlock>
-        <TimeList start="9:00" end="17:00" />
-        <TimeBlockGroup page={nowPage} onSetActiveDate={setActiveDate} />
+        <TimeBoxContent>
+          <TimeList start="9:00" end="17:00" />
+          <TimeBlockGroup page={nowPage} onSetActiveDate={setActiveDate} />
+        </TimeBoxContent>
       </TimeBoxBlock>
       {activeDate.includes(false) ? (
         <ErrorMessage>시간이 선택되지 않은 날짜가 있습니다</ErrorMessage>
@@ -32,21 +34,19 @@ export const TimeBox = () => {
 };
 
 const TimeBoxBlock = styled.div`
-  display: inline-flex;
+  display: flex;
   justify-content: center;
-  align-items: flex-start;
-  gap: 9px;
-  width: 320px;
-  height: 256px;
   border-radius: 0 0 16px 16px;
+  min-width: 320px;
+  max-width: 500px;
+  min-height: 256px;
+  max-height: 424px;
+  margin: 0 20px;
   border-left: 1px solid ${({ theme }) => theme.colors.gray5};
   border-right: 1px solid ${({ theme }) => theme.colors.gray5};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray5};
-  background: ${({ theme }) => theme.colors.white};
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 8px 53px 0px 2px;
-
   &::-webkit-scrollbar {
     width: 6px;
   }
@@ -62,4 +62,14 @@ const TimeBoxBlock = styled.div`
     background-color: ${({ theme }) => theme.colors.gray4};
     border-radius: 16px;
   }
+`;
+
+const TimeBoxContent = styled.div`
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 9px;
+  width: 320px;
+  background: ${({ theme }) => theme.colors.white};
+  padding: 8px 53px 0px 2px;
 `;

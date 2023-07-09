@@ -27,7 +27,8 @@ export const TimeBlockHeader = ({ page, setPage, activeDate }: HeaderProps) => {
 
 const TimeBlockHeaderBlock = styled.div`
   display: flex;
-  width: 320px;
+  min-width: 320px;
+  max-width: 500px;
   height: 70px;
   padding: 10px 53px;
   flex-direction: column;
@@ -36,6 +37,7 @@ const TimeBlockHeaderBlock = styled.div`
   border-radius: 16px 16px 0px 0px;
   border: 1px solid ${({ theme }) => theme.colors.gray5};
   background: ${({ theme }) => theme.colors.white};
+  margin: 0 20px;
 `;
 
 const DateBlock = styled.div`
