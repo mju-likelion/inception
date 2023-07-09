@@ -38,6 +38,7 @@ const TimeBoxContainer = styled.div`
 `;
 
 const TimeBoxBlock = styled.div`
+  aspect-ratio: 1/0.8;
   display: flex;
   justify-content: center;
   border-radius: 0 0 16px 16px;
