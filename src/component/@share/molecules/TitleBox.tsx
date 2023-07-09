@@ -28,7 +28,7 @@ export const TitleBox = ({
         <ProgressBar total={total} step={step} />
       ) : (
         <Title
-          ag="Title2"
+          ag="Title1"
           color={$isActive ? 'mint1' : $isPass ? 'mint2' : defaultColor}
         >
           {title}
@@ -51,9 +51,15 @@ const Container = styled.div`
   gap: 12px;
   @media ${({ theme }) => theme.size.web} {
     width: 500px;
+    h1 {
+      ${({ theme }) => theme.typographies.title3};
+    }
   }
 `;
 
 const BodyBlock = styled.div`
   width: 210px;
+  @media ${({ theme }) => theme.size.web} {
+    width: 500px;
+  }
 `;
