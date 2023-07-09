@@ -4,6 +4,8 @@ import { DateListAtom, TimeListAtom, TimeTableListAtom } from '@/store/atoms';
 import { TimeBlock } from '@/component/timeBlock/atoms';
 import { getPaginationDate, getPaginationTable } from '@/util';
 import { useEffect } from 'react';
+import range from 'lodash/range';
+
 interface TimeBlockGroupProps {
   page: number;
   onSetActiveDate: React.Dispatch<React.SetStateAction<boolean[]>>;
@@ -18,11 +20,10 @@ export const TimeBlockGroup = ({
   const [timeTable, setTimeTable] = useRecoilState(TimeTableListAtom);
 
   useEffect(() => {
-    setTimeTable(
-      Array.from(Array(timeList.length), () =>
-        new Array(dateList.length).fill(false)
-      )
+    const newTimeTable = range(timeList.length).map(() =>
+      new Array(dateList.length).fill(false)
     );
+    setTimeTable(newTimeTable);
   }, [timeList, dateList]);
 
   const newDateList = getPaginationDate({ page, dateList });

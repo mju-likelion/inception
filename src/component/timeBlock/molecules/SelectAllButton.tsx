@@ -5,6 +5,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { TimeTableListAtom, DateListAtom, TimeListAtom } from '@/store';
 import { useState } from 'react';
 import { Body } from '@/component/@share';
+import range from 'lodash/range';
 
 export const SelectAllButton = ({ children }: PropsWithChildren) => {
   const [timeTable, setTimeTable] = useRecoilState(TimeTableListAtom);
@@ -14,11 +15,10 @@ export const SelectAllButton = ({ children }: PropsWithChildren) => {
 
   const onClickAllDate = () => {
     setCheckAllDate(!checkAllDate);
-    setTimeTable(
-      Array.from(Array(timeList.length), () =>
-        new Array(dateList.length).fill(!checkAllDate)
-      )
+    const newTimeTable = range(timeList.length).map(() =>
+      new Array(dateList.length).fill(!checkAllDate)
     );
+    setTimeTable(newTimeTable);
   };
 
   return (
