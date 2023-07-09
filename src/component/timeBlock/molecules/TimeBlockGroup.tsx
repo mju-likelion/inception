@@ -29,9 +29,9 @@ export const TimeBlockGroup = ({
   const nowTimeTable = getPaginationTable({ page, timeTable });
 
   const handleClick = (x: number, y: number) => {
-    const updateArray = timeTable.map((value) => [...value]);
-    updateArray[x][y + (page - 1) * 4] = !updateArray[x][y + (page - 1) * 4];
-    setTimeTable(updateArray);
+    const updatedArray = timeTable.map((value) => [...value]);
+    updatedArray[x][y + (page - 1) * 4] = !updatedArray[x][y + (page - 1) * 4];
+    setTimeTable(updatedArray);
   };
 
   useEffect(() => {

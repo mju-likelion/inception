@@ -3,17 +3,13 @@ import { SelectDate, DateList } from '@/component/timeBlock/molecules';
 
 interface HeaderProps {
   page: number;
-  onSetPage: React.Dispatch<React.SetStateAction<number>>;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
   activeDate: boolean[];
 }
 
-export const TimeBlockHeader = ({
-  page,
-  onSetPage,
-  activeDate,
-}: HeaderProps) => {
-  const onClickBackButton = () => onSetPage((page) => page - 1);
-  const onClickNextButton = () => onSetPage((page) => page + 1);
+export const TimeBlockHeader = ({ page, setPage, activeDate }: HeaderProps) => {
+  const onClickBackButton = () => setPage((page) => page - 1);
+  const onClickNextButton = () => setPage((page) => page + 1);
 
   return (
     <TimeBlockHeaderBlock>

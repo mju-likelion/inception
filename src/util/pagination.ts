@@ -37,8 +37,5 @@ export const getPaginationTable = ({
   size = 4,
   timeTable,
 }: PaginationTableProps) => {
-  return (
-    timeTable &&
-    timeTable.map((date) => date.slice(size * (page - 1), size * page))
-  );
+  return timeTable.map((date) => date.slice(size * (page - 1), size * page));
 };

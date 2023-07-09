@@ -16,7 +16,7 @@ export const TimeBox = () => {
     <>
       <TimeBlockHeader
         page={nowPage}
-        onSetPage={setNowPage}
+        setPage={setNowPage}
         activeDate={activeDate}
       />
       <TimeBoxBlock>
@@ -38,7 +38,7 @@ const TimeBoxBlock = styled.div`
   gap: 9px;
   width: 320px;
   height: 256px;
-  border-radius: 0px 0px 16px 16px;
+  border-radius: 0 0 16px 16px;
   border-left: 1px solid ${({ theme }) => theme.colors.gray5};
   border-right: 1px solid ${({ theme }) => theme.colors.gray5};
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray5};
