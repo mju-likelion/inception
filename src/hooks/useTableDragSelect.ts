@@ -26,7 +26,7 @@ export const useTableDragSelect = (
     (e: Event) => {
       const index = getTableCellIndex(e);
 
-      if (index === null) {
+      if (!index) {
         return;
       }
 
