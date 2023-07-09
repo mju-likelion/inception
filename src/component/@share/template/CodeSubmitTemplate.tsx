@@ -12,16 +12,12 @@ export const CodeSubmitTemlplate = () => {
 
   const [buttonActive, setButtonActive] = useState(true);
 
-  const onChange = (event: any) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMemo(event.target.value);
 
     const index = memo.length;
     console.log(index);
-    if (index > 4) {
-      setButtonActive(false);
-    } else {
-      setButtonActive(true);
-    }
+    index > 4 ? setButtonActive(false) : setButtonActive(true);
   };
 
   const [clickTabBar, setClickTabBar] = useRecoilState(tabState);
@@ -29,7 +25,7 @@ export const CodeSubmitTemlplate = () => {
     'default'
   );
 
-  const tab = (tab: 'default' | 'result') => {
+  const changeTabBar = (tab: 'default' | 'result') => {
     console.log(clickTabBar); //2. 어떤 버튼을 클릭했는지 판단해줘(디폴트버튼을 눌렀으면 default,결과버튼을 눌렀으면 result 판단.)
     setSelectedTab(tab); // 그리고 클릭한 버튼에 맞게 atom 의 상태를 바꿔줘};
     setClickTabBar(tab);
@@ -38,7 +34,7 @@ export const CodeSubmitTemlplate = () => {
   return (
     <>
       <TabBar
-        onClick={tab} // 1. 버튼을 클릭하면 tab 함수를 실행해죠. 어떤버튼을 클릭하냐에 따라 값이 바뀐 아톰을 줘
+        onClick={changeTabBar} // 1. 버튼을 클릭하면 tab 함수를 실행해죠. 어떤버튼을 클릭하냐에 따라 값이 바뀐 아톰을 줘
         firstTabTitle={'약속 잡기'}
         secondTabTitle={'결과 보기'}
       />
