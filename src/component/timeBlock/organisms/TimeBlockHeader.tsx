@@ -37,7 +37,6 @@ const TimeBlockHeaderBlock = styled.div`
   border-radius: 16px 16px 0px 0px;
   border: 1px solid ${({ theme }) => theme.colors.gray5};
   background: ${({ theme }) => theme.colors.white};
-  margin: 0 20px;
 `;
 
 const DateBlock = styled.div`

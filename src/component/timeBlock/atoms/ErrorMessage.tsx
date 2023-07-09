@@ -5,7 +5,7 @@ import { PropsWithChildren } from 'react';
 export const ErrorMessage = ({ children }: PropsWithChildren) => {
   return (
     <ErrorMessageBlock>
-      <Body ag="Body3" color="red" align="right">
+      <Body ag="Body3" color="red" align="left">
         {children}
       </Body>
     </ErrorMessageBlock>
