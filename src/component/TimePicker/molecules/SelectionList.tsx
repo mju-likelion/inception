@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { TimeSelection } from '@/component/TimePicker';
 import { TimeList } from '@/component/TimePicker/data';
-import { useState } from 'react';
 
 interface SelectionListProps {
   selectedTime: string;
@@ -12,11 +11,8 @@ export const SelectionList = ({
   selectedTime,
   selectTimeItem,
 }: SelectionListProps) => {
-  const [isSelected, setIsSelected] = useState(false);
-
   const handleClick = (time: string) => {
     selectTimeItem(time);
-    setIsSelected(!!time);
   };
 
   return (
@@ -24,7 +20,7 @@ export const SelectionList = ({
       {TimeList.map((item) => (
         <TimeSelection
           onClick={() => handleClick(item)}
-          $isSelected={selectedTime === item && isSelected}
+          $isSelected={selectedTime === item}
           key={item}
         >
           {item}
@@ -43,4 +39,5 @@ const Container = styled.div`
   padding: 1px;
   border: 1px solid ${({ theme }) => theme.colors.gray4};
   box-shadow: 0px 2px 5px 0px rgba(195, 195, 195, 0.25);
+  z-index: 1;
 `;
