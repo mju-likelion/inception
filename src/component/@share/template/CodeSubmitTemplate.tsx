@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { TabBar } from '@/component/@share/organisms';
 import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
@@ -15,9 +15,11 @@ export const CodeSubmitTemlplate = () => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMemo(event.target.value);
 
-    const index = memo.length;
+    const index = memo.length; //코드자릿수 6자리 제한
     console.log(index);
     index > 4 ? setButtonActive(false) : setButtonActive(true);
+
+    console.log(memo.toUpperCase()); //코드 대문자로 제한
   };
 
   const [clickTabBar, setClickTabBar] = useRecoilState(tabState);
@@ -54,6 +56,7 @@ export const CodeSubmitTemlplate = () => {
           onChange={onChange}
           memo={memo}
           maxLength="6"
+          inputTextCase={inputTextCase}
         />
       </WrapInput>
       <WrapButton>
@@ -69,6 +72,10 @@ const WrapTitleBox = styled.div`
 
 const WrapInput = styled.div`
   margin: 0px 20px 0px 20px;
+`;
+
+const inputTextCase = css`
+  text-transform: uppercase;
 `;
 
 const WrapButton = styled.div`
