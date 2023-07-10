@@ -34,6 +34,7 @@ export const Text = styled.h1<{
       ${({ theme }) => theme.typographies.title1};
       letter-spacing: 0;
       text-align: ${props.align};
+      word-break: keep-all;
     `}
 
   ${(props) =>
@@ -42,6 +43,7 @@ export const Text = styled.h1<{
       ${({ theme }) => theme.typographies.title2};
       letter-spacing: 0;
       text-align: ${props.align};
+      word-break: keep-all;
     `}
 
   ${(props) =>
@@ -50,5 +52,6 @@ export const Text = styled.h1<{
       ${({ theme }) => theme.typographies.title3};
       letter-spacing: 0;
       text-align: ${props.align};
+      word-break: keep-all;
     `}
 `;
