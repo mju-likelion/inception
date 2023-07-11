@@ -30,5 +30,6 @@ const Text = styled.p<{
       ${({ theme }) => theme.typographies.subTitle};
       letter-spacing: 0;
       text-align: ${props.align};
+      word-break: keep-all;
     `}
 `;

@@ -48,6 +48,7 @@ const Text = styled.p<{
       ${({ theme }) => theme.typographies.body1.regular};
       letter-spacing: 0;
       text-align: ${props.align};
+      word-break: keep-all;
     `}
 
   ${(props) =>
@@ -56,6 +57,7 @@ const Text = styled.p<{
       ${({ theme }) => theme.typographies.body1.semiBold};
       letter-spacing: 0;
       text-align: ${props.align};
+      word-break: keep-all;
     `}
     
   ${(props) =>
@@ -64,6 +66,7 @@ const Text = styled.p<{
       ${({ theme }) => theme.typographies.body2.regular};
       letter-spacing: 0;
       text-align: ${props.align};
+      word-break: keep-all;
     `}
   
   ${(props) =>
@@ -72,6 +75,7 @@ const Text = styled.p<{
       ${({ theme }) => theme.typographies.body2.semiBold};
       letter-spacing: 0;
       text-align: ${props.align};
+      word-break: keep-all;
     `}
 
   ${(props) =>
@@ -80,6 +84,7 @@ const Text = styled.p<{
       ${({ theme }) => theme.typographies.body3};
       letter-spacing: 0;
       text-align: ${props.align};
+      word-break: keep-all;
     `}
 
   ${(props) =>
@@ -92,6 +97,7 @@ const Text = styled.p<{
       ${({ theme }) => theme.typographies.body4};
       letter-spacing: 0px;
       text-align: ${props.align};
+      word-break: keep-all;
     `}
     
     ${(props) =>
@@ -100,11 +106,13 @@ const Text = styled.p<{
       ${({ theme }) => theme.typographies.body5};
       letter-spacing: 0;
       text-align: ${props.align};
+      word-break: keep-all;
     `}
   ${({ ag }) =>
     ag === 'Body5' &&
     css`
       ${({ theme }) => theme.typographies.body5};
       letter-spacing: 0px;
+      word-break: keep-all;
     `}
 `;
