@@ -9,7 +9,7 @@ export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
   return <TimeBlockAtom $isActive={active} onClick={onClick} />;
 };
 
-const TimeBlockAtom = styled.div<{ $isActive: boolean }>`
+const TimeBlockAtom = styled.button<{ $isActive: boolean }>`
   width: 52px;
   height: 46px;
   border-radius: 8px;

@@ -18,6 +18,44 @@ export const TimeBlockGroup = ({
   const dateList = useRecoilValue(DateListAtom);
   const timeList = useRecoilValue(TimeListAtom);
   const [timeTable, setTimeTable] = useRecoilState(TimeTableListAtom);
+  const list = document.querySelectorAll('.btn');
+
+  for (let i = 0; i < list.length; i++) {
+    mouseMove(list[i] as HTMLElement, function (event: MouseEvent) {
+      if (!(event.target instanceof HTMLButtonElement)) return;
+      (event.target as HTMLButtonElement).style.backgroundColor = 'blue';
+    });
+
+    list[i].addEventListener('click', (event: Event) => {
+      clickEvent(event as MouseEvent);
+    });
+  }
+
+  function mouseMove(
+    target: HTMLElement,
+    whileMove: (event: MouseEvent) => void
+  ) {
+    const endMove = function () {
+      window.removeEventListener('mousemove', whileMove);
+      window.removeEventListener('mouseup', endMove);
+    };
+
+    target.addEventListener('mousedown', function (event: MouseEvent) {
+      event.stopPropagation();
+      window.addEventListener('mousemove', whileMove);
+      window.addEventListener('mouseup', endMove);
+    });
+  }
+
+  function clickEvent(event: MouseEvent) {
+    const button = event.target as HTMLButtonElement;
+
+    if (button.style.backgroundColor === 'blue') {
+      button.style.backgroundColor = 'gray';
+    } else {
+      button.style.backgroundColor = 'blue';
+    }
+  }
 
   useEffect(() => {
     const newTimeTable = range(timeList.length).map(() =>
