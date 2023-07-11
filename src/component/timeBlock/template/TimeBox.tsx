@@ -46,9 +46,8 @@ const TimeBoxBlock = styled.div`
   max-width: 500px;
   min-height: 256px;
   max-height: 424px;
-  border-left: 1px solid ${({ theme }) => theme.colors.gray5};
-  border-right: 1px solid ${({ theme }) => theme.colors.gray5};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray5};
+  border: 1px solid ${({ theme }) => theme.colors.gray5};
+  border-top: 0;
   overflow-y: auto;
   overflow-x: hidden;
   &::-webkit-scrollbar {
