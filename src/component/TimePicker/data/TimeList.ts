@@ -1,4 +1,4 @@
-export const TimeList = [
+export const TIME_LIST = [
   '00:00',
   '00:30',
   '01:00',

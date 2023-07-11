@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { TimeSelection } from '@/component/TimePicker';
-import { TimeList } from '@/component/TimePicker/data';
+import { TIME_LIST } from '@/component/TimePicker/data';
 
 interface SelectionListProps {
   selectedTime: string;
@@ -17,7 +17,7 @@ export const SelectionList = ({
 
   return (
     <Container>
-      {TimeList.map((item) => (
+      {TIME_LIST.map((item) => (
         <TimeSelection
           onClick={() => handleClick(item)}
           $isSelected={selectedTime === item}
