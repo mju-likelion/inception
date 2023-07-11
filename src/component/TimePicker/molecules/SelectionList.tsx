@@ -30,7 +30,7 @@ export const SelectionList = ({
   );
 };
 
-const Container = styled.div`
+const Container = styled.ul`
   width: 120px;
   max-height: 232px;
   overflow-y: scroll;

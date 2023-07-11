@@ -18,7 +18,7 @@ export const TimeSelection = ({
   );
 };
 
-const Container = styled.button<{ $isSelected: boolean }>`
+const Container = styled.li<{ $isSelected: boolean }>`
   width: 116px;
   height: 44px;
   padding: 12px;
