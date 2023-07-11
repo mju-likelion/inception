@@ -1,18 +1,20 @@
 import { styled } from 'styled-components';
 
 interface Props {
-  text: string;
-  onChange: any;
-  memo: any;
+  placeholder?: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  value: string;
+  maxLength?: number;
 }
 
-export const Input = ({ text, onChange, memo }: Props) => {
+export const Input = ({ placeholder, onChange, value, maxLength }: Props) => {
   return (
     <InputField
-      placeholder={text}
+      placeholder={placeholder}
       onChange={onChange}
-      value={memo}
-    ></InputField>
+      value={value}
+      maxLength={maxLength}
+    />
   );
 };
 
@@ -24,7 +26,7 @@ const InputField = styled.input`
   border-radius: 8px;
   background-color: none;
   color: ${({ theme }) => theme.colors.gray1};
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.typographies.body1.regular};
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray3};
@@ -39,5 +41,9 @@ const InputField = styled.input`
     color: ${({ theme }) => theme.colors.gray2};
     outline: ${({ theme }) => theme.colors.gray2};
     border: 1px solid ${({ theme }) => theme.colors.gray2};
+  }
+
+  &:focus::placeholder {
+    visibility: hidden;
   }
 `;
