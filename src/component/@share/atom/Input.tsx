@@ -2,9 +2,9 @@ import { styled } from 'styled-components';
 
 interface Props {
   placeholder?: string;
-  onChange?: () => void;
-  value?: string;
-  maxLength?: any;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  value: string;
+  maxLength?: number;
 }
 
 export const Input = ({ placeholder, onChange, value, maxLength }: Props) => {
@@ -26,7 +26,7 @@ const InputField = styled.input`
   border-radius: 8px;
   background-color: none;
   color: ${({ theme }) => theme.colors.gray1};
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.typographies.body1.regular};
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray3};
