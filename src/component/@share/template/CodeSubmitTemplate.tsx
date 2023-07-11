@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { TabBar } from '@/component/@share/organisms';
 import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
@@ -8,19 +8,20 @@ import { tabState } from '@/store';
 import { useRecoilState } from 'recoil';
 
 export const CodeSubmitTemlplate = () => {
-  const [memo, setMemo] = useState('');
+  const [value, setValue] = useState('');
 
 <<<<<<< HEAD
   const [buttonActive, setButtonActive] = useState(true);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMemo(event.target.value);
+    setValue(event.target.value);
+    setValue(event.target.value.toUpperCase());
 
-    const index = memo.length; //코드자릿수 6자리 제한
+    const index = value.length; //코드자릿수 6자리 제한
     console.log(index);
     index > 4 ? setButtonActive(false) : setButtonActive(true);
 
-    console.log(memo.toUpperCase()); //코드 대문자로 제한
+    console.log(value.toUpperCase()); //코드 대문자로 제한
   };
 
   const [clickTabBar, setClickTabBar] = useRecoilState(tabState);
@@ -88,11 +89,10 @@ export const CodeSubmitTemlplate = () => {
       </WrapTitleBox>
       <WrapInput>
         <Input
-          text={'약속방 입력 코드'}
+          placeholder={'약속방 입력 코드'}
           onChange={onChange}
-          memo={memo}
-          maxLength="6"
-          inputTextCase={inputTextCase}
+          value={value}
+          maxLength={6}
         />
       </WrapInput>
       <WrapButton>
@@ -108,10 +108,6 @@ const WrapTitleBox = styled.div`
 
 const WrapInput = styled.div`
   margin: 0px 20px 0px 20px;
-`;
-
-const inputTextCase = css`
-  text-transform: uppercase;
 `;
 
 const WrapButton = styled.div`
