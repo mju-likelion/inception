@@ -22,6 +22,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+  width: 133px;
 
   p {
     cursor: default;
