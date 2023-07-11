@@ -74,5 +74,5 @@ const TimeBoxContent = styled.div`
   gap: 9px;
   width: 320px;
   background: ${({ theme }) => theme.colors.white};
-  padding: 8px 53px 0px 2px;
+  padding: 8px 53px 0 2px;
 `;
