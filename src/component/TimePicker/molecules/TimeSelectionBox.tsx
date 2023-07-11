@@ -15,6 +15,7 @@ export const TimeSelectionBox = ({
   isError,
   isDisabled,
 }: TimeSelectionBoxProps) => {
+  // 아래 변수 및 함수 props로 상위 컴포넌트에서 관리 예정
   const [isOpened, setIsOpened] = useState(false);
   const [time, setTime] = useState(selectedTime);
 
@@ -42,9 +43,7 @@ export const TimeSelectionBox = ({
 };
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  position: relative;
 `;
 
 const Select = styled.button<{ $isError: boolean; $isOpened: boolean }>`
