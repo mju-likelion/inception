@@ -54,16 +54,14 @@ const Wrapper = styled.button<{
     css`
       div {
         position: relative;
-        width: 40px;
-        height: 40px;
+        width: 100%;
+        height: 100%;
         align-items: start;
-
         p {
           width: 20px;
           height: 20px;
           margin-top: 2px;
           margin-left: 4px;
-          /* background-color: red; */
         }
       }
       border-top: 2px solid ${({ theme }) => theme.colors.gray1};

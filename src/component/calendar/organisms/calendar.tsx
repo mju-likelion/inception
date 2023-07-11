@@ -6,7 +6,7 @@ import {
 } from '@/component/calendar/molecules';
 import { CalendarData } from '@/types';
 import { getCalendarData, isDuplicatedDate } from '@/util';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 // 방장이 신규 등록 시에는 항상 default, 약속시간을 선택할 때는 서버에서 내려온 데이터에 따라 default, disable 상태가 다르다.
@@ -21,6 +21,7 @@ export const Calendar = () => {
   const [calendar, setCalendar] = useState<CalendarData[]>(() =>
     getCalendarData(currentDate[0], currentDate[1])
   );
+  const [weekCount, setWeekCount] = useState(5);
 
   const handleClickDate = (date?: string) => {
     if (!date) return null;
@@ -54,25 +55,27 @@ export const Calendar = () => {
     ) {
       setCalendar((prev) => prev.concat(changedCalendar));
     }
+
+    setWeekCount(getWeekCount(changedYear, changedMonth));
   };
 
   /** @TODO GridFooter는 result === on 일때만 보여준다. GridHeader, GridFooter는 molecules로 관리해야될 것 같다. */
   return (
-    <Grid>
+    <Grid weekCount={weekCount}>
       <GridHeader>
         <CalendarHeader
           currentDate={currentDate}
           handleChangeCalendar={handleChangeCalendar}
         />
       </GridHeader>
-      <GridBody>
-        <DateHeader />
-        <DateComponent
-          calendarData={calendar}
-          currentDate={currentDate}
-          handleClickDate={handleClickDate}
-        />
-      </GridBody>
+
+      <DateHeader />
+      <DateComponent
+        calendarData={calendar}
+        currentDate={currentDate}
+        handleClickDate={handleClickDate}
+      />
+
       <GridFooter>
         <ButtonSmall>약속 수정</ButtonSmall>
       </GridFooter>
@@ -80,23 +83,55 @@ export const Calendar = () => {
   );
 };
 
-const Grid = styled.div`
+const getWeekCount = (year: string, month: string) => {
+  const startDay = new Date(+year, +month - 1, 1).getDay();
+  const totalDate = new Date(+year, +month, 0).getDate();
+  return Math.ceil((startDay + totalDate) / 7);
+};
+
+const Grid = styled.div<{ weekCount: number }>`
+  display: flex;
+  flex-direction: column;
   border: 1px solid red;
-  width: 320px;
+
+  aspect-ratio: ${({ weekCount }) => {
+    if (weekCount === 6) {
+      return '1/1.3125';
+      // return '1/1.484375';
+    } else if (weekCount === 5) {
+      return '1/1.15';
+    } else {
+      return '1/0.9875';
+    }
+  }};
+
+  min-width: 320px;
+  max-width: 500px;
+
+  min-height: 368px;
+  /* max-height: 575px; */
+  max-height: 668px;
+
+  @media (max-width: 360px) {
+    width: 320px;
+  }
+
+  @media ${({ theme }) => theme.size.mobile} {
+    width: 100%;
+  }
+  @media ${({ theme }) => theme.size.tablet} {
+  }
+  @media ${({ theme }) => theme.size.web} {
+  }
+
+  margin-bottom: 500px;
+  /* background-color: green; */
 `;
 
 const GridHeader = styled.div`
   height: 54px;
   display: flex;
   align-items: center;
-`;
-
-const GridBody = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 40px);
-  grid-template-rows: 50px auto;
-  width: 320px;
-  gap: 6px;
 `;
 
 const GridFooter = styled.div`

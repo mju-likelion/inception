@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Count, GridItem } from '@/component/calendar/atom';
 import { theme } from '@/globalStyle';
 import { ActiveStatus, CalendarData } from '@/types';
+import { styled } from 'styled-components';
 
 interface DateProps {
   calendarData: CalendarData[];
@@ -23,7 +24,7 @@ const DateComponent = ({
   }, [calendarData, currentDate]);
 
   return (
-    <>
+    <Wrapper>
       {blankGrid(showDates).map((blank) => {
         return blank;
       })}
@@ -51,7 +52,7 @@ const DateComponent = ({
           </GridItem>
         );
       })}
-    </>
+    </Wrapper>
   );
 };
 export { DateComponent as Date };
@@ -79,3 +80,26 @@ const getGridColor = (
       return 'gray1';
   }
 };
+
+const Wrapper = styled.div`
+  display: grid;
+  width: inherit;
+
+  /* height: calc(100% - 54px - 16px); */
+  height: 100%;
+
+  grid-template-columns: repeat(7, minmax(40px, 1fr));
+  grid-gap: 12px 6px;
+
+  margin-bottom: 16px;
+
+  grid-template-rows: auto;
+  @media ${({ theme }) => theme.size.mobile} {
+    /* grid-template-rows: repeat(auto-fit, minmax(40px, 79px)); */
+    grid-template-rows: repeat(auto-fit, minmax(40px, 1fr));
+  }
+  @media ${({ theme }) => theme.size.tablet} {
+  }
+  @media ${({ theme }) => theme.size.web} {
+  }
+`;

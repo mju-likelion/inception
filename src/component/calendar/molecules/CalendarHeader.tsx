@@ -34,9 +34,9 @@ const Wrapper = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
-  justify-content: center;
-  gap: 52px;
+  justify-content: space-between;
   h1 {
+    margin-left: 8px;
     width: 180px;
     display: flex;
     align-items: center;
@@ -48,4 +48,5 @@ const ButtonWrapper = styled.div`
   align-items: center;
   width: 70px;
   justify-content: space-between;
+  margin-right: 10px;
 `;
