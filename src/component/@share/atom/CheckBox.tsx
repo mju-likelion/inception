@@ -8,13 +8,13 @@ interface CheckBoxProp {
 
 export const CheckBox = ({ isChecked, onClick }: CheckBoxProp) => {
   return (
-    <Container onClick={onClick} isChecked={isChecked}>
+    <Container onClick={onClick} $isChecked={isChecked}>
       {isChecked && <CheckIcon />}
     </Container>
   );
 };
 
-const Container = styled.button<{ isChecked: boolean }>`
+const Container = styled.button<{ $isChecked: boolean }>`
   all: unset;
   width: 24px;
   height: 24px;
@@ -24,11 +24,11 @@ const Container = styled.button<{ isChecked: boolean }>`
   justify-content: center;
   align-items: center;
   border: 1px solid
-    ${({ theme, isChecked }) =>
-      isChecked ? theme.colors.gray2 : theme.colors.gray3};
+    ${({ theme, $isChecked }) =>
+      $isChecked ? theme.colors.gray2 : theme.colors.gray3};
   &:hover {
-    border-color: ${({ theme, isChecked }) =>
-      isChecked ? theme.colors.gray1 : theme.colors.gray2};
+    border-color: ${({ theme, $isChecked }) =>
+      $isChecked ? theme.colors.gray1 : theme.colors.gray2};
   }
 `;
 
