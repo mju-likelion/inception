@@ -1,25 +1,34 @@
 import { useState } from 'react';
+import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 import { Body } from '@/component/@share';
 import { TimeSelectionBox, TitleCheck } from '@/component/TimePicker/molecules';
 import { ReactComponent as Bar } from '@/assets/images/TimePickerBar.svg';
-import styled from 'styled-components';
+import { titleCheckState } from '@/store';
 
 export const TimePicker = () => {
-  // 시작 및 종료 시간, 체크박스 check 상태 전역 관리 예정
+  // 시작 및 종료 시간 전역 관리 예정
   const [isError, setIsError] = useState(false);
+  const [isChecked, setIsChecked] = useRecoilState(titleCheckState);
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleCheck = () => {
+    setIsChecked(!isChecked);
+    setIsDisabled(!isDisabled);
+  };
 
   return (
     <Container>
       <InnerContainer>
         <TimeSelectionBox
           selectedTime="08:00"
-          isDisabled={false}
+          isDisabled={isDisabled}
           isError={isError}
         />
         <Bar />
         <TimeSelectionBox
           selectedTime="22:00"
-          isDisabled={false}
+          isDisabled={isDisabled}
           isError={isError}
         />
       </InnerContainer>
@@ -28,7 +37,7 @@ export const TimePicker = () => {
           종료 시간이 시작 시간보다 늦어야 합니다
         </Body>
       )}
-      <TitleCheck />
+      <TitleCheck isChecked={isChecked} onClick={handleCheck} />
     </Container>
   );
 };
