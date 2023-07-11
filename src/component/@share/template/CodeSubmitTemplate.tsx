@@ -14,13 +14,11 @@ export const CodeSubmitTemlplate = () => {
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
-    setValue(event.target.value.toUpperCase());
 
-    const index = value.length; //코드자릿수 6자리 제한
-    console.log(index);
-    index > 4 ? setButtonActive(false) : setButtonActive(true);
+    setValue(event.target.value.toUpperCase()); //입력코드 대문자 변환
 
-    console.log(value.toUpperCase()); //코드 대문자로 제한
+    const index = value.length;
+    index > 4 ? setButtonActive(false) : setButtonActive(true); //코드자릿수 6자리 제한
   };
 
   const [clickTabBar, setClickTabBar] = useRecoilState(tabState);
@@ -29,15 +27,14 @@ export const CodeSubmitTemlplate = () => {
   );
 
   const changeTabBar = (tab: 'default' | 'result') => {
-    console.log(clickTabBar); //2. 어떤 버튼을 클릭했는지 판단해줘(디폴트버튼을 눌렀으면 default,결과버튼을 눌렀으면 result 판단.)
-    setSelectedTab(tab); // 그리고 클릭한 버튼에 맞게 atom 의 상태를 바꿔줘};
+    setSelectedTab(tab);
     setClickTabBar(tab);
   };
 
   return (
     <>
       <TabBar
-        onClick={changeTabBar} // 1. 버튼을 클릭하면 tab 함수를 실행해죠. 어떤버튼을 클릭하냐에 따라 값이 바뀐 아톰을 줘
+        onClick={changeTabBar}
         firstTabTitle={'약속 잡기'}
         secondTabTitle={'결과 보기'}
       />
