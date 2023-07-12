@@ -32,7 +32,7 @@ export const CodeSubmitTemlplate = () => {
   };
 
   return (
-    <>
+    <Wrapper>
       <TabBar
         onClick={changeTabBar}
         firstTabTitle={'약속 잡기'}
@@ -59,16 +59,31 @@ export const CodeSubmitTemlplate = () => {
       <WrapButton>
         <ButtonLarge isDisabled={buttonActive}>입력 완료</ButtonLarge>
       </WrapButton>
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media ${({ theme }) => theme.size.mobile} {
+  }
+  @media ${({ theme }) => theme.size.tablet} {
+  }
+  @media ${({ theme }) => theme.size.web} {
+  }
+`;
 
 const WrapTitleBox = styled.div`
   margin: 30px 20px 24px 20px;
 `;
 
 const WrapInput = styled.div`
+  display: flex;
   margin: 0px 20px 0px 20px;
+  @media ${({ theme }) => theme.size.mobile} {
+    margin: 0px 20px 0px 20px;
+  }
 `;
 
 const WrapButton = styled.div`
