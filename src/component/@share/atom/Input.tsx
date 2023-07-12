@@ -19,7 +19,9 @@ export const Input = ({ placeholder, onChange, value, maxLength }: Props) => {
 };
 
 const InputField = styled.input`
-  width: 320px;
+  width: 100%;
+  min-width: 320px;
+  max-width: 500px;
   height: 48px;
   padding: 12px;
   border: 1px solid ${({ theme }) => theme.colors.gray4};
