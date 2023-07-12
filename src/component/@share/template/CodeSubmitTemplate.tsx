@@ -90,7 +90,9 @@ const WrapInput = styled.div`
 
 const WrapButton = styled.div`
   display: flex;
+
   justify-content: center;
-  width: 240px;
-  margin: 200px 60px 0px 60px;
+  @media ${({ theme }) => theme.size.mobile} {
+    margin: 200px 75px 0px 75px;
+  }
 `;
