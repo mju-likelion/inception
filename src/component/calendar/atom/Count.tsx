@@ -1,5 +1,5 @@
 import { ActiveStatus } from '@/types';
-import { css, styled } from 'styled-components';
+import { styled } from 'styled-components';
 
 interface Props {
   count: number;
@@ -7,10 +7,10 @@ interface Props {
 }
 
 export const Count = ({ count, activeStatus = 'default' }: Props) => {
-  return <Wrapper activeStatus={activeStatus}>{count}</Wrapper>;
+  return <Wrapper $activeStatus={activeStatus}>{count}</Wrapper>;
 };
 
-const Wrapper = styled.p<{ activeStatus: ActiveStatus }>`
+const Wrapper = styled.p<{ $activeStatus: ActiveStatus }>`
   position: absolute;
   bottom: 2px;
   right: 2px;
@@ -21,17 +21,17 @@ const Wrapper = styled.p<{ activeStatus: ActiveStatus }>`
   height: 16px;
   border-radius: 100%;
   font-size: 11px;
-  background-color: ${({ activeStatus, theme }) => {
-    if (activeStatus === 'default') {
+  background-color: ${({ $activeStatus, theme }) => {
+    if ($activeStatus === 'default') {
       return theme.colors.gray1;
-    } else if (activeStatus === 'active') {
+    } else if ($activeStatus === 'active') {
       return theme.colors.mint1;
     }
   }};
-  color: ${({ activeStatus, theme }) => {
-    if (activeStatus === 'default') {
+  color: ${({ $activeStatus, theme }) => {
+    if ($activeStatus === 'default') {
       return theme.colors.white;
-    } else if (activeStatus === 'active') {
+    } else if ($activeStatus === 'active') {
       return theme.colors.white;
     }
   }};

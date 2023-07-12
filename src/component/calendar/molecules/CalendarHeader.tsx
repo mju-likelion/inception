@@ -1,15 +1,17 @@
 import { Title } from '@/component/@share';
 import { styled } from 'styled-components';
-import { ReactComponent as Back } from '@/assets/images/Back.svg';
-import { ReactComponent as Next } from '@/assets/images/Next.svg';
+import { NextButton, BackButton } from '@/component/@share/atom';
+import { DateRangeError } from '@/types';
 
 interface Props {
   currentDate: string[];
+  isDateRangeError: DateRangeError;
   handleChangeCalendar: (param: 'prev' | 'next') => void;
 }
 
 export const CalendarHeader = ({
   currentDate,
+  isDateRangeError,
   handleChangeCalendar,
 }: Props) => {
   /** @TODO currentDate가 이동 가능한 범위 제한에 걸릴 시 prev, next 버튼 비활성화 하는 기능 추가하기 */
@@ -19,12 +21,14 @@ export const CalendarHeader = ({
         {`${currentDate[0]}년 ${currentDate[1]}월`}
       </Title>
       <ButtonWrapper>
-        <button onClick={() => handleChangeCalendar('prev')}>
-          <Back />
-        </button>
-        <button onClick={() => handleChangeCalendar('next')}>
-          <Next />
-        </button>
+        <BackButton
+          isDisabled={isDateRangeError.start}
+          onClick={() => handleChangeCalendar('prev')}
+        />
+        <NextButton
+          isDisabled={isDateRangeError.end}
+          onClick={() => handleChangeCalendar('next')}
+        />
       </ButtonWrapper>
     </Wrapper>
   );
