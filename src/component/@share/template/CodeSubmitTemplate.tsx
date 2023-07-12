@@ -66,6 +66,8 @@ export const CodeSubmitTemlplate = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+
   @media ${({ theme }) => theme.size.mobile} {
   }
   @media ${({ theme }) => theme.size.tablet} {
@@ -75,7 +77,7 @@ const Wrapper = styled.div`
 `;
 
 const WrapTitleBox = styled.div`
-  margin: 30px 20px 24px 20px;
+  margin: 30px 90px 24px 20px;
 `;
 
 const WrapInput = styled.div`
@@ -87,5 +89,8 @@ const WrapInput = styled.div`
 `;
 
 const WrapButton = styled.div`
-  margin: 200px 20px 0px 20px;
+  display: flex;
+  justify-content: center;
+  width: 240px;
+  margin: 200px 60px 0px 60px;
 `;
