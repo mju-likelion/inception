@@ -90,7 +90,6 @@ const WrapInput = styled.div`
 
 const WrapButton = styled.div`
   display: flex;
-
   justify-content: center;
   @media ${({ theme }) => theme.size.mobile} {
     margin: 200px 75px 0px 75px;
