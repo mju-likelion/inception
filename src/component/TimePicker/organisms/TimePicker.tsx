@@ -73,7 +73,7 @@ export const TimePicker = () => {
           selectTimeItem={selectTime}
         />
       </InnerContainer>
-      {isError && (
+      {isError && !isDisabled && (
         <Body ag="Body3" color="red">
           종료 시간이 시작 시간보다 늦어야 합니다
         </Body>

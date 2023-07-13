@@ -72,6 +72,7 @@ const Select = styled.button<{ $isError: boolean; $isOpened: boolean }>`
   &:disabled {
     color: ${({ theme }) => theme.colors.gray4};
     cursor: default;
+    border-color: ${({ theme }) => theme.colors.gray4};
 
     &:hover {
       border-color: ${({ theme }) => theme.colors.gray4};
