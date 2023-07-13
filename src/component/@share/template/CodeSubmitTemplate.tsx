@@ -73,7 +73,7 @@ const WrapperContents = styled.div`
   justify-content: center;
 
   @media ${({ theme }) => theme.size.tablet} {
-    margin: 60px 167px 100px 167px;
+    margin: 60px 167px 0px 167px;
     align-items: center;
   }
   @media ${({ theme }) => theme.size.web} {
@@ -110,8 +110,10 @@ const WrapButton = styled.div`
   @media ${({ theme }) => theme.size.mobile} {
     margin: 200px 75px 100px 75px;
   }
+  @media ${({ theme }) => theme.size.tablet} {
+    margin: 100px 75px 100px 75px;
+  }
   @media ${({ theme }) => theme.size.web} {
-    margin: unset;
     margin-top: 312px;
   }
 `;
