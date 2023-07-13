@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export const selectedStartTimes = atom({
+export const selectedStartTime = atom({
   key: 'selectedStartTime',
   default: '08:00',
 });
