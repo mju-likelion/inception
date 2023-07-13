@@ -40,6 +40,9 @@ const Container = styled.ul`
   border: 1px solid ${({ theme }) => theme.colors.gray4};
   box-shadow: 0px 2px 5px 0px rgba(195, 195, 195, 0.25);
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   position: absolute;
   top: 56px;
   cursor: pointer;
