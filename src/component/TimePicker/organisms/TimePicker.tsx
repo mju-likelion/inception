@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { Body } from '@/component/@share';
-import { TimeSelectionBox, TitleCheck } from '@/component/TimePicker/molecules';
+import { Body, TitleCheck } from '@/component/@share';
+import { TimeSelectionBox } from '@/component/TimePicker';
 import { ReactComponent as Bar } from '@/assets/images/TimePickerBar.svg';
 import { selectedStartTime, selectedEndTime, titleCheckState } from '@/store';
 
@@ -96,7 +96,9 @@ export const TimePicker = () => {
           종료 시간이 시작 시간보다 늦어야 합니다
         </Body>
       )}
-      <TitleCheck isChecked={isChecked} onClick={handleCheck} />
+      <TitleCheck isChecked={isChecked} onClick={handleCheck}>
+        날짜만 조율할래요
+      </TitleCheck>
     </Container>
   );
 };

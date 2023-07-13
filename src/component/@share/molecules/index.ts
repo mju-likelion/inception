@@ -3,3 +3,4 @@ export * from './ProgressBarModal';
 export * from './Information';
 export * from './TabBarButton';
 export * from './TitleBox';
+export * from './TitleCheck';
