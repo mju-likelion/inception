@@ -76,13 +76,10 @@ const WrapperContents = styled.div`
     margin: 60px 167px 0px 167px;
     align-items: center;
   }
-  @media ${({ theme }) => theme.size.web} {
-  }
 `;
 
 const WrapTitleBoxInput = styled.div`
   @media ${({ theme }) => theme.size.tablet} {
-    margin: 0px;
   }
 `;
 
@@ -95,11 +92,9 @@ const WrapTitleBox = styled.div`
 
 const WrapInput = styled.div`
   display: flex;
-  @media ${({ theme }) => theme.size.mobile} {
-    margin: 0px 20px 0px 20px;
-  }
+  margin: 0px 20px 0px 20px;
+
   @media ${({ theme }) => theme.size.tablet} {
-    margin: unset;
     margin-top: 40px;
   }
 `;
@@ -107,8 +102,8 @@ const WrapInput = styled.div`
 const WrapButton = styled.div`
   display: flex;
   justify-content: center;
+  margin: 200px 75px 100px 75px;
   @media ${({ theme }) => theme.size.mobile} {
-    margin: 200px 75px 100px 75px;
   }
   @media ${({ theme }) => theme.size.tablet} {
     margin: 100px 75px 100px 75px;
