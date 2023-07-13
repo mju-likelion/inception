@@ -32,59 +32,75 @@ export const CodeSubmitTemlplate = () => {
   };
 
   return (
-    <Wrapper>
+    <>
       <TabBar
         onClick={changeTabBar}
         firstTabTitle={'약속 잡기'}
         secondTabTitle={'결과 보기'}
       />
-      <WrapTitleBox>
-        <TitleBox
-          title={'약속방 들어가기'}
-          content={
-            '약속 결과를 확인하기 위해 약속방의 입장 코드를 입력해 주세요'
-          }
-          $isActive={false}
-          $isPass={false}
-        />
-      </WrapTitleBox>
-      <WrapInput>
-        <Input
-          placeholder={'약속방 입력 코드'}
-          onChange={onChange}
-          value={value}
-          maxLength={6}
-        />
-      </WrapInput>
-      <WrapButton>
-        <ButtonLarge isDisabled={buttonActive}>입력 완료</ButtonLarge>
-      </WrapButton>
-    </Wrapper>
+      <WrapperContents>
+        <WrapTitleBoxInput>
+          <WrapTitleBox>
+            <TitleBox
+              title={'약속방 들어가기'}
+              content={
+                '약속 결과를 확인하기 위해 약속방의 입장 코드를 입력해 주세요'
+              }
+              $isActive={false}
+              $isPass={false}
+            />
+          </WrapTitleBox>
+          <WrapInput>
+            <Input
+              placeholder={'약속방 입력 코드'}
+              onChange={onChange}
+              value={value}
+              maxLength={6}
+            />
+          </WrapInput>
+        </WrapTitleBoxInput>
+        <WrapButton>
+          <ButtonLarge isDisabled={buttonActive}>입력 완료</ButtonLarge>
+        </WrapButton>
+      </WrapperContents>
+    </>
   );
 };
 
-const Wrapper = styled.div`
+const WrapperContents = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  @media ${({ theme }) => theme.size.mobile} {
-  }
   @media ${({ theme }) => theme.size.tablet} {
+    margin: 60px 167px 100px 167px;
+    align-items: center;
   }
   @media ${({ theme }) => theme.size.web} {
   }
 `;
 
+const WrapTitleBoxInput = styled.div`
+  @media ${({ theme }) => theme.size.tablet} {
+    margin: 0px;
+  }
+`;
+
 const WrapTitleBox = styled.div`
   margin: 30px 90px 24px 20px;
+  @media ${({ theme }) => theme.size.tablet} {
+    margin: 0px;
+  }
 `;
 
 const WrapInput = styled.div`
   display: flex;
-  margin: 0px 20px 0px 20px;
   @media ${({ theme }) => theme.size.mobile} {
     margin: 0px 20px 0px 20px;
+  }
+  @media ${({ theme }) => theme.size.tablet} {
+    margin: unset;
+    margin-top: 40px;
   }
 `;
 
@@ -92,6 +108,10 @@ const WrapButton = styled.div`
   display: flex;
   justify-content: center;
   @media ${({ theme }) => theme.size.mobile} {
-    margin: 200px 75px 0px 75px;
+    margin: 200px 75px 100px 75px;
+  }
+  @media ${({ theme }) => theme.size.web} {
+    margin: unset;
+    margin-top: 312px;
   }
 `;
