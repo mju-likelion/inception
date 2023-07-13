@@ -1,42 +1,40 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import { DropDownButton } from '@/component/TimePicker/atoms';
 import { SelectionList } from '@/component/TimePicker';
 
-// props 추후 디테일 예정
 interface TimeSelectionBoxProps {
   selectedTime: string;
   isError: boolean;
   isDisabled: boolean;
+  isOpened: boolean;
+  onClick: () => void;
+  selectTimeItem: (time: string) => void;
 }
 
 export const TimeSelectionBox = ({
   selectedTime,
   isError,
   isDisabled,
+  isOpened,
+  onClick,
+  selectTimeItem,
 }: TimeSelectionBoxProps) => {
-  // 아래 변수 및 함수 props로 상위 컴포넌트에서 관리 예정
-  const [isOpened, setIsOpened] = useState(false);
-  const [time, setTime] = useState(selectedTime);
-
-  const handleClick = (time: string) => {
-    setTime(time);
-    setIsOpened(false);
-  };
-
   return (
     <Container>
       <Select
         $isError={isError}
         $isOpened={isOpened}
         disabled={isDisabled}
-        onClick={() => setIsOpened(!isOpened)}
+        onClick={onClick}
       >
-        {time}
+        {selectedTime}
         <DropDownButton />
       </Select>
       {isOpened && (
-        <SelectionList selectedTime={time} selectTimeItem={handleClick} />
+        <SelectionList
+          selectedTime={selectedTime}
+          selectTimeItem={selectTimeItem}
+        />
       )}
     </Container>
   );
