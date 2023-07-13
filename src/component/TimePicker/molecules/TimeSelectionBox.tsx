@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 import { DropDownButton } from '@/component/TimePicker/atoms';
 import { SelectionList } from '@/component/TimePicker';
@@ -11,34 +12,38 @@ interface TimeSelectionBoxProps {
   selectTimeItem: (time: string) => void;
 }
 
-export const TimeSelectionBox = ({
-  selectedTime,
-  isError,
-  isDisabled,
-  isOpened,
-  onClick,
-  selectTimeItem,
-}: TimeSelectionBoxProps) => {
-  return (
-    <Container>
-      <Select
-        $isError={isError}
-        $isOpened={isOpened}
-        disabled={isDisabled}
-        onClick={onClick}
-      >
-        {selectedTime}
-        <DropDownButton />
-      </Select>
-      {isOpened && (
-        <SelectionList
-          selectedTime={selectedTime}
-          selectTimeItem={selectTimeItem}
-        />
-      )}
-    </Container>
-  );
-};
+export const TimeSelectionBox = forwardRef<
+  HTMLDivElement,
+  TimeSelectionBoxProps
+>(
+  (
+    { selectedTime, isError, isDisabled, isOpened, onClick, selectTimeItem },
+    ref
+  ) => {
+    return (
+      <Container ref={ref}>
+        <Select
+          $isError={isError}
+          $isOpened={isOpened}
+          disabled={isDisabled}
+          onClick={onClick}
+        >
+          {selectedTime}
+          <DropDownButton />
+        </Select>
+        {isOpened && (
+          <SelectionList
+            selectedTime={selectedTime}
+            selectTimeItem={selectTimeItem}
+          />
+        )}
+      </Container>
+    );
+  }
+);
+
+// forwardRef 사용 시 Component definition is missing display name 에러 해결용
+TimeSelectionBox.displayName = 'TimeSelectionBox';
 
 const Container = styled.div`
   position: relative;

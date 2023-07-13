@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { Body } from '@/component/@share';
@@ -7,6 +7,9 @@ import { ReactComponent as Bar } from '@/assets/images/TimePickerBar.svg';
 import { selectedStartTime, selectedEndTime, titleCheckState } from '@/store';
 
 export const TimePicker = () => {
+  const startBoxRef = useRef<HTMLDivElement>(null);
+  const endBoxRef = useRef<HTMLDivElement>(null);
+
   const [startTime, setStartTime] = useRecoilState(selectedStartTime);
   const [endTime, setEndTime] = useRecoilState(selectedEndTime);
   const [openPicker, setOpenPicker] = useState<'' | 'start' | 'end'>('');
@@ -14,8 +17,20 @@ export const TimePicker = () => {
   const [isChecked, setIsChecked] = useRecoilState(titleCheckState);
   const [isDisabled, setIsDisabled] = useState(false);
 
+  useEffect(() => {
+    window.addEventListener('mousedown', listOutSideClick);
+    return () => window.removeEventListener('mousedown', listOutSideClick);
+  }, [openPicker]);
+
   const openSelectionBox = (type: 'start' | 'end') => {
     openPicker !== type ? setOpenPicker(type) : setOpenPicker('');
+  };
+
+  const listOutSideClick = (e: MouseEvent) => {
+    const ref = openPicker === 'start' ? startBoxRef : endBoxRef;
+    if (openPicker && !ref.current?.contains(e.target as Node)) {
+      setOpenPicker('');
+    }
   };
 
   const selectTime = (time: string) => {
@@ -50,6 +65,7 @@ export const TimePicker = () => {
   const handleCheck = () => {
     setIsChecked(!isChecked);
     setIsDisabled(!isDisabled);
+    openPicker && setOpenPicker('');
   };
 
   return (
@@ -62,6 +78,7 @@ export const TimePicker = () => {
           isOpened={openPicker === 'start'}
           onClick={() => openSelectionBox('start')}
           selectTimeItem={selectTime}
+          ref={startBoxRef}
         />
         <Bar />
         <TimeSelectionBox
@@ -71,6 +88,7 @@ export const TimePicker = () => {
           isOpened={openPicker === 'end'}
           onClick={() => openSelectionBox('end')}
           selectTimeItem={selectTime}
+          ref={endBoxRef}
         />
       </InnerContainer>
       {isError && !isDisabled && (
