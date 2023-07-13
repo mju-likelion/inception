@@ -13,7 +13,7 @@ export const TimeBox = () => {
   const [activeDate, setActiveDate] = useState<boolean[]>([]);
 
   return (
-    <TimeBoxContainer>
+    <>
       <TimeBlockHeader
         page={nowPage}
         setPage={setNowPage}
@@ -29,13 +29,9 @@ export const TimeBox = () => {
         <ErrorMessage>시간이 선택되지 않은 날짜가 있습니다</ErrorMessage>
       ) : null}
       <SelectAllButton>모든 시간 선택하기</SelectAllButton>
-    </TimeBoxContainer>
+    </>
   );
 };
-
-const TimeBoxContainer = styled.div`
-  margin: 0 20px;
-`;
 
 const TimeBoxBlock = styled.div`
   aspect-ratio: 1 / 0.8;
