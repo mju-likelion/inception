@@ -23,8 +23,5 @@ const Container = styled.div`
   align-items: center;
   gap: 8px;
   width: 133px;
-
-  p {
-    cursor: default;
-  }
+  cursor: pointer;
 `;

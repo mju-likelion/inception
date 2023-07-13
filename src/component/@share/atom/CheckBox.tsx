@@ -26,6 +26,8 @@ const Container = styled.button<{ $isChecked: boolean }>`
   border: 1px solid
     ${({ theme, $isChecked }) =>
       $isChecked ? theme.colors.gray2 : theme.colors.gray3};
+  cursor: pointer;
+
   &:hover {
     border-color: ${({ theme, $isChecked }) =>
       $isChecked ? theme.colors.gray1 : theme.colors.gray2};
