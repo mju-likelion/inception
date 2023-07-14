@@ -49,7 +49,8 @@ export const Information = ({
 };
 
 const InformationBlock = styled.div<{ $isEnabled: boolean; $isNull: boolean }>`
-  width: 320px;
+  min-width: 320px;
+  max-width: 500px;
   height: ${({ $isNull }) => $isNull && '70px'};
   align-items: center;
   display: flex;
