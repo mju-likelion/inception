@@ -6,11 +6,24 @@ import {
   SelectAllButton,
 } from '@/component/timeBlock/molecules';
 import { TimeBlockHeader } from '@/component/timeBlock/organisms';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { act } from 'react-dom/test-utils';
 
-export const TimeBox = () => {
+interface TimeBoxProps {
+  onSetActiveButton: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const TimeBox = ({ onSetActiveButton }: TimeBoxProps) => {
   const [nowPage, setNowPage] = useState(1);
   const [activeDate, setActiveDate] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    activeDate.every(function (x) {
+      return x === true;
+    })
+      ? onSetActiveButton(false)
+      : onSetActiveButton(true);
+  }, [activeDate]);
 
   return (
     <>
@@ -60,6 +73,12 @@ const TimeBoxBlock = styled.div`
   &::-webkit-scrollbar-track {
     background-color: ${({ theme }) => theme.colors.gray4};
     border-radius: 16px;
+  }
+
+  @media ${({ theme }) => theme.size.web} {
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
 

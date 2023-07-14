@@ -3,8 +3,11 @@ import { Information, TitleBox } from '@/component/@share/molecules';
 import calendar from '@/assets/images/Calendar.svg';
 import { ButtonLarge } from '@/component/@share';
 import { styled } from 'styled-components';
+import { useState } from 'react';
 
 export const PossibleTimePage = () => {
+  const [isActive, setIsActive] = useState(true);
+
   return (
     <TimePageBlock>
       <ContentBlock>
@@ -17,7 +20,7 @@ export const PossibleTimePage = () => {
             step={2}
           />
         </TitleBoxBlock>
-        <TimeBox />
+        <TimeBox onSetActiveButton={setIsActive} />
         <InformationBlock>
           <Information
             icon={calendar}
@@ -26,7 +29,7 @@ export const PossibleTimePage = () => {
           />
         </InformationBlock>
         <ButtonBlock>
-          <ButtonLarge isDisabled>다음으로</ButtonLarge>
+          <ButtonLarge isDisabled={isActive}>다음으로</ButtonLarge>
         </ButtonBlock>
       </ContentBlock>
     </TimePageBlock>
