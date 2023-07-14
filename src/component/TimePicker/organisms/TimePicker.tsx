@@ -4,7 +4,12 @@ import { useRecoilState } from 'recoil';
 import { Body, TitleCheck } from '@/component/@share';
 import { TimeSelectionBox } from '@/component/TimePicker';
 import { ReactComponent as Bar } from '@/assets/images/TimePickerBar.svg';
-import { selectedStartTime, selectedEndTime, titleCheckState } from '@/store';
+import {
+  selectedStartTime,
+  selectedEndTime,
+  titleCheckState,
+  timeErrorState,
+} from '@/store';
 import { TIME_LIST } from '@/component/TimePicker/data';
 
 export const TimePicker = () => {
@@ -14,7 +19,7 @@ export const TimePicker = () => {
   const [startTime, setStartTime] = useRecoilState(selectedStartTime);
   const [endTime, setEndTime] = useRecoilState(selectedEndTime);
   const [openPicker, setOpenPicker] = useState<'' | 'start' | 'end'>('');
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useRecoilState(timeErrorState);
   const [isChecked, setIsChecked] = useRecoilState(titleCheckState);
   const [isDisabled, setIsDisabled] = useState(false);
 
