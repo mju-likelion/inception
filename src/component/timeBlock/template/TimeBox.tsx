@@ -7,7 +7,6 @@ import {
 } from '@/component/timeBlock/molecules';
 import { TimeBlockHeader } from '@/component/timeBlock/organisms';
 import { useEffect, useState } from 'react';
-import { act } from 'react-dom/test-utils';
 
 interface TimeBoxProps {
   onSetActiveButton: React.Dispatch<React.SetStateAction<boolean>>;
