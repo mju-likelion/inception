@@ -4,7 +4,7 @@ import { theme } from '@/globalStyle';
 import { ProgressBar } from './ProgressBar';
 
 interface TitleBoxProps {
-  title: string;
+  title?: string;
   content: string;
   $isActive: boolean;
   $isPass: boolean;
