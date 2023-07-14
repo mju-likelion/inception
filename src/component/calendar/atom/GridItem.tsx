@@ -1,8 +1,8 @@
 import { theme } from '@/globalStyle';
+import { PropsWithChildren } from 'react';
 import { css, styled } from 'styled-components';
 
 interface Props {
-  children?: React.ReactNode;
   disabled?: boolean;
   dateOptions?: {
     $isDate: boolean;
@@ -17,7 +17,7 @@ export const GridItem = ({
   disabled,
   dateOptions,
   handleClickDate,
-}: Props) => {
+}: PropsWithChildren<Props>) => {
   const onClick = () => {
     handleClickDate?.(dateOptions?.date);
   };

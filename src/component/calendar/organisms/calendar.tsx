@@ -6,7 +6,7 @@ import {
 } from '@/component/calendar/molecules';
 import { CalendarData, DateRangeError } from '@/types';
 import { getCalendarData, isDuplicatedDate } from '@/util';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 /**
@@ -24,21 +24,33 @@ import { styled } from 'styled-components';
  *
  * 결과보기
  * 특정 날짜를 focus 시 컬러가 변하고 제출한 사람이 누구인지 표시된다.
+ *
+ * 방장이 신규 등록 시에는 항상 default, 약속시간을 선택할 때는 서버에서 내려온 데이터에 따라 default, disable 상태가 다르다.
  */
 
-// 방장이 신규 등록 시에는 항상 default, 약속시간을 선택할 때는 서버에서 내려온 데이터에 따라 default, disable 상태가 다르다.
-export const Calendar = () => {
+interface Props {
+  /** @example '2023-06-20' */
+  minDate: string;
+  /** @example '2023-12-01' */
+  maxDate: string;
+}
+
+export const Calendar = ({ minDate, maxDate }: Props) => {
   /*
     view: 결과 보기화면, 버튼 비활성화, 날짜 선택한 사람들을 count로 보여주도록
     create: 방장이 새로운 방을 생성할 때
     use: 유저가 가용 가능한 시간을 선택
   */
   const [mode, setMode] = useState('create');
-  const [currentDate, setCurrentDate] = useState(['2023', '6']); // 항상 현재 년,월을 보여주는가??
+  const [currentDate, setCurrentDate] = useState(
+    minDate.split('-').slice(0, 2)
+  );
   const [calendar, setCalendar] = useState<CalendarData[]>(() =>
     getCalendarData(currentDate[0], currentDate[1])
   );
-  const [weekCount, setWeekCount] = useState(5);
+  const [weekCount, setWeekCount] = useState(
+    getWeekCount(minDate.split('-')[0], minDate.split('-')[1])
+  );
   const [isDateRangeError, setIsDateRangeError] = useState<DateRangeError>({
     start: false,
     end: false,
@@ -131,23 +143,9 @@ const Grid = styled.div<{ $weekCount: number }>`
   max-width: 500px;
 
   min-height: 368px;
-  /* max-height: 575px; */
   max-height: 668px;
 
-  @media (max-width: 360px) {
-    width: 320px;
-  }
-
-  @media ${({ theme }) => theme.size.mobile} {
-    width: 100%;
-  }
-  @media ${({ theme }) => theme.size.tablet} {
-  }
-  @media ${({ theme }) => theme.size.web} {
-  }
-
   margin-bottom: 500px;
-  /* background-color: green; */
 `;
 
 const GridHeader = styled.div`

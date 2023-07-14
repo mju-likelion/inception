@@ -90,10 +90,6 @@ const Text = styled.p<{
   ${(props) =>
     props.ag === 'Body4' &&
     css`
-      /* font-family: Pretendard; */
-      font-size: 12px;
-      font-weight: 600;
-      line-height: 16px;
       ${({ theme }) => theme.typographies.body4};
       letter-spacing: 0px;
       text-align: ${props.align};
