@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { App } from '@/App';
 import { Home } from './Home';
 import { CalendarTest } from './CalendarTest';
+import { RedirectPage } from '@/component/ErrorPage/atoms';
 
 export * from '@/App';
 export * from './Home';
@@ -20,6 +21,10 @@ export const pages = createBrowserRouter([
       {
         path: 'calendar', // ex) localhost:3000/calendar
         element: <CalendarTest />,
+      },
+      {
+        path: '/*', // ex) not-found
+        element: <RedirectPage />,
       },
     ],
   },
