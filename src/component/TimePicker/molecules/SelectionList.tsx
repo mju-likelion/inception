@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { TimeSelection } from '@/component/TimePicker';
 import { TIME_LIST } from '@/component/TimePicker/data';
+import { useState, useEffect, useRef } from 'react';
 
 interface SelectionListProps {
   selectedTime: string;
@@ -11,12 +12,26 @@ export const SelectionList = ({
   selectedTime,
   selectTimeItem,
 }: SelectionListProps) => {
+  const listRef = useRef<HTMLUListElement>(null);
+  const scrollHeight = listRef.current?.scrollHeight;
+  const optionHeight = scrollHeight && scrollHeight / TIME_LIST.length;
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    setIndex(TIME_LIST.indexOf(selectedTime));
+    const y = optionHeight && optionHeight * index;
+    y &&
+      listRef.current.scrollTo({
+        top: optionHeight * index,
+      });
+  });
+
   const handleClick = (time: string) => {
     selectTimeItem(time);
   };
 
   return (
-    <Container>
+    <Container ref={listRef}>
       {TIME_LIST.map((item) => (
         <TimeSelection
           onClick={() => handleClick(item)}
