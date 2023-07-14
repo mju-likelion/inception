@@ -4,9 +4,15 @@ import {
   Date as DateComponent,
   DateHeader,
 } from '@/component/calendar/molecules';
-import { CalendarData, DateRangeError } from '@/types';
-import { getCalendarData, isDuplicatedDate } from '@/util';
-import { useEffect, useState } from 'react';
+import { CalendarData, DateRangeLimit } from '@/types';
+import {
+  calcDateFewMonth,
+  dateFormatToString,
+  getCalendarData,
+  getWeekCount,
+  isDuplicatedDate,
+} from '@/util';
+import { useState } from 'react';
 import { styled } from 'styled-components';
 
 /**
@@ -29,31 +35,35 @@ import { styled } from 'styled-components';
  */
 
 interface Props {
+  viewType: 'result' | 'create' | 'select';
   /** @example '2023-06-20' */
-  minDate: string;
-  /** @example '2023-12-01' */
-  maxDate: string;
+  minDate?: string;
+  maxDate?: string;
 }
 
-export const Calendar = ({ minDate, maxDate }: Props) => {
-  /*
-    view: 결과 보기화면, 버튼 비활성화, 날짜 선택한 사람들을 count로 보여주도록
-    create: 방장이 새로운 방을 생성할 때
-    use: 유저가 가용 가능한 시간을 선택
-  */
-  const [mode, setMode] = useState('create');
-  const [currentDate, setCurrentDate] = useState(
-    minDate.split('-').slice(0, 2)
-  );
+export const Calendar = ({
+  viewType,
+  minDate = dateFormatToString(new Date()),
+  maxDate = dateFormatToString(calcDateFewMonth(new Date(), 5)), // 최대 180일
+}: Props) => {
+  const splitMinDate = minDate.split('-');
+  const splitMaxDate = maxDate.split('-');
+
+  /** 현재 날짜 */
+  const [currentDate, setCurrentDate] = useState(splitMinDate.slice(0, 2));
+
+  /** 달력 정보 */
   const [calendar, setCalendar] = useState<CalendarData[]>(() =>
-    getCalendarData(currentDate[0], currentDate[1])
+    getCalendarData(splitMinDate[0], splitMinDate[1])
   );
+
   const [weekCount, setWeekCount] = useState(
-    getWeekCount(minDate.split('-')[0], minDate.split('-')[1])
+    getWeekCount(splitMinDate[0], splitMinDate[1])
   );
-  const [isDateRangeError, setIsDateRangeError] = useState<DateRangeError>({
-    start: false,
-    end: false,
+
+  const [dateRangeLimit, setDateRangeLimit] = useState<DateRangeLimit>({
+    start: new Date(currentDate.join('-')) <= new Date(splitMinDate.join('-')),
+    end: new Date(currentDate.join('-')) >= new Date(splitMaxDate.join('-')),
   });
 
   const handleClickDate = (date?: string) => {
@@ -82,6 +92,14 @@ export const Calendar = ({ minDate, maxDate }: Props) => {
     const changedCalendar = getCalendarData(changedYear, changedMonth);
 
     setCurrentDate([changedYear, changedMonth]);
+    setDateRangeLimit({
+      start:
+        new Date(`${changedYear}-${changedMonth}`) <=
+        new Date(splitMinDate.slice(0, 2).join('-')),
+      end:
+        new Date(`${changedYear}-${changedMonth}`) >=
+        new Date(splitMaxDate.slice(0, 2).join('-')),
+    });
 
     if (
       !isDuplicatedDate(calendar, { year: changedYear, month: changedMonth })
@@ -98,7 +116,7 @@ export const Calendar = ({ minDate, maxDate }: Props) => {
       <GridHeader>
         <CalendarHeader
           currentDate={currentDate}
-          isDateRangeError={isDateRangeError}
+          dateRangeLimit={dateRangeLimit}
           handleChangeCalendar={handleChangeCalendar}
         />
       </GridHeader>
@@ -110,17 +128,13 @@ export const Calendar = ({ minDate, maxDate }: Props) => {
         handleClickDate={handleClickDate}
       />
 
-      <GridFooter>
-        <ButtonSmall>약속 수정</ButtonSmall>
-      </GridFooter>
+      {viewType === 'result' && (
+        <GridFooter>
+          <ButtonSmall>약속 수정</ButtonSmall>
+        </GridFooter>
+      )}
     </Grid>
   );
-};
-
-const getWeekCount = (year: string, month: string) => {
-  const startDay = new Date(+year, +month - 1, 1).getDay();
-  const totalDate = new Date(+year, +month, 0).getDate();
-  return Math.ceil((startDay + totalDate) / 7);
 };
 
 const Grid = styled.div<{ $weekCount: number }>`

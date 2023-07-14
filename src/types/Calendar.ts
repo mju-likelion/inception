@@ -6,7 +6,7 @@ export interface CalendarData {
 
 export type ActiveStatus = 'disabled' | 'default' | 'active';
 
-export interface DateRangeError {
+export interface DateRangeLimit {
   start: boolean;
   end: boolean;
 }

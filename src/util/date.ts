@@ -1,6 +1,8 @@
 /* date = 일자 데이터, day = 요일 데이터 */
 import { CalendarData } from '@/types';
+import { padStart } from 'lodash';
 
+/** 월별 캘란더 기본 정보를 반환한다. */
 export const getCalendarData = (
   year: string,
   month: string
@@ -20,10 +22,11 @@ export const getCalendarData = (
   return datas;
 };
 
+/** 캘린더 날짜가 겹치는지 판별 */
 export const isDuplicatedDate = (
   calendarData: CalendarData[],
   changedDate: { year: string; month: string }
-) => {
+): boolean => {
   const isExist = calendarData.some((calendar) => {
     const splitDate = calendar.date.split('-');
     return (
@@ -33,6 +36,23 @@ export const isDuplicatedDate = (
   });
 
   return isExist;
+};
+
+export const dateFormatToString = (date: Date): string => {
+  const year = `${date.getFullYear()}`;
+  const month = padStart(`${date.getMonth() + 1}`, 2, '0');
+  const day = padStart(`${date.getDate()}`, 2, '0');
+  return `${year}-${month}-${day}`; // yyyy-mm-dd
+};
+
+export const calcDateFewMonth = (date: Date, jumpMonth: number): Date => {
+  return new Date(date.setMonth(date.getMonth() + jumpMonth));
+};
+
+export const getWeekCount = (year: string, month: string) => {
+  const startDay = new Date(+year, +month - 1, 1).getDay();
+  const totalDate = new Date(+year, +month, 0).getDate();
+  return Math.ceil((startDay + totalDate) / 7);
 };
 
 const calcDaysByYearMonth = (year: string, month: string): string[] => {
@@ -45,7 +65,7 @@ const calcDaysByYearMonth = (year: string, month: string): string[] => {
   });
 };
 
-const convertDayNumberToString = (dayNumber: number) => {
+const convertDayNumberToString = (dayNumber: number): string => {
   switch (dayNumber) {
     case 0:
       return '일';
