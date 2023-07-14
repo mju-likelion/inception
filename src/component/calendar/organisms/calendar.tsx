@@ -4,7 +4,7 @@ import {
   Date as DateComponent,
   DateHeader,
 } from '@/component/calendar/molecules';
-import { CalendarData, DateRangeLimit } from '@/types';
+import { CalendarData, DateRangeLimit, ViewType } from '@/types';
 import {
   calcDateFewMonth,
   dateFormatToString,
@@ -35,7 +35,7 @@ import { styled } from 'styled-components';
  */
 
 interface Props {
-  viewType: 'result' | 'create' | 'select';
+  viewType: ViewType;
   /** @example '2023-06-20' */
   minDate?: string;
   maxDate?: string;
@@ -126,6 +126,7 @@ export const Calendar = ({
         calendarData={calendar}
         currentDate={currentDate}
         handleClickDate={handleClickDate}
+        viewType={viewType}
       />
 
       {viewType === 'result' && (

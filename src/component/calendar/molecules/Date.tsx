@@ -1,19 +1,21 @@
 import { useMemo } from 'react';
 import { Count, GridItem } from '@/component/calendar/atom';
 import { theme } from '@/globalStyle';
-import { ActiveStatus, CalendarData } from '@/types';
+import { ActiveStatus, CalendarData, ViewType } from '@/types';
 import { styled } from 'styled-components';
 
 interface DateProps {
   calendarData: CalendarData[];
   currentDate: string[];
   handleClickDate: (date?: string) => void;
+  viewType: ViewType;
 }
 
 const DateComponent = ({
   calendarData,
   currentDate,
   handleClickDate,
+  viewType,
 }: DateProps) => {
   const showDates = useMemo(() => {
     const filterdCalendarData = calendarData.filter((data) => {
@@ -47,7 +49,9 @@ const DateComponent = ({
             <div>
               <p>{removeZeroPadDate}</p>
               {/* 결과 보기 화면에서만 Count 출력하기 */}
-              <Count count={3} activeStatus={data.activeStatus} />
+              {viewType === 'result' && (
+                <Count count={3} activeStatus={data.activeStatus} />
+              )}
             </div>
           </GridItem>
         );

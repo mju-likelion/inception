@@ -10,3 +10,5 @@ export interface DateRangeLimit {
   start: boolean;
   end: boolean;
 }
+
+export type ViewType = 'result' | 'create' | 'select';
