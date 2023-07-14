@@ -59,7 +59,7 @@ const Container = styled.div`
 
 const BodyBlock = styled.div`
   width: 210px;
-  @media ${({ theme }) => theme.size.web} {
+  @media ${({ theme }) => theme.size.tablet} {
     width: 500px;
   }
 `;
