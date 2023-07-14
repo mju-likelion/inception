@@ -1,4 +1,4 @@
-export const TIME_LIST = [
+export enum TIME_LIST {
   '00:00',
   '00:30',
   '01:00',
@@ -48,4 +48,4 @@ export const TIME_LIST = [
   '23:00',
   '23:30',
   '24:00',
-];
+}

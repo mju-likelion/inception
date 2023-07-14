@@ -1,11 +1,11 @@
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { TimeSelection } from '@/component/TimePicker';
 import { TIME_LIST } from '@/component/TimePicker/data';
-import { useState, useEffect, useRef } from 'react';
 
 interface SelectionListProps {
-  selectedTime: string;
-  selectTimeItem: (time: string) => void;
+  selectedTime: keyof typeof TIME_LIST;
+  selectTimeItem: (time: keyof typeof TIME_LIST) => void;
 }
 
 export const SelectionList = ({
@@ -13,12 +13,18 @@ export const SelectionList = ({
   selectTimeItem,
 }: SelectionListProps) => {
   const listRef = useRef<HTMLUListElement>(null);
+
+  const TIME_LIST_KEYS = (
+    Object.values(TIME_LIST) as Array<keyof typeof TIME_LIST>
+  ).filter((v) => isNaN(Number(v)));
+
   const scrollHeight = listRef.current?.scrollHeight;
-  const optionHeight = scrollHeight && scrollHeight / TIME_LIST.length;
+  const optionHeight = scrollHeight && scrollHeight / TIME_LIST_KEYS.length;
+
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    setIndex(TIME_LIST.indexOf(selectedTime));
+    setIndex(TIME_LIST_KEYS.indexOf(selectedTime));
     const y = optionHeight && optionHeight * index;
     y &&
       listRef.current.scrollTo({
@@ -26,13 +32,13 @@ export const SelectionList = ({
       });
   });
 
-  const handleClick = (time: string) => {
+  const handleClick = (time: keyof typeof TIME_LIST) => {
     selectTimeItem(time);
   };
 
   return (
     <Container ref={listRef}>
-      {TIME_LIST.map((item) => (
+      {TIME_LIST_KEYS.map((item) => (
         <TimeSelection
           onClick={() => handleClick(item)}
           $isSelected={selectedTime === item}

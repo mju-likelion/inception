@@ -5,6 +5,7 @@ import { Body, TitleCheck } from '@/component/@share';
 import { TimeSelectionBox } from '@/component/TimePicker';
 import { ReactComponent as Bar } from '@/assets/images/TimePickerBar.svg';
 import { selectedStartTime, selectedEndTime, titleCheckState } from '@/store';
+import { TIME_LIST } from '@/component/TimePicker/data';
 
 export const TimePicker = () => {
   const startBoxRef = useRef<HTMLDivElement>(null);
@@ -33,13 +34,13 @@ export const TimePicker = () => {
     }
   };
 
-  const selectTime = (time: string) => {
+  const selectTime = (time: keyof typeof TIME_LIST) => {
     openPicker === 'start' ? setStartTime(time) : setEndTime(time);
     setOpenPicker('');
     checkError(time);
   };
 
-  const checkError = (time: string) => {
+  const checkError = (time: keyof typeof TIME_LIST) => {
     const startHour =
       openPicker === 'start' ? time.substring(0, 2) : startTime.substring(0, 2);
     const startMinute =
