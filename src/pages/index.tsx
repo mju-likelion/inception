@@ -6,6 +6,8 @@ import { PossibleDatePage } from './PossibleDatePage';
 import { RedirectPage } from '@/component/ErrorPage/atoms';
 import { PossibleTimePage } from './PossibleTimePage';
 import { Result } from './Result';
+import { LoginMasterTemlplate } from '@/component/@share/template/LoginMasterTemplate';
+import { CodeSubmitTemlplate } from '@/component/@share/template/CodeSubmitTemplate';
 
 export * from '@/App';
 export * from './Home';
@@ -24,6 +26,10 @@ export const pages = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: 'submit-code', // ex) localhost:3000/submit-code
+        element: <CodeSubmitTemlplate />,
+      },
+      {
         path: 'calendar', // ex) localhost:3000/calendar
         element: <CalendarTest />,
       },
@@ -34,6 +40,10 @@ export const pages = createBrowserRouter([
       {
         path: 'select-time', // ex) localhost:3000/selectTime
         element: <PossibleTimePage />,
+      },
+      {
+        path: 'login', // ex) localhost:3000/login
+        element: <LoginMasterTemlplate />,
       },
       {
         path: 'result', // ex) localhost:3000/result
