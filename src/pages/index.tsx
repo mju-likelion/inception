@@ -28,7 +28,7 @@ export const pages = createBrowserRouter([
         element: <PossibleTimePage />,
       },
       {
-        path: 'result', // ex) localhost:3000/selectTime
+        path: 'result', // ex) localhost:3000/result
         element: <Result />,
       },
     ],
