@@ -48,19 +48,17 @@ export const LoginMasterTemlplate = () => {
         firstTabTitle={'약속 잡기'}
         secondTabTitle={'결과 보기'}
       />
-      <WrapperContents>
-        <WrapTitleBoxInput>
-          <WrapTitleBox>
-            <TitleBox
-              total={3}
-              step={3}
-              title=""
-              content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
-              $isActive={true}
-              $isPass={false}
-            />
-          </WrapTitleBox>
-          <NicknameInput>
+      <WrapContents>
+        <WrapUpperContents>
+          <TitleBox
+            total={3}
+            step={3}
+            title=""
+            content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
+            $isActive={true}
+            $isPass={false}
+          />
+          <WrapInput>
             <Input
               type={'text'}
               placeholder={'닉네임'}
@@ -68,8 +66,6 @@ export const LoginMasterTemlplate = () => {
               onChange={onChangeNickname}
               value={nicknameValue}
             />
-          </NicknameInput>
-          <PasswordInput>
             <Input
               type={'password'}
               placeholder={'비밀번호'}
@@ -77,63 +73,62 @@ export const LoginMasterTemlplate = () => {
               onChange={onChangePassword}
               value={passwordValue}
             />
-          </PasswordInput>
-        </WrapTitleBoxInput>
+          </WrapInput>
+        </WrapUpperContents>
         <WrapButton>
           <ButtonLarge isDisabled={buttonInactive}>입력 완료</ButtonLarge>
         </WrapButton>
-      </WrapperContents>
+      </WrapContents>
     </>
   );
 };
-const WrapperContents = styled.div`
+const WrapContents = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 30px;
+
   @media ${({ theme }) => theme.size.tablet} {
-    margin: 60px 167px 0px 167px;
     align-items: center;
+    margin-top: 60px;
+  }
+  @media ${({ theme }) => theme.size.web} {
+    align-items: center;
+    margin-top: 80px;
   }
 `;
-
-const WrapTitleBoxInput = styled.div`
-  @media ${({ theme }) => theme.size.tablet} {
-  }
-`;
-
-const WrapTitleBox = styled.div`
-  margin: 30px 90px 24px 20px;
-  @media ${({ theme }) => theme.size.tablet} {
-    margin: 0px;
-  }
-`;
-
-const NicknameInput = styled.div`
+const WrapUpperContents = styled.div`
   display: flex;
-  margin: 24px 20px 8px 20px;
-  @media ${({ theme }) => theme.size.tablet} {
-    margin-top: 40px;
-  }
-`;
-const PasswordInput = styled.div`
-  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   margin: 0px 20px 0px 20px;
+`;
+
+const WrapInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 24px;
+  gap: 8px;
+
   @media ${({ theme }) => theme.size.tablet} {
+    width: 500px;
     margin-top: 40px;
+  }
+  @media ${({ theme }) => theme.size.web} {
+    margin-top: 50px;
   }
 `;
 
 const WrapButton = styled.div`
   display: flex;
   justify-content: center;
-  margin: 200px 75px 100px 75px;
+  margin: 200px 0px 100px 0px;
 
-  @media ${({ theme }) => theme.size.mobile} {
-  }
   @media ${({ theme }) => theme.size.tablet} {
-    margin: 100px 75px 100px 75px;
+    margin: 158px 0px 100px 0px;
   }
   @media ${({ theme }) => theme.size.web} {
-    margin-top: 312px;
+    margin: 270px 0px 200px 0px;
   }
 `;
