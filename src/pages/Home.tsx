@@ -5,12 +5,12 @@ import { Calendar, TimePicker } from '@/component';
 import { tabState } from '@/store';
 
 export const Home = () => {
-  const setTab = useSetRecoilState(tabState);
+  const setSelectedTab = useSetRecoilState(tabState);
 
   return (
     <>
       <TabBar
-        onClick={setTab}
+        onClick={setSelectedTab}
         firstTabTitle="약속 잡기"
         secondTabTitle="결과 보기"
       />
