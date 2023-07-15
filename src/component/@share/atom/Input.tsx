@@ -1,16 +1,27 @@
 import { styled } from 'styled-components';
 
 interface Props {
+  type?: React.HTMLInputTypeAttribute;
   placeholder?: string;
+  onKeyUp?: React.KeyboardEventHandler<HTMLInputElement>;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   value: string;
   maxLength?: number;
 }
 
-export const Input = ({ placeholder, onChange, value, maxLength }: Props) => {
+export const Input = ({
+  type,
+  placeholder,
+  onChange,
+  onKeyUp,
+  value,
+  maxLength,
+}: Props) => {
   return (
     <InputField
+      type={type}
       placeholder={placeholder}
+      onInput={onKeyUp}
       onChange={onChange}
       value={value}
       maxLength={maxLength}
@@ -19,7 +30,9 @@ export const Input = ({ placeholder, onChange, value, maxLength }: Props) => {
 };
 
 const InputField = styled.input`
-  width: 320px;
+  width: 100%;
+  min-width: 320px;
+  max-width: 500px;
   height: 48px;
   padding: 12px;
   border: 1px solid ${({ theme }) => theme.colors.gray4};

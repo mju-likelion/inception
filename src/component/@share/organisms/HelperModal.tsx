@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ButtonLarge } from '@/component/@share/atom';
-import { ProgressBarModal, TitleBox } from '../molecules';
+import { ProgressBarModal, HelperTitleBox } from '@/component/@share/molecules';
 
 interface HelperModalProps {
   step: 0 | 1 | 2 | 3;
@@ -27,7 +27,7 @@ export const HelperModal = ({ step }: HelperModalProps) => {
     const result = [];
     for (let i = 0; i < 3; i++) {
       result.push(
-        <TitleBox
+        <HelperTitleBox
           key={i}
           title={helpText[i].title}
           content={helpText[i].content}

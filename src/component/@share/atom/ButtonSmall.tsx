@@ -9,12 +9,13 @@ const Button = styled.button`
   ${({ theme }) => theme.typographies.body3};
   width: 92px;
   height: 40px;
-  border: 1px solid ${({ theme }) => theme.colors.gray4};
+  border: 1px solid ${({ theme }) => theme.colors.gray1};
   border-radius: 50px;
-  color: ${({ theme }) => theme.colors.gray4};
+  color: ${({ theme }) => theme.colors.gray1};
 
   &:hover {
-    border: 1px solid ${({ theme }) => theme.colors.mint1};
-    color: ${({ theme }) => theme.colors.mint1};
+    background-color: ${({ theme }) => theme.colors.gray4};
+    color: ${({ theme }) => theme.colors.gray2};
+    border: none;
   }
 `;
