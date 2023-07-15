@@ -22,6 +22,10 @@ export const LoginMasterTemlplate = () => {
     console.log(passwordValue);
   };
 
+  useEffect(() => {
+    console.log(nicknameValue, passwordValue);
+  }, []);
+
   const activeEvent: React.KeyboardEventHandler<HTMLInputElement> = () => {
     const isInactive = nicknameValue.length === 0 || passwordValue.length === 0;
     setButtonInactive(isInactive);
@@ -82,7 +86,6 @@ export const LoginMasterTemlplate = () => {
     </>
   );
 };
-
 const WrapperContents = styled.div`
   display: flex;
   flex-direction: column;
@@ -124,6 +127,7 @@ const WrapButton = styled.div`
   display: flex;
   justify-content: center;
   margin: 200px 75px 100px 75px;
+
   @media ${({ theme }) => theme.size.mobile} {
   }
   @media ${({ theme }) => theme.size.tablet} {
