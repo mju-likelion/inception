@@ -3,6 +3,7 @@ import { App } from '@/App';
 import { Home } from './Home';
 import { CalendarTest } from './CalendarTest';
 import { SelectDate } from './SelectDate';
+import { PossibleTimePage } from './PossibleTimePage';
 
 export * from '@/App';
 export * from './Home';
@@ -27,6 +28,10 @@ export const pages = createBrowserRouter([
       {
         path: 'select-date', // ex) localhost:3000/select-date
         element: <SelectDate />,
+      },
+      {
+        path: 'selectTime', // ex) localhost:3000/selectTime
+        element: <PossibleTimePage />,
       },
     ],
   },
