@@ -12,13 +12,7 @@ export const PossibleTimePage = () => {
     <TimePageBlock>
       <ContentBlock>
         <TitleBoxBlock>
-          <TitleBox
-            content="가용한 날짜들을 선택해주세요"
-            $isActive={false}
-            $isPass={false}
-            defaultColor="gray1"
-            step={2}
-          />
+          <TitleBox content="가용한 날짜들을 선택해주세요" step={2} />
         </TitleBoxBlock>
         <TimeBox onSetActiveButton={setIsActive} />
         <InformationBlock>
