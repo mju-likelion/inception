@@ -1,32 +1,34 @@
 import styled from 'styled-components';
 import { Body, Title } from '../atom';
 import { theme } from '@/globalStyle';
+import { ProgressBar } from './ProgressBar';
 
 interface TitleBoxProps {
-  title: string;
+  title?: string;
   content: string;
-  $isActive: boolean;
-  $isPass: boolean;
   defaultColor?: keyof typeof theme.colors;
+  total?: number;
+  step?: number;
 }
 
 export const TitleBox = ({
   title,
   content,
-  $isActive,
-  $isPass,
   defaultColor = 'black',
+  total = 3,
+  step,
 }: TitleBoxProps) => {
   return (
     <Container>
-      <Title
-        ag="Title2"
-        color={$isActive ? 'mint1' : $isPass ? 'mint2' : defaultColor}
-      >
-        {title}
-      </Title>
+      {step ? (
+        <ProgressBar total={total} step={step} />
+      ) : (
+        <Title ag="Title1" color={defaultColor}>
+          {title}
+        </Title>
+      )}
       <BodyBlock>
-        <Body ag="Body3" color={$isActive ? 'gray1' : 'gray3'}>
+        <Body ag="Body2Regular" color="gray1">
           {content}
         </Body>
       </BodyBlock>
@@ -40,8 +42,17 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
+  @media ${({ theme }) => theme.size.tablet} {
+    width: 500px;
+    h1 {
+      ${({ theme }) => theme.typographies.title3};
+    }
+  }
 `;
 
 const BodyBlock = styled.div`
   width: 210px;
+  @media ${({ theme }) => theme.size.tablet} {
+    width: 500px;
+  }
 `;
