@@ -133,7 +133,7 @@ export const Calendar = ({
 
       {viewType === 'result' && (
         <GridFooter>
-          <ButtonSmall>약속 수정</ButtonSmall>
+          <ButtonSmall>일정 수정</ButtonSmall>
         </GridFooter>
       )}
     </Grid>
@@ -143,7 +143,7 @@ export const Calendar = ({
 const Grid = styled.div<{ $weekCount: number }>`
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 
   aspect-ratio: ${({ $weekCount }) => {
     if ($weekCount === 6) {
