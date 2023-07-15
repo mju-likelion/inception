@@ -42,7 +42,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
-  @media ${({ theme }) => theme.size.web} {
+  @media ${({ theme }) => theme.size.tablet} {
     width: 500px;
     h1 {
       ${({ theme }) => theme.typographies.title3};
@@ -52,7 +52,7 @@ const Container = styled.div`
 
 const BodyBlock = styled.div`
   width: 210px;
-  @media ${({ theme }) => theme.size.web} {
+  @media ${({ theme }) => theme.size.tablet} {
     width: 500px;
   }
 `;
