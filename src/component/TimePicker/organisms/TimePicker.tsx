@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { Body, TitleCheck } from '@/component/@share';
 import { TimeSelectionBox } from '@/component/TimePicker';
-import { ReactComponent as Bar } from '@/assets/images/TimePickerBar.svg';
+
 import {
   selectedStartTime,
   selectedEndTime,
@@ -119,4 +119,11 @@ const InnerContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+`;
+
+const Bar = styled.div`
+  width: 8px;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.gray3};
+  border-radius: 1px;
 `;
