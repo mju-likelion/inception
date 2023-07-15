@@ -12,6 +12,7 @@ import {
   getWeekCount,
   isDuplicatedDate,
 } from '@/util';
+import padStart from 'lodash/padStart';
 import { useState } from 'react';
 import { styled } from 'styled-components';
 
@@ -88,11 +89,12 @@ export const Calendar = ({
     date.setMonth(type === 'prev' ? date.getMonth() - 1 : date.getMonth() + 1);
 
     const changedYear = `${date.getFullYear()}`;
-    const changedMonth = `${date.getMonth() + 1}`;
+    const changedMonth = padStart(`${date.getMonth() + 1}`, 2, '0');
     const changedCalendar = getCalendarData(changedYear, changedMonth);
 
     setCurrentDate([changedYear, changedMonth]);
     setDateRangeLimit({
+      // 주의! new Date('2023-06') !== new Date('2023-6')
       start:
         new Date(`${changedYear}-${changedMonth}`) <=
         new Date(splitMinDate.slice(0, 2).join('-')),
@@ -141,12 +143,10 @@ export const Calendar = ({
 const Grid = styled.div<{ $weekCount: number }>`
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
 
   aspect-ratio: ${({ $weekCount }) => {
     if ($weekCount === 6) {
       return '1/1.3125';
-      // return '1/1.484375';
     } else if ($weekCount === 5) {
       return '1/1.15';
     } else {
@@ -159,8 +159,6 @@ const Grid = styled.div<{ $weekCount: number }>`
 
   min-height: 368px;
   max-height: 668px;
-
-  //margin-bottom: 500px;
 `;
 
 const GridHeader = styled.div`

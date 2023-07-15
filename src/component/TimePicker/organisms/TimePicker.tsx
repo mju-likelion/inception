@@ -10,7 +10,7 @@ import {
   titleCheckState,
   timeErrorState,
 } from '@/store';
-import { TimeListData } from '@/types/TimePicker';
+import { TimeListData } from '@/types';
 
 export const TimePicker = () => {
   const startBoxRef = useRef<HTMLDivElement>(null);
