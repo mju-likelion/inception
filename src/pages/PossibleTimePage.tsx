@@ -44,7 +44,7 @@ export const PossibleTimePage = () => {
 const TimePageBlock = styled.div`
   margin: auto;
   min-width: 320px;
-  max-width: 500px;
+  max-width: 540px;
 `;
 
 const ContentBlock = styled.div`
