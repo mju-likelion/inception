@@ -10,7 +10,7 @@ import {
   titleCheckState,
   timeErrorState,
 } from '@/store';
-import { TIME_LIST } from '@/component/TimePicker/data';
+import { TimeListData } from '@/types/TimePicker';
 
 export const TimePicker = () => {
   const startBoxRef = useRef<HTMLDivElement>(null);
@@ -39,13 +39,13 @@ export const TimePicker = () => {
     }
   };
 
-  const selectTime = (time: keyof typeof TIME_LIST) => {
+  const selectTime = (time: TimeListData) => {
     openPicker === 'start' ? setStartTime(time) : setEndTime(time);
     setOpenPicker('');
     checkError(time);
   };
 
-  const checkError = (time: keyof typeof TIME_LIST) => {
+  const checkError = (time: TimeListData) => {
     const startHour =
       openPicker === 'start' ? time.substring(0, 2) : startTime.substring(0, 2);
     const startMinute =

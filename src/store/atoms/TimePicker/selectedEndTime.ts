@@ -1,7 +1,7 @@
-import { TIME_LIST } from '@/component/TimePicker/data';
 import { atom } from 'recoil';
+import { TimeListData } from '@/types/TimePicker';
 
-export const selectedEndTime = atom<keyof typeof TIME_LIST>({
+export const selectedEndTime = atom<TimeListData>({
   key: 'selectedEndTime',
   default: '22:00',
 });

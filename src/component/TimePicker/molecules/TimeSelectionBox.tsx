@@ -2,15 +2,15 @@ import { forwardRef } from 'react';
 import styled from 'styled-components';
 import { DropDownButton } from '@/component/TimePicker/atoms';
 import { SelectionList } from '@/component/TimePicker';
-import { TIME_LIST } from '@/component/TimePicker/data';
+import { TimeListData } from '@/types/TimePicker';
 
 interface TimeSelectionBoxProps {
-  selectedTime: keyof typeof TIME_LIST;
+  selectedTime: TimeListData;
   isError: boolean;
   isDisabled: boolean;
   isOpened: boolean;
   onClick: () => void;
-  selectTimeItem: (time: keyof typeof TIME_LIST) => void;
+  selectTimeItem: (time: TimeListData) => void;
 }
 
 export const TimeSelectionBox = forwardRef<
