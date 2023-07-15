@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import styled from 'styled-components';
 import { DropDownButton } from '@/component/TimePicker/atoms';
 import { SelectionList } from '@/component/TimePicker';
-import { TimeListData } from '@/types/TimePicker';
+import { TimeListData } from '@/types';
 
 interface TimeSelectionBoxProps {
   selectedTime: TimeListData;

@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { TimeListData } from '@/types/TimePicker';
+import { TimeListData } from '@/types';
 
 export const selectedEndTime = atom<TimeListData>({
   key: 'selectedEndTime',
