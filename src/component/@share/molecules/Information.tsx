@@ -83,4 +83,11 @@ const TextBlock = styled.div<{ $isEnabled: boolean }>`
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
+  overflow: hidden;
+
+  & > p {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;

@@ -42,7 +42,7 @@ export const Result = () => {
             />
             <Information
               title="약속방 링크"
-              content="https://www.google.co.kr/"
+              content="https://www.google.co.kr/afadsfadsfadsfadsf"
               isEnabled={true}
             />
             <Information
