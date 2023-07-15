@@ -12,6 +12,7 @@ import {
   getWeekCount,
   isDuplicatedDate,
 } from '@/util';
+import { padStart } from 'lodash';
 import { useState } from 'react';
 import { styled } from 'styled-components';
 
@@ -88,11 +89,12 @@ export const Calendar = ({
     date.setMonth(type === 'prev' ? date.getMonth() - 1 : date.getMonth() + 1);
 
     const changedYear = `${date.getFullYear()}`;
-    const changedMonth = `${date.getMonth() + 1}`;
+    const changedMonth = padStart(`${date.getMonth() + 1}`, 2, '0');
     const changedCalendar = getCalendarData(changedYear, changedMonth);
 
     setCurrentDate([changedYear, changedMonth]);
     setDateRangeLimit({
+      // 주의! new Date('2023-06') !== new Date('2023-6')
       start:
         new Date(`${changedYear}-${changedMonth}`) <=
         new Date(splitMinDate.slice(0, 2).join('-')),

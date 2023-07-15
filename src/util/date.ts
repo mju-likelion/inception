@@ -55,6 +55,20 @@ export const getWeekCount = (year: string, month: string) => {
   return Math.ceil((startDay + totalDate) / 7);
 };
 
+/** ['2023-01-01', '2023-05-01'] 형식의 string으로 된 날짜 중 가장 큰 날짜를 구함 */
+export const getMaxDate = (dates: string[]) => {
+  const times = dates.map((date) => new Date(date).getTime());
+  const max = Math.max(...times);
+  return dateFormatToString(new Date(max));
+};
+
+/** ['2023-01-01', '2023-05-01'] 형식의 string으로 된 날짜 중 가장 작은 날짜를 구함 */
+export const getMinDate = (dates: string[]) => {
+  const times = dates.map((date) => new Date(date).getTime());
+  const max = Math.min(...times);
+  return dateFormatToString(new Date(max));
+};
+
 const calcDaysByYearMonth = (year: string, month: string): string[] => {
   // date 파라미터에 0을 넣게 된다면 '이전달'을 참조하게된다.
   const getLastDay = new Date(+year, +month, 0).getDate();
