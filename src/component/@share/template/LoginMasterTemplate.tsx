@@ -56,8 +56,6 @@ export const LoginMasterTemlplate = () => {
             step={3}
             title=""
             content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
-            $isActive={true}
-            $isPass={false}
           />
           <WrapInput>
             <Input
