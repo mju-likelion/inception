@@ -48,10 +48,23 @@ const Container = styled.div`
 
 const TitleBoxContainer = styled.div`
   margin: 30px 0px 12px 20px;
+  @media ${({ theme }) => theme.size.tablet} {
+    width: 500px;
+    align-self: center;
+    margin: 60px 0px 24px 20px;
+  }
+  @media ${({ theme }) => theme.size.web} {
+    margin-top: 80px;
+  }
 `;
 
 const CalendarBox = styled.div`
   padding: 0 20px;
+  @media ${({ theme }) => theme.size.tablet} {
+    width: 500px;
+    align-self: center;
+    padding: 0;
+  }
 `;
 
 const HorizontalRule = styled.div`
@@ -60,6 +73,9 @@ const HorizontalRule = styled.div`
   background-color: ${({ theme }) => theme.colors.gray5};
   margin: 6px 0 24px;
   border-radius: 1px;
+  @media ${({ theme }) => theme.size.tablet} {
+    margin-top: 8px;
+  }
 `;
 
 const TimePickerBox = styled.div`
@@ -67,10 +83,14 @@ const TimePickerBox = styled.div`
   flex-direction: column;
   margin-left: 20px;
   gap: 8px;
-  margin-bottom: 100px;
+  @media ${({ theme }) => theme.size.tablet} {
+    width: 500px;
+    align-self: center;
+    margin-left: 0;
+  }
 `;
 
 const ButtonBox = styled.div`
-  margin-bottom: 100px;
+  margin: 100px 0;
   align-self: center;
 `;
