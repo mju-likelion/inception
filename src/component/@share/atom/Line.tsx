@@ -11,6 +11,6 @@ export const Line = ({ $isActive }: LineProps) => {
 
 const MintLineSVG = styled(LineSVG)`
   rect {
-    fill: ${({ theme }) => theme.colors.mint1};
+    fill: ${({ theme }) => theme.colors.mint2};
   }
 `;
