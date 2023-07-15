@@ -2,22 +2,24 @@ import styled from 'styled-components';
 import { ErrorAlert } from '../data/ErrorAlertText';
 import { ReactComponent as DoorSvgForTablet } from '@/assets/images/RedirectDoorInTablet.svg';
 import { ReactComponent as DoorSvgForDesktop } from '@/assets/images/RedirectDoorInDesktop.svg';
+import { ReactComponent as NotFound } from '@/assets/images/ErrorState404.svg';
+import { ReactComponent as InternalServerError } from '@/assets/images/ErrorState500.svg';
 
 import { ButtonLarge } from '@/component/@share';
 import { devices } from '@/globalStyle';
 import { useWindowResize } from '@/hooks';
 
 interface RedirectPageProps {
-  errorState?: 404 | 500;
-  //404 or 500인데, 일단 500만 고려하겠습니다.
+  errorState?: 500;
 }
 
-export const RedirectPage = ({ errorState = 404 }: RedirectPageProps) => {
+export const RedirectPage = ({ errorState }: RedirectPageProps) => {
   const windowSize = useWindowResize();
+
   return (
     <Container>
       <ErrorContentBox>
-        <ErrorStateText>{errorState}</ErrorStateText>
+        {errorState ? <InternalServerError /> : <NotFound />}
         <ErrorAlertText>{ErrorAlert.content}</ErrorAlertText>
       </ErrorContentBox>
       {windowSize.width >= devices.web ? (
@@ -46,16 +48,6 @@ const ErrorContentBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-`;
-
-const ErrorStateText = styled.p`
-  color: ${({ theme }) => theme.colors.mint1};
-  text-align: center;
-  font-family: Poppins;
-  //폰트 나중에 적용할게요 (디자이너님 응답 대기중)
-  font-size: 86px;
-  font-weight: 700;
-  line-height: 90px;
 `;
 
 const ErrorAlertText = styled.p`
