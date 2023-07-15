@@ -55,7 +55,6 @@ export const SelectDate = () => {
 };
 
 const Wrapper = styled.div`
-  /* background-color: blue; */
   min-width: 320px;
   max-width: 500px;
   margin: 30px 20px 0 20px;

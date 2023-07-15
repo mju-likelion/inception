@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { TimeSelection } from '@/component/TimePicker';
 import { TIME_LIST } from '@/component/TimePicker/data';
-import { TimeListData } from '@/types/TimePicker';
+import { TimeListData } from '@/types';
 
 interface SelectionListProps {
   selectedTime: TimeListData;
