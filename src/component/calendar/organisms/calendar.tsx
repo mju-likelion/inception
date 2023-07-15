@@ -159,8 +159,6 @@ const Grid = styled.div<{ $weekCount: number }>`
 
   min-height: 368px;
   max-height: 668px;
-
-  margin-bottom: 500px;
 `;
 
 const GridHeader = styled.div`

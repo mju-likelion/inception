@@ -49,7 +49,9 @@ export const Information = ({
 };
 
 const InformationBlock = styled.div<{ $isEnabled: boolean; $isNull: boolean }>`
-  width: 320px;
+  width: 100%;
+  // 100%로 변경해 반응형 스타일이 가능하도록 구현
+  /* width: 320px; */
   height: ${({ $isNull }) => $isNull && '70px'};
   align-items: center;
   display: flex;
