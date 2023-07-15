@@ -22,19 +22,11 @@ export const CodeSubmitTemlplate = () => {
   };
 
   const [clickTabBar, setClickTabBar] = useRecoilState(tabState);
-  const [selectedTab, setSelectedTab] = useState<'default' | 'result'>(
-    'default'
-  );
-
-  const changeTabBar = (tab: 'default' | 'result') => {
-    setSelectedTab(tab);
-    setClickTabBar(tab);
-  };
 
   return (
     <>
       <TabBar
-        onClick={changeTabBar}
+        onClick={setClickTabBar}
         firstTabTitle={'약속 잡기'}
         secondTabTitle={'결과 보기'}
       />
