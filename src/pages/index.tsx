@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { App } from '@/App';
 import { Home } from './Home';
 import { CalendarTest } from './CalendarTest';
+import { RedirectPage } from '@/component/ErrorPage/atoms';
 import { PossibleTimePage } from './PossibleTimePage';
 import { Result } from './Result';
 
@@ -30,6 +31,10 @@ export const pages = createBrowserRouter([
       {
         path: 'result', // ex) localhost:3000/result
         element: <Result />,
+      },
+      {
+        path: '/*', // ex) not-found
+        element: <RedirectPage />,
       },
     ],
   },
