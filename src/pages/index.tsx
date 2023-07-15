@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { App } from '@/App';
 import { Home } from './Home';
 import { CalendarTest } from './CalendarTest';
-import { SelectDate } from './SelectDate';
+import { PossibleDatePage } from './PossibleDatePage';
 import { RedirectPage } from '@/component/ErrorPage/atoms';
 import { PossibleTimePage } from './PossibleTimePage';
 import { Result } from './Result';
@@ -10,7 +10,7 @@ import { Result } from './Result';
 export * from '@/App';
 export * from './Home';
 export * from './CalendarTest';
-export * from './SelectDate';
+export * from './PossibleDatePage';
 
 /** @Note 라우팅 정보를 가지고있습니다. */
 export const pages = createBrowserRouter([
@@ -29,7 +29,7 @@ export const pages = createBrowserRouter([
       },
       {
         path: 'select-date', // ex) localhost:3000/select-date
-        element: <SelectDate />,
+        element: <PossibleDatePage />,
       },
       {
         path: 'select-time', // ex) localhost:3000/selectTime
