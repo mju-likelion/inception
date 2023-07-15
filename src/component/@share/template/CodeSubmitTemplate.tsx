@@ -3,7 +3,7 @@ import { TabBar } from '@/component/@share/organisms';
 import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { tabState } from '@/store';
 import { useRecoilState } from 'recoil';
 
@@ -14,12 +14,18 @@ export const CodeSubmitTemlplate = () => {
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
-
     setValue(event.target.value.toUpperCase()); //입력코드 대문자 변환
-
-    const index = value.length;
-    index > 4 ? setButtonActive(false) : setButtonActive(true); //코드자릿수 6자리 제한
   };
+
+  const onKeyUp = () => {
+    const index = value.length;
+    index > 5 ? setButtonActive(false) : setButtonActive(true); //코드자릿수 6자리 제한
+  };
+
+  useEffect(() => {
+    onKeyUp;
+    buttonActive;
+  });
 
   const [clickTabBar, setClickTabBar] = useRecoilState(tabState);
 
@@ -38,14 +44,13 @@ export const CodeSubmitTemlplate = () => {
               content={
                 '약속 결과를 확인하기 위해 약속방의 입장 코드를 입력해 주세요'
               }
-              $isActive={false}
-              $isPass={false}
             />
           </WrapTitleBox>
           <WrapInput>
             <Input
               placeholder={'약속방 입력 코드'}
               onChange={onChange}
+              onKeyUp={onKeyUp}
               value={value}
               maxLength={6}
             />
@@ -63,29 +68,25 @@ const WrapperContents = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   @media ${({ theme }) => theme.size.tablet} {
-    margin: 60px 167px 0px 167px;
+    margin-top: 60px;
     align-items: center;
   }
 `;
 
 const WrapTitleBoxInput = styled.div`
+  margin: 0px 20px 0px 20px;
   @media ${({ theme }) => theme.size.tablet} {
+    margin: 60px 0px 100px 0px;
   }
 `;
 
 const WrapTitleBox = styled.div`
-  margin: 30px 90px 24px 20px;
-  @media ${({ theme }) => theme.size.tablet} {
-    margin: 0px;
-  }
+  margin: 30px 0px 24px 0px;
 `;
 
 const WrapInput = styled.div`
   display: flex;
-  margin: 0px 20px 0px 20px;
-
   @media ${({ theme }) => theme.size.tablet} {
     margin-top: 40px;
   }
@@ -94,12 +95,12 @@ const WrapInput = styled.div`
 const WrapButton = styled.div`
   display: flex;
   justify-content: center;
-  margin: 200px 75px 100px 75px;
-  @media ${({ theme }) => theme.size.mobile} {
-  }
+  margin: 200px 0px 100px 0px;
+
   @media ${({ theme }) => theme.size.tablet} {
-    margin: 100px 75px 100px 75px;
+    margin: 100px 0px 100px 0px;
   }
+
   @media ${({ theme }) => theme.size.web} {
     margin-top: 312px;
   }

@@ -1,4 +1,4 @@
-import { TimeBox } from '@/component';
+import { TimeBox } from '@/component/timeBlock/template';
 import { Information, TitleBox } from '@/component/@share/molecules';
 import calendar from '@/assets/images/Calendar.svg';
 import { ButtonLarge } from '@/component/@share';
