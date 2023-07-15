@@ -22,11 +22,13 @@ export const RedirectPage = ({ errorState }: RedirectPageProps) => {
         {errorState ? <InternalServerError /> : <NotFound />}
         <ErrorAlertText>{ErrorAlert.content}</ErrorAlertText>
       </ErrorContentBox>
-      {windowSize.width >= devices.web ? (
-        <DoorSvgForDesktop />
-      ) : (
-        <DoorSvgForTablet />
-      )}
+      <div>
+        {windowSize.width >= devices.web ? (
+          <DoorSvgForDesktop />
+        ) : (
+          <DoorSvgForTablet />
+        )}
+      </div>
       <ButtonLarge isDisabled={false}>메인으로</ButtonLarge>
     </Container>
   );
@@ -39,6 +41,7 @@ const Container = styled.div`
   align-items: center;
   gap: 60px;
   width: 100%;
+  min-height: calc(100vh - 202px);
   padding: 50px 0;
   margin: auto;
   overflow-y: scroll;
