@@ -59,7 +59,7 @@ export const Result = () => {
 
 const ResultPageBlock = styled.div`
   min-width: 320px;
-  max-width: 500px;
+  max-width: 540px;
   margin: auto;
 `;
 
