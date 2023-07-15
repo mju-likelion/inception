@@ -3,6 +3,7 @@ import { App } from '@/App';
 import { Home } from './Home';
 import { CalendarTest } from './CalendarTest';
 import { RedirectPage } from '@/component/ErrorPage/atoms';
+import { PossibleTimePage } from './PossibleTimePage';
 
 export * from '@/App';
 export * from './Home';
@@ -21,6 +22,10 @@ export const pages = createBrowserRouter([
       {
         path: 'calendar', // ex) localhost:3000/calendar
         element: <CalendarTest />,
+      },
+      {
+        path: 'selectTime', // ex) localhost:3000/selectTime
+        element: <PossibleTimePage />,
       },
       {
         path: '/*', // ex) not-found

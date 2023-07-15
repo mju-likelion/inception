@@ -68,4 +68,5 @@ const TimeBlockGroupBlock = styled.div<{ columns: number }>`
   display: grid;
   grid-template-columns: repeat(${({ columns }) => columns}, 1fr);
   gap: 2px;
+  padding-bottom: 10px;
 `;
