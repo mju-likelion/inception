@@ -141,7 +141,7 @@ export const Calendar = ({
 const Grid = styled.div<{ $weekCount: number }>`
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 
   aspect-ratio: ${({ $weekCount }) => {
     if ($weekCount === 6) {
@@ -160,7 +160,7 @@ const Grid = styled.div<{ $weekCount: number }>`
   min-height: 368px;
   max-height: 668px;
 
-  margin-bottom: 500px;
+  /* margin-bottom: 500px; */
 `;
 
 const GridHeader = styled.div`
