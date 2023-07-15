@@ -22,13 +22,13 @@ export const RedirectPage = ({ errorState }: RedirectPageProps) => {
         {errorState ? <InternalServerError /> : <NotFound />}
         <ErrorAlertText>{ErrorAlert.content}</ErrorAlertText>
       </ErrorContentBox>
-      <div>
-        {windowSize.width >= devices.web ? (
-          <DoorSvgForDesktop />
-        ) : (
-          <DoorSvgForTablet />
-        )}
-      </div>
+
+      {windowSize.width >= devices.web ? (
+        <DoorSvgForDesktop />
+      ) : (
+        <DoorSvgForTablet />
+      )}
+
       <ButtonLarge isDisabled={false}>메인으로</ButtonLarge>
     </Container>
   );
