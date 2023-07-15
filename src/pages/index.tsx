@@ -24,7 +24,7 @@ export const pages = createBrowserRouter([
         element: <CalendarTest />,
       },
       {
-        path: 'selectTime', // ex) localhost:3000/selectTime
+        path: 'select-time', // ex) localhost:3000/selectTime
         element: <PossibleTimePage />,
       },
       {
