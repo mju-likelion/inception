@@ -10,7 +10,7 @@ import { useRecoilState } from 'recoil';
 export const CodeSubmitTemlplate = () => {
   const [value, setValue] = useState('');
 
-  const [buttonActive, setButtonActive] = useState(true);
+  const [buttonInactive, setButtonInactive] = useState(true);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -19,12 +19,12 @@ export const CodeSubmitTemlplate = () => {
 
   const onKeyUp = () => {
     const index = value.length;
-    index > 5 ? setButtonActive(false) : setButtonActive(true); //코드자릿수 6자리 제한
+    index > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
   };
 
   useEffect(() => {
     onKeyUp;
-    buttonActive;
+    buttonInactive;
   });
 
   const [clickTabBar, setClickTabBar] = useRecoilState(tabState);
@@ -57,7 +57,7 @@ export const CodeSubmitTemlplate = () => {
           </WrapInput>
         </WrapTitleBoxInput>
         <WrapButton>
-          <ButtonLarge isDisabled={buttonActive}>입력 완료</ButtonLarge>
+          <ButtonLarge isDisabled={buttonInactive}>입력 완료</ButtonLarge>
         </WrapButton>
       </WrapperContents>
     </>
