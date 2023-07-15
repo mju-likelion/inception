@@ -131,7 +131,7 @@ export const Calendar = ({
 
       {viewType === 'result' && (
         <GridFooter>
-          <ButtonSmall>약속 수정</ButtonSmall>
+          <ButtonSmall>일정 수정</ButtonSmall>
         </GridFooter>
       )}
     </Grid>
@@ -160,7 +160,7 @@ const Grid = styled.div<{ $weekCount: number }>`
   min-height: 368px;
   max-height: 668px;
 
-  margin-bottom: 500px;
+  //margin-bottom: 500px;
 `;
 
 const GridHeader = styled.div`
