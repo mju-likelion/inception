@@ -12,7 +12,7 @@ import {
   getWeekCount,
   isDuplicatedDate,
 } from '@/util';
-import { padStart } from 'lodash';
+import padStart from 'lodash/padStart';
 import { useState } from 'react';
 import { styled } from 'styled-components';
 
@@ -143,12 +143,10 @@ export const Calendar = ({
 const Grid = styled.div<{ $weekCount: number }>`
   display: flex;
   flex-direction: column;
-  /* border: 1px solid red; */
 
   aspect-ratio: ${({ $weekCount }) => {
     if ($weekCount === 6) {
       return '1/1.3125';
-      // return '1/1.484375';
     } else if ($weekCount === 5) {
       return '1/1.15';
     } else {

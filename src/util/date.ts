@@ -1,6 +1,6 @@
 /* date = 일자 데이터, day = 요일 데이터 */
 import { CalendarData } from '@/types';
-import { padStart } from 'lodash';
+import padStart from 'lodash/padStart';
 
 /** 월별 캘란더 기본 정보를 반환한다. */
 export const getCalendarData = (
