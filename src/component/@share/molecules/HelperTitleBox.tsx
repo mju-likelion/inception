@@ -6,14 +6,18 @@ import { ProgressBar } from './ProgressBar';
 interface TitleBoxProps {
   title?: string;
   content: string;
+  $isActive: boolean;
+  $isPass: boolean;
   defaultColor?: keyof typeof theme.colors;
   total?: number;
   step?: number;
 }
 
-export const TitleBox = ({
+export const HelperTitleBox = ({
   title,
   content,
+  $isActive,
+  $isPass,
   defaultColor = 'black',
   total = 3,
   step,
@@ -23,12 +27,15 @@ export const TitleBox = ({
       {step ? (
         <ProgressBar total={total} step={step} />
       ) : (
-        <Title ag="Title1" color={defaultColor}>
+        <Title
+          ag="Title2"
+          color={$isActive ? 'mint1' : $isPass ? 'mint2' : defaultColor}
+        >
           {title}
         </Title>
       )}
       <BodyBlock>
-        <Body ag="Body2Regular" color="gray1">
+        <Body ag="Body3" color={$isActive ? 'gray1' : 'gray3'}>
           {content}
         </Body>
       </BodyBlock>
@@ -42,17 +49,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
-  @media ${({ theme }) => theme.size.tablet} {
-    width: 500px;
-    h1 {
-      ${({ theme }) => theme.typographies.title3};
-    }
-  }
 `;
 
 const BodyBlock = styled.div`
   width: 210px;
-  @media ${({ theme }) => theme.size.tablet} {
-    width: 500px;
-  }
 `;

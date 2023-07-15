@@ -1,16 +1,27 @@
 import { styled } from 'styled-components';
 
 interface Props {
+  type?: React.HTMLInputTypeAttribute;
   placeholder?: string;
+  onKeyUp?: React.KeyboardEventHandler<HTMLInputElement>;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   value: string;
   maxLength?: number;
 }
 
-export const Input = ({ placeholder, onChange, value, maxLength }: Props) => {
+export const Input = ({
+  type,
+  placeholder,
+  onChange,
+  onKeyUp,
+  value,
+  maxLength,
+}: Props) => {
   return (
     <InputField
+      type={type}
       placeholder={placeholder}
+      onKeyUp={onKeyUp}
       onChange={onChange}
       value={value}
       maxLength={maxLength}
