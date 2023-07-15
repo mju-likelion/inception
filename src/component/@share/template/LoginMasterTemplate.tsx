@@ -15,20 +15,21 @@ export const LoginMasterTemlplate = () => {
 
   const onChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNicknameValue(event.target.value);
-    console.log(nicknameValue);
   };
   const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordValue(event.target.value);
-    console.log(passwordValue);
   };
 
   useEffect(() => {
-    console.log(nicknameValue, passwordValue);
-  }, []);
+    activeEvent;
+  }, [buttonInactive]);
 
-  const activeEvent: React.KeyboardEventHandler<HTMLInputElement> = () => {
-    const isInactive = nicknameValue.length === 0 || passwordValue.length === 0;
-    setButtonInactive(isInactive);
+  const activeEvent = () => {
+    nicknameValue.length >= 1 && passwordValue.length >= 1
+      ? setButtonInactive(false)
+      : setButtonInactive(true);
+
+    console.log(buttonInactive);
   };
 
   const [clickTabBar, setClickTabBar] = useRecoilState(tabState);
