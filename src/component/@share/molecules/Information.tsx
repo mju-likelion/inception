@@ -3,9 +3,9 @@ import { ButtonSmall } from '@/component/@share/atom/ButtonSmall';
 import { Body } from '@/component/@share/atom/Body';
 
 interface Props {
-  icon: string;
+  icon?: string;
   title: string;
-  content: string;
+  content?: string;
   isNull?: boolean;
   isEnabled?: boolean;
 }
@@ -52,7 +52,8 @@ const InformationBlock = styled.div<{ $isEnabled: boolean; $isNull: boolean }>`
   min-width: 320px;
   max-width: 500px;
   height: ${({ $isNull }) => $isNull && '70px'};
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   display: flex;
   padding: 12px;
   background-color: ${({ $isEnabled }) =>
@@ -67,6 +68,7 @@ const ContentBlock = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 12px;
+  flex: 1 0 0;
   align-self: stretch;
 `;
 
@@ -81,4 +83,11 @@ const TextBlock = styled.div<{ $isEnabled: boolean }>`
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
+  overflow: hidden;
+
+  & > p {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
