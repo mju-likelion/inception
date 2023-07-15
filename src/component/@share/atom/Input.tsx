@@ -21,7 +21,7 @@ export const Input = ({
     <InputField
       type={type}
       placeholder={placeholder}
-      onInput={onKeyUp}
+      onKeyUp={onKeyUp}
       onChange={onChange}
       value={value}
       maxLength={maxLength}
