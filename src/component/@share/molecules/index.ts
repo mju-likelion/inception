@@ -4,3 +4,4 @@ export * from './Information';
 export * from './TabBarButton';
 export * from './HelperTitleBox';
 export * from './TitleBox';
+export * from './TitleCheck';
