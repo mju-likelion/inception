@@ -5,14 +5,14 @@ import { ButtonLarge } from '@/component/@share';
 import { styled } from 'styled-components';
 import { useState } from 'react';
 import { TabBar } from '@/component/@share';
-import { TabItems } from '@/types';
+import { TabItem } from '@/types';
 
 export const PossibleTimePage = () => {
   const [isActive, setIsActive] = useState(true);
 
   const onClick = (tab: string) => {};
 
-  const tabItems: TabItems[] = [
+  const tabItems: TabItem[] = [
     {
       id: 'default',
       title: '약속 잡기',

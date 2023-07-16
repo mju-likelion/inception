@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { TabBarButton } from '@/component/@share/molecules';
 import { useRecoilState } from 'recoil';
 import { tabState } from '@/store/atoms';
-import { TabItems } from '@/types';
+import { TabItem } from '@/types';
 
 interface TabBarProps {
-  tabItems: TabItems[];
+  tabItems: TabItem[];
   onClick?: (tab: string) => void;
 }
 

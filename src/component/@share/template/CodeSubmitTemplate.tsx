@@ -4,14 +4,14 @@ import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useEffect, useState } from 'react';
-import { TabItems } from '@/types';
+import { TabItem } from '@/types';
 
 export const CodeSubmitTemlplate = () => {
   const [value, setValue] = useState('');
 
   const [buttonInactive, setButtonInactive] = useState(true);
 
-  const tabItems: TabItems[] = [
+  const tabItems: TabItem[] = [
     {
       id: 'default',
       title: '약속 잡기',

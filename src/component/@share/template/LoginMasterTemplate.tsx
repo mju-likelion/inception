@@ -4,7 +4,7 @@ import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
-import { TabItems } from '@/types';
+import { TabItem } from '@/types';
 
 export const LoginMasterTemlplate = () => {
   const [nicknameValue, setNicknameValue] = useState('');
@@ -31,7 +31,7 @@ export const LoginMasterTemlplate = () => {
     console.log(buttonInactive);
   };
 
-  const tabItems: TabItems[] = [
+  const tabItems: TabItem[] = [
     {
       id: 'default',
       title: '약속 잡기',

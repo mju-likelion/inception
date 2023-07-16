@@ -4,12 +4,12 @@ import { Calendar } from '@/component';
 import { TabBar } from '@/component/@share';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
-import { TabItems } from '@/types';
+import { TabItem } from '@/types';
 
 export const Result = () => {
   const onClick = (tab: string) => {};
 
-  const tabItems: TabItems[] = [
+  const tabItems: TabItem[] = [
     {
       id: 'default',
       title: '약속 잡기',
