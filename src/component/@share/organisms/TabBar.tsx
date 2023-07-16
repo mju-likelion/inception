@@ -10,7 +10,6 @@ interface TabBarProps {
 }
 
 export const TabBar = ({ onClick, tabItems }: TabBarProps) => {
-  // 탭 클릭시 탭 하이라이트가 바뀌는 것은 tabBar의 역할인 것 같다 외부에서 tabState를 바꾸는 것은 tabBar 고유 동작을 외부에 맡기고 있는 것 같다.
   const [selectedTab, setSelectedTab] = useRecoilState(tabState);
 
   const handleClick = (id: string) => {
