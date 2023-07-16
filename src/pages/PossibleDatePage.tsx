@@ -1,29 +1,33 @@
 import { Calendar } from '@/component';
 import { Body, ButtonLarge, TabBar } from '@/component/@share';
 import { Information, ProgressBar } from '@/component/@share/molecules';
-import { tabState } from '@/store';
-import { useRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 import CalendarIcon from '@/assets/images/Calendar.svg';
 import { getMaxDate, getMinDate } from '@/util';
+import { TabItems } from '@/types';
 
 export const PossibleDatePage = () => {
   const selectableDates = ['2023-06', '2023-07', '2023-08']; // @TODO 더미데이터. 서버에서 선택 가능한 시간들 가져와 보여주기
 
-  const [selectTab, setSelectTab] = useRecoilState(tabState);
+  const tabItems: TabItems[] = [
+    {
+      id: 'default',
+      title: '약속 잡기',
+    },
+    {
+      id: 'result',
+      title: '결과 보기',
+    },
+  ];
 
-  const onClick = (tab: 'default' | 'result') => {
-    setSelectTab(tab);
+  const onClick = (tab: string) => {
     // @TODO tab에 따라 라우팅하기
+    console.log('onClick!!');
   };
 
   return (
     <>
-      <TabBar
-        firstTabTitle="약속잡기"
-        secondTabTitle="결과보기"
-        onClick={onClick}
-      />
+      <TabBar onClick={onClick} tabItems={tabItems} />
       <Wrapper>
         <Header>
           <ProgressBar total={3} step={1} />

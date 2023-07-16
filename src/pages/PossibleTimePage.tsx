@@ -4,21 +4,28 @@ import calendar from '@/assets/images/Calendar.svg';
 import { ButtonLarge } from '@/component/@share';
 import { styled } from 'styled-components';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { tabState } from '@/store';
 import { TabBar } from '@/component/@share';
+import { TabItems } from '@/types';
 
 export const PossibleTimePage = () => {
   const [isActive, setIsActive] = useState(true);
-  const [tab, setTab] = useRecoilState(tabState);
+
+  const onClick = (tab: string) => {};
+
+  const tabItems: TabItems[] = [
+    {
+      id: 'default',
+      title: '약속 잡기',
+    },
+    {
+      id: 'result',
+      title: '결과 보기',
+    },
+  ];
 
   return (
     <>
-      <TabBar
-        onClick={(tab: 'default' | 'result') => setTab(tab)}
-        firstTabTitle="약속 잡기"
-        secondTabTitle="결과 보기"
-      />
+      <TabBar onClick={onClick} tabItems={tabItems} />
       <TimePageBlock>
         <ContentBlock>
           <TitleBoxBlock>

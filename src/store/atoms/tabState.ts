@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export const tabState = atom<'default' | 'result'>({
+export const tabState = atom<string>({
   key: 'tabState',
   default: 'default',
 });
