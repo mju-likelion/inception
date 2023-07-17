@@ -2,21 +2,27 @@ import styled from 'styled-components';
 import { Information, TitleBox } from '@/component/@share/molecules';
 import { Calendar } from '@/component';
 import { TabBar } from '@/component/@share';
-import { useRecoilState } from 'recoil';
-import { tabState } from '@/store';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
+import { TabItem } from '@/types';
 
 export const Result = () => {
-  const [tab, setTab] = useRecoilState(tabState);
+  const onClick = (tab: string) => {};
+
+  const tabItems: TabItem[] = [
+    {
+      id: 'default',
+      title: '약속 잡기',
+    },
+    {
+      id: 'result',
+      title: '결과 보기',
+    },
+  ];
 
   return (
     <>
-      <TabBar
-        onClick={(tab: 'default' | 'result') => setTab(tab)}
-        firstTabTitle="약속 잡기"
-        secondTabTitle="결과 보기"
-      />
+      <TabBar onClick={onClick} tabItems={tabItems} />
       <ResultPageBlock>
         <ContentBlock>
           <TitleBoxBlock>

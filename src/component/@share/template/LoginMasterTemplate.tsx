@@ -4,8 +4,7 @@ import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
-import { tabState } from '@/store';
-import { useRecoilState } from 'recoil';
+import { TabItem } from '@/types';
 
 export const LoginMasterTemlplate = () => {
   const [nicknameValue, setNicknameValue] = useState('');
@@ -32,23 +31,22 @@ export const LoginMasterTemlplate = () => {
     console.log(buttonInactive);
   };
 
-  const [clickTabBar, setClickTabBar] = useRecoilState(tabState);
-  const [selectedTab, setSelectedTab] = useState<'default' | 'result'>(
-    'default'
-  );
+  const tabItems: TabItem[] = [
+    {
+      id: 'default',
+      title: '약속 잡기',
+    },
+    {
+      id: 'result',
+      title: '결과 보기',
+    },
+  ];
 
-  const changeTabBar = (tab: 'default' | 'result') => {
-    setSelectedTab(tab);
-    setClickTabBar(tab);
-  };
+  const onClick = (tab: string) => {};
 
   return (
     <>
-      <TabBar
-        onClick={changeTabBar}
-        firstTabTitle={'약속 잡기'}
-        secondTabTitle={'결과 보기'}
-      />
+      <TabBar onClick={onClick} tabItems={tabItems} />
       <WrapContents>
         <WrapUpperContents>
           <TitleBox

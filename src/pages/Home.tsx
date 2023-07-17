@@ -3,17 +3,26 @@ import { useSetRecoilState } from 'recoil';
 import { TabBar, TitleBox, Body, ButtonLarge } from '@/component/@share';
 import { Calendar, TimePicker } from '@/component';
 import { tabState } from '@/store';
+import { TabItem } from '@/types';
 
 export const Home = () => {
   const setSelectedTab = useSetRecoilState(tabState);
+  const onClick = (tab: string) => {};
+
+  const tabItems: TabItem[] = [
+    {
+      id: 'default',
+      title: '약속 잡기',
+    },
+    {
+      id: 'result',
+      title: '결과 보기',
+    },
+  ];
 
   return (
     <>
-      <TabBar
-        onClick={setSelectedTab}
-        firstTabTitle="약속 잡기"
-        secondTabTitle="결과 보기"
-      />
+      <TabBar onClick={setSelectedTab} tabItems={tabItems} />
       <Container>
         <TitleBoxContainer>
           <TitleBox

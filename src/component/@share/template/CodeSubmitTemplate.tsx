@@ -4,13 +4,23 @@ import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useEffect, useState } from 'react';
-import { tabState } from '@/store';
-import { useRecoilState } from 'recoil';
+import { TabItem } from '@/types';
 
 export const CodeSubmitTemlplate = () => {
   const [value, setValue] = useState('');
 
   const [buttonInactive, setButtonInactive] = useState(true);
+
+  const tabItems: TabItem[] = [
+    {
+      id: 'default',
+      title: '약속 잡기',
+    },
+    {
+      id: 'result',
+      title: '결과 보기',
+    },
+  ];
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -22,20 +32,16 @@ export const CodeSubmitTemlplate = () => {
     index > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
   };
 
+  const onClick = () => {};
+
   useEffect(() => {
     onKeyUp;
     buttonInactive;
   });
 
-  const [clickTabBar, setClickTabBar] = useRecoilState(tabState);
-
   return (
     <>
-      <TabBar
-        onClick={setClickTabBar}
-        firstTabTitle={'약속 잡기'}
-        secondTabTitle={'결과 보기'}
-      />
+      <TabBar onClick={onClick} tabItems={tabItems} />
       <WrapperContents>
         <WrapTitleBoxInput>
           <WrapTitleBox>
