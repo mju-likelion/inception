@@ -4,6 +4,8 @@ import { ProgressBarModal, HelperTitleBox } from '@/component/@share/molecules';
 
 interface HelperModalProps {
   step: 0 | 1 | 2 | 3;
+  open: boolean;
+  close: () => void;
 }
 
 const helpText = [
@@ -22,7 +24,7 @@ const helpText = [
   },
 ];
 
-export const HelperModal = ({ step }: HelperModalProps) => {
+export const HelperModal = ({ step, open, close }: HelperModalProps) => {
   const onSetHelpText = () => {
     const result = [];
     for (let i = 0; i < 3; i++) {
@@ -41,15 +43,19 @@ export const HelperModal = ({ step }: HelperModalProps) => {
     return result;
   };
   return (
-    <ModalBlock>
-      <TopBlock>
-        <ProgressBarModal total={3} step={step} />
-        <TitleBoxBlock>{onSetHelpText()}</TitleBoxBlock>
-      </TopBlock>
-      <ButtonBlock>
-        <ButtonLarge>알겠어요</ButtonLarge>
-      </ButtonBlock>
-    </ModalBlock>
+    <>
+      {open ? (
+        <ModalBlock>
+          <TopBlock>
+            <ProgressBarModal total={3} step={step} />
+            <TitleBoxBlock>{onSetHelpText()}</TitleBoxBlock>
+          </TopBlock>
+          <ButtonBlock>
+            <ButtonLarge>알겠어요</ButtonLarge>
+          </ButtonBlock>
+        </ModalBlock>
+      ) : null}
+    </>
   );
 };
 

@@ -1,14 +1,30 @@
 import styled from 'styled-components';
 import { Logo, Helper } from '@/component/@share/atom';
+import { useState } from 'react';
+import { HelperModal } from './HelperModal';
 
 export const Header = () => {
+  const [clicked, setClicked] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setClicked(false);
+  };
   return (
-    <HeaderBox>
-      <InnerBox>
-        <Logo />
-        <Helper />
-      </InnerBox>
-    </HeaderBox>
+    <>
+      <HeaderBox>
+        <InnerBox>
+          <Logo />
+          <Helper onClick={openModal} />
+        </InnerBox>
+      </HeaderBox>
+      <HelperModal step={1} open={modalOpen} close={closeModal}></HelperModal>
+    </>
   );
 };
 
