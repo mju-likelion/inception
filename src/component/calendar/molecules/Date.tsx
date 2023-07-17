@@ -8,7 +8,7 @@ interface DateProps {
   calendarData: CalendarData[];
   currentDate: string[];
   handleClickDate: (date?: string) => void;
-  viewType: ViewType;
+  viewType?: ViewType;
 }
 
 const DateComponent = ({
@@ -45,12 +45,12 @@ const DateComponent = ({
             key={data.date}
             dateOptions={dateOptions}
             handleClickDate={handleClickDate}
+            // disabled={viewType === 'result'}
           >
             <div>
               <p>{removeZeroPadDate}</p>
-              {/* 결과 보기 화면에서만 Count 출력하기 */}
-              {viewType === 'result' && (
-                <Count count={3} activeStatus={data.activeStatus} />
+              {viewType === 'result' && data.count && (
+                <Count count={data.count} activeStatus={data.activeStatus} />
               )}
             </div>
           </GridItem>

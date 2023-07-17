@@ -4,17 +4,23 @@ import {
   Date as DateComponent,
   DateHeader,
 } from '@/component/calendar/molecules';
-import { CalendarData, DateRangeLimit, ViewType } from '@/types';
+import { useWeekCount } from '@/hooks';
+import {
+  CalendarData,
+  DateRangeLimit,
+  PromiseResultData,
+  ViewType,
+} from '@/types';
 import {
   calcDateFewMonth,
   dateFormatToString,
   getCalendarData,
-  getWeekCount,
   isDuplicatedDate,
 } from '@/util';
 import padStart from 'lodash/padStart';
 import { useState } from 'react';
 import { styled } from 'styled-components';
+import { promiseResultMockData } from '../data';
 
 /**
  * 공통
@@ -33,38 +39,63 @@ import { styled } from 'styled-components';
  * 특정 날짜를 focus 시 컬러가 변하고 제출한 사람이 누구인지 표시된다.
  *
  * 방장이 신규 등록 시에는 항상 default, 약속시간을 선택할 때는 서버에서 내려온 데이터에 따라 default, disable 상태가 다르다.
+ *
+ * 캘린더를 mode에 따라 나눈 이유
+ * mode에 따라 state 방식, 필요한 기능 등 다 다르기 때문에 분리
+ * 중복 로직을 최대한 공통화 해야한다.
  */
 
-interface Props {
+interface CalendarProps {
   viewType: ViewType;
   /** @example '2023-06-20' */
   minDate?: string;
   maxDate?: string;
 }
+export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
+  const minimumDate = minDate ?? dateFormatToString(new Date());
+  const maximumDate =
+    maxDate ?? dateFormatToString(calcDateFewMonth(new Date(), 5)); // 최대 180일
 
-export const Calendar = ({
-  viewType,
-  minDate = dateFormatToString(new Date()),
-  maxDate = dateFormatToString(calcDateFewMonth(new Date(), 5)), // 최대 180일
-}: Props) => {
-  const splitMinDate = minDate.split('-');
-  const splitMaxDate = maxDate.split('-');
+  const splitMinDate = minimumDate.split('-');
+  const splitMaxDate = maximumDate.split('-');
 
+  switch (viewType) {
+    case 'create':
+      return <CreateMode minDate={splitMinDate} maxDate={splitMaxDate} />;
+    case 'result':
+      return (
+        <ResultMode
+          minDate={splitMinDate}
+          maxDate={splitMaxDate}
+          promiseResult={promiseResultMockData}
+        />
+      );
+    default:
+      return <p>{viewType}은 개발되지 않은 캘린더 모드입니다.</p>;
+  }
+};
+
+interface BaseCalendarModeProps {
+  minDate: string[];
+  maxDate: string[];
+}
+
+type CreateModeProps = BaseCalendarModeProps;
+const CreateMode = ({ minDate, maxDate }: CreateModeProps) => {
   /** 현재 날짜 */
-  const [currentDate, setCurrentDate] = useState(splitMinDate.slice(0, 2));
+  const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
 
+  // @TODO recoil로 관리되어야할 값
   /** 달력 정보 */
   const [calendar, setCalendar] = useState<CalendarData[]>(() =>
-    getCalendarData(splitMinDate[0], splitMinDate[1])
+    getCalendarData(minDate[0], minDate[1])
   );
 
-  const [weekCount, setWeekCount] = useState(
-    getWeekCount(splitMinDate[0], splitMinDate[1])
-  );
+  const [weekCount, setWeekCount] = useWeekCount(minDate);
 
   const [dateRangeLimit, setDateRangeLimit] = useState<DateRangeLimit>({
-    start: new Date(currentDate.join('-')) <= new Date(splitMinDate.join('-')),
-    end: new Date(currentDate.join('-')) >= new Date(splitMaxDate.join('-')),
+    start: new Date(currentDate.join('-')) <= new Date(minDate.join('-')),
+    end: new Date(currentDate.join('-')) >= new Date(maxDate.join('-')),
   });
 
   const handleClickDate = (date?: string) => {
@@ -97,10 +128,10 @@ export const Calendar = ({
       // 주의! new Date('2023-06') !== new Date('2023-6')
       start:
         new Date(`${changedYear}-${changedMonth}`) <=
-        new Date(splitMinDate.slice(0, 2).join('-')),
+        new Date(minDate.slice(0, 2).join('-')),
       end:
         new Date(`${changedYear}-${changedMonth}`) >=
-        new Date(splitMaxDate.slice(0, 2).join('-')),
+        new Date(maxDate.slice(0, 2).join('-')),
     });
 
     if (
@@ -109,7 +140,7 @@ export const Calendar = ({
       setCalendar((prev) => prev.concat(changedCalendar));
     }
 
-    setWeekCount(getWeekCount(changedYear, changedMonth));
+    setWeekCount([changedYear, changedMonth]);
   };
 
   /** @TODO GridFooter는 result === on 일때만 보여준다. GridHeader, GridFooter는 molecules로 관리해야될 것 같다. */
@@ -123,19 +154,101 @@ export const Calendar = ({
         />
       </GridHeader>
 
-      <DateHeader />
-      <DateComponent
-        calendarData={calendar}
-        currentDate={currentDate}
-        handleClickDate={handleClickDate}
-        viewType={viewType}
-      />
+      <>
+        <DateHeader />
+        <DateComponent
+          calendarData={calendar}
+          currentDate={currentDate}
+          handleClickDate={handleClickDate}
+        />
+      </>
+    </Grid>
+  );
+};
 
-      {viewType === 'result' && (
-        <GridFooter>
-          <ButtonSmall>일정 수정</ButtonSmall>
-        </GridFooter>
-      )}
+interface ResultModeProps extends BaseCalendarModeProps {
+  promiseResult: PromiseResultData[];
+}
+const ResultMode = ({ minDate, maxDate, promiseResult }: ResultModeProps) => {
+  const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
+  const [weekCount, setWeekCount] = useWeekCount(minDate);
+  const [calendar, setCalendar] = useState<CalendarData[]>(() =>
+    getCalendarData(minDate[0], minDate[1], promiseResult)
+  );
+  const [dateRangeLimit, setDateRangeLimit] = useState<DateRangeLimit>({
+    start: new Date(currentDate.join('-')) <= new Date(minDate.join('-')),
+    end: new Date(currentDate.join('-')) >= new Date(maxDate.join('-')),
+  });
+
+  const handleChangeCalendar = (type: 'prev' | 'next') => {
+    const date = new Date(+currentDate[0], +currentDate[1] - 1); // Date 객체에선 month는 제로베이스임
+
+    date.setMonth(type === 'prev' ? date.getMonth() - 1 : date.getMonth() + 1);
+
+    const changedYear = `${date.getFullYear()}`;
+    const changedMonth = padStart(`${date.getMonth() + 1}`, 2, '0');
+    const changedCalendar = getCalendarData(changedYear, changedMonth);
+
+    setCurrentDate([changedYear, changedMonth]);
+    setDateRangeLimit({
+      // 주의! new Date('2023-06') !== new Date('2023-6')
+      start:
+        new Date(`${changedYear}-${changedMonth}`) <=
+        new Date(minDate.slice(0, 2).join('-')),
+      end:
+        new Date(`${changedYear}-${changedMonth}`) >=
+        new Date(maxDate.slice(0, 2).join('-')),
+    });
+
+    if (
+      !isDuplicatedDate(calendar, { year: changedYear, month: changedMonth })
+    ) {
+      setCalendar((prev) => prev.concat(changedCalendar));
+    }
+
+    setWeekCount([changedYear, changedMonth]);
+  };
+
+  const handleClickDate = (date?: string) => {
+    if (!date) return null;
+
+    // const changedDateColor = calendar.map((value) =>
+    //   value.date === date
+    //     ? ({
+    //         ...value,
+    //         activeStatus:
+    //           value.activeStatus === 'active' ? 'default' : 'active',
+    //       } as CalendarData)
+    //     : value
+    // );
+
+    // setCalendar(changedDateColor);
+    console.log('포커스 컬러로 변환, 해당 날짜에서 겹치는 시간 표시');
+  };
+
+  return (
+    <Grid $weekCount={weekCount}>
+      <GridHeader>
+        <CalendarHeader
+          currentDate={currentDate}
+          dateRangeLimit={dateRangeLimit}
+          handleChangeCalendar={handleChangeCalendar}
+        />
+      </GridHeader>
+
+      <>
+        <DateHeader />
+        <DateComponent
+          calendarData={calendar}
+          currentDate={currentDate}
+          handleClickDate={handleClickDate}
+          viewType="result"
+        />
+      </>
+
+      <GridFooter>
+        <ButtonSmall>일정 수정</ButtonSmall>
+      </GridFooter>
     </Grid>
   );
 };

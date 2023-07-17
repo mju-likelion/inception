@@ -37,12 +37,11 @@ export const GridItem = ({
 const Wrapper = styled.button<{
   $isDate?: boolean;
   color?: keyof typeof theme.colors;
-  disabled?: boolean;
 }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: ${({ disabled }) => disabled && 'default'};
+  /* cursor: ${({ disabled }) => disabled && 'default'}; */
 
   p {
     display: flex;
