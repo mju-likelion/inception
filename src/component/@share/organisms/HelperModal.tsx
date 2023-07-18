@@ -45,19 +45,35 @@ export const HelperModal = ({ step, open, close }: HelperModalProps) => {
   return (
     <>
       {open ? (
-        <ModalBlock>
-          <TopBlock>
-            <ProgressBarModal total={3} step={step} />
-            <TitleBoxBlock>{onSetHelpText()}</TitleBoxBlock>
-          </TopBlock>
-          <ButtonBlock>
-            <ButtonLarge>알겠어요</ButtonLarge>
-          </ButtonBlock>
-        </ModalBlock>
+        <ModalBackdrop onClick={close}>
+          <ModalBlock onClick={(e) => e.stopPropagation()}>
+            <TopBlock>
+              <ProgressBarModal total={3} step={step} />
+              <TitleBoxBlock>{onSetHelpText()}</TitleBoxBlock>
+            </TopBlock>
+            <ButtonBlock>
+              <ButtonLarge click={close}>알겠어요</ButtonLarge>
+            </ButtonBlock>
+          </ModalBlock>
+        </ModalBackdrop>
       ) : null}
     </>
   );
 };
+
+const ModalBackdrop = styled.div`
+  z-index: 1; //위치지정 요소
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(126, 128, 153, 0.2);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(8px);
+`;
 
 const ModalBlock = styled.div`
   width: 320px;
