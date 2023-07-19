@@ -62,7 +62,7 @@ export const HelperModal = ({ step, open, close }: HelperModalProps) => {
 };
 
 const ModalBackdrop = styled.div`
-  z-index: 1; //위치지정 요소
+  z-index: 1;
   position: fixed;
   display: flex;
   justify-content: center;
