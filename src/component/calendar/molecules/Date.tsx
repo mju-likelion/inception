@@ -1,21 +1,20 @@
 import { useMemo } from 'react';
 import { Count, GridItem } from '@/component/calendar/atom';
-import { theme } from '@/globalStyle';
-import { ActiveStatus, CalendarData, ViewType } from '@/types';
+import { CalendarData, ViewType } from '@/types';
 import { styled } from 'styled-components';
 
 interface DateProps {
   calendarData: CalendarData[];
   currentDate: string[];
+  viewType: ViewType;
   handleClickDate: (date?: string) => void;
-  viewType?: ViewType;
 }
 
 const DateComponent = ({
   calendarData,
   currentDate,
-  handleClickDate,
   viewType,
+  handleClickDate,
 }: DateProps) => {
   const showDates = useMemo(() => {
     const filterdCalendarData = calendarData.filter((data) => {
@@ -36,8 +35,9 @@ const DateComponent = ({
         const removeZeroPadDate = +date < 10 ? date[1] : date;
         const dateOptions = {
           $isDate: true,
-          dateColor: getGridColor(data.activeStatus),
           date: data.date,
+          activeStatus: data.activeStatus,
+          viewType: viewType,
         };
 
         return (
@@ -69,25 +69,6 @@ const blankGrid = (calendarData: CalendarData[]) => {
   }
 
   return blankGrids;
-};
-
-const getGridColor = (
-  activeStatus: ActiveStatus
-): keyof typeof theme.colors => {
-  switch (activeStatus) {
-    case 'active':
-      return 'mint1';
-    case 'activeFocus':
-      return 'mint3';
-    case 'default':
-      return 'gray1';
-    case 'defaultFocus':
-      return 'gray3';
-    case 'disabled':
-      return 'gray4';
-    default:
-      return 'gray1';
-  }
 };
 
 const Wrapper = styled.div`

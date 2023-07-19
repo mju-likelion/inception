@@ -1,16 +1,18 @@
 import { ActiveStatus } from '@/types';
+import { useEffect } from 'react';
 import { styled } from 'styled-components';
 
 interface Props {
   count: number;
   activeStatus?: ActiveStatus;
+  color?: string;
 }
 
 export const Count = ({ count, activeStatus = 'default' }: Props) => {
   return <Wrapper $activeStatus={activeStatus}>{count}</Wrapper>;
 };
 
-const Wrapper = styled.p<{ $activeStatus: ActiveStatus }>`
+const Wrapper = styled.h1<{ $activeStatus: ActiveStatus }>`
   position: absolute;
   bottom: 2px;
   right: 2px;

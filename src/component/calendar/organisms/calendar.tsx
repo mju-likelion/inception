@@ -19,7 +19,7 @@ import {
   isDuplicatedDate,
 } from '@/util';
 import padStart from 'lodash/padStart';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { styled } from 'styled-components';
 import { promiseResultMockData } from '../data';
 
@@ -58,6 +58,15 @@ type GetActiveStatus = (
   currentActiveStatus: ActiveStatus
 ) => ActiveStatus;
 
+type CheckLimitDate = (
+  currentDate: string[], // ['2023', '01', '20']
+  minDate: string[],
+  maxDate: string[]
+) => {
+  start: boolean;
+  end: boolean;
+};
+
 export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
   const minimumDate = minDate ?? dateFormatToString(new Date());
   const maximumDate =
@@ -75,22 +84,25 @@ export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
           return 'default';
       }
     } else if (mode === 'result') {
-      switch (currentActiveStatus) {
-        case 'default':
-          return 'defaultFocus';
-        case 'defaultFocus':
-          return 'default';
-        case 'active':
-          return 'activeFocus';
-        case 'activeFocus':
-          return 'active';
-      }
+      return currentActiveStatus;
     } else {
       // select 모드
       return 'disabled';
     }
 
     return 'disabled';
+  };
+
+  const checkLimitDate = (
+    currentDate: string[],
+    minDate: string[],
+    maxDate: string[]
+  ) => {
+    // 주의! new Date('2023-06') !== new Date('2023-6')
+    return {
+      start: new Date(currentDate.join('-')) <= new Date(minDate.join('-')),
+      end: new Date(currentDate.join('-')) >= new Date(maxDate.join('-')),
+    };
   };
 
   switch (viewType) {
@@ -100,6 +112,7 @@ export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
           minDate={splitMinDate}
           maxDate={splitMaxDate}
           getActiveStatus={getActiveStatus}
+          checkLimitDate={checkLimitDate}
         />
       );
     case 'result':
@@ -109,6 +122,7 @@ export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
           maxDate={splitMaxDate}
           promiseResult={promiseResultMockData}
           getActiveStatus={getActiveStatus}
+          checkLimitDate={checkLimitDate}
         />
       );
     default:
@@ -120,10 +134,16 @@ interface BaseCalendarModeProps {
   minDate: string[];
   maxDate: string[];
   getActiveStatus: GetActiveStatus;
+  checkLimitDate: CheckLimitDate;
 }
 
 type CreateModeProps = BaseCalendarModeProps;
-const CreateMode = ({ minDate, maxDate }: CreateModeProps) => {
+const CreateMode = ({
+  minDate,
+  maxDate,
+  getActiveStatus,
+  checkLimitDate,
+}: CreateModeProps) => {
   /** 현재 날짜 */
   const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
 
@@ -135,10 +155,9 @@ const CreateMode = ({ minDate, maxDate }: CreateModeProps) => {
 
   const [weekCount, setWeekCount] = useWeekCount(minDate);
 
-  const [dateRangeLimit, setDateRangeLimit] = useState<DateRangeLimit>({
-    start: new Date(currentDate.join('-')) <= new Date(minDate.join('-')),
-    end: new Date(currentDate.join('-')) >= new Date(maxDate.join('-')),
-  });
+  const [dateRangeLimit, setDateRangeLimit] = useState<DateRangeLimit>(
+    checkLimitDate(currentDate, minDate, maxDate)
+  );
 
   const handleClickDate = (date?: string) => {
     if (!date) return null;
@@ -147,8 +166,7 @@ const CreateMode = ({ minDate, maxDate }: CreateModeProps) => {
       value.date === date
         ? ({
             ...value,
-            activeStatus:
-              value.activeStatus === 'active' ? 'default' : 'active',
+            activeStatus: getActiveStatus('create', value.activeStatus),
           } as CalendarData)
         : value
     );
@@ -166,15 +184,13 @@ const CreateMode = ({ minDate, maxDate }: CreateModeProps) => {
     const changedCalendar = getCalendarData(changedYear, changedMonth);
 
     setCurrentDate([changedYear, changedMonth]);
-    setDateRangeLimit({
-      // 주의! new Date('2023-06') !== new Date('2023-6')
-      start:
-        new Date(`${changedYear}-${changedMonth}`) <=
-        new Date(minDate.slice(0, 2).join('-')),
-      end:
-        new Date(`${changedYear}-${changedMonth}`) >=
-        new Date(maxDate.slice(0, 2).join('-')),
-    });
+    setDateRangeLimit(
+      checkLimitDate(
+        [changedYear, changedMonth],
+        minDate.slice(0, 2),
+        maxDate.slice(0, 2)
+      )
+    );
 
     if (
       !isDuplicatedDate(calendar, { year: changedYear, month: changedMonth })
@@ -202,6 +218,7 @@ const CreateMode = ({ minDate, maxDate }: CreateModeProps) => {
           calendarData={calendar}
           currentDate={currentDate}
           handleClickDate={handleClickDate}
+          viewType={'create'}
         />
       </>
     </Grid>
@@ -214,18 +231,18 @@ interface ResultModeProps extends BaseCalendarModeProps {
 const ResultMode = ({
   minDate,
   maxDate,
-  getActiveStatus,
   promiseResult,
+  getActiveStatus,
+  checkLimitDate,
 }: ResultModeProps) => {
   const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
   const [weekCount, setWeekCount] = useWeekCount(minDate);
   const [calendar, setCalendar] = useState<CalendarData[]>(() =>
     getCalendarData(minDate[0], minDate[1], promiseResult)
   );
-  const [dateRangeLimit, setDateRangeLimit] = useState<DateRangeLimit>({
-    start: new Date(currentDate.join('-')) <= new Date(minDate.join('-')),
-    end: new Date(currentDate.join('-')) >= new Date(maxDate.join('-')),
-  });
+  const [dateRangeLimit, setDateRangeLimit] = useState<DateRangeLimit>(
+    checkLimitDate(currentDate, minDate, maxDate)
+  );
 
   const handleChangeCalendar = (type: 'prev' | 'next') => {
     const date = new Date(+currentDate[0], +currentDate[1] - 1); // Date 객체에선 month는 제로베이스임
@@ -237,15 +254,13 @@ const ResultMode = ({
     const changedCalendar = getCalendarData(changedYear, changedMonth);
 
     setCurrentDate([changedYear, changedMonth]);
-    setDateRangeLimit({
-      // 주의! new Date('2023-06') !== new Date('2023-6')
-      start:
-        new Date(`${changedYear}-${changedMonth}`) <=
-        new Date(minDate.slice(0, 2).join('-')),
-      end:
-        new Date(`${changedYear}-${changedMonth}`) >=
-        new Date(maxDate.slice(0, 2).join('-')),
-    });
+    setDateRangeLimit(
+      checkLimitDate(
+        [changedYear, changedMonth],
+        minDate.slice(0, 2),
+        maxDate.slice(0, 2)
+      )
+    );
 
     if (
       !isDuplicatedDate(calendar, { year: changedYear, month: changedMonth })
@@ -258,7 +273,6 @@ const ResultMode = ({
 
   const handleClickDate = (date?: string) => {
     if (!date) return null;
-    console.log('포커스 컬러로 변환, 해당 날짜에서 겹치는 시간 표시', date);
 
     const changedDateColor = calendar.map((value) =>
       value.date === date
