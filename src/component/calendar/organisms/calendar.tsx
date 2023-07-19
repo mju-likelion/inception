@@ -6,6 +6,7 @@ import {
 } from '@/component/calendar/molecules';
 import { useWeekCount } from '@/hooks';
 import {
+  ActiveStatus,
   CalendarData,
   DateRangeLimit,
   PromiseResultData,
@@ -18,7 +19,7 @@ import {
   isDuplicatedDate,
 } from '@/util';
 import padStart from 'lodash/padStart';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { styled } from 'styled-components';
 import { promiseResultMockData } from '../data';
 
@@ -51,6 +52,12 @@ interface CalendarProps {
   minDate?: string;
   maxDate?: string;
 }
+
+type GetActiveStatus = (
+  mode: ViewType,
+  currentActiveStatus: ActiveStatus
+) => ActiveStatus;
+
 export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
   const minimumDate = minDate ?? dateFormatToString(new Date());
   const maximumDate =
@@ -59,15 +66,49 @@ export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
   const splitMinDate = minimumDate.split('-');
   const splitMaxDate = maximumDate.split('-');
 
+  const getActiveStatus: GetActiveStatus = (mode, currentActiveStatus) => {
+    if (mode === 'create') {
+      switch (currentActiveStatus) {
+        case 'default':
+          return 'active';
+        case 'active':
+          return 'default';
+      }
+    } else if (mode === 'result') {
+      switch (currentActiveStatus) {
+        case 'default':
+          return 'defaultFocus';
+        case 'defaultFocus':
+          return 'default';
+        case 'active':
+          return 'activeFocus';
+        case 'activeFocus':
+          return 'active';
+      }
+    } else {
+      // select 모드
+      return 'disabled';
+    }
+
+    return 'disabled';
+  };
+
   switch (viewType) {
     case 'create':
-      return <CreateMode minDate={splitMinDate} maxDate={splitMaxDate} />;
+      return (
+        <CreateMode
+          minDate={splitMinDate}
+          maxDate={splitMaxDate}
+          getActiveStatus={getActiveStatus}
+        />
+      );
     case 'result':
       return (
         <ResultMode
           minDate={splitMinDate}
           maxDate={splitMaxDate}
           promiseResult={promiseResultMockData}
+          getActiveStatus={getActiveStatus}
         />
       );
     default:
@@ -78,6 +119,7 @@ export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
 interface BaseCalendarModeProps {
   minDate: string[];
   maxDate: string[];
+  getActiveStatus: GetActiveStatus;
 }
 
 type CreateModeProps = BaseCalendarModeProps;
@@ -169,7 +211,12 @@ const CreateMode = ({ minDate, maxDate }: CreateModeProps) => {
 interface ResultModeProps extends BaseCalendarModeProps {
   promiseResult: PromiseResultData[];
 }
-const ResultMode = ({ minDate, maxDate, promiseResult }: ResultModeProps) => {
+const ResultMode = ({
+  minDate,
+  maxDate,
+  getActiveStatus,
+  promiseResult,
+}: ResultModeProps) => {
   const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
   const [weekCount, setWeekCount] = useWeekCount(minDate);
   const [calendar, setCalendar] = useState<CalendarData[]>(() =>
@@ -211,19 +258,18 @@ const ResultMode = ({ minDate, maxDate, promiseResult }: ResultModeProps) => {
 
   const handleClickDate = (date?: string) => {
     if (!date) return null;
+    console.log('포커스 컬러로 변환, 해당 날짜에서 겹치는 시간 표시', date);
 
-    // const changedDateColor = calendar.map((value) =>
-    //   value.date === date
-    //     ? ({
-    //         ...value,
-    //         activeStatus:
-    //           value.activeStatus === 'active' ? 'default' : 'active',
-    //       } as CalendarData)
-    //     : value
-    // );
+    const changedDateColor = calendar.map((value) =>
+      value.date === date
+        ? ({
+            ...value,
+            activeStatus: getActiveStatus('result', value.activeStatus),
+          } as CalendarData)
+        : value
+    );
 
-    // setCalendar(changedDateColor);
-    console.log('포커스 컬러로 변환, 해당 날짜에서 겹치는 시간 표시');
+    setCalendar(changedDateColor);
   };
 
   return (

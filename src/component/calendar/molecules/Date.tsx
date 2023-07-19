@@ -45,7 +45,6 @@ const DateComponent = ({
             key={data.date}
             dateOptions={dateOptions}
             handleClickDate={handleClickDate}
-            // disabled={viewType === 'result'}
           >
             <div>
               <p>{removeZeroPadDate}</p>
@@ -78,6 +77,12 @@ const getGridColor = (
   switch (activeStatus) {
     case 'active':
       return 'mint1';
+    case 'activeFocus':
+      return 'mint3';
+    case 'default':
+      return 'gray1';
+    case 'defaultFocus':
+      return 'gray3';
     case 'disabled':
       return 'gray4';
     default:
