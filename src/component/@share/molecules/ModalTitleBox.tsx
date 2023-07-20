@@ -12,7 +12,9 @@ export const ModalTitleBox = ({ title, content }: TitleBoxProps) => {
     <Container>
       <Title ag="Title2">{title}</Title>{' '}
       <BodyBlock>
-        <Body ag="Body3">{content}</Body>
+        <Body ag="Body3" color="gray1" align="center">
+          {content}
+        </Body>
       </BodyBlock>
     </Container>
   );
@@ -20,12 +22,12 @@ export const ModalTitleBox = ({ title, content }: TitleBoxProps) => {
 
 const Container = styled.div`
   display: flex;
-  width: 250px;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
 `;
 
 const BodyBlock = styled.div`
-  width: 210px;
+  display: flex;
+  flex-direction: column;
 `;

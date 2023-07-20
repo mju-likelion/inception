@@ -1,19 +1,20 @@
 import styled from 'styled-components';
 import { ButtonLarge } from '@/component/@share/atom';
 import { ModalTitleBox } from '../molecules/ModalTitleBox';
+import { ModalIcon } from '../atom/ModalIcon';
 
 interface ModalProps {
-  error: 'loginError' | 'codeError' | 'theOtherError';
+  error: 'codeError' | 'loginError' | 'theOtherError';
 }
 
 const errorText = [
   {
-    errorType: 'loginError',
+    errorType: 'codeError',
     title: '존재하지 않는 약속방입니다',
     content: '입장코드를 다시 한번 확인해주세요',
   },
   {
-    errorType: 'codeError',
+    errorType: 'loginError',
     title: '존재하지 않는 정보입니다',
     content:
       '해당 약속방에서 사용된 닉네임과 비밀번호인지 다시 한번 확인해주세요',
@@ -26,49 +27,50 @@ const errorText = [
 ];
 
 export const Modal = ({ error }: ModalProps) => {
-  const onSetModalText = ({ error }: ModalProps) => {
+  const onSetModalText = () => {
     const result = [];
     const b = errorText.filter((s) => s.errorType === error);
 
     //에러타입을 키로, 맞는 객체를 찾아와서 배열을 만들어줘
-    result.push(<ModalTitleBox title={b[0].title} content={b.content} />);
+    result.push(<ModalTitleBox title={b[0].title} content={b[0].content} />);
 
     return result;
   };
   return (
-    <ModalBlock>
-      <TopBlock>
-        <TitleBoxBlock>{onSetModalText()}</TitleBoxBlock>
-      </TopBlock>
+    <WrapModal>
+      <ModalIconBox>
+        <ModalIcon value={'codeError'} />
+      </ModalIconBox>
+      <TitleBox>{onSetModalText()}</TitleBox>
       <ButtonBlock>
         <ButtonLarge>확인</ButtonLarge>
       </ButtonBlock>
-    </ModalBlock>
+    </WrapModal>
   );
 };
 
-const ModalBlock = styled.div`
-  width: 320px;
-  height: 476px;
+const WrapModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  height: 278px;
   border-radius: 16px;
   background: ${({ theme }) => theme.colors.white};
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
 `;
 
-const TitleBoxBlock = styled.div`
+const ModalIconBox = styled.div`
+  margin: 24px 122px 20px 122px;
+`;
+
+const TitleBox = styled.div`
   display: flex;
   width: 250px;
   height: 318px;
   flex-direction: column;
   align-items: flex-start;
   gap: 42px;
-`;
-
-const TopBlock = styled.div`
-  display: inline-flex;
-  align-items: flex-start;
-  gap: 8px;
-  margin: 32px 14px 42px 20px;
 `;
 
 const ButtonBlock = styled.div`
