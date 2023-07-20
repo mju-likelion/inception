@@ -33,5 +33,7 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  width: 250px;
+  height: 28px;
   gap: 2px;
 `;

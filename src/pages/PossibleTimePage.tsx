@@ -29,7 +29,7 @@ export const PossibleTimePage = () => {
       <TimePageBlock>
         <ContentBlock>
           <TitleBoxBlock>
-            <TitleBox content="가용한 날짜들을 선택해주세요" step={2} />
+            <TitleBox content="가용한 시간들을 선택해주세요" step={2} />
           </TitleBoxBlock>
           <TimeBox onSetActiveButton={setIsActive} />
           <InformationBlock>

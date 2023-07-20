@@ -25,6 +25,7 @@ const Button = styled.button`
   border: none;
   border-radius: 30px;
   background-color: ${({ theme }) => theme.colors.mint1};
+  color: ${({ theme }) => theme.colors.white};
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.mint3};
@@ -39,5 +40,4 @@ const Button = styled.button`
 const ButtonText = styled.p`
   ${({ theme }) => theme.typographies.subTitle};
   width: 160px;
-  color: ${({ theme }) => theme.colors.white};
 `;
