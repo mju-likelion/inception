@@ -30,6 +30,8 @@ export const Input = ({
 };
 
 const InputField = styled.input`
+  ${({ theme }) => theme.typographies.body1.regular};
+
   width: 100%;
   min-width: 320px;
   max-width: 500px;
@@ -38,7 +40,6 @@ const InputField = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.gray4};
   border-radius: 8px;
   color: ${({ theme }) => theme.colors.gray1};
-  font-size: ${({ theme }) => theme.typographies.body1.regular};
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray3};
