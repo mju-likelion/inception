@@ -8,7 +8,7 @@ interface MailProps {
 export const Mail = ({ email }: MailProps) => {
   return (
     <Container>
-      <Body ag="Body4" color="gray1">
+      <Body ag="Body4" color="gray2">
         이메일
       </Body>
       <Email>{email}</Email>

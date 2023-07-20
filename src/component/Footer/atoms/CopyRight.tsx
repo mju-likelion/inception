@@ -6,7 +6,7 @@ interface CopyRightProps {
 
 export const CopyRight = ({ content }: CopyRightProps) => {
   return (
-    <Body ag="Body5" color="gray2">
+    <Body ag="Body5" color="gray3">
       {content}
     </Body>
   );

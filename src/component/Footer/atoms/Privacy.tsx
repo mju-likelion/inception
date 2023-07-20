@@ -21,8 +21,8 @@ const Container = styled.div`
 
 const PrivacyContent = styled.button`
   ${({ theme }) => theme.typographies.body4};
-  color: ${({ theme }) => theme.colors.gray1};
+  color: ${({ theme }) => theme.colors.gray2};
   &:hover {
-    color: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.gray1};
   }
 `;
