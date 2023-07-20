@@ -73,8 +73,8 @@ const ContentBlock = styled.div`
 `;
 
 const Icon = styled.img`
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
 `;
 
 const TextBlock = styled.div<{ $isEnabled: boolean }>`
