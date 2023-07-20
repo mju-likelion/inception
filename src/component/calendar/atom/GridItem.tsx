@@ -98,10 +98,16 @@ const Wrapper = styled.button<{
         height: 100%;
         align-items: start;
         p {
-          width: 20px;
-          height: 20px;
+          ${({ theme }) => theme.typographies.body3}
           margin-top: 2px;
           margin-left: 4px;
+        }
+        @media ${({ theme }) => theme.size.web} {
+          p {
+            ${({ theme }) => theme.typographies.body1.regular}
+            margin-top: 2px;
+            margin-left: 4px;
+          }
         }
       }
       border-top: 2px solid ${({ theme }) => theme.colors.gray1};

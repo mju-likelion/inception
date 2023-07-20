@@ -4,7 +4,6 @@ import {
   Date as DateComponent,
   DateHeader,
 } from '@/component/calendar/molecules';
-import { useWeekCount } from '@/hooks';
 import {
   ActiveStatus,
   CalendarData,
@@ -153,8 +152,6 @@ const CreateMode = ({
     getCalendarData(minDate[0], minDate[1])
   );
 
-  const [weekCount, setWeekCount] = useWeekCount(minDate);
-
   const [dateRangeLimit, setDateRangeLimit] = useState<DateRangeLimit>(
     checkLimitDate(currentDate, minDate, maxDate)
   );
@@ -197,13 +194,11 @@ const CreateMode = ({
     ) {
       setCalendar((prev) => prev.concat(changedCalendar));
     }
-
-    setWeekCount([changedYear, changedMonth]);
   };
 
   /** @TODO GridFooter는 result === on 일때만 보여준다. GridHeader, GridFooter는 molecules로 관리해야될 것 같다. */
   return (
-    <Grid $weekCount={weekCount}>
+    <Grid>
       <GridHeader>
         <CalendarHeader
           currentDate={currentDate}
@@ -236,7 +231,6 @@ const ResultMode = ({
   checkLimitDate,
 }: ResultModeProps) => {
   const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
-  const [weekCount, setWeekCount] = useWeekCount(minDate);
   const [calendar, setCalendar] = useState<CalendarData[]>(() =>
     getCalendarData(minDate[0], minDate[1], promiseResult)
   );
@@ -267,8 +261,6 @@ const ResultMode = ({
     ) {
       setCalendar((prev) => prev.concat(changedCalendar));
     }
-
-    setWeekCount([changedYear, changedMonth]);
   };
 
   const handleClickDate = (date?: string) => {
@@ -287,7 +279,7 @@ const ResultMode = ({
   };
 
   return (
-    <Grid $weekCount={weekCount}>
+    <Grid>
       <GridHeader>
         <CalendarHeader
           currentDate={currentDate}
@@ -313,19 +305,11 @@ const ResultMode = ({
   );
 };
 
-const Grid = styled.div<{ $weekCount: number }>`
+const Grid = styled.div`
   display: flex;
   flex-direction: column;
 
-  aspect-ratio: ${({ $weekCount }) => {
-    if ($weekCount === 6) {
-      return '1/1.3125';
-    } else if ($weekCount === 5) {
-      return '1/1.15';
-    } else {
-      return '1/0.9875';
-    }
-  }};
+  aspect-ratio: 1/1.15;
 
   min-width: 320px;
   max-width: 500px;
