@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { TabItem } from '@/types';
 import { useNavigate } from 'react-router-dom';
 
-export const LoginMasterTemlplate = () => {
+export const LoginMasterTemplate = () => {
   const [nicknameValue, setNicknameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 

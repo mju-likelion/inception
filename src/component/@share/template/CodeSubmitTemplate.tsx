@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { TabItem } from '@/types';
 import { useNavigate } from 'react-router-dom';
 
-export const CodeSubmitTemlplate = () => {
+export const CodeSubmitTemplate = () => {
   const [value, setValue] = useState('');
 
   const [buttonInactive, setButtonInactive] = useState(true);
