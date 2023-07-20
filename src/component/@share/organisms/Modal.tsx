@@ -3,40 +3,35 @@ import { ButtonLarge } from '@/component/@share/atom';
 import { ModalTitleBox } from '../molecules/ModalTitleBox';
 
 interface ModalProps {
-  errorType: 'loginError' | 'codeError' | 'theOtherError';
+  error: 'loginError' | 'codeError' | 'theOtherError';
 }
 
 const errorText = [
   {
-    key: 'loginError',
+    errorType: 'loginError',
     title: '존재하지 않는 약속방입니다',
     content: '입장코드를 다시 한번 확인해주세요',
   },
   {
-    key: 'codeError',
+    errorType: 'codeError',
     title: '존재하지 않는 정보입니다',
     content:
       '해당 약속방에서 사용된 닉네임과 비밀번호인지 다시 한번 확인해주세요',
   },
   {
-    key: 'theOtherError',
+    errorType: 'theOtherError',
     title: '알 수 없는 에러가 발생했어요',
     content: '잠시 후에 다시 시도해주세요',
   },
 ];
 
-export const Modal = ({ errorType }: ModalProps) => {
-  const onSetModalText = () => {
+export const Modal = ({ error }: ModalProps) => {
+  const onSetModalText = ({ error }: ModalProps) => {
     const result = [];
-    for (let i = 0; i < 3; i++) {
-      //에러타입을 키로, 맞는 객체를 찾아와서 배열을 만들어줘
-      result.push(
-        <ModalTitleBox
-          title={errorText[i].title}
-          content={errorText[i].content}
-        />
-      );
-    }
+    const b = errorText.filter((s) => s.errorType === error);
+
+    //에러타입을 키로, 맞는 객체를 찾아와서 배열을 만들어줘
+    result.push(<ModalTitleBox title={b[0].title} content={b.content} />);
 
     return result;
   };
