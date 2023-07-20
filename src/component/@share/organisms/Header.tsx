@@ -1,11 +1,14 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { Logo, Helper } from '@/component/@share/atom';
 
 export const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <HeaderBox>
       <InnerBox>
-        <Logo />
+        <Logo onClick={() => navigate('/')} />
         <Helper />
       </InnerBox>
     </HeaderBox>
