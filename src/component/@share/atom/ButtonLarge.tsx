@@ -3,14 +3,16 @@ import { styled } from 'styled-components';
 
 interface Props {
   isDisabled?: boolean;
+  click?: () => void;
 }
 
 export const ButtonLarge = ({
   children,
   isDisabled,
+  click,
 }: PropsWithChildren<Props>) => {
   return (
-    <Button disabled={isDisabled}>
+    <Button disabled={isDisabled} onClick={click}>
       <ButtonText>{children}</ButtonText>
     </Button>
   );
