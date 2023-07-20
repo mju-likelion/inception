@@ -1,14 +1,9 @@
 import { styled } from 'styled-components';
-import { useSetRecoilState } from 'recoil';
 import { TabBar, TitleBox, Body, ButtonLarge } from '@/component/@share';
 import { Calendar, TimePicker } from '@/component';
-import { tabState } from '@/store';
 import { TabItem } from '@/types';
 
 export const Home = () => {
-  const setSelectedTab = useSetRecoilState(tabState);
-  const onClick = (tab: string) => {};
-
   const tabItems: TabItem[] = [
     {
       id: 'default',
@@ -22,7 +17,7 @@ export const Home = () => {
 
   return (
     <>
-      <TabBar onClick={setSelectedTab} tabItems={tabItems} />
+      <TabBar tabItems={tabItems} />
       <Container>
         <TitleBoxContainer>
           <TitleBox
