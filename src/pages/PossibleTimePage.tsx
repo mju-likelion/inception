@@ -6,9 +6,12 @@ import { styled } from 'styled-components';
 import { useState } from 'react';
 import { TabBar } from '@/component/@share';
 import { TabItem } from '@/types';
+import { useNavigate } from 'react-router-dom';
 
 export const PossibleTimePage = () => {
   const [isActive, setIsActive] = useState(true);
+
+  const navigate = useNavigate();
 
   const onClick = (tab: string) => {};
 
@@ -40,7 +43,12 @@ export const PossibleTimePage = () => {
             />
           </InformationBlock>
           <ButtonBlock>
-            <ButtonLarge isDisabled={isActive}>다음으로</ButtonLarge>
+            <ButtonLarge
+              isDisabled={isActive}
+              onClick={() => navigate('/login')}
+            >
+              다음으로
+            </ButtonLarge>
           </ButtonBlock>
         </ContentBlock>
       </TimePageBlock>

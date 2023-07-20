@@ -8,6 +8,7 @@ import { ReactComponent as InternalServerError } from '@/assets/images/ErrorStat
 import { ButtonLarge } from '@/component/@share';
 import { devices } from '@/globalStyle';
 import { useWindowResize } from '@/hooks';
+import { useNavigate } from 'react-router-dom';
 
 interface RedirectPageProps {
   errorState?: 500;
@@ -15,6 +16,7 @@ interface RedirectPageProps {
 
 export const RedirectPage = ({ errorState }: RedirectPageProps) => {
   const windowSize = useWindowResize();
+  const navigate = useNavigate();
 
   return (
     <Container>
@@ -29,7 +31,9 @@ export const RedirectPage = ({ errorState }: RedirectPageProps) => {
         <DoorSvgForTablet />
       )}
 
-      <ButtonLarge isDisabled={false}>메인으로</ButtonLarge>
+      <ButtonLarge isDisabled={false} onClick={() => navigate('/')}>
+        메인으로
+      </ButtonLarge>
     </Container>
   );
 };

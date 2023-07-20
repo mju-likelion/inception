@@ -1,9 +1,12 @@
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { TabBar, TitleBox, Body, ButtonLarge } from '@/component/@share';
 import { Calendar, TimePicker } from '@/component';
 import { TabItem } from '@/types';
 
 export const Home = () => {
+  const navigate = useNavigate();
+
   const tabItems: TabItem[] = [
     {
       id: 'default',
@@ -36,7 +39,9 @@ export const Home = () => {
           <TimePicker />
         </TimePickerBox>
         <ButtonBox>
-          <ButtonLarge isDisabled>약속방 생성</ButtonLarge>
+          <ButtonLarge onClick={() => navigate('/select-date')}>
+            약속방 생성
+          </ButtonLarge>
         </ButtonBox>
       </Container>
     </>

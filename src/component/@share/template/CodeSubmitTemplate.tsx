@@ -5,11 +5,14 @@ import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useEffect, useState } from 'react';
 import { TabItem } from '@/types';
+import { useNavigate } from 'react-router-dom';
 
 export const CodeSubmitTemlplate = () => {
   const [value, setValue] = useState('');
 
   const [buttonInactive, setButtonInactive] = useState(true);
+
+  const navigate = useNavigate();
 
   const tabItems: TabItem[] = [
     {
@@ -63,7 +66,12 @@ export const CodeSubmitTemlplate = () => {
           </WrapInput>
         </WrapTitleBoxInput>
         <WrapButton>
-          <ButtonLarge isDisabled={buttonInactive}>입력 완료</ButtonLarge>
+          <ButtonLarge
+            isDisabled={buttonInactive}
+            onClick={() => navigate('/result')}
+          >
+            입력 완료
+          </ButtonLarge>
         </WrapButton>
       </WrapperContents>
     </>

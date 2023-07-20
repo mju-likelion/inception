@@ -47,7 +47,9 @@ export const HelperModal = ({ step }: HelperModalProps) => {
         <TitleBoxBlock>{onSetHelpText()}</TitleBoxBlock>
       </TopBlock>
       <ButtonBlock>
-        <ButtonLarge>알겠어요</ButtonLarge>
+        <ButtonLarge onClick={() => console.log('임시메소드입니다.')}>
+          알겠어요
+        </ButtonLarge>
       </ButtonBlock>
     </ModalBlock>
   );

@@ -5,12 +5,15 @@ import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
 import { TabItem } from '@/types';
+import { useNavigate } from 'react-router-dom';
 
 export const LoginMasterTemlplate = () => {
   const [nicknameValue, setNicknameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
   const [buttonInactive, setButtonInactive] = useState(true);
+
+  const navigate = useNavigate();
 
   const onChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNicknameValue(event.target.value);
@@ -73,7 +76,12 @@ export const LoginMasterTemlplate = () => {
           </WrapInput>
         </WrapUpperContents>
         <WrapButton>
-          <ButtonLarge isDisabled={buttonInactive}>입력 완료</ButtonLarge>
+          <ButtonLarge
+            isDisabled={buttonInactive}
+            onClick={() => navigate('/result')}
+          >
+            입력 완료
+          </ButtonLarge>
         </WrapButton>
       </WrapContents>
     </>

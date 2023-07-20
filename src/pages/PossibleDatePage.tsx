@@ -5,8 +5,11 @@ import { styled } from 'styled-components';
 import CalendarIcon from '@/assets/images/Calendar.svg';
 import { getMaxDate, getMinDate } from '@/util';
 import { TabItem } from '@/types';
+import { useNavigate } from 'react-router-dom';
 
 export const PossibleDatePage = () => {
+  const navigate = useNavigate();
+
   const selectableDates = ['2023-06', '2023-07', '2023-08']; // @TODO 더미데이터. 서버에서 선택 가능한 시간들 가져와 보여주기
 
   const tabItems: TabItem[] = [
@@ -51,7 +54,9 @@ export const PossibleDatePage = () => {
           />
         </Content>
         <Bottom>
-          <ButtonLarge>다음으로</ButtonLarge>
+          <ButtonLarge onClick={() => navigate('/select-time')}>
+            다음으로
+          </ButtonLarge>
         </Bottom>
       </Wrapper>
     </>
