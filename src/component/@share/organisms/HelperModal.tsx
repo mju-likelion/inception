@@ -4,8 +4,8 @@ import { ProgressBarModal, HelperTitleBox } from '@/component/@share/molecules';
 
 interface HelperModalProps {
   step: 0 | 1 | 2 | 3;
-  open: boolean;
-  close: () => void;
+  isOpen: boolean;
+  onCloseModal: () => void;
 }
 
 const helpText = [
@@ -24,7 +24,11 @@ const helpText = [
   },
 ];
 
-export const HelperModal = ({ step, open, close }: HelperModalProps) => {
+export const HelperModal = ({
+  step,
+  isOpen,
+  onCloseModal,
+}: HelperModalProps) => {
   const onSetHelpText = () => {
     const result = [];
     for (let i = 0; i < 3; i++) {
@@ -44,15 +48,15 @@ export const HelperModal = ({ step, open, close }: HelperModalProps) => {
   };
   return (
     <>
-      {open ? (
-        <ModalBackdrop onClick={close}>
+      {isOpen ? (
+        <ModalBackdrop onClick={onCloseModal}>
           <ModalBlock onClick={(e) => e.stopPropagation()}>
             <TopBlock>
               <ProgressBarModal total={3} step={step} />
               <TitleBoxBlock>{onSetHelpText()}</TitleBoxBlock>
             </TopBlock>
             <ButtonBlock>
-              <ButtonLarge click={close}>알겠어요</ButtonLarge>
+              <ButtonLarge click={onCloseModal}>알겠어요</ButtonLarge>
             </ButtonBlock>
           </ModalBlock>
         </ModalBackdrop>

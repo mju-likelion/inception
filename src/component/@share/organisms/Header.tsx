@@ -36,8 +36,8 @@ export const Header = () => {
       </HeaderBox>
       <HelperModal
         step={step}
-        open={modalOpen}
-        close={closeModal}
+        isOpen={modalOpen}
+        onCloseModal={closeModal}
       ></HelperModal>
     </>
   );
