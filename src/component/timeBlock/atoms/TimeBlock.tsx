@@ -6,7 +6,7 @@ interface TimeBlockProps {
 }
 
 export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
-  return <TimeBlockAtom $isActive={active} onClick={onClick} />;
+  return <TimeBlockAtom $isActive={active} onClick={onClick} className="btn" />;
 };
 
 const TimeBlockAtom = styled.button<{ $isActive: boolean }>`
