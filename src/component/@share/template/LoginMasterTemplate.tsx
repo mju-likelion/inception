@@ -110,10 +110,9 @@ const WrapInput = styled.div`
 
   @media ${({ theme }) => theme.size.tablet} {
     width: 500px;
-    margin-top: 40px;
   }
   @media ${({ theme }) => theme.size.web} {
-    margin-top: 50px;
+    margin-top: 40px;
   }
 `;
 
@@ -126,6 +125,6 @@ const WrapButton = styled.div`
     margin: 158px 0px 100px 0px;
   }
   @media ${({ theme }) => theme.size.web} {
-    margin: 270px 0px 200px 0px;
+    margin: 220px 0px 100px 0px;
   }
 `;
