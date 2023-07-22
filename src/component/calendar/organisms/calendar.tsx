@@ -299,7 +299,9 @@ const ResultMode = ({
       </>
 
       <GridFooter>
-        <ButtonSmall>일정 수정</ButtonSmall>
+        <FooterRightWrapper>
+          <ButtonSmall>일정 수정</ButtonSmall>
+        </FooterRightWrapper>
       </GridFooter>
     </Grid>
   );
@@ -330,4 +332,9 @@ const GridFooter = styled.div`
   justify-content: end;
   height: 71px;
   align-items: center;
+`;
+
+const FooterRightWrapper = styled.div`
+  margin-top: 15px;
+  margin-bottom: 16px;
 `;
