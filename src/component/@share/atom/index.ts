@@ -3,7 +3,6 @@ export * from './ButtonSmall';
 export * from './Logo';
 export * from './Helper';
 export * from './CheckBox';
-export * from './Body';
 export * from './Line';
 export * from './Dot';
 export * from './LineModal';

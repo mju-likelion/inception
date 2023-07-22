@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { ReactComponent as SuccessIcon } from '@/assets/images/Success.svg';
 import { ReactComponent as ErrorIcon } from '@/assets/images/Error.svg';
-import { Body } from '@/component/@share/atom';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { toastState } from '@/store';
+import { theme } from '@/globalStyle';
+import { css } from 'styled-components';
 
 interface ToastProps {
   type: 'success' | 'error';
@@ -27,11 +28,11 @@ export const Toast = ({ type, message }: ToastProps) => {
     <Container>
       {type === 'success' ? <SuccessIcon /> : <ErrorIcon />}
       <MessageBox>
-        <Body ag="Body1Regular" color="white">
+        <Body ag="Body1Regular" $color="white">
           {message}
         </Body>
         {type === 'error' && (
-          <Body ag="Body3" color="gray3">
+          <Body ag="Body3" $color="gray3">
             잠시 후 다시 시도해주세요
           </Body>
         )}
@@ -81,4 +82,23 @@ const MessageBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
+`;
+
+const Body = styled.p<{ ag: string; $color: keyof typeof theme.colors }>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
+  letter-spacing: 0;
+  text-align: left;
+  word-break: keep-all;
+
+  ${(props) =>
+    props.ag === 'Body3' &&
+    css`
+      ${({ theme }) => theme.typographies.body3};
+    `}
+
+  ${(props) =>
+    props.ag === 'Body1Regular' &&
+    css`
+      ${({ theme }) => theme.typographies.body3};
+    `}
 `;

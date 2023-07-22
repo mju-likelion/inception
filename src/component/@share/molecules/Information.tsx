@@ -1,6 +1,6 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import { ButtonSmall } from '@/component/@share/atom/ButtonSmall';
-import { Body } from '@/component/@share/atom/Body';
+import { theme } from '@/globalStyle';
 
 interface Props {
   icon?: string;
@@ -23,21 +23,21 @@ export const Information = ({
         {isEnabled || <Icon src={icon} />}
         <TextBlock $isEnabled={isEnabled}>
           {isEnabled ? (
-            <Body ag="Body1SemiBold" color="gray1">
+            <Body ag="Body1SemiBold" $color="gray1">
               {title}
             </Body>
           ) : (
-            <Body ag="Body3" color="gray2">
+            <Body ag="Body3" $color="gray2">
               {title}
             </Body>
           )}
           {isNull ||
             (isEnabled ? (
-              <Body ag="Body3" color="gray2">
+              <Body ag="Body3" $color="gray2">
                 {content}
               </Body>
             ) : (
-              <Body ag="Body1SemiBold" color="gray1">
+              <Body ag="Body1SemiBold" $color="gray1">
                 {content}
               </Body>
             ))}
@@ -90,4 +90,26 @@ const TextBlock = styled.div<{ $isEnabled: boolean }>`
     overflow: hidden;
     text-overflow: ellipsis;
   }
+`;
+
+const Body = styled.p<{
+  ag: string;
+  $color: keyof typeof theme.colors;
+}>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
+  text-align: left;
+  letter-spacing: 0;
+  word-break: keep-all;
+
+  ${(props) =>
+    props.ag === 'Body1SemiBold' &&
+    css`
+      ${({ theme }) => theme.typographies.body1.semiBold};
+    `}
+
+  ${(props) =>
+    props.ag === 'Body3' &&
+    css`
+      ${({ theme }) => theme.typographies.body3};
+    `}
 `;
