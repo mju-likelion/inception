@@ -124,8 +124,18 @@ export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
           checkLimitDate={checkLimitDate}
         />
       );
+    case 'select':
+      /** @TODO Select Mode 개발하기 */
+      return (
+        <CreateMode
+          minDate={splitMinDate}
+          maxDate={splitMaxDate}
+          getActiveStatus={getActiveStatus}
+          checkLimitDate={checkLimitDate}
+        />
+      );
     default:
-      return <p>{viewType}은 개발되지 않은 캘린더 모드입니다.</p>;
+      return <p>viewType: {viewType}은(는) 개발되지 않은 캘린더 모드입니다.</p>;
   }
 };
 
