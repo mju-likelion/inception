@@ -53,6 +53,7 @@ const WrapModal = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 300px;
   height: 278px;
   border-radius: 16px;
@@ -70,9 +71,10 @@ const TitleBox = styled.div`
   height: 318px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 42px;
+  gap: 30px;
 `;
 
 const ButtonBlock = styled.div`
   text-align: center;
+  margin-bottom: 24px;
 `;
