@@ -4,55 +4,37 @@ import calendar from '@/assets/images/Calendar.svg';
 import { ButtonLarge } from '@/component/@share';
 import { styled } from 'styled-components';
 import { useState } from 'react';
-import { TabBar } from '@/component/@share';
-import { TabItem } from '@/types';
-import { useNavigate } from 'react-router-dom';
 
-export const PossibleTimePage = () => {
+interface Props {
+  buttonClick: () => void;
+}
+
+export const PossibleTimePage = ({ buttonClick }: Props) => {
   const [isActive, setIsActive] = useState(true);
-
-  const navigate = useNavigate();
 
   const onClick = (tab: string) => {};
 
-  const tabItems: TabItem[] = [
-    {
-      id: 'default',
-      title: '약속 잡기',
-    },
-    {
-      id: 'result',
-      title: '결과 보기',
-    },
-  ];
-
   return (
-    <>
-      <TabBar onClick={onClick} tabItems={tabItems} />
-      <TimePageBlock>
-        <ContentBlock>
-          <TitleBoxBlock>
-            <TitleBox content="가용한 날짜들을 선택해주세요" step={2} />
-          </TitleBoxBlock>
-          <TimeBox onSetActiveButton={setIsActive} />
-          <InformationBlock>
-            <Information
-              icon={calendar}
-              title="선택 가능 시간"
-              content="09:00 - 17:00"
-            />
-          </InformationBlock>
-          <ButtonBlock>
-            <ButtonLarge
-              isDisabled={isActive}
-              onClick={() => navigate('/login')}
-            >
-              다음으로
-            </ButtonLarge>
-          </ButtonBlock>
-        </ContentBlock>
-      </TimePageBlock>
-    </>
+    <TimePageBlock>
+      <ContentBlock>
+        <TitleBoxBlock>
+          <TitleBox content="가용한 날짜들을 선택해주세요" step={2} />
+        </TitleBoxBlock>
+        <TimeBox onSetActiveButton={setIsActive} />
+        <InformationBlock>
+          <Information
+            icon={calendar}
+            title="선택 가능 시간"
+            content="09:00 - 17:00"
+          />
+        </InformationBlock>
+        <ButtonBlock>
+          <ButtonLarge isDisabled={isActive} onClick={buttonClick}>
+            다음으로
+          </ButtonLarge>
+        </ButtonBlock>
+      </ContentBlock>
+    </TimePageBlock>
   );
 };
 

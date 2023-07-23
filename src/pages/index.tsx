@@ -2,12 +2,11 @@ import { createBrowserRouter } from 'react-router-dom';
 import { App } from '@/App';
 import { Home } from './Home';
 import { CalendarTest } from './CalendarTest';
-import { PossibleDatePage } from './PossibleDatePage';
 import { RedirectPage } from '@/component/ErrorPage/atoms';
-import { PossibleTimePage } from './PossibleTimePage';
 import { Result } from './Result';
 import { LoginMasterTemplate } from '@/component/@share/template/LoginMasterTemplate';
 import { CodeSubmitTemplate } from '@/component/@share/template/CodeSubmitTemplate';
+import { AppointmentStepPage } from './AppointmentStepPage';
 
 export * from '@/App';
 export * from './Home';
@@ -34,12 +33,8 @@ export const pages = createBrowserRouter([
         element: <CalendarTest />,
       },
       {
-        path: 'select-date', // ex) localhost:3000/select-date
-        element: <PossibleDatePage />,
-      },
-      {
-        path: 'select-time', // ex) localhost:3000/selectTime
-        element: <PossibleTimePage />,
+        path: 'appointment', // ex) localhost:3000/appointment
+        element: <AppointmentStepPage />,
       },
       {
         path: 'login', // ex) localhost:3000/login

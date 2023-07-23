@@ -39,7 +39,7 @@ export const Home = () => {
           <TimePicker />
         </TimePickerBox>
         <ButtonBox>
-          <ButtonLarge onClick={() => navigate('/select-date')}>
+          <ButtonLarge onClick={() => navigate(`/appointment?step=1`)}>
             약속방 생성
           </ButtonLarge>
         </ButtonBox>
