@@ -30,6 +30,7 @@ const Container = styled.button`
 
 const Title = styled.h1<{ $color: keyof typeof theme.colors }>`
   ${({ theme }) => theme.typographies.title2};
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
   letter-spacing: 0;
   text-align: left;
   word-break: keep-all;
