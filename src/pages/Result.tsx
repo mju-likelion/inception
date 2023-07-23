@@ -16,7 +16,7 @@ export const Result = () => {
     },
     {
       id: 'result',
-      title: '결과 보기',
+      title: '약속방',
     },
   ];
 
