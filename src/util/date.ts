@@ -11,24 +11,26 @@ export const getCalendarData = (
   const days = calcDaysByYearMonth(year, month);
   const paddingMonth = +month < 10 ? `0${+month}` : month;
 
+  // 가장 많이 선택된 횟수로 status 구하기 위해 사용
+  const mostSelectedCount = promiseResult && getMostSelectedDate(promiseResult);
+
   const datas = days.map((date) => {
     const day = new Date(+year, +month - 1, +date).getDay();
     const dateString = `${year}-${paddingMonth}-${date}`;
-    const resultData =
-      promiseResult?.find((result) => result.date === dateString) ?? {};
+    const resultData = promiseResult?.find(
+      (result) => result.date === dateString
+    );
 
-    const {
-      status = 'default',
-      count,
-      users,
-    } = resultData as PromiseResultData;
+    if (resultData && mostSelectedCount === resultData.count) {
+      resultData.status = 'active';
+    }
 
     return {
       date: dateString,
       day: convertDayNumberToString(day),
-      activeStatus: status,
-      count: count,
-      selectUsers: users,
+      activeStatus: resultData?.status ?? 'default',
+      count: resultData?.count,
+      selectUsers: resultData?.users,
     } as CalendarData;
   });
 
@@ -111,4 +113,19 @@ const convertDayNumberToString = (dayNumber: number): string => {
     default:
       throw Error(`${dayNumber}는 올바른 요일 숫자가 아닙니다.`);
   }
+};
+
+const getMostSelectedDate = (dateOfResult: PromiseResultData[]) => {
+  let maxCount = 0;
+
+  for (const date of dateOfResult) {
+    if (!date.count) continue;
+    date.count >= maxCount && (maxCount = date.count);
+  }
+
+  // const mostSelectedDates =
+  //   dateOfResult.filter((item) => item.count === maxCount) ?? [];
+
+  // return mostSelectedDates;
+  return maxCount;
 };
