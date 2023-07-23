@@ -46,6 +46,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1<{ $color: keyof typeof theme.colors }>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
   ${({ theme }) => theme.typographies.title1};
   letter-spacing: 0;
   text-align: left;
