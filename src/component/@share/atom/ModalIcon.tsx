@@ -4,7 +4,7 @@ import { ReactComponent as ModalIconRoomSVG } from '@/assets/images/ModalIconRoo
 import { styled } from 'styled-components';
 
 interface ModalIconProps {
-  value: 'loginError' | 'codeError' | 'theOtherError';
+  value: 'loginError' | 'codeError' | string;
 }
 
 export const ModalIcon = ({ value }: ModalIconProps) => {
@@ -12,13 +12,11 @@ export const ModalIcon = ({ value }: ModalIconProps) => {
     switch (value) {
       case 'loginError':
         return <ModalIconUser />;
-        break;
       case 'codeError':
         return <ModalIconRoom />;
-        break;
-      case 'theOtherError':
+
+      default:
         return <ModalIconWarning />;
-        break;
     }
   };
 

@@ -24,6 +24,8 @@ const errorText = [
     title: '알 수 없는 에러가 발생했어요',
     content: '잠시 후에 다시 시도해주세요',
   },
+  //이렇게 객체로 받지 말고 filter를 돌다가 에러를 못 찾을 때 이 내용을 반환시키게끔 코드를 짜야 함
+  //-> 조건문으로 에러가 에러타입과 동일할 때는 현재 로직 사용하고, 그렇지 않을때는 알수없는에러객체를 반환하도록 하기. 아이콘은 예외케이스 적용 완료
 ];
 
 export const Modal = ({ error }: ModalProps) => {
@@ -39,7 +41,7 @@ export const Modal = ({ error }: ModalProps) => {
   return (
     <WrapModal>
       <ModalIconBox>
-        <ModalIcon value={'codeError'} />
+        <ModalIcon value={'hi'} />
       </ModalIconBox>
       <TitleBox>{onSetModalText()}</TitleBox>
       <ButtonBlock>
