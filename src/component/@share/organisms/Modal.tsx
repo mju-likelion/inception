@@ -91,7 +91,6 @@ const ModalDimmed = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  backdrop-filter: blur(8px);
 `;
 
 const ModalIconBox = styled.div`
@@ -101,11 +100,10 @@ const ModalIconBox = styled.div`
 const TitleBox = styled.div`
   display: flex;
   width: 240px;
-  height: 318px;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 30px;
+  margin-bottom: 30px;
 `;
 
 const ButtonBlock = styled.div`
