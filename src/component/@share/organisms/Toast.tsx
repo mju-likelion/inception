@@ -99,6 +99,6 @@ const Body = styled.p<{ ag: string; $color: keyof typeof theme.colors }>`
   ${(props) =>
     props.ag === 'Body1Regular' &&
     css`
-      ${({ theme }) => theme.typographies.body3};
+      ${({ theme }) => theme.typographies.body1.regular};
     `}
 `;

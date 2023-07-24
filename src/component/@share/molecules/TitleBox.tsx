@@ -55,7 +55,7 @@ const Title = styled.h1<{ $color: keyof typeof theme.colors }>`
 
 const Body = styled.p<{ $color: keyof typeof theme.colors }>`
   color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
-  ${({ theme }) => theme.typographies.body2.semiBold};
+  ${({ theme }) => theme.typographies.body2.regular};
   letter-spacing: 0;
   text-align: left;
   word-break: keep-all;
