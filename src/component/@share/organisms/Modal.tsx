@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { ButtonLarge } from '@/component/@share/atom';
 import { ModalTitleBox } from '../molecules/ModalTitleBox';
 import { ModalIcon } from '../atom/ModalIcon';
+import { ModalDimmed } from '../atom/ModalDimmed';
 
 interface ModalProps {
   error: 'codeError' | 'loginError' | string;
@@ -46,13 +47,15 @@ export const Modal = ({ error }: ModalProps) => {
 
   return (
     <WrapModal>
-      <ModalIconBox>
-        <ModalIcon value={error} />
-      </ModalIconBox>
-      <TitleBox>{onSetModalText()}</TitleBox>
-      <ButtonBlock>
-        <ButtonLarge>확인</ButtonLarge>
-      </ButtonBlock>
+      <ModalDimmed>
+        <ModalIconBox>
+          <ModalIcon value={error} />
+        </ModalIconBox>
+        <TitleBox>{onSetModalText()}</TitleBox>
+        <ButtonBlock>
+          <ButtonLarge>확인</ButtonLarge>
+        </ButtonBlock>
+      </ModalDimmed>
     </WrapModal>
   );
 };
