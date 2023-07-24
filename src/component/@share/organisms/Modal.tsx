@@ -4,7 +4,7 @@ import { ModalTitleBox } from '../molecules/ModalTitleBox';
 import { ModalIcon } from '../atom/ModalIcon';
 
 interface ModalProps {
-  error: 'codeError' | 'loginError' | 'theOtherError';
+  error: 'codeError' | 'loginError' | string;
 }
 
 const errorText = [
@@ -24,24 +24,30 @@ const errorText = [
     title: '알 수 없는 에러가 발생했어요',
     content: '잠시 후에 다시 시도해주세요',
   },
-  //이렇게 객체로 받지 말고 filter를 돌다가 에러를 못 찾을 때 이 내용을 반환시키게끔 코드를 짜야 함
-  //-> 조건문으로 에러가 에러타입과 동일할 때는 현재 로직 사용하고, 그렇지 않을때는 알수없는에러객체를 반환하도록 하기. 아이콘은 예외케이스 적용 완료
 ];
 
 export const Modal = ({ error }: ModalProps) => {
   const onSetModalText = () => {
     const result = [];
-    const b = errorText.filter((s) => s.errorType === error);
 
+    function errorCheck(s: any) {
+      return s.errorType === error
+        ? s.errorType
+        : s.errorType === 'theOtherError';
+    }
+
+    const b = errorText.filter(errorCheck);
     //에러타입을 키로, 맞는 객체를 찾아와서 배열을 만들어줘
     result.push(<ModalTitleBox title={b[0].title} content={b[0].content} />);
-
     return result;
+
+    console.log(result);
   };
+
   return (
     <WrapModal>
       <ModalIconBox>
-        <ModalIcon value={'hi'} />
+        <ModalIcon value={error} />
       </ModalIconBox>
       <TitleBox>{onSetModalText()}</TitleBox>
       <ButtonBlock>
@@ -72,7 +78,7 @@ const TitleBox = styled.div`
   width: 250px;
   height: 318px;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 30px;
 `;
 

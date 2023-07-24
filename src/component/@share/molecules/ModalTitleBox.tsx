@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { Body, Title } from '../atom';
-import { theme } from '@/globalStyle';
 
 interface TitleBoxProps {
   title: string;
@@ -10,11 +8,9 @@ interface TitleBoxProps {
 export const ModalTitleBox = ({ title, content }: TitleBoxProps) => {
   return (
     <Container>
-      <Title ag="Title2">{title}</Title>{' '}
+      <Title>{title}</Title>
       <BodyBlock>
-        <Body ag="Body3" color="gray1" align="center">
-          {content}
-        </Body>
+        <Body>{content}</Body>
       </BodyBlock>
     </Container>
   );
@@ -30,4 +26,14 @@ const Container = styled.div`
 const BodyBlock = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const Title = styled.div`
+  ${({ theme }) => theme.typographies.title2};
+`;
+
+const Body = styled.div`
+  ${({ theme }) => theme.typographies.body3};
+  color: ${({ theme }) => theme.colors.gray1};
+  text-align: center;
 `;

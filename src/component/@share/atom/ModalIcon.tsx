@@ -11,12 +11,11 @@ export const ModalIcon = ({ value }: ModalIconProps) => {
   const ModalIconvalue = () => {
     switch (value) {
       case 'loginError':
-        return <ModalIconUser />;
+        return <ModalIconUserSVG />;
       case 'codeError':
-        return <ModalIconRoom />;
-
+        return <ModalIconRoomSVG />;
       default:
-        return <ModalIconWarning />;
+        return <ModalIconWarningSVG />;
     }
   };
 
@@ -24,7 +23,3 @@ export const ModalIcon = ({ value }: ModalIconProps) => {
 };
 
 const Container = styled.div``;
-
-const ModalIconUser = styled(ModalIconUserSVG)``;
-const ModalIconRoom = styled(ModalIconRoomSVG)``;
-const ModalIconWarning = styled(ModalIconWarningSVG)``;
