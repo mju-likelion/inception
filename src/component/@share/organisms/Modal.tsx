@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import { ButtonLarge } from '@/component/@share/atom';
 import { ModalTitleBox } from '../molecules/ModalTitleBox';
 import { ModalIcon } from '../atom/ModalIcon';
-import { ModalDimmed } from '../atom/ModalDimmed';
 
 interface ModalProps {
   error: 'codeError' | 'loginError' | string;
+  isOpen: boolean;
+  onCloseModal: () => void;
 }
 
 const errorText = [
@@ -27,7 +28,7 @@ const errorText = [
   },
 ];
 
-export const Modal = ({ error }: ModalProps) => {
+export const Modal = ({ error, isOpen, onCloseModal }: ModalProps) => {
   const onSetModalText = () => {
     const result = [];
 
@@ -46,17 +47,21 @@ export const Modal = ({ error }: ModalProps) => {
   };
 
   return (
-    <WrapModal>
-      <ModalDimmed>
-        <ModalIconBox>
-          <ModalIcon value={error} />
-        </ModalIconBox>
-        <TitleBox>{onSetModalText()}</TitleBox>
-        <ButtonBlock>
-          <ButtonLarge>확인</ButtonLarge>
-        </ButtonBlock>
-      </ModalDimmed>
-    </WrapModal>
+    <>
+      {isOpen ? (
+        <ModalDimmed onClick={onCloseModal}>
+          <WrapModal>
+            <ModalIconBox>
+              <ModalIcon value={error} />
+            </ModalIconBox>
+            <TitleBox>{onSetModalText()}</TitleBox>
+            <ButtonBlock>
+              <ButtonLarge click={onCloseModal}>확인</ButtonLarge>
+            </ButtonBlock>
+          </WrapModal>
+        </ModalDimmed>
+      ) : null}
+    </>
   );
 };
 
@@ -72,16 +77,34 @@ const WrapModal = styled.div`
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
 `;
 
+const ModalDimmed = styled.div`
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background-color: rgba(42, 43, 49, 0.4);
+  z-index: 1;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(8px);
+`;
+
 const ModalIconBox = styled.div`
   margin: 24px 122px 20px 122px;
 `;
 
 const TitleBox = styled.div`
   display: flex;
-  width: 250px;
+  width: 240px;
   height: 318px;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   gap: 30px;
 `;
 
