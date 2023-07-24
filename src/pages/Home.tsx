@@ -7,9 +7,13 @@ import { TAB_ITEMS } from '@/pages/data';
 export const Home = () => {
   const navigate = useNavigate();
 
+  const handleTabBarClick = (tab: string) => {
+    tab === TAB_ITEMS[1].id && navigate('/submit-code');
+  };
+
   return (
     <>
-      <TabBar tabItems={TAB_ITEMS} />
+      <TabBar tabItems={TAB_ITEMS} onClick={handleTabBarClick} />
       <Container>
         <TitleBoxContainer>
           <TitleBox

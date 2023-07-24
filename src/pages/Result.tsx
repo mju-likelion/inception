@@ -4,10 +4,15 @@ import { Calendar } from '@/component';
 import { TabBar } from '@/component/@share';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
-import { TAB_ITEMS } from './data';
+import { TAB_ITEMS } from '@/pages/data';
+import { useNavigate } from 'react-router-dom';
 
 export const Result = () => {
-  const onClick = (tab: string) => {};
+  const navigate = useNavigate();
+
+  const onClick = (tab: string) => {
+    tab === TAB_ITEMS[0].id && navigate('/');
+  };
 
   return (
     <>
