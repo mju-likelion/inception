@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
-import { TabBarButton } from '@/component/@share/molecules';
 import { useRecoilState } from 'recoil';
+import { useLocation } from 'react-router-dom';
+import { TabBarButton } from '@/component/@share/molecules';
 import { tabState } from '@/store/atoms';
 import { TabItem } from '@/types';
 
@@ -11,6 +13,28 @@ interface TabBarProps {
 
 export const TabBar = ({ onClick, tabItems }: TabBarProps) => {
   const [selectedTab, setSelectedTab] = useRecoilState(tabState);
+  const path = useLocation().pathname;
+
+  useEffect(() => {
+    setActiveTab();
+  }, [path]);
+
+  const setActiveTab = () => {
+    switch (path) {
+      case '/':
+        return setSelectedTab(tabItems[0].id);
+      case '/appointment':
+        return setSelectedTab(tabItems[1].id);
+      case '/login':
+        return setSelectedTab(tabItems[1].id);
+      case '/result':
+        return setSelectedTab(tabItems[1].id);
+      case '/submit-code':
+        return setSelectedTab(tabItems[1].id);
+      default:
+        setSelectedTab(tabItems[0].id);
+    }
+  };
 
   const handleClick = (id: string) => {
     setSelectedTab(id);
