@@ -1,10 +1,11 @@
 import { Calendar } from '@/component';
-import { Body, ButtonLarge, TabBar } from '@/component/@share';
+import { ButtonLarge, TabBar } from '@/component/@share';
 import { Information, ProgressBar } from '@/component/@share/molecules';
 import { styled } from 'styled-components';
 import CalendarIcon from '@/assets/images/Calendar.svg';
 import { getMaxDate, getMinDate } from '@/util';
 import { TabItem } from '@/types';
+import { theme } from '@/globalStyle';
 
 export const PossibleDatePage = () => {
   const selectableDates = ['2023-06', '2023-07', '2023-08']; // @TODO 더미데이터. 서버에서 선택 가능한 시간들 가져와 보여주기
@@ -31,9 +32,7 @@ export const PossibleDatePage = () => {
       <Wrapper>
         <Header>
           <ProgressBar total={3} step={1} />
-          <Body ag="Body2Regular" color="gray1">
-            가용한 날짜들을 선택해주세요.
-          </Body>
+          <Body $color="gray1">가용한 날짜들을 선택해주세요.</Body>
         </Header>
         <Content>
           <Calendar
@@ -93,4 +92,12 @@ const Bottom = styled.div`
   display: flex;
   justify-content: center;
   margin: 100px auto;
+`;
+
+const Body = styled.p<{ $color: keyof typeof theme.colors }>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
+  ${({ theme }) => theme.typographies.body2.regular};
+  letter-spacing: 0;
+  text-align: left;
+  word-break: keep-all;
 `;

@@ -4,8 +4,8 @@ import { CheckBox } from '@/component/@share';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { TimeTableListAtom, DateListAtom, TimeListAtom } from '@/store';
 import { useState } from 'react';
-import { Body } from '@/component/@share';
 import range from 'lodash/range';
+import { theme } from '@/globalStyle';
 
 export const SelectAllButton = ({ children }: PropsWithChildren) => {
   const [timeTable, setTimeTable] = useRecoilState(TimeTableListAtom);
@@ -24,9 +24,7 @@ export const SelectAllButton = ({ children }: PropsWithChildren) => {
   return (
     <SelectAllButtonBlock>
       <CheckBox isChecked={checkAllDate} onClick={onClickAllDate} />
-      <Body ag="Body3" color="gray2">
-        {children}
-      </Body>
+      <Body $color="gray2">{children}</Body>
     </SelectAllButtonBlock>
   );
 };
@@ -37,4 +35,12 @@ const SelectAllButtonBlock = styled.div`
   align-items: center;
   gap: 8px;
   margin-top: 12px;
+`;
+
+const Body = styled.p<{ $color: keyof typeof theme.colors }>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
+  ${({ theme }) => theme.typographies.body3};
+  letter-spacing: 0;
+  text-align: left;
+  word-break: keep-all;
 `;
