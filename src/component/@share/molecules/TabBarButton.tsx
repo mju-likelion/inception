@@ -28,6 +28,7 @@ const Container = styled.button`
   flex-direction: column;
   gap: 15px;
   height: 41px;
+  cursor: pointer;
 `;
 
 const Bar = styled.div`
