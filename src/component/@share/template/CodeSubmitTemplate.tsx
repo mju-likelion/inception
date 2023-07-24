@@ -44,14 +44,13 @@ export const CodeSubmitTemlplate = () => {
       <TabBar onClick={onClick} tabItems={tabItems} />
       <WrapperContents>
         <WrapTitleBoxInput>
-          <WrapTitleBox>
-            <TitleBox
-              title={'약속방 들어가기'}
-              content={
-                '약속 결과를 확인하기 위해 약속방의 입장 코드를 입력해 주세요'
-              }
-            />
-          </WrapTitleBox>
+          <TitleBox
+            title={'약속방 들어가기'}
+            content={
+              '입장코드를 입력해서 가용 날짜를 선택하거나 다른 사람들이 모일 수 있는 시간을 확인해보세요'
+            }
+          />
+
           <WrapInput>
             <Input
               placeholder={'약속방 입력 코드'}
@@ -74,26 +73,26 @@ const WrapperContents = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 30px;
   @media ${({ theme }) => theme.size.tablet} {
     margin-top: 60px;
+    align-items: center;
+  }
+  @media ${({ theme }) => theme.size.web} {
+    margin-top: 80px;
     align-items: center;
   }
 `;
 
 const WrapTitleBoxInput = styled.div`
   margin: 0px 20px 0px 20px;
-  @media ${({ theme }) => theme.size.tablet} {
-    margin: 60px 0px 100px 0px;
-  }
-`;
-
-const WrapTitleBox = styled.div`
-  margin: 30px 0px 24px 0px;
 `;
 
 const WrapInput = styled.div`
   display: flex;
-  @media ${({ theme }) => theme.size.tablet} {
+  margin-top: 24px;
+
+  @media ${({ theme }) => theme.size.web} {
     margin-top: 40px;
   }
 `;
@@ -108,6 +107,6 @@ const WrapButton = styled.div`
   }
 
   @media ${({ theme }) => theme.size.web} {
-    margin-top: 312px;
+    margin-top: 220px;
   }
 `;

@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { Body, Title } from '../atom';
+import styled, { css } from 'styled-components';
 import { theme } from '@/globalStyle';
 import { ProgressBar } from './ProgressBar';
 
@@ -27,17 +26,12 @@ export const HelperTitleBox = ({
       {step ? (
         <ProgressBar total={total} step={step} />
       ) : (
-        <Title
-          ag="Title2"
-          color={$isActive ? 'mint1' : $isPass ? 'mint2' : defaultColor}
-        >
+        <Title $color={$isActive ? 'mint1' : $isPass ? 'mint2' : defaultColor}>
           {title}
         </Title>
       )}
       <BodyBlock>
-        <Body ag="Body3" color={$isActive ? 'gray1' : 'gray3'}>
-          {content}
-        </Body>
+        <Body $color={$isActive ? 'gray1' : 'gray3'}>{content}</Body>
       </BodyBlock>
     </Container>
   );
@@ -49,6 +43,21 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
+`;
+
+const Title = styled.h1<{ $color: keyof typeof theme.colors }>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
+  word-break: keep-all;
+  letter-spacing: 0;
+  ${({ theme }) => theme.typographies.title2};
+  text-align: left;
+`;
+
+const Body = styled.p<{ $color: keyof typeof theme.colors }>`
+  letter-spacing: 0;
+  ${({ theme }) => theme.typographies.body3};
+  text-align: left;
+  word-break: keep-all;
 `;
 
 const BodyBlock = styled.div`

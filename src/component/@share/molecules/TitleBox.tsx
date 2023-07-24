@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Body, Title } from '../atom';
 import { theme } from '@/globalStyle';
 import { ProgressBar } from './ProgressBar';
 
@@ -23,14 +22,10 @@ export const TitleBox = ({
       {step ? (
         <ProgressBar total={total} step={step} />
       ) : (
-        <Title ag="Title1" color={defaultColor}>
-          {title}
-        </Title>
+        <Title $color={defaultColor}>{title}</Title>
       )}
       <BodyBlock>
-        <Body ag="Body2Regular" color="gray1">
-          {content}
-        </Body>
+        <Body $color="gray1">{content}</Body>
       </BodyBlock>
     </Container>
   );
@@ -48,6 +43,22 @@ const Container = styled.div`
       ${({ theme }) => theme.typographies.title3};
     }
   }
+`;
+
+const Title = styled.h1<{ $color: keyof typeof theme.colors }>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
+  ${({ theme }) => theme.typographies.title1};
+  letter-spacing: 0;
+  text-align: left;
+  word-break: keep-all;
+`;
+
+const Body = styled.p<{ $color: keyof typeof theme.colors }>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
+  ${({ theme }) => theme.typographies.body2.regular};
+  letter-spacing: 0;
+  text-align: left;
+  word-break: keep-all;
 `;
 
 const BodyBlock = styled.div`

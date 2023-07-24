@@ -1,9 +1,10 @@
 import { styled } from 'styled-components';
 import { useSetRecoilState } from 'recoil';
-import { TabBar, TitleBox, Body, ButtonLarge } from '@/component/@share';
+import { TabBar, TitleBox, ButtonLarge } from '@/component/@share';
 import { Calendar, TimePicker } from '@/component';
 import { tabState } from '@/store';
 import { TabItem } from '@/types';
+import { theme } from '@/globalStyle';
 
 export const Home = () => {
   const setSelectedTab = useSetRecoilState(tabState);
@@ -31,11 +32,15 @@ export const Home = () => {
           />
         </TitleBoxContainer>
         <CalendarBox>
-          <Calendar viewType="create" />
+          <Calendar
+            minDate="2015-02-01"
+            maxDate="2030-01-01"
+            viewType="create"
+          />
           <HorizontalRule />
         </CalendarBox>
         <TimePickerBox>
-          <Body ag="Body2Regular" color="gray1">
+          <Body $color="gray1">
             약속 날짜의 선택 가능 시간대를 선택해주세요
           </Body>
           <TimePicker />
@@ -99,6 +104,14 @@ const TimePickerBox = styled.div`
     margin-right: 20px;
     align-self: center;
   }
+`;
+
+const Body = styled.p<{ $color: keyof typeof theme.colors }>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
+  ${({ theme }) => theme.typographies.body2.regular};
+  letter-spacing: 0;
+  text-align: left;
+  word-break: keep-all;
 `;
 
 const ButtonBox = styled.div`

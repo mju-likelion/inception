@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 import { ReactComponent as HelperSvg } from '@/assets/images/Helper.svg';
 
-export const Helper = () => {
+type HelpProp = {
+  onClick: () => void;
+};
+
+export const Helper = ({ onClick }: HelpProp) => {
   return (
-    <HelperIcon>
-      <HelperSvg />
-    </HelperIcon>
+    <>
+      <HelperIcon onClick={onClick}>
+        <HelperSvg />
+      </HelperIcon>
+    </>
   );
 };
 
