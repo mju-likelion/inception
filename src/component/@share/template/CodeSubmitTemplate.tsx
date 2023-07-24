@@ -4,7 +4,7 @@ import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useEffect, useState } from 'react';
-import { TabItem } from '@/types';
+import { TAB_ITEMS } from '@/pages/data';
 import { useNavigate } from 'react-router-dom';
 
 export const CodeSubmitTemplate = () => {
@@ -13,17 +13,6 @@ export const CodeSubmitTemplate = () => {
   const [buttonInactive, setButtonInactive] = useState(true);
 
   const navigate = useNavigate();
-
-  const tabItems: TabItem[] = [
-    {
-      id: 'default',
-      title: '약속 잡기',
-    },
-    {
-      id: 'result',
-      title: '약속방',
-    },
-  ];
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -44,7 +33,7 @@ export const CodeSubmitTemplate = () => {
 
   return (
     <>
-      <TabBar onClick={onClick} tabItems={tabItems} />
+      <TabBar onClick={onClick} tabItems={TAB_ITEMS} />
       <WrapperContents>
         <WrapTitleBoxInput>
           <WrapTitleBox>

@@ -4,23 +4,12 @@ import { RedirectPage } from '@/component/ErrorPage/atoms';
 import { LoginMasterTemplate } from '@/component/@share/template/LoginMasterTemplate';
 import { PossibleDatePage } from '@/pages';
 import { PossibleTimePage } from '@/pages/PossibleTimePage';
-import { TabItem } from '@/types';
+import { TAB_ITEMS } from '@/pages/data';
 
 export const AppointmentStepPage = () => {
   const [searchParams] = useSearchParams();
   const step = searchParams.get('step');
   const navigate = useNavigate();
-
-  const tabItems: TabItem[] = [
-    {
-      id: 'default',
-      title: '약속 잡기',
-    },
-    {
-      id: 'result',
-      title: '약속방',
-    },
-  ];
 
   const handleButtonClick = () => {
     if (step === '3') {
@@ -45,7 +34,7 @@ export const AppointmentStepPage = () => {
 
   return (
     <>
-      <TabBar tabItems={tabItems} />
+      <TabBar tabItems={TAB_ITEMS} />
       {renderPage()}
     </>
   );

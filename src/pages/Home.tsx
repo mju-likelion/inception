@@ -2,25 +2,14 @@ import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { TabBar, TitleBox, Body, ButtonLarge } from '@/component/@share';
 import { Calendar, TimePicker } from '@/component';
-import { TabItem } from '@/types';
+import { TAB_ITEMS } from '@/pages/data';
 
 export const Home = () => {
   const navigate = useNavigate();
 
-  const tabItems: TabItem[] = [
-    {
-      id: 'default',
-      title: '약속 잡기',
-    },
-    {
-      id: 'result',
-      title: '약속방',
-    },
-  ];
-
   return (
     <>
-      <TabBar tabItems={tabItems} />
+      <TabBar tabItems={TAB_ITEMS} />
       <Container>
         <TitleBoxContainer>
           <TitleBox

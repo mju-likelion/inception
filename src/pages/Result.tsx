@@ -4,25 +4,14 @@ import { Calendar } from '@/component';
 import { TabBar } from '@/component/@share';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
-import { TabItem } from '@/types';
+import { TAB_ITEMS } from './data';
 
 export const Result = () => {
   const onClick = (tab: string) => {};
 
-  const tabItems: TabItem[] = [
-    {
-      id: 'default',
-      title: '약속 잡기',
-    },
-    {
-      id: 'result',
-      title: '약속방',
-    },
-  ];
-
   return (
     <>
-      <TabBar onClick={onClick} tabItems={tabItems} />
+      <TabBar onClick={onClick} tabItems={TAB_ITEMS} />
       <ResultPageBlock>
         <ContentBlock>
           <TitleBoxBlock>
