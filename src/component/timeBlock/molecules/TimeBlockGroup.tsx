@@ -21,32 +21,26 @@ export const TimeBlockGroup = ({
 
   const list = document.querySelectorAll('.btn');
 
-  for (let i = 0; i < list.length; i++) {
-    mouseMove(list[i] as HTMLElement, function (event: MouseEvent) {
-      if (!(event.target instanceof HTMLButtonElement)) return;
-      (event.target as HTMLButtonElement).style.backgroundColor = 'blue';
-    });
+  let isMouseDown = false;
 
-    list[i].addEventListener('click', (event: Event) => {
-      clickEvent(event as MouseEvent);
-    });
-  }
-
-  function mouseMove(
-    target: HTMLElement,
-    whileMove: (event: MouseEvent) => void
-  ) {
-    const endMove = function () {
-      window.removeEventListener('mousemove', whileMove);
-      window.removeEventListener('mouseup', endMove);
-    };
-
-    target.addEventListener('mousedown', function (event: MouseEvent) {
+  list.forEach((button) => {
+    button.addEventListener('mousedown', function (event) {
       event.stopPropagation();
-      window.addEventListener('mousemove', whileMove);
-      window.addEventListener('mouseup', endMove);
+      clickEvent(event as MouseEvent); // MouseEvent로 타입 단언
+      isMouseDown = true;
     });
-  }
+
+    button.addEventListener('mouseup', function (event) {
+      event.stopPropagation();
+      isMouseDown = false;
+    });
+
+    button.addEventListener('mouseenter', function (event) {
+      if (isMouseDown) {
+        clickEvent(event as MouseEvent);
+      }
+    });
+  });
 
   function clickEvent(event: MouseEvent) {
     const button = event.target as HTMLButtonElement;
@@ -63,18 +57,6 @@ export const TimeBlockGroup = ({
       new Array(dateList.length).fill(false)
     );
     setTimeTable(newTimeTable);
-
-    // nowTimeTable.map((row, rowIndex) =>
-    //   row.map((_, columnIndex) =>
-    //     mouseMove(
-    //       nowTimeTable[rowIndex][columnIndex] as HTMLElement,
-    //       function (event: MouseEvent) {
-    //         if (!(event.target instanceof HTMLButtonElement)) return;
-    //         (event.target as HTMLButtonElement).style.backgroundColor = 'blue';
-    //       }
-    //     )
-    //   )
-    // );
   }, [timeList, dateList]);
 
   const newDateList = getPaginationDate({ page, dateList });
