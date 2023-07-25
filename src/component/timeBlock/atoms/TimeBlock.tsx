@@ -26,7 +26,7 @@ export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
       $isActive={active}
       onMouseEnter={() => mouseEnter()}
       onMouseDown={() => mouseDown()}
-      onTouchStart={() => mouseEnter}
+      onTouchStart={() => mouseEnter()}
       onTouchEnd={() => mouseDown()}
     />
   );
