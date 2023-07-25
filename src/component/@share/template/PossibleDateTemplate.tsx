@@ -10,7 +10,7 @@ interface Props {
   buttonClick: () => void;
 }
 
-export const PossibleDatePage = ({ buttonClick }: Props) => {
+export const PossibleDateTemplate = ({ buttonClick }: Props) => {
   const selectableDates = ['2023-06', '2023-07', '2023-08']; // @TODO 더미데이터. 서버에서 선택 가능한 시간들 가져와 보여주기
 
   const onClick = (tab: string) => {

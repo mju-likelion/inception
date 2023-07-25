@@ -9,10 +9,8 @@ interface Props {
   buttonClick: () => void;
 }
 
-export const PossibleTimePage = ({ buttonClick }: Props) => {
+export const PossibleTimeTemplate = ({ buttonClick }: Props) => {
   const [isActive, setIsActive] = useState(true);
-
-  const onClick = (tab: string) => {};
 
   return (
     <TimePageBlock>
