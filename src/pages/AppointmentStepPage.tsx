@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { TabBar } from '@/component/@share';
 import { RedirectPage } from '@/component/ErrorPage/atoms';
@@ -10,6 +11,23 @@ export const AppointmentStepPage = () => {
   const [searchParams] = useSearchParams();
   const step = searchParams.get('step');
   const navigate = useNavigate();
+
+  const temp = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = '';
+  };
+
+  useEffect(() => {
+    (() => {
+      window.addEventListener('beforeunload', temp);
+      if (step === '2' || step === '3') {
+        navigate('/appointment?step=1');
+      }
+    })();
+    return () => {
+      window.removeEventListener('beforeunload', temp);
+    };
+  }, []);
 
   const handleButtonClick = () => {
     if (step === '3') {
