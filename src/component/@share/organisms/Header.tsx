@@ -32,7 +32,7 @@ export const Header = () => {
     <>
       <HeaderBox>
         <InnerBox>
-        <Logo onClick={() => navigate('/')} />
+          <Logo onClick={() => navigate('/')} />
           <Helper onClick={openModal} />
         </InnerBox>
       </HeaderBox>
