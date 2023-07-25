@@ -19,39 +19,6 @@ export const TimeBlockGroup = ({
   const timeList = useRecoilValue(TimeListAtom);
   const [timeTable, setTimeTable] = useRecoilState(TimeTableListAtom);
 
-  const list = document.querySelectorAll('.btn');
-
-  let isMouseDown = false;
-
-  list.forEach((button) => {
-    button.addEventListener('mousedown', function (event) {
-      event.stopPropagation();
-      clickEvent(event as MouseEvent); // MouseEvent로 타입 단언
-      isMouseDown = true;
-    });
-
-    button.addEventListener('mouseup', function (event) {
-      event.stopPropagation();
-      isMouseDown = false;
-    });
-
-    button.addEventListener('mouseenter', function (event) {
-      if (isMouseDown) {
-        clickEvent(event as MouseEvent);
-      }
-    });
-  });
-
-  function clickEvent(event: MouseEvent) {
-    const button = event.target as HTMLButtonElement;
-
-    if (button.style.backgroundColor === 'blue') {
-      button.style.backgroundColor = 'gray';
-    } else {
-      button.style.backgroundColor = 'blue';
-    }
-  }
-
   useEffect(() => {
     const newTimeTable = range(timeList.length).map(() =>
       new Array(dateList.length).fill(false)

@@ -6,9 +6,16 @@ import { styled } from 'styled-components';
 import { useState } from 'react';
 import { TabBar } from '@/component/@share';
 import { TabItem } from '@/types';
+import { useRecoilState } from 'recoil';
+import { IsMouseDownAtom } from '@/store/atoms/TimeBlock/isMouseDown';
 
 export const PossibleTimePage = () => {
   const [isActive, setIsActive] = useState(true);
+  const [isMouseDown, setIsMouseDown] = useRecoilState(IsMouseDownAtom);
+
+  const mouseUp = () => {
+    setIsMouseDown(false);
+  };
 
   const onClick = (tab: string) => {};
 
@@ -26,7 +33,7 @@ export const PossibleTimePage = () => {
   return (
     <>
       <TabBar onClick={onClick} tabItems={tabItems} />
-      <TimePageBlock>
+      <TimePageBlock onMouseUp={mouseUp}>
         <ContentBlock>
           <TitleBoxBlock>
             <TitleBox content="가용한 시간들을 선택해주세요" step={2} />
