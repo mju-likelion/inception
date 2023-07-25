@@ -12,20 +12,20 @@ export const AppointmentStepPage = () => {
   const step = searchParams.get('step');
   const navigate = useNavigate();
 
-  const temp = (e: BeforeUnloadEvent) => {
+  const preventRefresh = (e: BeforeUnloadEvent) => {
     e.preventDefault();
     e.returnValue = '';
   };
 
   useEffect(() => {
     (() => {
-      window.addEventListener('beforeunload', temp);
+      window.addEventListener('beforeunload', preventRefresh);
       if (step === '2' || step === '3') {
         navigate('/appointment?step=1');
       }
     })();
     return () => {
-      window.removeEventListener('beforeunload', temp);
+      window.removeEventListener('beforeunload', preventRefresh);
     };
   }, []);
 
