@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { TabBar } from '@/component/@share';
-import { RedirectPage } from '@/component/ErrorPage/atoms';
-import { LoginMasterTemplate } from '@/component/@share/template/LoginMasterTemplate';
-import { PossibleDatePage } from '@/pages';
-import { PossibleTimePage } from '@/pages/PossibleTimePage';
+import {
+  LoginMasterTemplate,
+  PossibleDateTemplate,
+  PossibleTimeTemplate,
+} from '@/component/@share/template';
+import { RedirectPage } from '@/pages';
 import { TAB_ITEMS } from '@/pages/data';
 
 export const AppointmentStepPage = () => {
@@ -44,9 +46,9 @@ export const AppointmentStepPage = () => {
   const renderPage = () => {
     switch (step) {
       case '1':
-        return <PossibleDatePage buttonClick={handleButtonClick} />;
+        return <PossibleDateTemplate buttonClick={handleButtonClick} />;
       case '2':
-        return <PossibleTimePage buttonClick={handleButtonClick} />;
+        return <PossibleTimeTemplate buttonClick={handleButtonClick} />;
       case '3':
         return <LoginMasterTemplate buttonClick={handleButtonClick} />;
       default:
