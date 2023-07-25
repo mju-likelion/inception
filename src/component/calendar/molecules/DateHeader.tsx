@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { GridItem } from '@/component/calendar/atom';
-import { Body } from '@/component/@share';
 import { styled } from 'styled-components';
+import { theme } from '@/globalStyle';
 
 export const DateHeader = () => {
   const Dates = useRef(['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']);
@@ -10,9 +10,7 @@ export const DateHeader = () => {
       {Dates.current.map((date) => {
         return (
           <GridItem key={date} disabled>
-            <Body ag="Body4" color="gray3" align="center">
-              {date}
-            </Body>
+            <Body $color="gray3">{date}</Body>
           </GridItem>
         );
       })}
@@ -26,4 +24,12 @@ const Wrapper = styled.div`
   height: 20px;
   gap: 6px;
   margin: 15px 0;
+`;
+
+const Body = styled.p<{ $color: keyof typeof theme.colors }>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
+  ${({ theme }) => theme.typographies.body4};
+  letter-spacing: 0;
+  text-align: center;
+  word-break: keep-all;
 `;

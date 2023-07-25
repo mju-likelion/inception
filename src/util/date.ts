@@ -1,21 +1,34 @@
 /* date = 일자 데이터, day = 요일 데이터 */
-import { CalendarData } from '@/types';
+import { CalendarData, PromiseResultData } from '@/types';
 import padStart from 'lodash/padStart';
 
 /** 월별 캘란더 기본 정보를 반환한다. */
 export const getCalendarData = (
   year: string,
-  month: string
+  month: string,
+  promiseResult?: PromiseResultData[]
 ): CalendarData[] => {
   const days = calcDaysByYearMonth(year, month);
   const paddingMonth = +month < 10 ? `0${+month}` : month;
 
   const datas = days.map((date) => {
     const day = new Date(+year, +month - 1, +date).getDay();
+    const dateString = `${year}-${paddingMonth}-${date}`;
+    const resultData =
+      promiseResult?.find((result) => result.date === dateString) ?? {};
+
+    const {
+      status = 'default',
+      count,
+      users,
+    } = resultData as PromiseResultData;
+
     return {
-      date: `${year}-${paddingMonth}-${date}`,
+      date: dateString,
       day: convertDayNumberToString(day),
-      activeStatus: 'default',
+      activeStatus: status,
+      count: count,
+      selectUsers: users,
     } as CalendarData;
   });
 

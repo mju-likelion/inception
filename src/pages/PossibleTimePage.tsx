@@ -18,7 +18,7 @@ export const PossibleTimePage = ({ buttonClick }: Props) => {
     <TimePageBlock>
       <ContentBlock>
         <TitleBoxBlock>
-          <TitleBox content="가용한 날짜들을 선택해주세요" step={2} />
+          <TitleBox content="가용한 시간들을 선택해주세요" step={2} />
         </TitleBoxBlock>
         <TimeBox onSetActiveButton={setIsActive} />
         <InformationBlock>
@@ -29,7 +29,7 @@ export const PossibleTimePage = ({ buttonClick }: Props) => {
           />
         </InformationBlock>
         <ButtonBlock>
-          <ButtonLarge isDisabled={isActive} onClick={buttonClick}>
+          <ButtonLarge isDisabled={isActive} click={buttonClick}>
             다음으로
           </ButtonLarge>
         </ButtonBlock>

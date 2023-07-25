@@ -4,6 +4,8 @@ import { ProgressBarModal, HelperTitleBox } from '@/component/@share/molecules';
 
 interface HelperModalProps {
   step: 0 | 1 | 2 | 3;
+  isOpen: boolean;
+  onCloseModal: () => void;
 }
 
 const helpText = [
@@ -22,7 +24,11 @@ const helpText = [
   },
 ];
 
-export const HelperModal = ({ step }: HelperModalProps) => {
+export const HelperModal = ({
+  step,
+  isOpen,
+  onCloseModal,
+}: HelperModalProps) => {
   const onSetHelpText = () => {
     const result = [];
     for (let i = 0; i < 3; i++) {
@@ -41,19 +47,37 @@ export const HelperModal = ({ step }: HelperModalProps) => {
     return result;
   };
   return (
-    <ModalBlock>
-      <TopBlock>
-        <ProgressBarModal total={3} step={step} />
-        <TitleBoxBlock>{onSetHelpText()}</TitleBoxBlock>
-      </TopBlock>
-      <ButtonBlock>
-        <ButtonLarge onClick={() => console.log('임시메소드입니다.')}>
-          알겠어요
-        </ButtonLarge>
-      </ButtonBlock>
-    </ModalBlock>
+    <>
+      {isOpen ? (
+        <ModalBackdrop onClick={onCloseModal}>
+          <ModalBlock onClick={(e) => e.stopPropagation()}>
+            <TopBlock>
+              <ProgressBarModal total={3} step={step} />
+              <TitleBoxBlock>{onSetHelpText()}</TitleBoxBlock>
+            </TopBlock>
+            <ButtonBlock>
+              <ButtonLarge click={onCloseModal}>알겠어요</ButtonLarge>
+            </ButtonBlock>
+          </ModalBlock>
+        </ModalBackdrop>
+      ) : null}
+    </>
   );
 };
+
+const ModalBackdrop = styled.div`
+  z-index: 1;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(126, 128, 153, 0.2);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(8px);
+`;
 
 const ModalBlock = styled.div`
   width: 320px;

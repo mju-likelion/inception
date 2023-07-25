@@ -1,26 +1,28 @@
 import { ActiveStatus } from '@/types';
+import { useEffect } from 'react';
 import { styled } from 'styled-components';
 
 interface Props {
   count: number;
   activeStatus?: ActiveStatus;
+  color?: string;
 }
 
 export const Count = ({ count, activeStatus = 'default' }: Props) => {
   return <Wrapper $activeStatus={activeStatus}>{count}</Wrapper>;
 };
 
-const Wrapper = styled.p<{ $activeStatus: ActiveStatus }>`
+const Wrapper = styled.h1<{ $activeStatus: ActiveStatus }>`
+  width: 16px;
+  height: 16px;
+  ${({ theme }) => theme.typographies.body5};
   position: absolute;
   bottom: 2px;
   right: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 16px;
-  height: 16px;
   border-radius: 100%;
-  font-size: 11px;
   background-color: ${({ $activeStatus, theme }) => {
     if ($activeStatus === 'default') {
       return theme.colors.gray1;
@@ -35,4 +37,10 @@ const Wrapper = styled.p<{ $activeStatus: ActiveStatus }>`
       return theme.colors.white;
     }
   }};
+
+  @media ${({ theme }) => theme.size.web} {
+    width: 24px;
+    height: 24px;
+    ${({ theme }) => theme.typographies.body2.regular};
+  }
 `;

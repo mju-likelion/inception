@@ -3,16 +3,16 @@ import { styled } from 'styled-components';
 
 interface Props {
   isDisabled?: boolean;
-  onClick?: () => void;
+  click?: () => void;
 }
 
 export const ButtonLarge = ({
   children,
   isDisabled,
-  onClick,
+  click,
 }: PropsWithChildren<Props>) => {
   return (
-    <Button disabled={isDisabled} onClick={onClick}>
+    <Button disabled={isDisabled} onClick={click}>
       <ButtonText>{children}</ButtonText>
     </Button>
   );
@@ -25,6 +25,7 @@ const Button = styled.button`
   border: none;
   border-radius: 30px;
   background-color: ${({ theme }) => theme.colors.mint1};
+  color: ${({ theme }) => theme.colors.white};
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.mint3};
@@ -39,5 +40,4 @@ const Button = styled.button`
 const ButtonText = styled.p`
   ${({ theme }) => theme.typographies.subTitle};
   width: 160px;
-  color: ${({ theme }) => theme.colors.white};
 `;

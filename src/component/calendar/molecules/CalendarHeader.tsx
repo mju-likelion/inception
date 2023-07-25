@@ -1,4 +1,3 @@
-import { Title } from '@/component/@share';
 import { styled } from 'styled-components';
 import { NextButton, BackButton } from '@/component/@share/atom';
 import { DateRangeLimit } from '@/types';
@@ -16,9 +15,7 @@ export const CalendarHeader = ({
 }: Props) => {
   return (
     <Wrapper>
-      <Title ag="Title2" color="gray1">
-        {`${currentDate[0]}년 ${+currentDate[1]}월`}
-      </Title>
+      <DateTitle>{`${currentDate[0]}년 ${+currentDate[1]}월`}</DateTitle>
       <ButtonWrapper>
         <BackButton
           isDisabled={dateRangeLimit.start}
@@ -43,6 +40,14 @@ const Wrapper = styled.div`
     width: 180px;
     display: flex;
     align-items: center;
+  }
+`;
+
+const DateTitle = styled.h1`
+  color: ${({ theme }) => theme.colors.gray1};
+  ${({ theme }) => theme.typographies.title2}
+  @media ${({ theme }) => theme.size.web} {
+    ${({ theme }) => theme.typographies.title1}
   }
 `;
 
