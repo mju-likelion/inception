@@ -12,6 +12,10 @@ export const Home = () => {
     tab === TAB_ITEMS[1].id && navigate('/submit-code');
   };
 
+  const handleButtonClick = () => {
+    navigate(`/appointment?step=1`);
+  };
+
   return (
     <>
       <TabBar tabItems={TAB_ITEMS} onClick={handleTabBarClick} />
@@ -37,9 +41,7 @@ export const Home = () => {
           <TimePicker />
         </TimePickerBox>
         <ButtonBox>
-          <ButtonLarge click={() => navigate(`/appointment?step=1`)}>
-            약속방 생성
-          </ButtonLarge>
+          <ButtonLarge click={handleButtonClick}>약속방 생성</ButtonLarge>
         </ButtonBox>
       </Container>
     </>
