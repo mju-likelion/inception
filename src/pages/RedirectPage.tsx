@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ErrorAlert } from '../data/ErrorAlertText';
+import { ErrorAlert } from '@/pages/data';
 import { ReactComponent as DoorSvgForTablet } from '@/assets/images/RedirectDoorInTablet.svg';
 import { ReactComponent as DoorSvgForDesktop } from '@/assets/images/RedirectDoorInDesktop.svg';
 import { ReactComponent as NotFound } from '@/assets/images/ErrorState404.svg';
