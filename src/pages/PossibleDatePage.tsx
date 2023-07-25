@@ -40,7 +40,7 @@ export const PossibleDatePage = ({ buttonClick }: Props) => {
         />
       </Content>
       <Bottom>
-        <ButtonLarge>다음으로</ButtonLarge>
+        <ButtonLarge click={buttonClick}>다음으로</ButtonLarge>
       </Bottom>
     </Wrapper>
   );
