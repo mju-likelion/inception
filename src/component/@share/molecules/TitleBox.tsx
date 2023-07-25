@@ -18,7 +18,7 @@ export const TitleBox = ({
   step,
 }: TitleBoxProps) => {
   return (
-    <Container>
+    <Container title={title}>
       {step ? (
         <ProgressBar total={total} step={step} />
       ) : (
@@ -36,7 +36,8 @@ const Container = styled.div`
   width: 250px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
+  gap: ${({ title }) => (title ? '12px' : 0)};
+
   @media ${({ theme }) => theme.size.tablet} {
     width: 500px;
     h1 {
