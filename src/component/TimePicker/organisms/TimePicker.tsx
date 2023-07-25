@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { Body, TitleCheck } from '@/component/@share';
+import { TitleCheck } from '@/component/@share';
 import { TimeSelectionBox } from '@/component/TimePicker';
 
 import {
@@ -11,6 +11,7 @@ import {
   timeErrorState,
 } from '@/store';
 import { TimeListData } from '@/types';
+import { theme } from '@/globalStyle';
 
 export const TimePicker = () => {
   const startBoxRef = useRef<HTMLDivElement>(null);
@@ -98,9 +99,7 @@ export const TimePicker = () => {
         />
       </InnerContainer>
       {isError && !isDisabled && (
-        <Body ag="Body3" color="red">
-          종료 시간이 시작 시간보다 늦어야 합니다
-        </Body>
+        <Body $color="red">종료 시간이 시작 시간보다 늦어야 합니다</Body>
       )}
       <TitleCheck isChecked={isChecked} onClick={handleCheck}>
         날짜만 조율할래요
@@ -126,4 +125,12 @@ const Bar = styled.div`
   height: 1px;
   background-color: ${({ theme }) => theme.colors.gray3};
   border-radius: 1px;
+`;
+
+const Body = styled.p<{ $color: keyof typeof theme.colors }>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
+  ${({ theme }) => theme.typographies.body3};
+  letter-spacing: 0;
+  text-align: left;
+  word-break: keep-all;
 `;

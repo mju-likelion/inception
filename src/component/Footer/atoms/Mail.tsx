@@ -1,4 +1,4 @@
-import { Body } from '@/component/@share';
+import { theme } from '@/globalStyle';
 import styled from 'styled-components';
 
 interface MailProps {
@@ -8,9 +8,7 @@ interface MailProps {
 export const Mail = ({ email }: MailProps) => {
   return (
     <Container>
-      <Body ag="Body4" color="gray2">
-        이메일
-      </Body>
+      <Body $color="gray2">이메일</Body>
       <Email>{email}</Email>
     </Container>
   );
@@ -19,6 +17,14 @@ export const Mail = ({ email }: MailProps) => {
 const Container = styled.div`
   display: flex;
   gap: 8px;
+`;
+
+const Body = styled.p<{ $color: keyof typeof theme.colors }>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
+  ${({ theme }) => theme.typographies.body4};
+  letter-spacing: 0;
+  text-align: left;
+  word-break: keep-all;
 `;
 
 const Email = styled.button`
