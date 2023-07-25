@@ -1,17 +1,20 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { App } from '@/App';
-import { Home } from './Home';
-import { CalendarTest } from './CalendarTest';
-import { RedirectPage } from '@/component/ErrorPage/atoms';
-import { Result } from './Result';
-import { LoginMasterTemplate } from '@/component/@share/template/LoginMasterTemplate';
 import { CodeSubmitTemplate } from '@/component/@share/template/CodeSubmitTemplate';
-import { AppointmentStepPage } from './AppointmentStepPage';
+import {
+  Home,
+  CalendarTest,
+  Result,
+  AppointmentStepPage,
+  RedirectPage,
+} from '@/pages';
 
 export * from '@/App';
 export * from './Home';
 export * from './CalendarTest';
-export * from './PossibleDatePage';
+export * from './AppointmentStepPage';
+export * from './Result';
+export * from './RedirectPage';
 
 /** @Note 라우팅 정보를 가지고있습니다. */
 export const pages = createBrowserRouter([
@@ -35,10 +38,6 @@ export const pages = createBrowserRouter([
       {
         path: 'appointment', // ex) localhost:3000/appointment
         element: <AppointmentStepPage />,
-      },
-      {
-        path: 'login', // ex) localhost:3000/login
-        element: <LoginMasterTemplate />,
       },
       {
         path: 'result', // ex) localhost:3000/result
