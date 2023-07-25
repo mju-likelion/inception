@@ -8,16 +8,14 @@ interface TimeBlockProps {
 
 export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
   const [isMouseDown, setIsMouseDown] = useRecoilState(IsMouseDownAtom);
-  const mouseDown = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const mouseDown = () => {
     if (!isMouseDown) {
       onClick();
     }
     setIsMouseDown(true);
   };
 
-  const mouseEnter = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const mouseEnter = () => {
     if (isMouseDown) {
       onClick();
     }
@@ -26,8 +24,10 @@ export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
   return (
     <TimeBlockAtom
       $isActive={active}
-      onMouseEnter={(e) => mouseEnter(e)}
-      onMouseDown={(e) => mouseDown(e)}
+      onMouseEnter={() => mouseEnter()}
+      onMouseDown={() => mouseDown()}
+      onTouchStart={() => mouseEnter}
+      onTouchEnd={() => mouseDown()}
     />
   );
 };
