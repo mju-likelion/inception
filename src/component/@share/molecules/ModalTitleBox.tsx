@@ -28,11 +28,11 @@ const BodyBlock = styled.div`
   flex-direction: column;
 `;
 
-const Title = styled.div`
+const Title = styled.p`
   ${({ theme }) => theme.typographies.title2};
 `;
 
-const Body = styled.div`
+const Body = styled.p`
   ${({ theme }) => theme.typographies.body3};
   color: ${({ theme }) => theme.colors.gray1};
   text-align: center;

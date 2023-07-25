@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { ButtonLarge } from '@/component/@share/atom';
 import { ModalTitleBox } from '../molecules/ModalTitleBox';
 import { ModalIcon } from '../atom/ModalIcon';
+import { ModalDimmed } from '../atom/ModalDimmed';
 
 interface ModalProps {
   error: 'codeError' | 'loginError' | string;
@@ -32,18 +33,21 @@ export const Modal = ({ error, isOpen, onCloseModal }: ModalProps) => {
   const onSetModalText = () => {
     const result = [];
 
-    function errorCheck(s: any) {
-      return s.errorType === error
-        ? s.errorType
-        : s.errorType === 'theOtherError';
+    function errorCheck(checkParameter: any) {
+      return checkParameter.errorType === error
+        ? checkParameter.errorType
+        : checkParameter.errorType === 'theOtherError';
     }
 
-    const b = errorText.filter(errorCheck);
+    const filterArray = errorText.filter(errorCheck);
     //에러타입을 키로, 맞는 객체를 찾아와서 배열을 만들어줘
-    result.push(<ModalTitleBox title={b[0].title} content={b[0].content} />);
+    result.push(
+      <ModalTitleBox
+        title={filterArray[0].title}
+        content={filterArray[0].content}
+      />
+    );
     return result;
-
-    console.log(result);
   };
 
   return (
@@ -71,26 +75,9 @@ const WrapModal = styled.div`
   align-items: center;
   justify-content: center;
   width: 300px;
-  height: 278px;
   border-radius: 16px;
   background: ${({ theme }) => theme.colors.white};
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
-`;
-
-const ModalDimmed = styled.div`
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-  background-color: rgba(42, 43, 49, 0.4);
-  z-index: 1;
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 `;
 
 const ModalIconBox = styled.div`
