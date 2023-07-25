@@ -1,9 +1,7 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import { TabBarButton } from '@/component/@share/molecules';
-import { tabState } from '@/store/atoms';
 import { TabItem } from '@/types';
 
 interface TabBarProps {
@@ -12,7 +10,7 @@ interface TabBarProps {
 }
 
 export const TabBar = ({ onClick, tabItems }: TabBarProps) => {
-  const [selectedTab, setSelectedTab] = useRecoilState(tabState);
+  const [selectedTab, setSelectedTab] = useState(tabItems[0].id);
   const path = useLocation().pathname;
 
   useEffect(() => {
