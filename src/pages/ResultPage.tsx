@@ -7,7 +7,7 @@ import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
 import { useNavigate } from 'react-router-dom';
 
-export const Result = () => {
+export const ResultPage = () => {
   const navigate = useNavigate();
 
   const onClick = (tab: string) => {

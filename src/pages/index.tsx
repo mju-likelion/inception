@@ -1,11 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { App } from '@/App';
-import { CodeSubmitTemplate } from '@/component/@share/template/CodeSubmitTemplate';
 import {
   Home,
   CalendarTest,
-  Result,
+  ResultPage,
   AppointmentStepPage,
+  CodeSubmitPage,
   RedirectPage,
 } from '@/pages';
 
@@ -13,7 +13,8 @@ export * from '@/App';
 export * from './Home';
 export * from './CalendarTest';
 export * from './AppointmentStepPage';
-export * from './Result';
+export * from './ResultPage';
+export * from './CodeSubmitPage';
 export * from './RedirectPage';
 
 /** @Note 라우팅 정보를 가지고있습니다. */
@@ -29,7 +30,7 @@ export const pages = createBrowserRouter([
       },
       {
         path: 'submit-code', // ex) localhost:3000/submit-code
-        element: <CodeSubmitTemplate />,
+        element: <CodeSubmitPage />,
       },
       {
         path: 'calendar', // ex) localhost:3000/calendar
@@ -41,7 +42,7 @@ export const pages = createBrowserRouter([
       },
       {
         path: 'result', // ex) localhost:3000/result
-        element: <Result />,
+        element: <ResultPage />,
       },
       {
         path: '/*', // ex) not-found

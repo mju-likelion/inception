@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { TAB_ITEMS } from '@/pages/data';
 import { useNavigate } from 'react-router-dom';
 
-export const CodeSubmitTemplate = () => {
+export const CodeSubmitPage = () => {
   const [value, setValue] = useState('');
 
   const [buttonInactive, setButtonInactive] = useState(true);
@@ -26,6 +26,10 @@ export const CodeSubmitTemplate = () => {
 
   const onClick = (tab: string) => {
     tab === TAB_ITEMS[0].id && navigate('/');
+  };
+
+  const handleButtonClick = () => {
+    navigate('/result');
   };
 
   useEffect(() => {
@@ -56,10 +60,7 @@ export const CodeSubmitTemplate = () => {
           </WrapInput>
         </WrapTitleBoxInput>
         <WrapButton>
-          <ButtonLarge
-            isDisabled={buttonInactive}
-            click={() => navigate('/result')}
-          >
+          <ButtonLarge isDisabled={buttonInactive} click={handleButtonClick}>
             입력 완료
           </ButtonLarge>
         </WrapButton>
