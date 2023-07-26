@@ -14,8 +14,8 @@ export const Header = () => {
   const [step, setStep] = useState<0 | 1 | 2 | 3>(1);
 
   useEffect(() => {
-    if (location.pathname === '/' || stepParams === '1') setStep(1);
-    else if (stepParams === '2') setStep(2);
+    if (location.pathname === '/') setStep(1);
+    else if (stepParams === '1' || stepParams === '2') setStep(2);
     else if (stepParams === '3') setStep(3);
     else setStep(0);
   }, [location]);
