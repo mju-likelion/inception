@@ -1,6 +1,8 @@
 import { IsMouseDownAtom } from '@/store/atoms/TimeBlock/isMouseDown';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { useWindowResize } from '@/hooks';
+import { devices } from '@/globalStyle';
 
 interface TimeBlockProps {
   active: boolean;
@@ -8,11 +10,13 @@ interface TimeBlockProps {
 }
 
 export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
+  const windowSize = useWindowResize();
+
   const [isMouseDown, setIsMouseDown] = useRecoilState(IsMouseDownAtom);
   const mouseDown = () => {
-    if (!isMouseDown) {
-      onClick();
-    }
+    // if (!isMouseDown && windowSize.width >= devices.web) {
+    //   onClick();
+    // }
     setIsMouseDown(true);
   };
 
@@ -25,13 +29,15 @@ export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
   return (
     <TimeBlockAtom
       $isActive={active}
-      onMouseEnter={() => mouseEnter()}
-      onMouseDown={() => mouseDown()}
+      onPointerDown={() => mouseDown()}
+      onPointerEnter={() => mouseEnter()}
+      onClick={() => onClick()}
     />
   );
 };
 
 const TimeBlockAtom = styled.button<{ $isActive: boolean }>`
+  touch-action: none;
   width: 52px;
   height: 46px;
   border-radius: 8px;
