@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import { TabBar } from '@/component/@share';
 import {
   LoginMasterTemplate,
@@ -56,9 +56,13 @@ export const AppointmentStepPage = () => {
     }
   };
 
+  // step=1/2/3이 아닐 땐 TabBar지워야함 === step이 1/2/3일때만 TabBar가 보여야함!
+
   return (
     <>
-      <TabBar tabItems={TAB_ITEMS} onClick={handleTabBarClick} />
+      {(step === '1' || step === '2' || step === '3') && (
+        <TabBar tabItems={TAB_ITEMS} onClick={handleTabBarClick} />
+      )}
       {renderPage()}
     </>
   );
