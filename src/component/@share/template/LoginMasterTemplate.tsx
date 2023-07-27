@@ -1,16 +1,21 @@
 import styled from 'styled-components';
-import { TabBar } from '@/component/@share/organisms';
 import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
-import { TabItem } from '@/types';
+import { useNavigate } from 'react-router-dom';
 
-export const LoginMasterTemlplate = () => {
+interface Props {
+  buttonClick?: () => void;
+}
+
+export const LoginMasterTemplate = ({ buttonClick }: Props) => {
   const [nicknameValue, setNicknameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
   const [buttonInactive, setButtonInactive] = useState(true);
+
+  const navigate = useNavigate();
 
   const onChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNicknameValue(event.target.value);
@@ -31,52 +36,40 @@ export const LoginMasterTemlplate = () => {
     console.log(buttonInactive);
   };
 
-  const tabItems: TabItem[] = [
-    {
-      id: 'default',
-      title: '약속 잡기',
-    },
-    {
-      id: 'result',
-      title: '결과 보기',
-    },
-  ];
-
   const onClick = (tab: string) => {};
 
   return (
-    <>
-      <TabBar onClick={onClick} tabItems={tabItems} />
-      <WrapContents>
-        <WrapUpperContents>
-          <TitleBox
-            total={3}
-            step={3}
-            title=""
-            content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
+    <WrapContents>
+      <WrapUpperContents>
+        <TitleBox
+          total={3}
+          step={3}
+          title=""
+          content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
+        />
+        <WrapInput>
+          <Input
+            type={'text'}
+            placeholder={'닉네임'}
+            onKeyUp={activeEvent}
+            onChange={onChangeNickname}
+            value={nicknameValue}
           />
-          <WrapInput>
-            <Input
-              type={'text'}
-              placeholder={'닉네임'}
-              onKeyUp={activeEvent}
-              onChange={onChangeNickname}
-              value={nicknameValue}
-            />
-            <Input
-              type={'password'}
-              placeholder={'비밀번호'}
-              onKeyUp={activeEvent}
-              onChange={onChangePassword}
-              value={passwordValue}
-            />
-          </WrapInput>
-        </WrapUpperContents>
-        <WrapButton>
-          <ButtonLarge isDisabled={buttonInactive}>입력 완료</ButtonLarge>
-        </WrapButton>
-      </WrapContents>
-    </>
+          <Input
+            type={'password'}
+            placeholder={'비밀번호'}
+            onKeyUp={activeEvent}
+            onChange={onChangePassword}
+            value={passwordValue}
+          />
+        </WrapInput>
+      </WrapUpperContents>
+      <WrapButton>
+        <ButtonLarge isDisabled={buttonInactive} click={buttonClick}>
+          입력 완료
+        </ButtonLarge>
+      </WrapButton>
+    </WrapContents>
   );
 };
 const WrapContents = styled.div`
