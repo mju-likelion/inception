@@ -14,9 +14,9 @@ export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
 
   const [isMouseDown, setIsMouseDown] = useRecoilState(IsMouseDownAtom);
   const mouseDown = () => {
-    // if (!isMouseDown && windowSize.width >= devices.web) {
-    //   onClick();
-    // }
+    if (!isMouseDown && windowSize.width >= devices.web) {
+      onClick();
+    }
     setIsMouseDown(true);
   };
 
@@ -31,7 +31,7 @@ export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
       $isActive={active}
       onPointerDown={() => mouseDown()}
       onPointerEnter={() => mouseEnter()}
-      onClick={() => onClick()}
+      onClick={() => windowSize.width < devices.web && onClick()}
     />
   );
 };
