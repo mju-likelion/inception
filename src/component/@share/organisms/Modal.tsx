@@ -5,7 +5,7 @@ import { ModalIcon } from '../atom/ModalIcon';
 import { ModalDimmed } from '../atom/ModalDimmed';
 
 interface ModalProps {
-  error: 'codeError' | 'loginError' | string;
+  error: string;
   isOpen: boolean;
   onCloseModal: () => void;
 }
@@ -52,7 +52,7 @@ export const Modal = ({ error, isOpen, onCloseModal }: ModalProps) => {
 
   return (
     <>
-      {isOpen ? (
+      {isOpen && (
         <ModalDimmed onClick={onCloseModal}>
           <WrapModal>
             <ModalIconBox>
@@ -64,7 +64,7 @@ export const Modal = ({ error, isOpen, onCloseModal }: ModalProps) => {
             </ButtonBlock>
           </WrapModal>
         </ModalDimmed>
-      ) : null}
+      )}
     </>
   );
 };
@@ -75,9 +75,9 @@ const WrapModal = styled.div`
   align-items: center;
   justify-content: center;
   width: 300px;
+  height: 278px;
   border-radius: 16px;
   background: ${({ theme }) => theme.colors.white};
-  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
 `;
 
 const ModalIconBox = styled.div`

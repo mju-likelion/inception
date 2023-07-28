@@ -6,7 +6,7 @@ interface ModalDimmedProps {
 }
 
 export const ModalDimmed = ({ onClick, children }: ModalDimmedProps) => {
-  return <Container onClick={onClick}> {children} </Container>;
+  return <Container onClick={onClick}>{children}</Container>;
 };
 
 const Container = styled.div`

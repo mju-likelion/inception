@@ -3,7 +3,7 @@ import { ReactComponent as ModalIconWarningSVG } from '@/assets/images/ModalIcon
 import { ReactComponent as ModalIconRoomSVG } from '@/assets/images/ModalIconRoom.svg';
 
 interface ModalIconProps {
-  value: 'loginError' | 'codeError' | string;
+  value: string;
 }
 
 export const ModalIcon = ({ value }: ModalIconProps) => {
