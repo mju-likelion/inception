@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
-import { CheckBox, Body } from '@/component/@share';
+import { CheckBox } from '@/component/@share';
+import { theme } from '@/globalStyle';
 
 interface TitleCheckProps {
   isChecked: boolean;
@@ -15,9 +16,7 @@ export const TitleCheck = ({
   return (
     <Container onClick={onClick}>
       <CheckBox isChecked={isChecked} onClick={onClick} />
-      <Body ag="Body3" color="gray2">
-        {children}
-      </Body>
+      <Body $color="gray2">{children}</Body>
     </Container>
   );
 };
@@ -28,4 +27,12 @@ const Container = styled.div`
   gap: 8px;
   width: 133px;
   cursor: pointer;
+`;
+
+const Body = styled.p<{ $color: keyof typeof theme.colors }>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
+  ${({ theme }) => theme.typographies.body3};
+  letter-spacing: 0;
+  text-align: left;
+  word-break: keep-all;
 `;

@@ -4,23 +4,15 @@ import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useEffect, useState } from 'react';
-import { TabItem } from '@/types';
+import { TAB_ITEMS } from '@/pages/data';
+import { useNavigate } from 'react-router-dom';
 
-export const CodeSubmitTemlplate = () => {
+export const CodeSubmitPage = () => {
   const [value, setValue] = useState('');
 
   const [buttonInactive, setButtonInactive] = useState(true);
 
-  const tabItems: TabItem[] = [
-    {
-      id: 'default',
-      title: '약속 잡기',
-    },
-    {
-      id: 'result',
-      title: '결과 보기',
-    },
-  ];
+  const navigate = useNavigate();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -32,7 +24,13 @@ export const CodeSubmitTemlplate = () => {
     index > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
   };
 
-  const onClick = () => {};
+  const onClick = (tab: string) => {
+    tab === TAB_ITEMS[0].id && navigate('/');
+  };
+
+  const handleButtonClick = () => {
+    navigate('/result');
+  };
 
   useEffect(() => {
     onKeyUp;
@@ -41,7 +39,7 @@ export const CodeSubmitTemlplate = () => {
 
   return (
     <>
-      <TabBar onClick={onClick} tabItems={tabItems} />
+      <TabBar onClick={onClick} tabItems={TAB_ITEMS} />
       <WrapperContents>
         <WrapTitleBoxInput>
           <TitleBox
@@ -62,7 +60,9 @@ export const CodeSubmitTemlplate = () => {
           </WrapInput>
         </WrapTitleBoxInput>
         <WrapButton>
-          <ButtonLarge isDisabled={buttonInactive}>입력 완료</ButtonLarge>
+          <ButtonLarge isDisabled={buttonInactive} click={handleButtonClick}>
+            입력 완료
+          </ButtonLarge>
         </WrapButton>
       </WrapperContents>
     </>
