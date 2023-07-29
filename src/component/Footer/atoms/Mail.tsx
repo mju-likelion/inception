@@ -25,6 +25,7 @@ const Email = styled.button`
   ${({ theme }) => theme.typographies.body4};
   color: ${({ theme }) => theme.colors.gray2};
   text-decoration: underline;
+  text-underline-offset: 2px;
   &:hover {
     color: ${({ theme }) => theme.colors.gray1};
   }

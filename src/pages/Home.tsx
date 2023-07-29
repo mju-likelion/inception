@@ -31,7 +31,11 @@ export const Home = () => {
           />
         </TitleBoxContainer>
         <CalendarBox>
-          <Calendar viewType="create" />
+          <Calendar
+            minDate="2015-02-01"
+            maxDate="2030-01-01"
+            viewType="create"
+          />
           <HorizontalRule />
         </CalendarBox>
         <TimePickerBox>
