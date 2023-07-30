@@ -287,6 +287,8 @@ const ResultMode = ({ getActiveStatus, checkLimitDate }: ResultModeProps) => {
         : value
     );
 
+    // @TODO 클릭한 날짜에서 선택된 날짜 정보를 가져오는 api 작성 필요
+
     setCalendar(changedDateColor);
   };
 

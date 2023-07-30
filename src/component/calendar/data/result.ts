@@ -79,3 +79,12 @@ export const promiseResultMockData: PromiseResultData[] = [
     users: ['유저1'],
   },
 ];
+
+export const timeOfSelectedDateMockData: string[] = [
+  '15:00',
+  '12:00',
+  '11:00',
+  '09:00',
+  '15:00',
+  '22:00',
+];
