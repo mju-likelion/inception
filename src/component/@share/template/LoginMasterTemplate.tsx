@@ -112,6 +112,7 @@ const WrapButton = styled.div`
   display: flex;
   justify-content: center;
   margin: 200px 0px 100px 0px;
+  //푸터고정 = calc (뷰크기(vh) - (헤더를 제외한 내부콘텐츠 및 마진 + 푸터))
   min-height: calc(100vh - 744px);
 
   @media ${({ theme }) => theme.size.tablet} {
