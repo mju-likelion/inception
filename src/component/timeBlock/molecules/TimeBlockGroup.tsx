@@ -6,6 +6,7 @@ import { getPaginationDate, getPaginationTable } from '@/util';
 import { useEffect, useState } from 'react';
 import range from 'lodash/range';
 import { isMouseDownState } from '@/store/atoms/TimeBlock/isMouseDownState';
+import { touchMoveDrag } from '@/util';
 interface TimeBlockGroupProps {
   page: number;
   onSetActiveDate: React.Dispatch<React.SetStateAction<boolean[]>>;
@@ -19,6 +20,7 @@ export const TimeBlockGroup = ({
   const timeList = useRecoilValue(timeListState);
   const [timeTable, setTimeTable] = useRecoilState(timeTableState);
   const isMouseDown = useRecoilValue(isMouseDownState);
+  const [previousTarget, setPreviousTarget] = useState<HTMLButtonElement>();
 
   useEffect(() => {
     const newTimeTable = range(timeList.length)?.map(() =>
@@ -50,27 +52,12 @@ export const TimeBlockGroup = ({
     }
   }, [timeTable]);
 
-  const [previousTarget, setPreviousTarget] = useState<HTMLButtonElement>();
-  const touchMove = (event: React.TouchEvent<HTMLDivElement>) => {
-    const target = document.elementFromPoint(
-      event.touches[0].clientX,
-      event.touches[0].clientY
-    ) as HTMLButtonElement;
-
-    if (
-      isMouseDown &&
-      target?.nodeName === 'BUTTON' &&
-      target !== previousTarget
-    ) {
-      target.click();
-      setPreviousTarget(target);
-    }
-  };
-
   return (
     <TimeBlockGroupBlock
       columns={newDateList.length}
-      onTouchMove={(e) => touchMove(e)}
+      onTouchMove={(event) =>
+        touchMoveDrag({ event, isMouseDown, previousTarget, setPreviousTarget })
+      }
     >
       {nowTimeTable.map((row, rowIndex) =>
         row.map((_, columnIndex) => (
