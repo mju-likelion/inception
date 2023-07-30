@@ -7,14 +7,16 @@ interface DateProps {
   calendarData: CalendarData[];
   currentDate: string[];
   viewType: ViewType;
-  handleClickDate: (date?: string) => void;
+  handleMouseEnter?: (date: string) => void;
+  handleMouseDown: (date: string) => void;
 }
 
 const DateComponent = ({
   calendarData,
   currentDate,
   viewType,
-  handleClickDate,
+  handleMouseEnter,
+  handleMouseDown,
 }: DateProps) => {
   const showDates = useMemo(() => {
     const filterdCalendarData = calendarData.filter((data) => {
@@ -44,7 +46,10 @@ const DateComponent = ({
           <GridItem
             key={data.date}
             dateOptions={dateOptions}
-            handleClickDate={handleClickDate}
+            handleMouseDown={() => handleMouseDown(data.date)}
+            handleMouseEnter={() =>
+              handleMouseEnter && handleMouseEnter(data.date)
+            }
           >
             <div>
               <p>{removeZeroPadDate}</p>

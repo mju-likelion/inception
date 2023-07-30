@@ -11,19 +11,21 @@ interface Props {
     date: string;
     activeStatus: ActiveStatus;
   };
-  handleClickDate?: (date?: string) => void;
+  handleMouseEnter?: () => void;
+  handleMouseDown?: () => void;
 }
 
 export const GridItem = ({
   children,
   disabled,
   dateOptions,
-  handleClickDate,
+  // handleClickDate,
+  handleMouseEnter,
+  handleMouseDown,
 }: PropsWithChildren<Props>) => {
   const [color, setColor] = useState(getGridColor(dateOptions?.activeStatus));
-
-  const onClick = () => {
-    handleClickDate?.(dateOptions?.date);
+  const onMouseDown = () => {
+    handleMouseDown && handleMouseDown();
   };
 
   const onFocus = () => {
@@ -52,9 +54,10 @@ export const GridItem = ({
       disabled={disabled}
       $isDate={dateOptions?.$isDate}
       color={color}
-      onClick={onClick}
       onFocus={onFocus}
       onBlur={onBlur}
+      onMouseEnter={handleMouseEnter}
+      onMouseDown={onMouseDown}
     >
       {children}
     </Wrapper>
