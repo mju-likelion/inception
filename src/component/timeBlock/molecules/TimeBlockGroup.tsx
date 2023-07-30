@@ -21,7 +21,7 @@ export const TimeBlockGroup = ({
   const isMouseDown = useRecoilValue(IsMouseDownAtom);
 
   useEffect(() => {
-    const newTimeTable = range(timeList.length).map(() =>
+    const newTimeTable = range(timeList.length)?.map(() =>
       new Array(dateList.length).fill(false)
     );
     setTimeTable(newTimeTable);
