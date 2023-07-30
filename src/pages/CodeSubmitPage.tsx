@@ -105,7 +105,7 @@ const WrapButton = styled.div`
   min-height: calc(100vh - 744px);
 
   @media ${({ theme }) => theme.size.tablet} {
-    margin: 100px 0px 100px 0px;
+    margin: 100px 0px;
     min-height: calc(100vh - 691px);
   }
 
