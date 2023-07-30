@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { DateListAtom } from '@/store/atoms';
+import { dateListState } from '@/store/atoms';
 import { DuringDate } from '@/component/timeBlock/atoms/DuringDate';
 import { BackButton, NextButton } from '@/component/@share/atom';
 
@@ -17,7 +17,7 @@ export const SelectDate = ({
   onClickNext,
   size = 4,
 }: DateListProps) => {
-  const dateList = useRecoilValue(DateListAtom);
+  const dateList = useRecoilValue(dateListState);
   const start = dateList[0];
   const end = dateList[dateList.length - 1];
   const totalPageLength = Math.trunc(dateList.length / size + 1);
