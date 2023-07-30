@@ -77,7 +77,6 @@ const WrapContents = styled.div`
   flex-direction: column;
   justify-content: center;
   margin-top: 30px;
-
   @media ${({ theme }) => theme.size.tablet} {
     align-items: center;
     margin-top: 60px;
@@ -113,11 +112,14 @@ const WrapButton = styled.div`
   display: flex;
   justify-content: center;
   margin: 200px 0px 100px 0px;
+  min-height: calc(100vh - 744px);
 
   @media ${({ theme }) => theme.size.tablet} {
     margin: 158px 0px 100px 0px;
+    min-height: calc(100vh - 710px);
   }
   @media ${({ theme }) => theme.size.web} {
     margin: 220px 0px 100px 0px;
+    min-height: calc(100vh - 808px);
   }
 `;
