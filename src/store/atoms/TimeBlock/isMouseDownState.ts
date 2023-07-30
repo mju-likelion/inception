@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export const IsMouseDownAtom = atom<boolean>({
+export const isMouseDownState = atom<boolean>({
   key: 'isMouseDownState',
   default: false,
 });

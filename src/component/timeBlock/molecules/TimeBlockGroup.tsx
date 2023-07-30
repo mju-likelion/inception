@@ -1,11 +1,11 @@
 import { styled } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { DateListAtom, TimeListAtom, TimeTableListAtom } from '@/store/atoms';
+import { dateListState, timeListState, timeTableState } from '@/store/atoms';
 import { TimeBlock } from '@/component/timeBlock/atoms';
 import { getPaginationDate, getPaginationTable } from '@/util';
 import { useEffect, useState } from 'react';
 import range from 'lodash/range';
-import { IsMouseDownAtom } from '@/store/atoms/TimeBlock/isMouseDown';
+import { isMouseDownState } from '@/store/atoms/TimeBlock/isMouseDownState';
 interface TimeBlockGroupProps {
   page: number;
   onSetActiveDate: React.Dispatch<React.SetStateAction<boolean[]>>;
@@ -15,10 +15,10 @@ export const TimeBlockGroup = ({
   page,
   onSetActiveDate,
 }: TimeBlockGroupProps) => {
-  const dateList = useRecoilValue(DateListAtom);
-  const timeList = useRecoilValue(TimeListAtom);
-  const [timeTable, setTimeTable] = useRecoilState(TimeTableListAtom);
-  const isMouseDown = useRecoilValue(IsMouseDownAtom);
+  const dateList = useRecoilValue(dateListState);
+  const timeList = useRecoilValue(timeListState);
+  const [timeTable, setTimeTable] = useRecoilState(timeTableState);
+  const isMouseDown = useRecoilValue(isMouseDownState);
 
   useEffect(() => {
     const newTimeTable = range(timeList.length)?.map(() =>

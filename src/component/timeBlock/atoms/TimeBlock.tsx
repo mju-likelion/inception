@@ -1,4 +1,4 @@
-import { IsMouseDownAtom } from '@/store/atoms/TimeBlock/isMouseDown';
+import { isMouseDownState } from '@/store/atoms/TimeBlock/isMouseDownState';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { useWindowResize } from '@/hooks';
@@ -12,7 +12,7 @@ interface TimeBlockProps {
 export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
   const windowSize = useWindowResize();
 
-  const [isMouseDown, setIsMouseDown] = useRecoilState(IsMouseDownAtom);
+  const [isMouseDown, setIsMouseDown] = useRecoilState(isMouseDownState);
   const mouseDown = () => {
     if (!isMouseDown && windowSize.width >= devices.web) {
       onClick();
