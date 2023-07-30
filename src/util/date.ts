@@ -1,8 +1,8 @@
 /* date = 일자 데이터, day = 요일 데이터 */
-import { CalendarData, PromiseResultData } from '@/types';
+import { ActiveStatus, CalendarData, PromiseResultData } from '@/types';
 import padStart from 'lodash/padStart';
 
-/** 월별 캘란더 기본 정보를 반환한다. */
+/** 월별 캘린더 기본 정보를 반환한다. */
 export const getCalendarData = (
   year: string,
   month: string,
@@ -11,24 +11,32 @@ export const getCalendarData = (
   const days = calcDaysByYearMonth(year, month);
   const paddingMonth = +month < 10 ? `0${+month}` : month;
 
+  // 가장 많이 선택된 횟수로 status 구하기 위해 사용
+  const mostSelectedCount =
+    promiseResult && getCountOfMostSelectedDate(promiseResult);
+
   const datas = days.map((date) => {
     const day = new Date(+year, +month - 1, +date).getDay();
     const dateString = `${year}-${paddingMonth}-${date}`;
-    const resultData =
-      promiseResult?.find((result) => result.date === dateString) ?? {};
+    const resultData = promiseResult?.find(
+      (result) => result.date === dateString
+    );
+    let activeStatus: ActiveStatus = 'default';
 
-    const {
-      status = 'default',
-      count,
-      users,
-    } = resultData as PromiseResultData;
+    if (resultData && mostSelectedCount === resultData.count) {
+      activeStatus = 'active';
+    }
+
+    if (promiseResult && !resultData) {
+      activeStatus = 'disabled';
+    }
 
     return {
       date: dateString,
       day: convertDayNumberToString(day),
-      activeStatus: status,
-      count: count,
-      selectUsers: users,
+      activeStatus: activeStatus,
+      count: resultData?.count,
+      selectUsers: resultData?.users,
     } as CalendarData;
   });
 
@@ -82,6 +90,30 @@ export const getMinDate = (dates: string[]) => {
   return dateFormatToString(new Date(max));
 };
 
+/** 서버 결과를 UI 정보에 맞게 맵핑 */
+export const resolvePromiseResult = (data: PromiseResultData[]) => {
+  const selectedDate = data.map((item) => item.date);
+
+  let minTime = Infinity;
+  let maxTime = 0;
+
+  selectedDate.forEach((date) => {
+    const time = new Date(date).getTime();
+    if (minTime > time) {
+      minTime = time;
+    }
+    if (maxTime < time) {
+      maxTime = time;
+    }
+  });
+
+  const result = {
+    minDate: dateFormatToString(new Date(minTime)).split('-'),
+    maxDate: dateFormatToString(new Date(maxTime)).split('-'),
+  };
+  return result;
+};
+
 const calcDaysByYearMonth = (year: string, month: string): string[] => {
   // date 파라미터에 0을 넣게 된다면 '이전달'을 참조하게된다.
   const getLastDay = new Date(+year, +month, 0).getDate();
@@ -111,4 +143,19 @@ const convertDayNumberToString = (dayNumber: number): string => {
     default:
       throw Error(`${dayNumber}는 올바른 요일 숫자가 아닙니다.`);
   }
+};
+
+const getCountOfMostSelectedDate = (dateOfResult: PromiseResultData[]) => {
+  let maxCount = 0;
+
+  for (const date of dateOfResult) {
+    if (!date.count) continue;
+    date.count >= maxCount && (maxCount = date.count);
+  }
+
+  // const mostSelectedDates =
+  //   dateOfResult.filter((item) => item.count === maxCount) ?? [];
+
+  // return mostSelectedDates;
+  return maxCount;
 };

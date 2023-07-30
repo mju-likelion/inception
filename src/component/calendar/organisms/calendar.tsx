@@ -16,6 +16,7 @@ import {
   dateFormatToString,
   getCalendarData,
   isDuplicatedDate,
+  resolvePromiseResult,
 } from '@/util';
 import padStart from 'lodash/padStart';
 import { useState } from 'react';
@@ -97,6 +98,10 @@ export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
     minDate: string[],
     maxDate: string[]
   ) => {
+    if (currentDate.length >= 3) currentDate = currentDate.slice(0, 2);
+    if (minDate.length >= 3) minDate = minDate.slice(0, 2);
+    if (maxDate.length >= 3) maxDate = maxDate.slice(0, 2);
+
     // 주의! new Date('2023-06') !== new Date('2023-6')
     return {
       start: new Date(currentDate.join('-')) <= new Date(minDate.join('-')),
@@ -117,9 +122,6 @@ export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
     case 'result':
       return (
         <ResultMode
-          minDate={splitMinDate}
-          maxDate={splitMaxDate}
-          promiseResult={promiseResultMockData}
           getActiveStatus={getActiveStatus}
           checkLimitDate={checkLimitDate}
         />
@@ -140,13 +142,14 @@ export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
 };
 
 interface BaseCalendarModeProps {
-  minDate: string[];
-  maxDate: string[];
   getActiveStatus: GetActiveStatus;
   checkLimitDate: CheckLimitDate;
 }
 
-type CreateModeProps = BaseCalendarModeProps;
+interface CreateModeProps extends BaseCalendarModeProps {
+  minDate: string[];
+  maxDate: string[];
+}
 const CreateMode = ({
   minDate,
   maxDate,
@@ -230,19 +233,14 @@ const CreateMode = ({
   );
 };
 
-interface ResultModeProps extends BaseCalendarModeProps {
-  promiseResult: PromiseResultData[];
-}
-const ResultMode = ({
-  minDate,
-  maxDate,
-  promiseResult,
-  getActiveStatus,
-  checkLimitDate,
-}: ResultModeProps) => {
+type ResultModeProps = BaseCalendarModeProps;
+const ResultMode = ({ getActiveStatus, checkLimitDate }: ResultModeProps) => {
+  /** @TODO 데이터 패치 로직으로 변경 필요 */
+  const { minDate, maxDate } = resolvePromiseResult(promiseResultMockData);
+
   const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
   const [calendar, setCalendar] = useState<CalendarData[]>(() =>
-    getCalendarData(minDate[0], minDate[1], promiseResult)
+    getCalendarData(minDate[0], minDate[1], promiseResultMockData)
   );
   const [dateRangeLimit, setDateRangeLimit] = useState<DateRangeLimit>(
     checkLimitDate(currentDate, minDate, maxDate)
@@ -255,7 +253,11 @@ const ResultMode = ({
 
     const changedYear = `${date.getFullYear()}`;
     const changedMonth = padStart(`${date.getMonth() + 1}`, 2, '0');
-    const changedCalendar = getCalendarData(changedYear, changedMonth);
+    const changedCalendar = getCalendarData(
+      changedYear,
+      changedMonth,
+      promiseResultMockData
+    );
 
     setCurrentDate([changedYear, changedMonth]);
     setDateRangeLimit(
@@ -284,6 +286,8 @@ const ResultMode = ({
           } as CalendarData)
         : value
     );
+
+    // @TODO 클릭한 날짜에서 선택된 날짜 정보를 가져오는 api 작성 필요
 
     setCalendar(changedDateColor);
   };
