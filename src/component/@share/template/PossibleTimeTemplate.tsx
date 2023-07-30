@@ -5,7 +5,7 @@ import { ButtonLarge } from '@/component/@share';
 import { styled } from 'styled-components';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { IsMouseDownAtom } from '@/store/atoms/TimeBlock/isMouseDownState';
+import { isMouseDownState } from '@/store/atoms/TimeBlock/isMouseDownState';
 
 interface Props {
   buttonClick: () => void;
@@ -13,7 +13,7 @@ interface Props {
 
 export const PossibleTimeTemplate = ({ buttonClick }: Props) => {
   const [isActive, setIsActive] = useState(true);
-  const [isMouseDown, setIsMouseDown] = useRecoilState(IsMouseDownAtom);
+  const [isMouseDown, setIsMouseDown] = useRecoilState(isMouseDownState);
 
   const mouseUp = () => {
     setIsMouseDown(false);
