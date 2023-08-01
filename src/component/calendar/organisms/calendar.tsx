@@ -11,9 +11,8 @@ import {
   getCalendarData,
   isDuplicatedDate,
   resolvePromiseResult,
-  touchMoveDrag,
 } from '@/util';
-import React, { MutableRefObject, useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { promiseResultMockData } from '../data';
 import padStart from 'lodash/padStart';
@@ -172,7 +171,7 @@ interface BaseCalendarModeProps {
 interface CreateModeProps extends BaseCalendarModeProps {
   minDate: string[];
   maxDate: string[];
-  calendarTouchMoveDrag: any;
+  calendarTouchMoveDrag: (param: ICalendarTouchMoveDrag) => void;
 }
 
 const CreateMode = ({
@@ -366,7 +365,7 @@ const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
 };
 
 interface SelectModeProps extends BaseCalendarModeProps {
-  calendarTouchMoveDrag: any;
+  calendarTouchMoveDrag: (param: ICalendarTouchMoveDrag) => void;
 }
 
 const SelectMode = ({
