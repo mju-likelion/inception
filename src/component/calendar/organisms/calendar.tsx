@@ -11,11 +11,12 @@ import {
   getCalendarData,
   isDuplicatedDate,
   resolvePromiseResult,
+  touchMoveDrag,
 } from '@/util';
-import padStart from 'lodash/padStart';
-import { useCallback, useRef, useState } from 'react';
+import React, { MutableRefObject, useCallback, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { promiseResultMockData } from '../data';
+import padStart from 'lodash/padStart';
 
 interface CalendarProps {
   viewType: ViewType;
@@ -136,6 +137,14 @@ interface CreateModeProps extends BaseCalendarModeProps {
   minDate: string[];
   maxDate: string[];
 }
+
+interface ICalendarTouchMoveDrag {
+  event: React.TouchEvent<HTMLDivElement>;
+  isMouseDown: boolean;
+  previousTarget: string;
+  setCurrentTouchTargetText: (target: string) => void;
+}
+
 const CreateMode = ({
   minDate,
   maxDate,
@@ -157,21 +166,63 @@ const CreateMode = ({
 
   /** @TODO atom으로 관리해야할까? */
   const isMouseDown = useRef(false);
+  const currentTouchTargetText = useRef<string>();
+  const setCurrentTouchTargetText = (text: string) => {
+    currentTouchTargetText.current = text;
+  };
 
   const handleMouseDown = (date: string) => {
     isMouseDown.current = true;
+    currentTouchTargetText.current = date.split('-')[2];
     const changedCalendar = changedDateColor(calendar, date, 'create');
     setCalendar(changedCalendar);
   };
 
   const handleMouseUp = () => {
     isMouseDown.current = false;
+    currentTouchTargetText.current = undefined;
   };
 
   const handleMouseEnter = (date: string) => {
     if (!isMouseDown.current) return;
     const changedCalendar = changedDateColor(calendar, date, 'create');
     setCalendar(changedCalendar);
+  };
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    calendarTouchMoveDrag({
+      event,
+      isMouseDown: isMouseDown.current,
+      previousTarget: currentTouchTargetText.current ?? '',
+      setCurrentTouchTargetText,
+    });
+  };
+
+  const calendarTouchMoveDrag = ({
+    event,
+    isMouseDown,
+    previousTarget,
+    setCurrentTouchTargetText,
+  }: ICalendarTouchMoveDrag) => {
+    const targetEl = document.elementFromPoint(
+      event.touches[0].clientX,
+      event.touches[0].clientY
+    );
+    const targetElDayText = padStart(targetEl?.textContent ?? '', 2, '0');
+
+    if (
+      targetEl?.className === 'gridItemInner' &&
+      isMouseDown &&
+      targetElDayText !== previousTarget
+    ) {
+      const event = new MouseEvent('mousedown', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+      });
+      targetEl.parentElement?.dispatchEvent(event);
+      setCurrentTouchTargetText(targetElDayText);
+    }
   };
 
   const handleChangeCalendar = (type: 'prev' | 'next') => {
@@ -203,9 +254,9 @@ const CreateMode = ({
   return (
     <Grid
       onMouseUp={handleMouseUp}
-      onTouchEnd={handleMouseUp}
       onMouseLeave={handleMouseUp}
-      onTouchCancel={handleMouseUp}
+      onTouchEnd={handleMouseUp}
+      onTouchMove={handleTouchMove}
     >
       <GridHeader>
         <CalendarHeader
