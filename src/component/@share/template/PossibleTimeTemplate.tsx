@@ -4,6 +4,8 @@ import calendar from '@/assets/images/Calendar.svg';
 import { ButtonLarge } from '@/component/@share';
 import { styled } from 'styled-components';
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { isMouseDownState } from '@/store/atoms/TimeBlock/isMouseDownState';
 
 interface Props {
   buttonClick: () => void;
@@ -11,9 +13,14 @@ interface Props {
 
 export const PossibleTimeTemplate = ({ buttonClick }: Props) => {
   const [isActive, setIsActive] = useState(true);
+  const [isMouseDown, setIsMouseDown] = useRecoilState(isMouseDownState);
+
+  const mouseUp = () => {
+    setIsMouseDown(false);
+  };
 
   return (
-    <TimePageBlock>
+    <TimePageBlock onMouseUp={mouseUp} onTouchEnd={mouseUp}>
       <ContentBlock>
         <TitleBoxBlock>
           <TitleBox content="가용한 시간들을 선택해주세요" step={2} />
