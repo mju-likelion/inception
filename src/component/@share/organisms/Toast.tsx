@@ -6,9 +6,10 @@ import { useSetRecoilState } from 'recoil';
 import { toastState } from '@/store';
 import { theme } from '@/globalStyle';
 import { css } from 'styled-components';
+import { ToastType } from '@/types/Toast';
 
 interface ToastProps {
-  type: 'success' | 'error';
+  type: ToastType;
   message: string;
 }
 
