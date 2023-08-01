@@ -1,15 +1,25 @@
 import { theme } from '@/globalStyle';
 import styled from 'styled-components';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { ToastType } from '@/types/Toast';
 
 interface MailProps {
   email: string;
+  onClick: (copyResult: ToastType) => void;
 }
 
-export const Mail = ({ email }: MailProps) => {
+export const Mail = ({ email, onClick }: MailProps) => {
   return (
     <Container>
       <Body $color="gray2">이메일</Body>
-      <Email>{email}</Email>
+      <CopyToClipboard
+        text={email}
+        onCopy={(text) =>
+          text === email ? onClick('success') : onClick('error')
+        }
+      >
+        <Email>{email}</Email>
+      </CopyToClipboard>
     </Container>
   );
 };
