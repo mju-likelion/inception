@@ -45,6 +45,13 @@ type ChangeDateColor = (
   viewType: ViewType
 ) => CalendarData[];
 
+interface ICalendarTouchMoveDrag {
+  event: React.TouchEvent<HTMLDivElement>;
+  isMouseDown: boolean;
+  previousTarget: string;
+  setCurrentTouchTargetText: (target: string) => void;
+}
+
 export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
   const minimumDate = minDate ?? dateFormatToString(new Date());
   const maximumDate =
@@ -98,6 +105,33 @@ export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
     };
   };
 
+  const calendarTouchMoveDrag = ({
+    event,
+    isMouseDown,
+    previousTarget,
+    setCurrentTouchTargetText,
+  }: ICalendarTouchMoveDrag) => {
+    const targetEl = document.elementFromPoint(
+      event.touches[0].clientX,
+      event.touches[0].clientY
+    );
+    const targetElDayText = padStart(targetEl?.textContent ?? '', 2, '0');
+
+    if (
+      targetEl?.className === 'gridItemInner' &&
+      isMouseDown &&
+      targetElDayText !== previousTarget
+    ) {
+      const event = new MouseEvent('mousedown', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+      });
+      targetEl.parentElement?.dispatchEvent(event);
+      setCurrentTouchTargetText(targetElDayText);
+    }
+  };
+
   switch (viewType) {
     case 'create':
       return (
@@ -106,6 +140,7 @@ export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
           maxDate={splitMaxDate}
           checkLimitDate={checkLimitDate}
           changedDateColor={changedDateColor}
+          calendarTouchMoveDrag={calendarTouchMoveDrag}
         />
       );
     case 'result':
@@ -121,6 +156,7 @@ export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
         <SelectMode
           checkLimitDate={checkLimitDate}
           changedDateColor={changedDateColor}
+          calendarTouchMoveDrag={calendarTouchMoveDrag}
         />
       );
     default:
@@ -136,13 +172,7 @@ interface BaseCalendarModeProps {
 interface CreateModeProps extends BaseCalendarModeProps {
   minDate: string[];
   maxDate: string[];
-}
-
-interface ICalendarTouchMoveDrag {
-  event: React.TouchEvent<HTMLDivElement>;
-  isMouseDown: boolean;
-  previousTarget: string;
-  setCurrentTouchTargetText: (target: string) => void;
+  calendarTouchMoveDrag: any;
 }
 
 const CreateMode = ({
@@ -150,6 +180,7 @@ const CreateMode = ({
   maxDate,
   checkLimitDate,
   changedDateColor,
+  calendarTouchMoveDrag,
 }: CreateModeProps) => {
   /** 현재 날짜 */
   const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
@@ -196,33 +227,6 @@ const CreateMode = ({
       previousTarget: currentTouchTargetText.current ?? '',
       setCurrentTouchTargetText,
     });
-  };
-
-  const calendarTouchMoveDrag = ({
-    event,
-    isMouseDown,
-    previousTarget,
-    setCurrentTouchTargetText,
-  }: ICalendarTouchMoveDrag) => {
-    const targetEl = document.elementFromPoint(
-      event.touches[0].clientX,
-      event.touches[0].clientY
-    );
-    const targetElDayText = padStart(targetEl?.textContent ?? '', 2, '0');
-
-    if (
-      targetEl?.className === 'gridItemInner' &&
-      isMouseDown &&
-      targetElDayText !== previousTarget
-    ) {
-      const event = new MouseEvent('mousedown', {
-        bubbles: true,
-        cancelable: true,
-        view: window,
-      });
-      targetEl.parentElement?.dispatchEvent(event);
-      setCurrentTouchTargetText(targetElDayText);
-    }
   };
 
   const handleChangeCalendar = (type: 'prev' | 'next') => {
@@ -361,8 +365,15 @@ const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
   );
 };
 
-type SelectModeProps = BaseCalendarModeProps;
-const SelectMode = ({ checkLimitDate, changedDateColor }: SelectModeProps) => {
+interface SelectModeProps extends BaseCalendarModeProps {
+  calendarTouchMoveDrag: any;
+}
+
+const SelectMode = ({
+  checkLimitDate,
+  changedDateColor,
+  calendarTouchMoveDrag,
+}: SelectModeProps) => {
   /** @TODO 데이터 패치 로직으로 변경 필요 */
   const { minDate, maxDate } = resolvePromiseResult(promiseResultMockData);
 
@@ -381,21 +392,36 @@ const SelectMode = ({ checkLimitDate, changedDateColor }: SelectModeProps) => {
 
   /** @TODO atom으로 관리해야할까? */
   const isMouseDown = useRef(false);
+  const currentTouchTargetText = useRef<string>();
+  const setCurrentTouchTargetText = (text: string) => {
+    currentTouchTargetText.current = text;
+  };
 
   const handleMouseDown = (date: string) => {
     isMouseDown.current = true;
-    const changedCalendar = changedDateColor(calendar, date, 'select');
+    currentTouchTargetText.current = date.split('-')[2];
+    const changedCalendar = changedDateColor(calendar, date, 'create');
     setCalendar(changedCalendar);
   };
 
   const handleMouseUp = () => {
     isMouseDown.current = false;
+    currentTouchTargetText.current = undefined;
   };
 
   const handleMouseEnter = (date: string) => {
     if (!isMouseDown.current) return;
     const changedCalendar = changedDateColor(calendar, date, 'select');
     setCalendar(changedCalendar);
+  };
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    calendarTouchMoveDrag({
+      event,
+      isMouseDown: isMouseDown.current,
+      previousTarget: currentTouchTargetText.current ?? '',
+      setCurrentTouchTargetText,
+    });
   };
 
   const handleChangeCalendar = (type: 'prev' | 'next') => {
@@ -427,9 +453,9 @@ const SelectMode = ({ checkLimitDate, changedDateColor }: SelectModeProps) => {
   return (
     <Grid
       onMouseUp={handleMouseUp}
-      onTouchEnd={handleMouseUp}
       onMouseLeave={handleMouseUp}
-      onTouchCancel={handleMouseUp}
+      onTouchEnd={handleMouseUp}
+      onTouchMove={handleTouchMove}
     >
       <GridHeader>
         <CalendarHeader
