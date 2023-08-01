@@ -1,4 +1,4 @@
 export const OrganizationInfo = {
-  email: '53791@naver.com',
+  email: 'gatherplz@gmail.com',
   copyRight: '© 2023. Team(TBIN). All rights reserved',
 };
