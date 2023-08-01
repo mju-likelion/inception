@@ -23,7 +23,7 @@ export const PossibleTimeTemplate = ({ buttonClick }: Props) => {
     <TimePageBlock onMouseUp={mouseUp} onTouchEnd={mouseUp}>
       <ContentBlock>
         <TitleBoxBlock>
-          <TitleBox content="가용한 시간들을 선택해주세요" step={2} />
+          <TitleBox content="가능한 시간들을 선택해주세요" step={2} />
         </TitleBoxBlock>
         <TimeBox onSetActiveButton={setIsActive} />
         <InformationBlock>

@@ -22,7 +22,7 @@ export const PossibleDateTemplate = ({ buttonClick }: Props) => {
     <Wrapper>
       <Header>
         <ProgressBar total={3} step={1} />
-        <Body $color="gray1">가용한 날짜들을 선택해주세요.</Body>
+        <Body $color="gray1">가능한 날짜들을 선택해주세요.</Body>
       </Header>
       <Content>
         <Calendar
