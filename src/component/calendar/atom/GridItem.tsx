@@ -1,6 +1,6 @@
 import { theme } from '@/globalStyle';
 import { ActiveStatus, ViewType } from '@/types';
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { css, styled } from 'styled-components';
 
 interface Props {
@@ -11,19 +11,37 @@ interface Props {
     date: string;
     activeStatus: ActiveStatus;
   };
-  handleClickDate?: (date?: string) => void;
+  handleMouseEnter?: () => void;
+  handleMouseDown?: () => void;
 }
 
 export const GridItem = ({
   children,
   disabled,
   dateOptions,
-  handleClickDate,
+  // handleClickDate,
+  handleMouseEnter,
+  handleMouseDown,
 }: PropsWithChildren<Props>) => {
   const [color, setColor] = useState(getGridColor(dateOptions?.activeStatus));
+  const isTouchEvent = useRef(false);
 
-  const onClick = () => {
-    handleClickDate?.(dateOptions?.date);
+  /*
+    모바일에선 touchStart - mouseDown 순서로 이벤트 발생된다.
+    touchStart 발생시 mouseDown 이벤트 호출을 막기 위해 mouseDown, touchStart 함수 분리
+  */
+  const onMouseDown = (e: React.MouseEvent) => {
+    if (isTouchEvent.current) {
+      e.preventDefault();
+      isTouchEvent.current = false;
+      return;
+    }
+    handleMouseDown && handleMouseDown();
+  };
+
+  const onTouchStart = () => {
+    isTouchEvent.current = true;
+    handleMouseDown && handleMouseDown();
   };
 
   const onFocus = () => {
@@ -52,9 +70,11 @@ export const GridItem = ({
       disabled={disabled}
       $isDate={dateOptions?.$isDate}
       color={color}
-      onClick={onClick}
       onFocus={onFocus}
       onBlur={onBlur}
+      onMouseEnter={handleMouseEnter}
+      onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
     >
       {children}
     </Wrapper>

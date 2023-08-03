@@ -32,8 +32,6 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
     nicknameValue.length >= 1 && passwordValue.length >= 1
       ? setButtonInactive(false)
       : setButtonInactive(true);
-
-    console.log(buttonInactive);
   };
 
   const onClick = (tab: string) => {};
