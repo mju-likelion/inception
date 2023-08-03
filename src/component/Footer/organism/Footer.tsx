@@ -1,22 +1,24 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
 import { Mail, Privacy, CopyRight } from '@/component/Footer/atoms';
 import { OrganizationInfo } from '@/component/Footer/data';
 import { Toast } from '@/component/@share';
 import { devices } from '@/globalStyle';
 import { useWindowResize } from '@/hooks';
-import { toastState } from '@/store';
 import { ToastType } from '@/types/Toast';
+import { useRecoilState } from 'recoil';
+import { copyTypes } from '@/store';
 
 export const Footer = () => {
   const windowSize = useWindowResize();
-  const [copyType, setCopyType] = useState<ToastType>('error');
-  const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
+  const [toastType, setToastType] = useState<ToastType>('error');
+  const [isToastOpened, setIsToastOpened] = useState(false);
+  const [copyType, setCopyType] = useRecoilState(copyTypes);
 
   const copyEmail = (copyResult: ToastType) => {
     setIsToastOpened(true);
-    setCopyType(copyResult);
+    setToastType(copyResult);
+    setCopyType('email');
   };
 
   return (
@@ -42,11 +44,11 @@ export const Footer = () => {
           />
         </WebContainer>
       )}
-      {isToastOpened && (
+      {isToastOpened && copyType === 'email' && (
         <Toast
-          type={copyType}
+          type={toastType}
           message={
-            copyType === 'success'
+            toastType === 'success'
               ? '메일 주소가 복사되었습니다'
               : '메일 주소 복사에 실패하였습니다'
           }
