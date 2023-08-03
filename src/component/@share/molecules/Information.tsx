@@ -1,6 +1,7 @@
 import { css, styled } from 'styled-components';
 import { ButtonSmall } from '@/component/@share/atom/ButtonSmall';
 import { theme } from '@/globalStyle';
+import { ToastType } from '@/types/Toast';
 
 interface Props {
   icon?: string;
@@ -8,6 +9,7 @@ interface Props {
   content?: string;
   isNull?: boolean;
   isEnabled?: boolean;
+  clickButton?: (type: ToastType) => void;
 }
 
 export const Information = ({
@@ -16,6 +18,7 @@ export const Information = ({
   content,
   isNull = false,
   isEnabled = false,
+  clickButton,
 }: Props) => {
   return (
     <InformationBlock $isEnabled={isEnabled} $isNull={isNull}>
@@ -42,7 +45,11 @@ export const Information = ({
               </Body>
             ))}
         </TextBlock>
-        {isEnabled && <ButtonSmall>복사하기</ButtonSmall>}
+        {isEnabled && (
+          <ButtonSmall copyContent={content} onCopy={clickButton}>
+            복사하기
+          </ButtonSmall>
+        )}
       </ContentBlock>
     </InformationBlock>
   );
