@@ -1,17 +1,37 @@
 import styled from 'styled-components';
 import { Information, TitleBox } from '@/component/@share/molecules';
 import { Calendar } from '@/component';
-import { TabBar } from '@/component/@share';
+import { TabBar, Toast } from '@/component/@share';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { ToastType } from '@/types/Toast';
+import { toastState, copyTypes } from '@/store';
+import { useRecoilState } from 'recoil';
 
 export const ResultPage = () => {
   const navigate = useNavigate();
+  const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
+  const [urlToastType, setUrlToastType] = useState<ToastType>('error');
+  const [codeToastType, setCodeToastType] = useState<ToastType>('error');
+  const [copyType, setCopyType] = useRecoilState(copyTypes);
 
   const onClick = (tab: string) => {
     tab === TAB_ITEMS[0].id && navigate('/');
+  };
+
+  const copyUrl = (type: ToastType) => {
+    setIsToastOpened(true);
+    setUrlToastType(type);
+    setCopyType('url');
+  };
+
+  const copyCode = (type: ToastType) => {
+    setIsToastOpened(true);
+    setCodeToastType(type);
+    setCopyType('code');
   };
 
   return (
@@ -44,15 +64,37 @@ export const ResultPage = () => {
               title="약속방 링크"
               content="https://www.google.co.kr/afadsfadsfadsfadsf"
               isEnabled={true}
+              clickButton={copyUrl}
             />
             <Information
               title="약속방 입장 코드"
               content="A1B1C1"
               isEnabled={true}
+              clickButton={copyCode}
             />
           </InformationBlock>
         </ContentBlock>
       </ResultPageBlock>
+      {isToastOpened && copyType === 'url' && (
+        <Toast
+          type={urlToastType}
+          message={
+            urlToastType === 'success'
+              ? '약속방 링크가 복사되었습니다'
+              : '약속방 링크 복사에 실패하였습니다'
+          }
+        />
+      )}
+      {isToastOpened && copyType === 'code' && (
+        <Toast
+          type={codeToastType}
+          message={
+            codeToastType === 'success'
+              ? '입장 코드가 복사되었습니다'
+              : '입장 코드 복사에 실패하였습니다'
+          }
+        />
+      )}
     </>
   );
 };
