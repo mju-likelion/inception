@@ -8,11 +8,9 @@ interface Props {
 
 export const LoadingIcon = ({ type }: Props) => {
   return (
-    <>
-      <Loading>
-        {type === 'LargeButton' ? <LoadingLargeButton /> : <LoadingPage />}
-      </Loading>
-    </>
+    <Loading>
+      {type === 'LargeButton' ? <LoadingLargeButton /> : <LoadingPage />}
+    </Loading>
   );
 };
 
