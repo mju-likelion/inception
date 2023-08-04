@@ -27,8 +27,6 @@ export const LoginMasterTemlplate = () => {
     isNicknameValue.length >= 1 && isPasswordValue.length >= 1
       ? setIsButtonInactive(false)
       : setIsButtonInactive(true);
-
-    console.log(isButtonInactive);
   };
 
   const tabItems: TabItem[] = [
