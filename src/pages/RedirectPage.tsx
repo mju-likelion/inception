@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ErrorAlert } from '../data/ErrorAlertText';
+import { ErrorAlert } from '@/pages/data';
 import { ReactComponent as DoorSvgForTablet } from '@/assets/images/RedirectDoorInTablet.svg';
 import { ReactComponent as DoorSvgForDesktop } from '@/assets/images/RedirectDoorInDesktop.svg';
 import { ReactComponent as NotFound } from '@/assets/images/ErrorState404.svg';
@@ -8,6 +8,7 @@ import { ReactComponent as InternalServerError } from '@/assets/images/ErrorStat
 import { ButtonLarge } from '@/component/@share';
 import { devices } from '@/globalStyle';
 import { useWindowResize } from '@/hooks';
+import { useNavigate } from 'react-router-dom';
 
 interface RedirectPageProps {
   errorState?: 500;
@@ -15,6 +16,7 @@ interface RedirectPageProps {
 
 export const RedirectPage = ({ errorState }: RedirectPageProps) => {
   const windowSize = useWindowResize();
+  const navigate = useNavigate();
 
   return (
     <Container>
@@ -29,7 +31,9 @@ export const RedirectPage = ({ errorState }: RedirectPageProps) => {
         <DoorSvgForTablet />
       )}
 
-      <ButtonLarge isDisabled={false}>메인으로</ButtonLarge>
+      <ButtonLarge isDisabled={false} click={() => navigate('/')}>
+        메인으로
+      </ButtonLarge>
     </Container>
   );
 };

@@ -1,6 +1,6 @@
 import { Dates } from '@/component/timeBlock/atoms';
 import { useRecoilValue } from 'recoil';
-import { DateListAtom } from '@/store/atoms';
+import { dateListState } from '@/store/atoms';
 import { styled } from 'styled-components';
 import {
   getPaginationDate,
@@ -14,7 +14,7 @@ interface DateListProps {
 }
 
 export const DateList = ({ page, activeDate }: DateListProps) => {
-  const dateList = useRecoilValue(DateListAtom);
+  const dateList = useRecoilValue(dateListState);
   const newDateList = getPaginationDate({ page, dateList });
   const newActiveDateList = getPaginationActiveDate({
     page,

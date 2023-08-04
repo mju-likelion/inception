@@ -1,29 +1,24 @@
 import { styled } from 'styled-components';
-import { useSetRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import { TabBar, TitleBox, ButtonLarge } from '@/component/@share';
 import { Calendar, TimePicker } from '@/component';
-import { tabState } from '@/store';
-import { TabItem } from '@/types';
+import { TAB_ITEMS } from '@/pages/data';
 import { theme } from '@/globalStyle';
 
 export const Home = () => {
-  const setSelectedTab = useSetRecoilState(tabState);
-  const onClick = (tab: string) => {};
+  const navigate = useNavigate();
 
-  const tabItems: TabItem[] = [
-    {
-      id: 'default',
-      title: '약속 잡기',
-    },
-    {
-      id: 'result',
-      title: '결과 보기',
-    },
-  ];
+  const handleTabBarClick = (tab: string) => {
+    tab === TAB_ITEMS[1].id && navigate('/submit-code');
+  };
+
+  const handleButtonClick = () => {
+    navigate(`/appointment?step=1`);
+  };
 
   return (
     <>
-      <TabBar onClick={setSelectedTab} tabItems={tabItems} />
+      <TabBar tabItems={TAB_ITEMS} onClick={handleTabBarClick} />
       <Container>
         <TitleBoxContainer>
           <TitleBox
@@ -46,7 +41,7 @@ export const Home = () => {
           <TimePicker />
         </TimePickerBox>
         <ButtonBox>
-          <ButtonLarge isDisabled>약속방 생성</ButtonLarge>
+          <ButtonLarge click={handleButtonClick}>약속방 생성</ButtonLarge>
         </ButtonBox>
       </Container>
     </>

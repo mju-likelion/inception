@@ -28,8 +28,11 @@ const Wrapper = styled.div`
 
 const Body = styled.p<{ $color: keyof typeof theme.colors }>`
   color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
-  ${({ theme }) => theme.typographies.body4};
   letter-spacing: 0;
   text-align: center;
   word-break: keep-all;
+  ${({ theme }) => theme.typographies.body4};
+  @media ${({ theme }) => theme.size.web} {
+    ${({ theme }) => theme.typographies.body2.semiBold};
+  }
 `;

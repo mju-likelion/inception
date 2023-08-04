@@ -58,27 +58,6 @@ const TimeBoxBlock = styled.div`
   border-top: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  /* 스크롤바 막대 설정*/
-  &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.white};
-    max-height: 12px;
-  }
-
-  /* 스크롤바 뒷 배경 설정*/
-  &::-webkit-scrollbar-track {
-    background-color: ${({ theme }) => theme.colors.gray4};
-    border-radius: 16px;
-  }
-
-  @media ${({ theme }) => theme.size.web} {
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
 `;
 
 const TimeBoxContent = styled.div`

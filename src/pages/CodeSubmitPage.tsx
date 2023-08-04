@@ -4,23 +4,15 @@ import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useEffect, useState } from 'react';
-import { TabItem } from '@/types';
+import { TAB_ITEMS } from '@/pages/data';
+import { useNavigate } from 'react-router-dom';
 
-export const CodeSubmitTemlplate = () => {
+export const CodeSubmitPage = () => {
   const [value, setValue] = useState('');
 
   const [buttonInactive, setButtonInactive] = useState(true);
 
-  const tabItems: TabItem[] = [
-    {
-      id: 'default',
-      title: '약속 잡기',
-    },
-    {
-      id: 'result',
-      title: '결과 보기',
-    },
-  ];
+  const navigate = useNavigate();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -32,7 +24,13 @@ export const CodeSubmitTemlplate = () => {
     index > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
   };
 
-  const onClick = () => {};
+  const onClick = (tab: string) => {
+    tab === TAB_ITEMS[0].id && navigate('/');
+  };
+
+  const handleButtonClick = () => {
+    navigate('/result');
+  };
 
   useEffect(() => {
     onKeyUp;
@@ -41,13 +39,13 @@ export const CodeSubmitTemlplate = () => {
 
   return (
     <>
-      <TabBar onClick={onClick} tabItems={tabItems} />
+      <TabBar onClick={onClick} tabItems={TAB_ITEMS} />
       <WrapperContents>
         <WrapTitleBoxInput>
           <TitleBox
             title={'약속방 들어가기'}
             content={
-              '입장코드를 입력해서 가용 날짜를 선택하거나 다른 사람들이 모일 수 있는 시간을 확인해보세요'
+              '입장코드를 입력해서 가능 날짜를 선택하거나 다른 사람들이 모일 수 있는 시간을 확인해보세요'
             }
           />
 
@@ -62,7 +60,9 @@ export const CodeSubmitTemlplate = () => {
           </WrapInput>
         </WrapTitleBoxInput>
         <WrapButton>
-          <ButtonLarge isDisabled={buttonInactive}>입력 완료</ButtonLarge>
+          <ButtonLarge isDisabled={buttonInactive} click={handleButtonClick}>
+            입력 완료
+          </ButtonLarge>
         </WrapButton>
       </WrapperContents>
     </>
@@ -101,12 +101,16 @@ const WrapButton = styled.div`
   display: flex;
   justify-content: center;
   margin: 200px 0px 100px 0px;
+  //푸터고정 = calc (뷰크기(vh) - (헤더를 제외한 내부콘텐츠 및 마진 + 푸터))
+  min-height: calc(100vh - 744px);
 
   @media ${({ theme }) => theme.size.tablet} {
-    margin: 100px 0px 100px 0px;
+    margin: 100px 0px;
+    min-height: calc(100vh - 691px);
   }
 
   @media ${({ theme }) => theme.size.web} {
     margin-top: 220px;
+    min-height: calc(100vh - 847px);
   }
 `;
