@@ -26,3 +26,6 @@ yarn-error.log*
 # IDEs and editors
 /.idea
 /.vscode
+
+# https cert files
+/cert
