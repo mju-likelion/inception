@@ -1,16 +1,6 @@
 import { PromiseResultData } from '@/types';
 
 export const promiseResultMockData: PromiseResultData[] = [
-  { date: '2023-07-01', status: 'disabled' },
-  { date: '2023-07-02', status: 'disabled' },
-  { date: '2023-07-03', status: 'disabled' },
-  { date: '2023-07-04', status: 'disabled' },
-  { date: '2023-07-05', status: 'disabled' },
-  { date: '2023-07-06', status: 'disabled' },
-  { date: '2023-07-07', status: 'disabled' },
-  { date: '2023-07-08', status: 'disabled' },
-  { date: '2023-07-09', status: 'disabled' },
-  { date: '2023-07-10', status: 'disabled' },
   {
     date: '2023-07-11',
     status: 'default',
@@ -31,7 +21,7 @@ export const promiseResultMockData: PromiseResultData[] = [
   },
   {
     date: '2023-07-14',
-    status: 'active',
+    status: 'default',
     count: 10,
     users: [
       '유저1',
@@ -46,4 +36,55 @@ export const promiseResultMockData: PromiseResultData[] = [
       '유저10',
     ],
   },
+  {
+    date: '2023-07-22',
+    status: 'default',
+    count: 12,
+    users: [
+      '유저1',
+      '유저2',
+      '유저3',
+      '유저4',
+      '유저5',
+      '유저6',
+      '유저7',
+      '유저8',
+      '유저9',
+      '유저10',
+      '유저11',
+      '유저12',
+    ],
+  },
+  {
+    date: '2023-07-30',
+    status: 'default',
+    count: 10,
+    users: [
+      '유저1',
+      '유저2',
+      '유저3',
+      '유저4',
+      '유저5',
+      '유저6',
+      '유저7',
+      '유저8',
+      '유저9',
+      '유저10',
+    ],
+  },
+  {
+    date: '2023-11-09',
+    status: 'default',
+    count: 1,
+    users: ['유저1'],
+  },
+];
+
+export const timeOfSelectedDateMockData: string[] = [
+  '15:00',
+  '12:00',
+  '11:00',
+  '09:00',
+  '15:00',
+  '22:00',
 ];

@@ -12,6 +12,7 @@
 /build
 
 # misc
+.env
 .DS_Store
 .env.local
 .env.development.local
@@ -25,3 +26,6 @@ yarn-error.log*
 # IDEs and editors
 /.idea
 /.vscode
+
+# https cert files
+/cert

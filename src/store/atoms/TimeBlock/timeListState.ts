@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export const TimeListAtom = atom({
+export const timeListState = atom({
   key: 'timeState',
   default: [
     '8:00',

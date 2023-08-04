@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import { PropsWithChildren } from 'react';
 import { CheckBox } from '@/component/@share';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { TimeTableListAtom, DateListAtom, TimeListAtom } from '@/store';
+import { timeTableState, dateListState, timeListState } from '@/store';
 import { useState } from 'react';
 import range from 'lodash/range';
 import { theme } from '@/globalStyle';
 
 export const SelectAllButton = ({ children }: PropsWithChildren) => {
-  const [timeTable, setTimeTable] = useRecoilState(TimeTableListAtom);
-  const dateList = useRecoilValue(DateListAtom);
-  const timeList = useRecoilValue(TimeListAtom);
+  const [timeTable, setTimeTable] = useRecoilState(timeTableState);
+  const dateList = useRecoilValue(dateListState);
+  const timeList = useRecoilValue(timeListState);
   const [checkAllDate, setCheckAllDate] = useState(false);
 
   const onClickAllDate = () => {

@@ -1,16 +1,16 @@
 import styled from 'styled-components';
-import { TabBar } from '@/component/@share/organisms';
 import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
-import { TabItem } from '@/types';
+import { useNavigate } from 'react-router-dom';
 
 export const LoginMasterTemlplate = () => {
   const [isNicknameValue, setIsNicknameValue] = useState('');
   const [isPasswordValue, setIsPasswordValue] = useState('');
-
   const [isButtonInactive, setIsButtonInactive] = useState(true);
+
+  const navigate = useNavigate();
 
   const onChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsNicknameValue(event.target.value);
@@ -29,29 +29,31 @@ export const LoginMasterTemlplate = () => {
       : setIsButtonInactive(true);
   };
 
-  const tabItems: TabItem[] = [
-    {
-      id: 'default',
-      title: '약속 잡기',
-    },
-    {
-      id: 'result',
-      title: '결과 보기',
-    },
-  ];
-
   const onClick = (tab: string) => {};
 
   return (
-    <>
-      <TabBar onClick={onClick} tabItems={tabItems} />
-      <WrapContents>
-        <WrapUpperContents>
-          <TitleBox
-            total={3}
-            step={3}
-            title=""
-            content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
+    <WrapContents>
+      <WrapUpperContents>
+        <TitleBox
+          total={3}
+          step={3}
+          title=""
+          content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
+        />
+        <WrapInput>
+          <Input
+            type={'text'}
+            placeholder={'닉네임'}
+            onKeyUp={activeEvent}
+            onChange={onChangeNickname}
+            value={nicknameValue}
+          />
+          <Input
+            type={'password'}
+            placeholder={'비밀번호'}
+            onKeyUp={activeEvent}
+            onChange={onChangePassword}
+            value={passwordValue}
           />
           <WrapInput>
             <Input
@@ -82,7 +84,6 @@ const WrapContents = styled.div`
   flex-direction: column;
   justify-content: center;
   margin-top: 30px;
-
   @media ${({ theme }) => theme.size.tablet} {
     align-items: center;
     margin-top: 60px;
@@ -118,11 +119,15 @@ const WrapButton = styled.div`
   display: flex;
   justify-content: center;
   margin: 200px 0px 100px 0px;
+  //푸터고정 = calc (뷰크기(vh) - (헤더를 제외한 내부콘텐츠 및 마진 + 푸터))
+  min-height: calc(100vh - 744px);
 
   @media ${({ theme }) => theme.size.tablet} {
     margin: 158px 0px 100px 0px;
+    min-height: calc(100vh - 710px);
   }
   @media ${({ theme }) => theme.size.web} {
     margin: 220px 0px 100px 0px;
+    min-height: calc(100vh - 808px);
   }
 `;

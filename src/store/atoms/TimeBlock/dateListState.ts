@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export const DateListAtom = atom({
+export const dateListState = atom({
   key: 'dateState',
   default: [
     '2023-06-29',

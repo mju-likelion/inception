@@ -26,6 +26,7 @@ const Container = styled.button`
   flex-direction: column;
   gap: 15px;
   height: 41px;
+  cursor: pointer;
 `;
 
 const Title = styled.h1<{ $color: keyof typeof theme.colors }>`

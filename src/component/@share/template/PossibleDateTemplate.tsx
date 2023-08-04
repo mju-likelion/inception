@@ -1,25 +1,17 @@
 import { Calendar } from '@/component';
-import { ButtonLarge, TabBar } from '@/component/@share';
+import { ButtonLarge } from '@/component/@share';
 import { Information, ProgressBar } from '@/component/@share/molecules';
 import { styled } from 'styled-components';
 import CalendarIcon from '@/assets/images/Calendar.svg';
 import { getMaxDate, getMinDate } from '@/util';
-import { TabItem } from '@/types';
 import { theme } from '@/globalStyle';
 
-export const PossibleDatePage = () => {
-  const selectableDates = ['2023-06', '2023-07', '2023-08']; // @TODO 더미데이터. 서버에서 선택 가능한 시간들 가져와 보여주기
+interface Props {
+  buttonClick: () => void;
+}
 
-  const tabItems: TabItem[] = [
-    {
-      id: 'default',
-      title: '약속 잡기',
-    },
-    {
-      id: 'result',
-      title: '결과 보기',
-    },
-  ];
+export const PossibleDateTemplate = ({ buttonClick }: Props) => {
+  const selectableDates = ['2023-06', '2023-07', '2023-08']; // @TODO 더미데이터. 서버에서 선택 가능한 시간들 가져와 보여주기
 
   const onClick = (tab: string) => {
     // @TODO tab에 따라 라우팅하기
@@ -27,33 +19,30 @@ export const PossibleDatePage = () => {
   };
 
   return (
-    <>
-      <TabBar onClick={onClick} tabItems={tabItems} />
-      <Wrapper>
-        <Header>
-          <ProgressBar total={3} step={1} />
-          <Body $color="gray1">가용한 날짜들을 선택해주세요.</Body>
-        </Header>
-        <Content>
-          <Calendar
-            viewType="select"
-            // @TODO 선택 가능 기간이 어떻게 들어오는지 판단 필요
-            minDate={getMinDate(selectableDates)}
-            maxDate={getMaxDate(selectableDates)}
-          />
-          <Information
-            icon={CalendarIcon}
-            title="선택 가능 기간"
-            content={selectableDates
-              .map((date) => `${+date.split('-')[1]}월`)
-              .join(', ')}
-          />
-        </Content>
-        <Bottom>
-          <ButtonLarge>다음으로</ButtonLarge>
-        </Bottom>
-      </Wrapper>
-    </>
+    <Wrapper>
+      <Header>
+        <ProgressBar total={3} step={1} />
+        <Body $color="gray1">가능한 날짜들을 선택해주세요.</Body>
+      </Header>
+      <Content>
+        <Calendar
+          viewType="select"
+          // @TODO 선택 가능 기간이 어떻게 들어오는지 판단 필요
+          minDate={getMinDate(selectableDates)}
+          maxDate={getMaxDate(selectableDates)}
+        />
+        <Information
+          icon={CalendarIcon}
+          title="선택 가능 기간"
+          content={selectableDates
+            .map((date) => `${+date.split('-')[1]}월`)
+            .join(', ')}
+        />
+      </Content>
+      <Bottom>
+        <ButtonLarge click={buttonClick}>다음으로</ButtonLarge>
+      </Bottom>
+    </Wrapper>
   );
 };
 
