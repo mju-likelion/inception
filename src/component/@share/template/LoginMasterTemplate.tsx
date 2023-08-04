@@ -5,7 +5,7 @@ import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const LoginMasterTemlplate = () => {
+export const LoginMasterTemplate = () => {
   const [isNicknameValue, setIsNicknameValue] = useState('');
   const [isPasswordValue, setIsPasswordValue] = useState('');
   const [isButtonInactive, setIsButtonInactive] = useState(true);
@@ -42,43 +42,28 @@ export const LoginMasterTemlplate = () => {
         />
         <WrapInput>
           <Input
-            type={'text'}
-            placeholder={'닉네임'}
+            type="text"
+            placeholder="닉네임"
             onKeyUp={activeEvent}
             onChange={onChangeNickname}
-            value={nicknameValue}
+            value={isNicknameValue}
           />
           <Input
-            type={'password'}
-            placeholder={'비밀번호'}
+            type="password"
+            placeholder="비밀번호"
             onKeyUp={activeEvent}
             onChange={onChangePassword}
-            value={passwordValue}
+            value={isPasswordValue}
           />
-          <WrapInput>
-            <Input
-              type="text"
-              placeholder="닉네임"
-              onKeyUp={activeEvent}
-              onChange={onChangeNickname}
-              value={isNicknameValue}
-            />
-            <Input
-              type="password"
-              placeholder="비밀번호"
-              onKeyUp={activeEvent}
-              onChange={onChangePassword}
-              value={isPasswordValue}
-            />
-          </WrapInput>
-        </WrapUpperContents>
-        <WrapButton>
-          <ButtonLarge isDisabled={isButtonInactive}>입력 완료</ButtonLarge>
-        </WrapButton>
-      </WrapContents>
-    </>
+        </WrapInput>
+      </WrapUpperContents>
+      <WrapButton>
+        <ButtonLarge isDisabled={isButtonInactive}>입력 완료</ButtonLarge>
+      </WrapButton>
+    </WrapContents>
   );
 };
+
 const WrapContents = styled.div`
   display: flex;
   flex-direction: column;
