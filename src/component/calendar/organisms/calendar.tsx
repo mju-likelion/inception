@@ -1,4 +1,3 @@
-import { ButtonSmall } from '@/component/@share';
 import {
   CalendarHeader,
   Date as DateComponent,
@@ -194,7 +193,6 @@ const CreateMode = ({
     checkLimitDate(currentDate, minDate, maxDate)
   );
 
-  /** @TODO atom으로 관리해야할까? */
   const isMouseDown = useRef(false);
   const currentTouchTargetText = useRef<string>();
   const setCurrentTouchTargetText = (text: string) => {
@@ -354,12 +352,6 @@ const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
           viewType="result"
         />
       </>
-
-      <GridFooter>
-        <FooterRightWrapper>
-          <ButtonSmall>일정 수정</ButtonSmall>
-        </FooterRightWrapper>
-      </GridFooter>
     </Grid>
   );
 };
@@ -495,17 +487,4 @@ const GridHeader = styled.div`
   height: 54px;
   display: flex;
   align-items: center;
-`;
-
-const GridFooter = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: end;
-  height: 71px;
-  align-items: center;
-`;
-
-const FooterRightWrapper = styled.div`
-  margin-top: 15px;
-  margin-bottom: 16px;
 `;

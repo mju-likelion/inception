@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Information, TitleBox } from '@/component/@share/molecules';
 import { Calendar } from '@/component';
-import { TabBar } from '@/component/@share';
+import { ButtonSmall, TabBar } from '@/component/@share';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
@@ -25,9 +25,10 @@ export const ResultPage = () => {
               content="링크를 공유한 사람들과 겹치는 가능 날짜에 인원수와 함께 표시됩니다"
             />
           </TitleBoxBlock>
-          <CalendarBlock>
-            <Calendar viewType="result" />
-          </CalendarBlock>
+          <Calendar viewType="result" />
+          <GridFooter>
+            <ButtonSmall>일정 수정</ButtonSmall>
+          </GridFooter>
           <InformationBlock>
             <Information
               icon={Time}
@@ -78,10 +79,14 @@ const TitleBoxBlock = styled.div`
   }
 `;
 
-const CalendarBlock = styled.div`
-  margin-bottom: 12px;
+const GridFooter = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-bottom: 28px;
   @media ${({ theme }) => theme.size.tablet} {
-    margin-bottom: 30px;
+    margin-bottom: 42px;
   }
 `;
 
