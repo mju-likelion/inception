@@ -49,23 +49,19 @@ export const LoginCodeTemplate = () => {
       <TabBar onClick={onClick} tabItems={tabItems} />
       <WrapContents>
         <WrapUpperContents>
-          <TitleBox
-            content={
-              '생성한 약속방에서 입력한 닉네임과 비밀번호를 입력해주세요'
-            }
-          />
+          <TitleBox content="생성한 약속방에서 입력한 닉네임과 비밀번호를 입력해주세요" />
 
           <WrapInput>
             <Input
-              type={'text'}
-              placeholder={'닉네임'}
+              type="text"
+              placeholder="닉네임"
               onKeyUp={activeEvent}
               onChange={onChangeNickname}
               value={isNicknameValue}
             />
             <Input
-              type={'password'}
-              placeholder={'비밀번호'}
+              type="password"
+              placeholder="비밀번호"
               onKeyUp={activeEvent}
               onChange={onChangePassword}
               value={isPasswordValue}

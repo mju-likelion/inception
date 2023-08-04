@@ -7,28 +7,28 @@ import { useState, useEffect } from 'react';
 import { TabItem } from '@/types';
 
 export const LoginMasterTemlplate = () => {
-  const [nicknameValue, setNicknameValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
+  const [isNicknameValue, setIsNicknameValue] = useState('');
+  const [isPasswordValue, setIsPasswordValue] = useState('');
 
-  const [buttonInactive, setButtonInactive] = useState(true);
+  const [isButtonInactive, setIsButtonInactive] = useState(true);
 
   const onChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNicknameValue(event.target.value);
+    setIsNicknameValue(event.target.value);
   };
   const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(event.target.value);
+    setIsPasswordValue(event.target.value);
   };
 
   useEffect(() => {
     activeEvent;
-  }, [buttonInactive]);
+  }, [isButtonInactive]);
 
   const activeEvent = () => {
-    nicknameValue.length >= 1 && passwordValue.length >= 1
-      ? setButtonInactive(false)
-      : setButtonInactive(true);
+    isNicknameValue.length >= 1 && isPasswordValue.length >= 1
+      ? setIsButtonInactive(false)
+      : setIsButtonInactive(true);
 
-    console.log(buttonInactive);
+    console.log(isButtonInactive);
   };
 
   const tabItems: TabItem[] = [
@@ -61,19 +61,19 @@ export const LoginMasterTemlplate = () => {
               placeholder={'닉네임'}
               onKeyUp={activeEvent}
               onChange={onChangeNickname}
-              value={nicknameValue}
+              value={isNicknameValue}
             />
             <Input
               type={'password'}
               placeholder={'비밀번호'}
               onKeyUp={activeEvent}
               onChange={onChangePassword}
-              value={passwordValue}
+              value={isPasswordValue}
             />
           </WrapInput>
         </WrapUpperContents>
         <WrapButton>
-          <ButtonLarge isDisabled={buttonInactive}>입력 완료</ButtonLarge>
+          <ButtonLarge isDisabled={isButtonInactive}>입력 완료</ButtonLarge>
         </WrapButton>
       </WrapContents>
     </>
