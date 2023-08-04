@@ -57,15 +57,15 @@ export const LoginMasterTemlplate = () => {
           />
           <WrapInput>
             <Input
-              type={'text'}
-              placeholder={'닉네임'}
+              type="text"
+              placeholder="닉네임"
               onKeyUp={activeEvent}
               onChange={onChangeNickname}
               value={isNicknameValue}
             />
             <Input
-              type={'password'}
-              placeholder={'비밀번호'}
+              type="password"
+              placeholder="비밀번호"
               onKeyUp={activeEvent}
               onChange={onChangePassword}
               value={isPasswordValue}
