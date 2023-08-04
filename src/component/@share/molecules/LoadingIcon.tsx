@@ -1,28 +1,45 @@
+import { ReactComponent as LoadingBgMintSVG } from '@/assets/images/LoadingBgMint.svg';
+import { ReactComponent as LoadingBgWhiteSVG } from '@/assets/images/LoadingBgWhite.svg';
+import { ReactComponent as SpinerWhiteSVG } from '@/assets/images/SpinerWhite.svg';
+import { ReactComponent as SpinerMintSVG } from '@/assets/images/SpinerMint.svg';
 import styled from 'styled-components';
 
 export const LoadingIcon = () => {
   return (
     <>
-      <Spin />
+      <WrapBg>
+        <LoadingBgMint />
+      </WrapBg>
+      <WrapSpiner>
+        <SpinerMint />
+      </WrapSpiner>
     </>
   );
 };
 
-const Spin = styled.div`
-  width: 40px;
-  height: 40px;
-  border: 6px solid #e5e5ea;
-  border-bottom-color: #50e3c0;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
+const WrapBg = styled.div`
+  position: absolute;
+`;
 
-  @keyframes rotation {
-    0% {
+const WrapSpiner = styled.div`
+  position: relative;
+`;
+
+const LoadingBgMint = styled(LoadingBgMintSVG)`
+  width: 500px;
+  height: 500px;
+`;
+
+const SpinerMint = styled(SpinerMintSVG)`
+  width: 500px;
+  height: 500px;
+
+  animation: rotate 3s infinite;
+  @keyframes rotate {
+    from {
       transform: rotate(0deg);
     }
-    100% {
+    to {
       transform: rotate(360deg);
     }
   }
