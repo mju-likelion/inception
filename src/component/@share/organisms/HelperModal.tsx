@@ -77,6 +77,7 @@ const ModalBackdrop = styled.div`
   right: 0;
   bottom: 0;
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 `;
 
 const ModalBlock = styled.div`
