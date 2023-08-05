@@ -11,3 +11,4 @@ export * from './Check';
 export * from './Input';
 export * from './NextButton';
 export * from './BackButton';
+export * from './LoadingIcon';
