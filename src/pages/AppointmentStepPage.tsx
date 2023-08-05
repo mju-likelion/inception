@@ -50,7 +50,7 @@ export const AppointmentStepPage = () => {
       case '2':
         return <PossibleTimeTemplate buttonClick={handleButtonClick} />;
       case '3':
-        return <LoginMasterTemplate />;
+        return <LoginMasterTemplate buttonClick={handleButtonClick} />;
       default:
         return <RedirectPage />;
     }
