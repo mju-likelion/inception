@@ -4,19 +4,22 @@ import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+interface Props {
+  buttonClick: () => void;
+}
 
-export const LoginMasterTemplate = () => {
-  const [isNicknameValue, setIsNicknameValue] = useState('');
-  const [isPasswordValue, setIsPasswordValue] = useState('');
+export const LoginMasterTemplate = ({ buttonClick }: Props) => {
+  const [nicknameValue, setNicknameValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
   const [isButtonInactive, setIsButtonInactive] = useState(true);
 
   const navigate = useNavigate();
 
   const onChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsNicknameValue(event.target.value);
+    setNicknameValue(event.target.value);
   };
   const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPasswordValue(event.target.value);
+    setPasswordValue(event.target.value);
   };
 
   useEffect(() => {
@@ -24,7 +27,7 @@ export const LoginMasterTemplate = () => {
   }, [isButtonInactive]);
 
   const activeEvent = () => {
-    isNicknameValue.length >= 1 && isPasswordValue.length >= 1
+    nicknameValue.length >= 1 && passwordValue.length >= 1
       ? setIsButtonInactive(false)
       : setIsButtonInactive(true);
   };
@@ -46,19 +49,21 @@ export const LoginMasterTemplate = () => {
             placeholder="닉네임"
             onKeyUp={activeEvent}
             onChange={onChangeNickname}
-            value={isNicknameValue}
+            value={nicknameValue}
           />
           <Input
             type="password"
             placeholder="비밀번호"
             onKeyUp={activeEvent}
             onChange={onChangePassword}
-            value={isPasswordValue}
+            value={passwordValue}
           />
         </WrapInput>
       </WrapUpperContents>
       <WrapButton>
-        <ButtonLarge isDisabled={isButtonInactive}>입력 완료</ButtonLarge>
+        <ButtonLarge isDisabled={isButtonInactive} click={buttonClick}>
+          입력 완료
+        </ButtonLarge>
       </WrapButton>
     </WrapContents>
   );

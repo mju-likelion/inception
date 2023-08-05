@@ -5,18 +5,21 @@ import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
 import { TabItem } from '@/types';
+interface Props {
+  buttonClick: () => void;
+}
 
-export const LoginCodeTemplate = () => {
-  const [isNicknameValue, setIsNicknameValue] = useState('');
-  const [isPasswordValue, setIsPasswordValue] = useState('');
+export const LoginCodeTemplate = ({ buttonClick }: Props) => {
+  const [nicknameValue, setNicknameValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
 
   const [isButtonInactive, setIsButtonInactive] = useState(true);
 
   const onChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsNicknameValue(event.target.value);
+    setNicknameValue(event.target.value);
   };
   const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPasswordValue(event.target.value);
+    setPasswordValue(event.target.value);
   };
 
   useEffect(() => {
@@ -24,11 +27,9 @@ export const LoginCodeTemplate = () => {
   }, [isButtonInactive]);
 
   const activeEvent = () => {
-    isNicknameValue.length >= 1 && isPasswordValue.length >= 1
+    nicknameValue.length >= 1 && passwordValue.length >= 1
       ? setIsButtonInactive(false)
       : setIsButtonInactive(true);
-
-    console.log(isButtonInactive);
   };
 
   const tabItems: TabItem[] = [
@@ -57,19 +58,21 @@ export const LoginCodeTemplate = () => {
               placeholder="닉네임"
               onKeyUp={activeEvent}
               onChange={onChangeNickname}
-              value={isNicknameValue}
+              value={nicknameValue}
             />
             <Input
               type="password"
               placeholder="비밀번호"
               onKeyUp={activeEvent}
               onChange={onChangePassword}
-              value={isPasswordValue}
+              value={passwordValue}
             />
           </WrapInput>
         </WrapUpperContents>
         <WrapButton>
-          <ButtonLarge isDisabled={isButtonInactive}>완료</ButtonLarge>
+          <ButtonLarge isDisabled={isButtonInactive} click={buttonClick}>
+            완료
+          </ButtonLarge>
         </WrapButton>
       </WrapContents>
     </>
