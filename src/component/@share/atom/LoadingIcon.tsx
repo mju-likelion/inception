@@ -97,7 +97,9 @@ const SpinnerBox = styled.div`
   width: 40px;
   height: 40px;
 
-  animation: rotate 3s infinite;
+  animation: rotate 1000ms infinite;
+  animation-delay: 1ms;
+
   @keyframes rotate {
     from {
       transform: rotate(0deg);
