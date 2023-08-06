@@ -43,9 +43,10 @@ export const GridItem = ({
     handleMouseDown && handleMouseDown(buttonRef.current);
   };
 
+  // mouseDown !== touchStart
   const onTouchStart = () => {
     isTouchEvent.current = true;
-    handleMouseDown && handleMouseDown();
+    handleMouseDown && handleMouseDown(buttonRef.current);
   };
 
   const onFocus = () => {

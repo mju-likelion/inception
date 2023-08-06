@@ -38,6 +38,7 @@ const DateComponent = ({
     buttonEl && setCurrentFocusItem(buttonEl);
     handleMouseDown(date);
   };
+
   const onMouseEnter = (date: string) => {
     handleMouseEnter && handleMouseEnter(date);
   };
