@@ -11,20 +11,24 @@ interface Props {
     date: string;
     activeStatus: ActiveStatus;
   };
+  currentFocusItem?: HTMLElement;
   handleMouseEnter?: () => void;
-  handleMouseDown?: () => void;
+  handleMouseDown?: (buttonEl?: HTMLElement | null) => void;
 }
 
 export const GridItem = ({
   children,
   disabled,
   dateOptions,
-  // handleClickDate,
+  currentFocusItem,
   handleMouseEnter,
   handleMouseDown,
 }: PropsWithChildren<Props>) => {
   const [color, setColor] = useState(getGridColor(dateOptions?.activeStatus));
   const isTouchEvent = useRef(false);
+
+  // 사파리 포커스 이벤트 호환성 이슈
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   /*
     모바일에선 touchStart - mouseDown 순서로 이벤트 발생된다.
@@ -36,7 +40,7 @@ export const GridItem = ({
       isTouchEvent.current = false;
       return;
     }
-    handleMouseDown && handleMouseDown();
+    handleMouseDown && handleMouseDown(buttonRef.current);
   };
 
   const onTouchStart = () => {
@@ -45,6 +49,7 @@ export const GridItem = ({
   };
 
   const onFocus = () => {
+    // result 모드에선 포커스 발생 조건 및 색상이 다르다.
     if (dateOptions?.viewType === 'result') {
       setColor(() => {
         if (dateOptions?.activeStatus === 'active') {
@@ -65,13 +70,17 @@ export const GridItem = ({
     setColor(getGridColor(dateOptions?.activeStatus));
   }, [dateOptions?.activeStatus]);
 
+  useEffect(() => {
+    // 포커스, blur 판별. safari 및 안드로이드 focus 호환성 이슈.
+    currentFocusItem === buttonRef.current ? onFocus() : onBlur();
+  }, [currentFocusItem]);
+
   return (
     <Wrapper
+      ref={buttonRef}
       disabled={disabled}
-      $isDate={dateOptions?.$isDate}
       color={color}
-      onFocus={onFocus}
-      onBlur={onBlur}
+      $isDate={dateOptions?.$isDate}
       onMouseEnter={handleMouseEnter}
       onMouseDown={onMouseDown}
       onTouchStart={onTouchStart}

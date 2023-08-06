@@ -20,7 +20,7 @@ export const Home = () => {
     });
     console.log(res);
     // api 요청 후 응답이 정상적이라면navigate 실행
-    // navigate(`/appointment?step=1`);
+    navigate(`/appointment?step=1`);
   };
 
   return (
