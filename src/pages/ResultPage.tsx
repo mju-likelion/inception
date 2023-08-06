@@ -8,7 +8,7 @@ import { TAB_ITEMS } from '@/pages/data';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ToastType } from '@/types/Toast';
-import { toastState, copyTypes } from '@/store';
+import { toastState, currentCopyType } from '@/store';
 import { useRecoilState } from 'recoil';
 
 export const ResultPage = () => {
@@ -16,7 +16,7 @@ export const ResultPage = () => {
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
   const [urlToastType, setUrlToastType] = useState<ToastType>('error');
   const [codeToastType, setCodeToastType] = useState<ToastType>('error');
-  const [copyType, setCopyType] = useRecoilState(copyTypes);
+  const [copyType, setCopyType] = useRecoilState(currentCopyType);
 
   const onClick = (tab: string) => {
     tab === TAB_ITEMS[0].id && navigate('/');

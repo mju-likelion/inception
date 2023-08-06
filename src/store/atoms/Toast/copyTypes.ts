@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
+import { CopyType } from '@/types/Toast';
 
-export const copyTypes = atom<'email' | 'url' | 'code' | ''>({
-  key: 'copyTypes',
+export const currentCopyType = atom<CopyType>({
+  key: 'currentCopyType',
   default: '',
 });

@@ -7,12 +7,12 @@ import { devices } from '@/globalStyle';
 import { useWindowResize } from '@/hooks';
 import { ToastType } from '@/types/Toast';
 import { useRecoilState } from 'recoil';
-import { copyTypes, toastState } from '@/store';
+import { currentCopyType, toastState } from '@/store';
 
 export const Footer = () => {
   const windowSize = useWindowResize();
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
-  const [copyType, setCopyType] = useRecoilState(copyTypes);
+  const [copyType, setCopyType] = useRecoilState(currentCopyType);
   const [toastType, setToastType] = useState<ToastType>('error');
 
   const copyEmail = (copyResult: ToastType) => {
