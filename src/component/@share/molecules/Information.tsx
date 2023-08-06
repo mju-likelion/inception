@@ -9,7 +9,7 @@ interface Props {
   content?: string;
   isNull?: boolean;
   isEnabled?: boolean;
-  clickButton?: (type: ToastType) => void;
+  clickButton?: (copyResult: ToastType) => void;
 }
 
 export const Information = ({

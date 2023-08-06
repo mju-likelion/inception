@@ -22,15 +22,15 @@ export const ResultPage = () => {
     tab === TAB_ITEMS[0].id && navigate('/');
   };
 
-  const copyUrl = (type: ToastType) => {
+  const copyUrl = (copyResult: ToastType) => {
     setIsToastOpened(true);
-    setUrlToastType(type);
+    setUrlToastType(copyResult);
     setCopyType('url');
   };
 
-  const copyCode = (type: ToastType) => {
+  const copyCode = (copyResult: ToastType) => {
     setIsToastOpened(true);
-    setCodeToastType(type);
+    setCodeToastType(copyResult);
     setCopyType('code');
   };
 
