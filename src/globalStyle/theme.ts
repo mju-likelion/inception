@@ -86,7 +86,7 @@ export const theme: DefaultTheme = {
     subTitle: css`
       font-size: 18px;
       font-weight: 600;
-      line-height: 28px;
+      line-height: 24px;
     `,
     body1: {
       regular: css`

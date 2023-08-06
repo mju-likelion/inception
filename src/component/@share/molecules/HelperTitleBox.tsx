@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { theme } from '@/globalStyle';
 import { ProgressBar } from './ProgressBar';
 
@@ -54,6 +54,7 @@ const Title = styled.h1<{ $color: keyof typeof theme.colors }>`
 `;
 
 const Body = styled.p<{ $color: keyof typeof theme.colors }>`
+  color: ${({ theme, $color }) => theme.colors[$color] || theme.colors.black};
   letter-spacing: 0;
   ${({ theme }) => theme.typographies.body3};
   text-align: left;
