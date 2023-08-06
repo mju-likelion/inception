@@ -52,6 +52,11 @@ macOS의 경우 homeBrew, Windows의 경우 choco가 필요합니다
 HTTPS 설정을 원할 경우 문의 바랍니다.
 
 ```shell
-# window의 경우 package.json의 "start:https"를 아래와 같이 설정합니다.
-# "set HTTPS=true&&set SSL_CRT_FILE=cert/cert.pem SSL_KEY_FILE=cert/cert-key.pem&&craco start",
+# package.json의 "start:https"를 아래와 같이 설정합니다.
+
+# macOS
+"HTTPS=true SSL_CRT_FILE=cert/cert.pem SSL_KEY_FILE=cert/cert-key.pem craco start",
+
+# window
+"set HTTPS=true&&set SSL_CRT_FILE=cert/cert.pem SSL_KEY_FILE=cert/cert-key.pem&&craco start",
 ```
