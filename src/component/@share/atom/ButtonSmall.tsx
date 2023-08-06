@@ -13,7 +13,15 @@ const Button = styled.button`
   border-radius: 50px;
   color: ${({ theme }) => theme.colors.gray1};
 
-  &:hover {
+  @media (hover: hover) {
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.gray4};
+      color: ${({ theme }) => theme.colors.gray2};
+      border: none;
+    }
+  }
+
+  &:active {
     background-color: ${({ theme }) => theme.colors.gray4};
     color: ${({ theme }) => theme.colors.gray2};
     border: none;

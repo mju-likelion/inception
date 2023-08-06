@@ -4,6 +4,7 @@ import { TabBar, TitleBox, ButtonLarge } from '@/component/@share';
 import { Calendar, TimePicker } from '@/component';
 import { TAB_ITEMS } from '@/pages/data';
 import { theme } from '@/globalStyle';
+import { createRoom } from '@/util/api';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -12,7 +13,13 @@ export const Home = () => {
     tab === TAB_ITEMS[1].id && navigate('/submit-code');
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
+    const res = await createRoom({
+      dateOnly: true,
+      dates: '2023-07-07,2023-07-08',
+    });
+    console.log(res);
+    // api 요청 후 응답이 정상적이라면navigate 실행
     navigate(`/appointment?step=1`);
   };
 
