@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Count, GridItem } from '@/component/calendar/atom';
 import { CalendarData, ViewType } from '@/types';
 import { styled } from 'styled-components';
@@ -26,6 +26,22 @@ const DateComponent = ({
     return filterdCalendarData;
   }, [calendarData, currentDate]);
 
+  const [currentFocusItem, setCurrentFocusItem] = useState<HTMLElement>();
+
+  const onMouseDown = ({
+    buttonEl,
+    date,
+  }: {
+    buttonEl?: HTMLElement | null | undefined;
+    date: string;
+  }) => {
+    buttonEl && setCurrentFocusItem(buttonEl);
+    handleMouseDown(date);
+  };
+  const onMouseEnter = (date: string) => {
+    handleMouseEnter && handleMouseEnter(date);
+  };
+
   return (
     <Wrapper>
       {blankGrid(showDates).map((blank) => {
@@ -46,10 +62,11 @@ const DateComponent = ({
           <GridItem
             key={data.date}
             dateOptions={dateOptions}
-            handleMouseDown={() => handleMouseDown(data.date)}
-            handleMouseEnter={() =>
-              handleMouseEnter && handleMouseEnter(data.date)
+            handleMouseDown={(buttonEl: HTMLElement | null | undefined) =>
+              onMouseDown({ buttonEl, date: data.date })
             }
+            handleMouseEnter={() => onMouseEnter(data.date)}
+            currentFocusItem={currentFocusItem}
           >
             {/* elementFromPoint를 찾을 때 기준점을 class === 'gridInner로 한다. */}
             <div className="gridItemInner">
