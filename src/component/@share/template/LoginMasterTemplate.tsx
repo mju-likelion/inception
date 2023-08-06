@@ -61,7 +61,7 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
         </WrapInput>
       </WrapUpperContents>
       <WrapButton>
-        <ButtonLarge isDisabled={isButtonInactive} click={buttonClick}>
+        <ButtonLarge isDisabled={isButtonInactive} onClick={buttonClick}>
           입력 완료
         </ButtonLarge>
       </WrapButton>
