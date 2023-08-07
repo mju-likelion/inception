@@ -1,17 +1,31 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Mail, Privacy, CopyRight } from '@/component/Footer/atoms';
-import { OrganizationInfo } from '@/component/Footer/data/OrganizationInfo';
+import { OrganizationInfo } from '@/component/Footer/data';
+import { Toast } from '@/component/@share';
 import { devices } from '@/globalStyle';
 import { useWindowResize } from '@/hooks';
+import { ToastType } from '@/types/Toast';
+import { useRecoilState } from 'recoil';
+import { currentCopyType, toastState } from '@/store';
 
 export const Footer = () => {
   const windowSize = useWindowResize();
+  const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
+  const [copyType, setCopyType] = useRecoilState(currentCopyType);
+  const [toastType, setToastType] = useState<ToastType>('error');
+
+  const copyEmail = (copyResult: ToastType) => {
+    setIsToastOpened(true);
+    setToastType(copyResult);
+    setCopyType('email');
+  };
 
   return (
     <Container>
       {windowSize.width < devices.web ? (
         <>
-          <Mail email={OrganizationInfo.email} />
+          <Mail email={OrganizationInfo.email} onClick={copyEmail} />
           <Privacy
             firstContent="개인정보 처리 방침"
             secondContent="서비스 이용약관"
@@ -21,7 +35,7 @@ export const Footer = () => {
       ) : (
         <WebContainer>
           <InnerContainer>
-            <Mail email={OrganizationInfo.email} />
+            <Mail email={OrganizationInfo.email} onClick={copyEmail} />
             <CopyRight content={OrganizationInfo.copyRight} />
           </InnerContainer>
           <Privacy
@@ -29,6 +43,9 @@ export const Footer = () => {
             secondContent="서비스 이용약관"
           />
         </WebContainer>
+      )}
+      {isToastOpened && copyType === 'email' && (
+        <Toast type={toastType} copyType={copyType} />
       )}
     </Container>
   );

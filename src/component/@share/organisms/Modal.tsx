@@ -60,7 +60,7 @@ export const Modal = ({ error, isOpen, onCloseModal }: ModalProps) => {
             </ModalIconBox>
             <TitleBox>{onSetModalText()}</TitleBox>
             <ButtonBlock>
-              <ButtonLarge click={onCloseModal}>확인</ButtonLarge>
+              <ButtonLarge onClick={onCloseModal}>확인</ButtonLarge>
             </ButtonBlock>
           </WrapModal>
         </ModalDimmed>

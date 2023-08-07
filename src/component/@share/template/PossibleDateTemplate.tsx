@@ -40,7 +40,7 @@ export const PossibleDateTemplate = ({ buttonClick }: Props) => {
         />
       </Content>
       <Bottom>
-        <ButtonLarge click={buttonClick}>다음으로</ButtonLarge>
+        <ButtonLarge onClick={buttonClick}>다음으로</ButtonLarge>
       </Bottom>
     </Wrapper>
   );

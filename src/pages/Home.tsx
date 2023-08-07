@@ -48,7 +48,7 @@ export const Home = () => {
           <TimePicker />
         </TimePickerBox>
         <ButtonBox>
-          <ButtonLarge click={handleButtonClick}>약속방 생성</ButtonLarge>
+          <ButtonLarge onClick={handleButtonClick}>약속방 생성</ButtonLarge>
         </ButtonBox>
       </Container>
     </>

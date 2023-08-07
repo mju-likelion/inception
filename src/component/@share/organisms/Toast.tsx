@@ -6,14 +6,17 @@ import { useSetRecoilState } from 'recoil';
 import { toastState } from '@/store';
 import { theme } from '@/globalStyle';
 import { css } from 'styled-components';
+import { CopyType, ToastType } from '@/types/Toast';
+import { getToastMessage } from '@/util';
 
 interface ToastProps {
-  type: 'success' | 'error';
-  message: string;
+  type: ToastType;
+  copyType: CopyType;
 }
 
-export const Toast = ({ type, message }: ToastProps) => {
+export const Toast = ({ type, copyType }: ToastProps) => {
   const setToast = useSetRecoilState(toastState);
+  const message = getToastMessage(type, copyType);
 
   useEffect(() => {
     const timer = setTimeout(() => {

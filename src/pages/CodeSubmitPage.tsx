@@ -60,7 +60,7 @@ export const CodeSubmitPage = () => {
           </WrapInput>
         </WrapTitleBoxInput>
         <WrapButton>
-          <ButtonLarge isDisabled={buttonInactive} click={handleButtonClick}>
+          <ButtonLarge isDisabled={buttonInactive} onClick={handleButtonClick}>
             입력 완료
           </ButtonLarge>
         </WrapButton>

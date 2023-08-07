@@ -70,7 +70,7 @@ export const LoginCodeTemplate = ({ buttonClick }: Props) => {
           </WrapInput>
         </WrapUpperContents>
         <WrapButton>
-          <ButtonLarge isDisabled={isButtonInactive} click={buttonClick}>
+          <ButtonLarge isDisabled={isButtonInactive} onClick={buttonClick}>
             완료
           </ButtonLarge>
         </WrapButton>

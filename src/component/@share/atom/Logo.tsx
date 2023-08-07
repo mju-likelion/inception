@@ -1,17 +1,14 @@
 import styled from 'styled-components';
+import { ReactComponent as LogoSvg } from '@/assets/images/Logo.svg';
 
 interface LogoProps {
   onClick: () => void;
 }
 
 export const Logo = ({ onClick }: LogoProps) => {
-  return <Title onClick={onClick}>SCHEDULE</Title>;
+  return <LogoBox onClick={onClick} />;
 };
 
-const Title = styled.button`
-  all: unset;
-  font-size: 16px;
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.mint1};
+const LogoBox = styled(LogoSvg)`
   cursor: pointer;
 `;
