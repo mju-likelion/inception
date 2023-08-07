@@ -16,7 +16,7 @@ import { styled } from 'styled-components';
 import { promiseResultMockData } from '../data';
 import padStart from 'lodash/padStart';
 import { useRecoilState } from 'recoil';
-import { calendarState } from '@/store/atoms/Calendar';
+import { calendarState } from '@/store/atoms';
 
 interface CalendarProps {
   viewType: ViewType;
