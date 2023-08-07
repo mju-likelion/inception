@@ -9,10 +9,13 @@ export interface CreateRoomRequest {
 }
 
 export interface CreateRoomResponse {
+  code: string;
   dates: string;
-  dateOnly: boolean | undefined;
+  dateOnly: boolean;
   startTime: string | undefined;
   endTime: string | undefined;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export const createRoom = async (
