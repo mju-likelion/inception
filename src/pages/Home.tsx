@@ -4,22 +4,46 @@ import { TabBar, TitleBox, ButtonLarge } from '@/component/@share';
 import { Calendar, TimePicker } from '@/component';
 import { TAB_ITEMS } from '@/pages/data';
 import { theme } from '@/globalStyle';
-import { createRoom } from '@/util/api';
+import { CreateRoomRequest, createRoom } from '@/util/api';
+import { useMemo } from 'react';
+import { calcDateFewMonth, dateFormatToString } from '@/util';
+import { useRecoilValue } from 'recoil';
+import { selectedEndTime, selectedStartTime, titleCheckState } from '@/store';
+import { calendarState } from '@/store/atoms/Calendar';
 
 export const Home = () => {
   const navigate = useNavigate();
+  const selectableDate = useMemo(() => {
+    const date = new Date();
+    return {
+      minDate: dateFormatToString(date),
+      maxDate: dateFormatToString(calcDateFewMonth(date, 5)),
+    };
+  }, []);
+
+  const dateOnly = useRecoilValue(titleCheckState);
+  const startTime = useRecoilValue(selectedStartTime);
+  const endTime = useRecoilValue(selectedEndTime);
+
+  const requestParam: CreateRoomRequest = {
+    dates: useRecoilValue(calendarState)
+      .filter((state) => state.activeStatus === 'active')
+      .map((calendarState) => calendarState.date)
+      .join(','),
+    dateOnly,
+    startTime: dateOnly ? undefined : startTime,
+    endTime: dateOnly ? undefined : endTime,
+  };
 
   const handleTabBarClick = (tab: string) => {
     tab === TAB_ITEMS[1].id && navigate('/submit-code');
   };
 
   const handleButtonClick = async () => {
-    const res = await createRoom({
-      dateOnly: true,
-      dates: '2023-07-07,2023-07-08',
-    });
-    console.log(res);
+    // const res = await createRoom(requestParam);
+    // console.log(res);
     // api 요청 후 응답이 정상적이라면navigate 실행
+    await null;
     navigate(`/appointment?step=1`);
   };
 
@@ -35,8 +59,8 @@ export const Home = () => {
         </TitleBoxContainer>
         <CalendarBox>
           <Calendar
-            minDate="2015-02-01"
-            maxDate="2030-01-01"
+            minDate={selectableDate.minDate}
+            maxDate={selectableDate.maxDate}
             viewType="create"
           />
           <HorizontalRule />
