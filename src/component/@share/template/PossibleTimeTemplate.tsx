@@ -34,7 +34,7 @@ export const PossibleTimeTemplate = ({ buttonClick }: Props) => {
           />
         </InformationBlock>
         <ButtonBlock>
-          <ButtonLarge isDisabled={isActive} click={buttonClick}>
+          <ButtonLarge isDisabled={isActive} onClick={buttonClick}>
             다음으로
           </ButtonLarge>
         </ButtonBlock>

@@ -31,7 +31,7 @@ export const RedirectPage = ({ errorState }: RedirectPageProps) => {
         <DoorSvgForTablet />
       )}
 
-      <ButtonLarge isDisabled={false} click={() => navigate('/')}>
+      <ButtonLarge isDisabled={false} onClick={() => navigate('/')}>
         메인으로
       </ButtonLarge>
     </Container>

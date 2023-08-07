@@ -1,3 +1,3 @@
-export * from './toastState';
+export * from './Toast';
 export * from './TimePicker';
 export * from './TimeBlock';

@@ -1,8 +1,35 @@
 import { PropsWithChildren } from 'react';
 import { styled } from 'styled-components';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { ToastType } from '@/types/Toast';
 
-export const ButtonSmall = ({ children }: PropsWithChildren) => {
-  return <Button>{children}</Button>;
+interface Props {
+  copyContent?: string;
+  onClick?: () => void;
+  onCopy?: (copyResult: ToastType) => void;
+}
+
+export const ButtonSmall = ({
+  children,
+  copyContent,
+  onClick,
+  onCopy,
+}: PropsWithChildren<Props>) => {
+  const handleCopy = (copyResult: ToastType) => {
+    onCopy && onCopy(copyResult);
+  };
+  return copyContent ? (
+    <CopyToClipboard
+      text={copyContent}
+      onCopy={(text) =>
+        text === copyContent ? handleCopy('success') : handleCopy('error')
+      }
+    >
+      <Button>{children}</Button>
+    </CopyToClipboard>
+  ) : (
+    <Button onClick={onClick}>{children}</Button>
+  );
 };
 
 const Button = styled.button`

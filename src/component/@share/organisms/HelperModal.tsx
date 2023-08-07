@@ -56,7 +56,7 @@ export const HelperModal = ({
               <TitleBoxBlock>{onSetHelpText()}</TitleBoxBlock>
             </TopBlock>
             <ButtonBlock>
-              <ButtonLarge click={onCloseModal}>알겠어요</ButtonLarge>
+              <ButtonLarge onClick={onCloseModal}>알겠어요</ButtonLarge>
             </ButtonBlock>
           </ModalBlock>
         </ModalBackdrop>

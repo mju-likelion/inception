@@ -1,17 +1,37 @@
 import styled from 'styled-components';
 import { Information, TitleBox } from '@/component/@share/molecules';
 import { Calendar } from '@/component';
-import { ButtonSmall, TabBar } from '@/component/@share';
+import { ButtonSmall, TabBar, Toast } from '@/component/@share';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { ToastType } from '@/types/Toast';
+import { toastState, currentCopyType } from '@/store';
+import { useRecoilState } from 'recoil';
 
 export const ResultPage = () => {
   const navigate = useNavigate();
+  const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
+  const [urlToastType, setUrlToastType] = useState<ToastType>('error');
+  const [codeToastType, setCodeToastType] = useState<ToastType>('error');
+  const [copyType, setCopyType] = useRecoilState(currentCopyType);
 
   const onClick = (tab: string) => {
     tab === TAB_ITEMS[0].id && navigate('/');
+  };
+
+  const copyUrl = (copyResult: ToastType) => {
+    setIsToastOpened(true);
+    setUrlToastType(copyResult);
+    setCopyType('url');
+  };
+
+  const copyCode = (copyResult: ToastType) => {
+    setIsToastOpened(true);
+    setCodeToastType(copyResult);
+    setCopyType('code');
   };
 
   return (
@@ -45,15 +65,23 @@ export const ResultPage = () => {
               title="약속방 링크"
               content="https://www.google.co.kr/afadsfadsfadsfadsf"
               isEnabled={true}
+              clickButton={copyUrl}
             />
             <Information
               title="약속방 입장 코드"
               content="A1B1C1"
               isEnabled={true}
+              clickButton={copyCode}
             />
           </InformationBlock>
         </ContentBlock>
       </ResultPageBlock>
+      {isToastOpened && copyType === 'url' && (
+        <Toast type={urlToastType} copyType={copyType} />
+      )}
+      {isToastOpened && copyType === 'code' && (
+        <Toast type={codeToastType} copyType={copyType} />
+      )}
     </>
   );
 };
