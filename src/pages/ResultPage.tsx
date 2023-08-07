@@ -77,24 +77,10 @@ export const ResultPage = () => {
         </ContentBlock>
       </ResultPageBlock>
       {isToastOpened && copyType === 'url' && (
-        <Toast
-          type={urlToastType}
-          message={
-            urlToastType === 'success'
-              ? '약속방 링크가 복사되었습니다'
-              : '약속방 링크 복사에 실패하였습니다'
-          }
-        />
+        <Toast type={urlToastType} copyType={copyType} />
       )}
       {isToastOpened && copyType === 'code' && (
-        <Toast
-          type={codeToastType}
-          message={
-            codeToastType === 'success'
-              ? '입장 코드가 복사되었습니다'
-              : '입장 코드 복사에 실패하였습니다'
-          }
-        />
+        <Toast type={codeToastType} copyType={copyType} />
       )}
     </>
   );

@@ -45,14 +45,7 @@ export const Footer = () => {
         </WebContainer>
       )}
       {isToastOpened && copyType === 'email' && (
-        <Toast
-          type={toastType}
-          message={
-            toastType === 'success'
-              ? '메일 주소가 복사되었습니다'
-              : '메일 주소 복사에 실패하였습니다'
-          }
-        />
+        <Toast type={toastType} copyType={copyType} />
       )}
     </Container>
   );
