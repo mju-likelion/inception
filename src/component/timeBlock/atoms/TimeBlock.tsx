@@ -1,4 +1,4 @@
-import { isMouseDownState } from '@/store/atoms/TimeBlock/isMouseDownState';
+import { isMouseDownState } from '@/store/atoms';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { useWindowResize } from '@/hooks';

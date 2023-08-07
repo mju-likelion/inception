@@ -1,12 +1,17 @@
 import { styled } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { dateListState, timeListState, timeTableState } from '@/store/atoms';
+import {
+  dateListState,
+  timeListState,
+  timeTableState,
+  isMouseDownState,
+} from '@/store/atoms';
 import { TimeBlock } from '@/component/timeBlock/atoms';
 import { getPaginationDate, getPaginationTable } from '@/util';
 import { useEffect, useState } from 'react';
 import range from 'lodash/range';
-import { isMouseDownState } from '@/store/atoms/TimeBlock/isMouseDownState';
 import { touchMoveDrag } from '@/util';
+
 interface TimeBlockGroupProps {
   page: number;
   onSetActiveDate: React.Dispatch<React.SetStateAction<boolean[]>>;

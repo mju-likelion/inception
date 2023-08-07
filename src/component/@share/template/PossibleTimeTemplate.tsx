@@ -5,7 +5,7 @@ import { ButtonLarge } from '@/component/@share';
 import { styled } from 'styled-components';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { isMouseDownState } from '@/store/atoms/TimeBlock/isMouseDownState';
+import { isMouseDownState } from '@/store/atoms';
 
 interface Props {
   buttonClick: () => void;
