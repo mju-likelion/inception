@@ -11,10 +11,12 @@ import {
   isDuplicatedDate,
   resolvePromiseResult,
 } from '@/util';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { promiseResultMockData } from '../data';
 import padStart from 'lodash/padStart';
+import { useRecoilState } from 'recoil';
+import { calendarState } from '@/store/atoms/Calendar';
 
 interface CalendarProps {
   viewType: ViewType;
@@ -183,11 +185,8 @@ const CreateMode = ({
   /** 현재 날짜 */
   const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
 
-  // @TODO recoil로 관리되어야할 값
   /** 달력 정보 */
-  const [calendar, setCalendar] = useState<CalendarData[]>(() =>
-    getCalendarData(minDate[0], minDate[1])
-  );
+  const [calendar, setCalendar] = useRecoilState<CalendarData[]>(calendarState);
 
   const [dateRangeLimit, setDateRangeLimit] = useState<DateRangeLimit>(
     checkLimitDate(currentDate, minDate, maxDate)
@@ -251,6 +250,10 @@ const CreateMode = ({
     }
   };
 
+  useEffect(() => {
+    setCalendar(getCalendarData(minDate[0], minDate[1]));
+  }, []);
+
   /** @TODO GridFooter는 result === on 일때만 보여준다. GridHeader, GridFooter는 molecules로 관리해야될 것 같다. */
   return (
     <Grid
@@ -272,7 +275,6 @@ const CreateMode = ({
         <DateComponent
           calendarData={calendar}
           currentDate={currentDate}
-          // handleClickDate={handleClickDate}
           handleMouseDown={handleMouseDown}
           handleMouseEnter={handleMouseEnter}
           viewType={'create'}
@@ -288,9 +290,8 @@ const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
   const { minDate, maxDate } = resolvePromiseResult(promiseResultMockData);
 
   const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
-  const [calendar, setCalendar] = useState<CalendarData[]>(() =>
-    getCalendarData(minDate[0], minDate[1], promiseResultMockData)
-  );
+  const [calendar, setCalendar] = useRecoilState<CalendarData[]>(calendarState);
+
   const [dateRangeLimit, setDateRangeLimit] = useState<DateRangeLimit>(
     checkLimitDate(currentDate, minDate, maxDate)
   );
@@ -333,6 +334,10 @@ const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
     // @TODO 클릭한 날짜에서 선택된 날짜 정보를 가져오는 api 작성 필요
   };
 
+  useEffect(() => {
+    setCalendar(getCalendarData(minDate[0], minDate[1], promiseResultMockData));
+  }, []);
+
   return (
     <Grid>
       <GridHeader>
@@ -371,11 +376,8 @@ const SelectMode = ({
   /** 현재 날짜 */
   const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
 
-  // @TODO recoil로 관리되어야할 값
   /** 달력 정보 */
-  const [calendar, setCalendar] = useState<CalendarData[]>(() =>
-    getCalendarData(minDate[0], minDate[1])
-  );
+  const [calendar, setCalendar] = useRecoilState<CalendarData[]>(calendarState);
 
   const [dateRangeLimit, setDateRangeLimit] = useState<DateRangeLimit>(
     checkLimitDate(currentDate, minDate, maxDate)
@@ -439,6 +441,10 @@ const SelectMode = ({
       setCalendar((prev) => prev.concat(changedCalendar));
     }
   };
+
+  useEffect(() => {
+    setCalendar(getCalendarData(minDate[0], minDate[1]));
+  }, []);
 
   /** @TODO GridFooter는 result === on 일때만 보여준다. GridHeader, GridFooter는 molecules로 관리해야될 것 같다. */
   return (

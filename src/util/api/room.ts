@@ -1,13 +1,14 @@
 import { Axios } from '@/util/axios';
 
-interface CreateRoomRequest {
-  dates: string; // "2023-07-07,2023-07-08"
+/** @TODO dates는 string[]으로 바뀔 예정?? */
+export interface CreateRoomRequest {
+  dates: string; // '2023-07-07,2023-07-08' | ['2023-07-07', '2023-07-08']
   dateOnly: boolean; // true: 날짜, false: 날짜+시간
-  startTime?: string; // '09:00'
-  endTime?: string; // '17:00'
+  startTime?: string | undefined; // '09:00'
+  endTime?: string | undefined; // '17:00'
 }
 
-interface CreateRoomResponse {
+export interface CreateRoomResponse {
   dates: string;
   dateOnly: boolean | undefined;
   startTime: string | undefined;
