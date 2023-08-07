@@ -85,6 +85,8 @@ const DateComponent = ({
 export { DateComponent as Date };
 
 const blankGrid = (calendarData: CalendarData[]) => {
+  if (calendarData.length <= 0) return [];
+
   const startDay = new Date(calendarData[0].date).getDay();
   const blankGrids = [];
 

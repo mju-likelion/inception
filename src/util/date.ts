@@ -59,6 +59,7 @@ export const isDuplicatedDate = (
   return isExist;
 };
 
+/** Date 객체를 yyyy-mm-dd 형식으로 변환 */
 export const dateFormatToString = (date: Date): string => {
   const year = `${date.getFullYear()}`;
   const month = padStart(`${date.getMonth() + 1}`, 2, '0');
