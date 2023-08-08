@@ -46,7 +46,7 @@ export const viewRoom = async (
     return res.data as ViewRoomResponse;
   } catch (e) {
     if (e instanceof Error) {
-      throw new Error('createRoom Error', e);
+      throw new Error('viewRoom Error', e);
     }
   }
 };
