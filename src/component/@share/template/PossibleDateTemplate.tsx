@@ -39,7 +39,7 @@ export const PossibleDateTemplate = ({
           title="선택 가능 기간"
           content={(selectableDates || [])
             .map((date) => `${+date.split('-')[1]}월`)
-            .join(', ')}
+            .join(' - ')}
         />
       </Content>
       <Bottom>
