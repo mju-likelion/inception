@@ -4,15 +4,27 @@ import { TabBar, TitleBox, ButtonLarge } from '@/component/@share';
 import { Calendar, TimePicker } from '@/component';
 import { TAB_ITEMS } from '@/pages/data';
 import { theme } from '@/globalStyle';
-import { CreateRoomRequest, createRoom } from '@/util/api';
+import { createRoom } from '@/util/api';
 import { useMemo } from 'react';
 import { calcDateFewMonth, dateFormatToString } from '@/util';
 import { useRecoilValue } from 'recoil';
-import { selectedEndTime, selectedStartTime, titleCheckState } from '@/store';
+import {
+  selectedEndTime,
+  selectedStartTime,
+  timeErrorState,
+  titleCheckState,
+} from '@/store';
 import { calendarState } from '@/store/atoms/Calendar';
 
 export const Home = () => {
   const navigate = useNavigate();
+
+  const dateOnly = useRecoilValue(titleCheckState);
+  const startTime = useRecoilValue(selectedStartTime);
+  const endTime = useRecoilValue(selectedEndTime);
+  const calendar = useRecoilValue(calendarState);
+  const isTimeRangeError = useRecoilValue(timeErrorState);
+
   const selectableDate = useMemo(() => {
     const date = new Date();
     return {
@@ -21,25 +33,23 @@ export const Home = () => {
     };
   }, []);
 
-  const dateOnly = useRecoilValue(titleCheckState);
-  const startTime = useRecoilValue(selectedStartTime);
-  const endTime = useRecoilValue(selectedEndTime);
-
-  const requestParam: CreateRoomRequest = {
-    dates: useRecoilValue(calendarState)
+  const dates = useMemo(() => {
+    return calendar
       .filter((state) => state.activeStatus === 'active')
-      .map((calendarState) => calendarState.date),
-    dateOnly,
-    startTime: dateOnly ? undefined : startTime,
-    endTime: dateOnly ? undefined : endTime,
-  };
+      .map((calendarState) => calendarState.date);
+  }, [calendar]);
 
   const handleTabBarClick = (tab: string) => {
     tab === TAB_ITEMS[1].id && navigate('/submit-code');
   };
 
   const handleButtonClick = async () => {
-    const res = await createRoom(requestParam);
+    const res = await createRoom({
+      dates: dates,
+      dateOnly,
+      startTime: dateOnly ? undefined : startTime,
+      endTime: dateOnly ? undefined : endTime,
+    });
     navigate(`/appointment/${res?.data.code}?step=1`); // api 요청 후 응답이 정상적이라면 navigate 실행
   };
 
@@ -68,7 +78,12 @@ export const Home = () => {
           <TimePicker />
         </TimePickerBox>
         <ButtonBox>
-          <ButtonLarge onClick={handleButtonClick}>약속방 생성</ButtonLarge>
+          <ButtonLarge
+            isDisabled={dates.length <= 0 || (!dateOnly && isTimeRangeError)}
+            onClick={handleButtonClick}
+          >
+            약속방 생성
+          </ButtonLarge>
         </ButtonBox>
       </Container>
     </>
