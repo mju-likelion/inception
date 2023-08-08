@@ -46,7 +46,9 @@ export const AppointmentStepPage = () => {
     if (step === '3') {
       navigate('/result');
     } else {
-      step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
+      roomInfo?.dateOnly
+        ? step && navigate(`/appointment/${params.code}?step=3`)
+        : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
     }
   };
 
