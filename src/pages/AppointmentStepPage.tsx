@@ -10,6 +10,8 @@ import { RedirectPage } from '@/pages';
 import { TAB_ITEMS } from '@/pages/data';
 import { viewRoom } from '@/util/api';
 import { ViewRoomResponse } from '@/util/api';
+import { RecoilState, useRecoilState } from 'recoil';
+import { dateListState } from '@/store';
 
 export const AppointmentStepPage = () => {
   const [searchParams] = useSearchParams();
@@ -17,6 +19,7 @@ export const AppointmentStepPage = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [roomInfo, setRoomInfo] = useState<ViewRoomResponse>();
+  const [dateList, setDateList] = useRecoilState(dateListState);
 
   const preventRefresh = (e: BeforeUnloadEvent) => {
     e.preventDefault();
@@ -25,7 +28,9 @@ export const AppointmentStepPage = () => {
 
   useEffect(() => {
     (async () => {
-      setRoomInfo(await viewRoom(params.code));
+      const res = await viewRoom(params.code);
+      setRoomInfo(res);
+      setDateList(res?.dates || []);
 
       window.addEventListener('beforeunload', preventRefresh);
       if (step === '2' || step === '3') {
@@ -59,7 +64,13 @@ export const AppointmentStepPage = () => {
           />
         );
       case '2':
-        return <PossibleTimeTemplate buttonClick={handleButtonClick} />;
+        return (
+          <PossibleTimeTemplate
+            buttonClick={handleButtonClick}
+            startTime={roomInfo?.startTime as string}
+            endTime={roomInfo?.endTime as string}
+          />
+        );
       case '3':
         return <LoginMasterTemplate buttonClick={handleButtonClick} />;
       default:

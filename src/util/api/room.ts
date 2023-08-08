@@ -42,8 +42,8 @@ export const viewRoom = async (
   id: string | undefined
 ): Promise<ViewRoomResponse | undefined> => {
   try {
-    const res = (await Axios.get(`/api/rooms/${id}`)) as ViewRoomResponse;
-    return res;
+    const res = await Axios.get(`/api/rooms/${id}`);
+    return res.data as ViewRoomResponse;
   } catch (e) {
     if (e instanceof Error) {
       throw new Error('createRoom Error', e);
