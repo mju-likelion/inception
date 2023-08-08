@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import { TabBar } from '@/component/@share';
 import {
@@ -8,12 +8,15 @@ import {
 } from '@/component/@share/template';
 import { RedirectPage } from '@/pages';
 import { TAB_ITEMS } from '@/pages/data';
+import { viewRoom } from '@/util/api';
+import { ViewRoomResponse } from '@/util/api';
 
 export const AppointmentStepPage = () => {
   const [searchParams] = useSearchParams();
   const step = searchParams.get('step');
   const navigate = useNavigate();
   const params = useParams();
+  const [roomInfo, setRoomInfo] = useState<ViewRoomResponse>();
 
   const preventRefresh = (e: BeforeUnloadEvent) => {
     e.preventDefault();
@@ -21,7 +24,9 @@ export const AppointmentStepPage = () => {
   };
 
   useEffect(() => {
-    (() => {
+    (async () => {
+      setRoomInfo(await viewRoom(params.code));
+
       window.addEventListener('beforeunload', preventRefresh);
       if (step === '2' || step === '3') {
         navigate(`/appointment/${params.code}?step=1`);
@@ -47,7 +52,12 @@ export const AppointmentStepPage = () => {
   const renderPage = () => {
     switch (step) {
       case '1':
-        return <PossibleDateTemplate buttonClick={handleButtonClick} />;
+        return (
+          <PossibleDateTemplate
+            buttonClick={handleButtonClick}
+            selectableDates={roomInfo?.dates as string[]}
+          />
+        );
       case '2':
         return <PossibleTimeTemplate buttonClick={handleButtonClick} />;
       case '3':
