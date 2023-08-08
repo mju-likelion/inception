@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import { TabBar } from '@/component/@share';
 import {
   LoginMasterTemplate,
@@ -13,6 +13,7 @@ export const AppointmentStepPage = () => {
   const [searchParams] = useSearchParams();
   const step = searchParams.get('step');
   const navigate = useNavigate();
+  const params = useParams();
 
   const preventRefresh = (e: BeforeUnloadEvent) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ export const AppointmentStepPage = () => {
     (() => {
       window.addEventListener('beforeunload', preventRefresh);
       if (step === '2' || step === '3') {
-        navigate('/appointment?step=1');
+        navigate(`/appointment/${params.code}?step=1`);
       }
     })();
     return () => {
@@ -35,7 +36,7 @@ export const AppointmentStepPage = () => {
     if (step === '3') {
       navigate('/result');
     } else {
-      step && navigate(`/appointment?step=${+step + 1}`);
+      step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
     }
   };
 

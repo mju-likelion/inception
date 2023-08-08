@@ -37,7 +37,7 @@ export const pages = createBrowserRouter([
         element: <CalendarTest />,
       },
       {
-        path: 'appointment', // ex) localhost:3000/appointment
+        path: 'appointment/:code', // ex) localhost:3000/appointment
         element: <AppointmentStepPage />,
       },
       {
