@@ -5,24 +5,24 @@ interface PrivacyProps {
   secondContent: string;
 }
 
-const privacyLink =
+const PrivacyLink =
   'https://www.notion.so/likelion-11th/9122afea432645408dafbc37e334d32a?pvs=4';
 
-const termsOfUseLink =
+const TermsOfUseLink =
   'https://www.notion.so/likelion-11th/9122afea432645408dafbc37e334d32a?pvs=4';
 
 export const Privacy = ({ firstContent, secondContent }: PrivacyProps) => {
   return (
     <Container>
       <PrivacyContent
-        href={privacyLink}
+        href={PrivacyLink}
         target="_blank"
         rel="noopener noreferrer"
       >
         {firstContent}
       </PrivacyContent>
       <PrivacyContent
-        href={termsOfUseLink}
+        href={TermsOfUseLink}
         target="_blank"
         rel="noopener noreferrer"
       >
