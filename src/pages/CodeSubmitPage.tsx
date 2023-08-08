@@ -28,6 +28,12 @@ export const CodeSubmitPage = () => {
     tab === TAB_ITEMS[0].id && navigate('/');
   };
 
+  const activeEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleButtonClick();
+    }
+  }; // enter 로 input submit
+
   const handleButtonClick = () => {
     navigate('/result');
   };
@@ -54,6 +60,7 @@ export const CodeSubmitPage = () => {
               placeholder={'약속방 입력 코드'}
               onChange={onChange}
               onKeyUp={onKeyUp}
+              onKeyDown={activeEnter}
               value={value}
               maxLength={6}
             />

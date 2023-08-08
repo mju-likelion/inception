@@ -7,6 +7,7 @@ interface Props {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   value: string;
   maxLength?: number;
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
 export const Input = ({
@@ -16,6 +17,7 @@ export const Input = ({
   onKeyUp,
   value,
   maxLength,
+  onKeyDown,
 }: Props) => {
   return (
     <InputField
@@ -25,6 +27,7 @@ export const Input = ({
       onChange={onChange}
       value={value}
       maxLength={maxLength}
+      onKeyDown={onKeyDown}
     />
   );
 };
