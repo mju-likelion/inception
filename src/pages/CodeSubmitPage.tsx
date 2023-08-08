@@ -88,7 +88,7 @@ const WrapTitleBoxInput = styled.div`
   margin: 0px 20px 0px 20px;
 `;
 
-const WrapInput = styled.div`
+const WrapInput = styled.form`
   display: flex;
   margin-top: 24px;
 
