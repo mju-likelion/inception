@@ -388,12 +388,7 @@ const SelectMode = ({
   selectableDates,
 }: SelectModeProps) => {
   const resultData = getDatesToCalendarData(selectableDates);
-
-  // const CalendarData = getDatesToCalendarData(selectableDates);
-  /** @TODO 데이터 패치 로직으로 변경 필요 */
   const { minDate, maxDate } = resolvePromiseResult(resultData);
-
-  console.log(resultData);
 
   /** 현재 날짜 */
   const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
@@ -470,7 +465,7 @@ const SelectMode = ({
   };
 
   useEffect(() => {
-    setCalendar(getCalendarData(minDate[0], minDate[1], 'select'));
+    setCalendar(getCalendarData(minDate[0], minDate[1], 'select', resultData));
   }, []);
 
   /** @TODO GridFooter는 result === on 일때만 보여준다. GridHeader, GridFooter는 molecules로 관리해야될 것 같다. */

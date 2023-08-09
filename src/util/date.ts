@@ -29,7 +29,11 @@ export const getCalendarData = (
       (result) => result.date === dateString
     );
 
-    if (resultData && mostSelectedCount === resultData.count) {
+    if (
+      viewType === 'result' &&
+      resultData &&
+      mostSelectedCount === resultData.count
+    ) {
       activeStatus = 'active';
     }
 

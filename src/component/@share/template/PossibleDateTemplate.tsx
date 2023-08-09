@@ -1,5 +1,5 @@
 import { Calendar } from '@/component';
-import { ButtonLarge } from '@/component/@share';
+import { ButtonLarge, LoadingIcon } from '@/component/@share';
 import { Information, ProgressBar } from '@/component/@share/molecules';
 import { styled } from 'styled-components';
 import CalendarIcon from '@/assets/images/Calendar.svg';
@@ -8,19 +8,13 @@ import { theme } from '@/globalStyle';
 
 interface Props {
   buttonClick: () => void;
-  selectableDates: string[];
+  selectableDates?: string[];
 }
 
 export const PossibleDateTemplate = ({
   buttonClick,
   selectableDates,
 }: Props) => {
-  // const selectableDates = ['2023-06', '2023-07', '2023-08']; // @TODO 더미데이터. 서버에서 선택 가능한 시간들 가져와 보여주기
-  const onClick = (tab: string) => {
-    // @TODO tab에 따라 라우팅하기
-    console.log('onClick!!');
-  };
-
   return (
     <Wrapper>
       <Header>
@@ -28,13 +22,17 @@ export const PossibleDateTemplate = ({
         <Body $color="gray1">가능한 날짜들을 선택해주세요.</Body>
       </Header>
       <Content>
-        <Calendar
-          viewType="select"
-          // @TODO 선택 가능 기간이 어떻게 들어오는지 판단 필요
-          minDate={getMinDate(selectableDates || [])}
-          maxDate={getMaxDate(selectableDates || [])}
-          selectableDates={selectableDates}
-        />
+        {/* selectableDates가 빈 값이라면 캘린더를 렌더링하지 않는다. */}
+        {selectableDates ? (
+          <Calendar
+            viewType="select"
+            minDate={getMinDate(selectableDates)}
+            maxDate={getMaxDate(selectableDates)}
+            selectableDates={selectableDates}
+          />
+        ) : (
+          <LoadingIcon />
+        )}
         <Information
           icon={CalendarIcon}
           title="선택 가능 기간"
