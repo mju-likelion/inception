@@ -26,20 +26,24 @@ export const Footer = () => {
     <Container>
       {windowSize.width < devices.web ? (
         <>
-          <SquareButton>문의하기</SquareButton>
-          <Mail email={OrganizationInfo.email} onClick={copyEmail} />
+          <SquareButton isAnchor href={OrganizationInfo.CHANNEL_TALK}>
+            문의하기
+          </SquareButton>
+          <Mail email={OrganizationInfo.EMAIL} onClick={copyEmail} />
           <Privacy
             firstContent="개인정보 처리 방침"
             secondContent="서비스 이용약관"
           />
-          <CopyRight content={OrganizationInfo.copyRight} />
+          <CopyRight content={OrganizationInfo.COPYRIGHT} />
         </>
       ) : (
         <WebContainer>
           <InnerContainer>
-            <SquareButton>문의하기</SquareButton>
-            <Mail email={OrganizationInfo.email} onClick={copyEmail} />
-            <CopyRight content={OrganizationInfo.copyRight} />
+            <SquareButton isAnchor href={OrganizationInfo.CHANNEL_TALK}>
+              문의하기
+            </SquareButton>
+            <Mail email={OrganizationInfo.EMAIL} onClick={copyEmail} />
+            <CopyRight content={OrganizationInfo.COPYRIGHT} />
           </InnerContainer>
           <Privacy
             firstContent="개인정보 처리 방침"
