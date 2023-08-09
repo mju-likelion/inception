@@ -232,7 +232,11 @@ const CreateMode = ({
 
     const changedYear = `${date.getFullYear()}`;
     const changedMonth = padStart(`${date.getMonth() + 1}`, 2, '0');
-    const changedCalendar = getCalendarData(changedYear, changedMonth);
+    const changedCalendar = getCalendarData(
+      changedYear,
+      changedMonth,
+      'create'
+    );
 
     setCurrentDate([changedYear, changedMonth]);
     setDateRangeLimit(
@@ -251,7 +255,7 @@ const CreateMode = ({
   };
 
   useEffect(() => {
-    setCalendar(getCalendarData(minDate[0], minDate[1]));
+    setCalendar(getCalendarData(minDate[0], minDate[1], 'create'));
   }, []);
 
   /** @TODO GridFooter는 result === on 일때만 보여준다. GridHeader, GridFooter는 molecules로 관리해야될 것 같다. */
@@ -306,6 +310,7 @@ const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
     const changedCalendar = getCalendarData(
       changedYear,
       changedMonth,
+      'result',
       promiseResultMockData
     );
 
@@ -335,7 +340,9 @@ const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
   };
 
   useEffect(() => {
-    setCalendar(getCalendarData(minDate[0], minDate[1], promiseResultMockData));
+    setCalendar(
+      getCalendarData(minDate[0], minDate[1], 'result', promiseResultMockData)
+    );
   }, []);
 
   return (
@@ -424,7 +431,11 @@ const SelectMode = ({
 
     const changedYear = `${date.getFullYear()}`;
     const changedMonth = padStart(`${date.getMonth() + 1}`, 2, '0');
-    const changedCalendar = getCalendarData(changedYear, changedMonth);
+    const changedCalendar = getCalendarData(
+      changedYear,
+      changedMonth,
+      'select'
+    );
 
     setCurrentDate([changedYear, changedMonth]);
     setDateRangeLimit(
@@ -443,7 +454,7 @@ const SelectMode = ({
   };
 
   useEffect(() => {
-    setCalendar(getCalendarData(minDate[0], minDate[1]));
+    setCalendar(getCalendarData(minDate[0], minDate[1], 'select'));
   }, []);
 
   /** @TODO GridFooter는 result === on 일때만 보여준다. GridHeader, GridFooter는 molecules로 관리해야될 것 같다. */
