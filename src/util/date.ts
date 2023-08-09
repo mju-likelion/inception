@@ -1,15 +1,20 @@
 /* date = 일자 데이터, day = 요일 데이터 */
-import { ActiveStatus, CalendarData, PromiseResultData } from '@/types';
+import {
+  ActiveStatus,
+  CalendarData,
+  PromiseResultData,
+  ViewType,
+} from '@/types';
 import padStart from 'lodash/padStart';
 
 /** 월별 캘린더 기본 정보를 반환한다. */
 export const getCalendarData = (
   year: string,
   month: string,
+  viewType: ViewType,
   promiseResult?: PromiseResultData[]
 ): CalendarData[] => {
   const days = calcDaysByYearMonth(year, month);
-  const paddingMonth = +month < 10 ? `0${+month}` : month;
 
   // 가장 많이 선택된 횟수로 status 구하기 위해 사용
   const mostSelectedCount =
@@ -17,14 +22,23 @@ export const getCalendarData = (
 
   const datas = days.map((date) => {
     const day = new Date(+year, +month - 1, +date).getDay();
-    const dateString = `${year}-${paddingMonth}-${date}`;
+    const dateString = `${year}-${padStart(month, 2, '0')}-${date}`;
+    let activeStatus: ActiveStatus = 'default';
+
     const resultData = promiseResult?.find(
       (result) => result.date === dateString
     );
-    let activeStatus: ActiveStatus = 'default';
 
     if (resultData && mostSelectedCount === resultData.count) {
       activeStatus = 'active';
+    }
+
+    // 현재 날짜의 이전 날짜는 disable 처리
+    if (
+      viewType !== 'result' &&
+      new Date(dateString) < new Date(dateFormatToString(new Date()))
+    ) {
+      activeStatus = 'disabled';
     }
 
     if (promiseResult && !resultData) {
