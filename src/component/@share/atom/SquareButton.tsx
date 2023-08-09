@@ -1,8 +1,23 @@
 import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
-export const SquareButton = ({ children }: PropsWithChildren) => {
-  return <Button>{children}</Button>;
+interface ButtonProps {
+  isAnchor?: boolean;
+  href?: string;
+}
+
+export const SquareButton = ({
+  isAnchor,
+  href,
+  children,
+}: PropsWithChildren<ButtonProps>) => {
+  return isAnchor ? (
+    <a href={href} target="_blank" rel="noopener noreferrer">
+      <Button>{children}</Button>
+    </a>
+  ) : (
+    <Button>{children}</Button>
+  );
 };
 
 const Button = styled.button`
@@ -16,10 +31,9 @@ const Button = styled.button`
   ${({ theme }) => theme.typographies.body4}
   color: ${({ theme }) => theme.colors.gray2};
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.gray3};
-  }
-  &:active {
-    background-color: ${({ theme }) => theme.colors.gray3};
+  @media (hover: hover) {
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.gray3};
+    }
   }
 `;
