@@ -33,6 +33,7 @@ export const PossibleDateTemplate = ({
           // @TODO 선택 가능 기간이 어떻게 들어오는지 판단 필요
           minDate={getMinDate(selectableDates || [])}
           maxDate={getMaxDate(selectableDates || [])}
+          selectableDates={selectableDates}
         />
         <Information
           icon={CalendarIcon}
