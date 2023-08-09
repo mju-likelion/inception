@@ -8,6 +8,7 @@ import { useWindowResize } from '@/hooks';
 import { ToastType } from '@/types/Toast';
 import { useRecoilState } from 'recoil';
 import { currentCopyType, toastState } from '@/store';
+import { SquareButton } from '@/component/@share/atom/SquareButton';
 
 export const Footer = () => {
   const windowSize = useWindowResize();
@@ -25,18 +26,24 @@ export const Footer = () => {
     <Container>
       {windowSize.width < devices.web ? (
         <>
-          <Mail email={OrganizationInfo.email} onClick={copyEmail} />
+          <SquareButton isAnchor href={OrganizationInfo.CHANNEL_TALK}>
+            문의하기
+          </SquareButton>
+          <Mail email={OrganizationInfo.EMAIL} onClick={copyEmail} />
           <Privacy
             firstContent="개인정보 처리 방침"
             secondContent="서비스 이용약관"
           />
-          <CopyRight content={OrganizationInfo.copyRight} />
+          <CopyRight content={OrganizationInfo.COPYRIGHT} />
         </>
       ) : (
         <WebContainer>
           <InnerContainer>
-            <Mail email={OrganizationInfo.email} onClick={copyEmail} />
-            <CopyRight content={OrganizationInfo.copyRight} />
+            <SquareButton isAnchor href={OrganizationInfo.CHANNEL_TALK}>
+              문의하기
+            </SquareButton>
+            <Mail email={OrganizationInfo.EMAIL} onClick={copyEmail} />
+            <CopyRight content={OrganizationInfo.COPYRIGHT} />
           </InnerContainer>
           <Privacy
             firstContent="개인정보 처리 방침"
@@ -54,7 +61,7 @@ export const Footer = () => {
 const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.gray5};
   width: 100%;
-  height: 150px;
+  height: 194px;
   padding: 0 150px 0 20px;
   display: flex;
   flex-direction: column;
@@ -63,6 +70,7 @@ const Container = styled.div`
   gap: 12px;
   @media ${({ theme }) => theme.size.web} {
     padding: 0;
+    height: 162px;
     align-items: center;
   }
 `;
@@ -71,7 +79,7 @@ const WebContainer = styled.div`
   @media ${({ theme }) => theme.size.web} {
     display: flex;
     width: 1200px;
-    height: 80px;
+    height: 92px;
     justify-content: space-between;
     align-items: flex-end;
     padding: 0 10px;
