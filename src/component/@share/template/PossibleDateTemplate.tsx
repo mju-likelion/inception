@@ -41,11 +41,11 @@ export const PossibleDateTemplate = ({
 
   const getPossibleMonth = (selectableDates: string[]) => {
     const startMonth = String(
-      Number(getMinDate(selectableDates).split('-')[1])
+      +getMinDate(selectableDates).split('-')[1]
     ).concat('월');
-    const endMonth = String(
-      Number(getMaxDate(selectableDates).split('-')[1])
-    ).concat('월');
+    const endMonth = String(+getMaxDate(selectableDates).split('-')[1]).concat(
+      '월'
+    );
 
     return startMonth !== endMonth
       ? [startMonth, endMonth].join(' - ')
