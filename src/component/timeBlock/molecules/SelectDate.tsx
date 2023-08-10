@@ -39,7 +39,6 @@ export const SelectDate = ({
 
 const SelectDateBlock = styled.div`
   display: flex;
-  width: 144px;
   height: 24px;
   justify-content: center;
   align-items: center;
