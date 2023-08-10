@@ -57,13 +57,23 @@ export const PossibleDateTemplate = ({
         ) : (
           <LoadingIcon />
         )}
-        <Information
-          icon={CalendarIcon}
-          title="선택 가능 기간"
-          content={(selectableDates || [])
-            .map((date) => `${+date.split('-')[1]}월`)
-            .join(' - ')}
-        />
+        {selectableDates ? (
+          <Information
+            icon={CalendarIcon}
+            title="선택 가능 기간"
+            content={
+              getMinDate(selectableDates).split('-')[1] !==
+              getMaxDate(selectableDates).split('-')[1]
+                ? [
+                    Number(getMinDate(selectableDates).split('-')[1]) + '월',
+                    Number(getMaxDate(selectableDates).split('-')[1]) + '월',
+                  ].join(' - ')
+                : Number(getMinDate(selectableDates).split('-')[1]) + '월'
+            }
+          />
+        ) : (
+          <LoadingIcon />
+        )}
       </Content>
       <Bottom>
         <ButtonLarge
