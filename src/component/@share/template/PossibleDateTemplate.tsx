@@ -47,8 +47,7 @@ export const PossibleDateTemplate = ({
       Number(getMaxDate(selectableDates).split('-')[1])
     ).concat('월');
 
-    return getMinDate(selectableDates).split('-')[1] !==
-      getMaxDate(selectableDates).split('-')[1]
+    return startMonth !== endMonth
       ? [startMonth, endMonth].join(' - ')
       : startMonth;
   };
