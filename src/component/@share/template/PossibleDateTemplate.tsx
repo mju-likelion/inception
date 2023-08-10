@@ -39,6 +39,20 @@ export const PossibleDateTemplate = ({
     setDateList(activeList);
   };
 
+  const getPossibleMonth = (selectableDates: string[]) => {
+    const startMonth = String(
+      Number(getMinDate(selectableDates).split('-')[1])
+    ).concat('월');
+    const endMonth = String(
+      Number(getMaxDate(selectableDates).split('-')[1])
+    ).concat('월');
+
+    return getMinDate(selectableDates).split('-')[1] !==
+      getMaxDate(selectableDates).split('-')[1]
+      ? [startMonth, endMonth].join(' - ')
+      : startMonth;
+  };
+
   return (
     <Wrapper>
       <Header>
@@ -61,15 +75,7 @@ export const PossibleDateTemplate = ({
           <Information
             icon={CalendarIcon}
             title="선택 가능 기간"
-            content={
-              getMinDate(selectableDates).split('-')[1] !==
-              getMaxDate(selectableDates).split('-')[1]
-                ? [
-                    Number(getMinDate(selectableDates).split('-')[1]) + '월',
-                    Number(getMaxDate(selectableDates).split('-')[1]) + '월',
-                  ].join(' - ')
-                : Number(getMinDate(selectableDates).split('-')[1]) + '월'
-            }
+            content={getPossibleMonth(selectableDates)}
           />
         ) : (
           <LoadingIcon />
