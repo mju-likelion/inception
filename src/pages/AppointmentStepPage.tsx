@@ -25,7 +25,7 @@ export const AppointmentStepPage = () => {
 
   useEffect(() => {
     (async () => {
-      const res = await viewRoom(params.code);
+      const res = await viewRoom({ id: params.code ?? '' });
       setRoomInfo(res);
 
       window.addEventListener('beforeunload', preventRefresh);
