@@ -1,7 +1,7 @@
 import { TimeBox } from '@/component/timeBlock/template';
 import { Information, TitleBox } from '@/component/@share/molecules';
 import calendar from '@/assets/images/Calendar.svg';
-import { ButtonLarge } from '@/component/@share';
+import { ButtonLarge, LoadingIcon } from '@/component/@share';
 import { styled } from 'styled-components';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -31,11 +31,15 @@ export const PossibleTimeTemplate = ({
         <TitleBoxBlock>
           <TitleBox content="가능한 시간들을 선택해주세요" step={2} />
         </TitleBoxBlock>
-        <TimeBox
-          onSetActiveButton={setIsActive}
-          startTime={startTime}
-          endTime={endTime}
-        />
+        {startTime ? (
+          <TimeBox
+            onSetActiveButton={setIsActive}
+            startTime={startTime}
+            endTime={endTime}
+          />
+        ) : (
+          <LoadingIcon />
+        )}
         <InformationBlock>
           <Information
             icon={calendar}

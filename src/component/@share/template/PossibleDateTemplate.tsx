@@ -5,7 +5,11 @@ import { styled } from 'styled-components';
 import CalendarIcon from '@/assets/images/Calendar.svg';
 import { getMaxDate, getMinDate } from '@/util';
 import { theme } from '@/globalStyle';
-
+import { calendarState } from '@/store';
+import { useRecoilValue } from 'recoil';
+import { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { dateListState } from '@/store';
 interface Props {
   buttonClick: () => void;
   selectableDates?: string[];
@@ -15,6 +19,26 @@ export const PossibleDateTemplate = ({
   buttonClick,
   selectableDates,
 }: Props) => {
+  const [isActiveButton, setIsActiveButton] = useState(true);
+  const calendarData = useRecoilValue(calendarState);
+  const [dateList, setDateList] = useRecoilState(dateListState);
+
+  useEffect(() => {
+    calendarData.every(function (date) {
+      return date.activeStatus !== 'active';
+    })
+      ? setIsActiveButton(true)
+      : setIsActiveButton(false);
+  }, [calendarData]);
+
+  const setActiveDatesList = () => {
+    const activeList: string[] = [];
+    calendarData.map(
+      (data) => data.activeStatus === 'active' && activeList.push(data.date)
+    );
+    setDateList(activeList);
+  };
+
   return (
     <Wrapper>
       <Header>
@@ -42,7 +66,15 @@ export const PossibleDateTemplate = ({
         />
       </Content>
       <Bottom>
-        <ButtonLarge onClick={buttonClick}>다음으로</ButtonLarge>
+        <ButtonLarge
+          onClick={() => {
+            buttonClick();
+            setActiveDatesList();
+          }}
+          isDisabled={isActiveButton}
+        >
+          다음으로
+        </ButtonLarge>
       </Bottom>
     </Wrapper>
   );
