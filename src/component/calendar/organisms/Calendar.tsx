@@ -17,12 +17,14 @@ import { promiseResultMockData } from '../data';
 import padStart from 'lodash/padStart';
 import { useRecoilState } from 'recoil';
 import { calendarState } from '@/store/atoms';
+import { getDatesToCalendarData } from '@/util/getDatesToCalendarData';
 
 interface CalendarProps {
   viewType: ViewType;
   /** @example '2023-06-20' */
   minDate?: string;
   maxDate?: string;
+  selectableDates?: string[];
 }
 
 type GetActiveStatus = (
@@ -52,7 +54,12 @@ interface ICalendarTouchMoveDrag {
   setCurrentTouchTargetText: (target: string) => void;
 }
 
-export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
+export const Calendar = ({
+  viewType,
+  minDate,
+  maxDate,
+  selectableDates,
+}: CalendarProps) => {
   const minimumDate = minDate ?? dateFormatToString(new Date());
   const maximumDate =
     maxDate ?? dateFormatToString(calcDateFewMonth(new Date(), 5)); // 최대 180일
@@ -157,6 +164,7 @@ export const Calendar = ({ viewType, minDate, maxDate }: CalendarProps) => {
           checkLimitDate={checkLimitDate}
           changedDateColor={changedDateColor}
           calendarTouchMoveDrag={calendarTouchMoveDrag}
+          selectableDates={selectableDates || []}
         />
       );
     default:
@@ -370,15 +378,17 @@ const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
 
 interface SelectModeProps extends BaseCalendarModeProps {
   calendarTouchMoveDrag: (param: ICalendarTouchMoveDrag) => void;
+  selectableDates: string[];
 }
 
 const SelectMode = ({
   checkLimitDate,
   changedDateColor,
   calendarTouchMoveDrag,
+  selectableDates,
 }: SelectModeProps) => {
-  /** @TODO 데이터 패치 로직으로 변경 필요 */
-  const { minDate, maxDate } = resolvePromiseResult(promiseResultMockData);
+  const resultData = getDatesToCalendarData(selectableDates);
+  const { minDate, maxDate } = resolvePromiseResult(resultData);
 
   /** 현재 날짜 */
   const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
@@ -434,7 +444,8 @@ const SelectMode = ({
     const changedCalendar = getCalendarData(
       changedYear,
       changedMonth,
-      'select'
+      'select',
+      resultData
     );
 
     setCurrentDate([changedYear, changedMonth]);
@@ -454,7 +465,7 @@ const SelectMode = ({
   };
 
   useEffect(() => {
-    setCalendar(getCalendarData(minDate[0], minDate[1], 'select'));
+    setCalendar(getCalendarData(minDate[0], minDate[1], 'select', resultData));
   }, []);
 
   /** @TODO GridFooter는 result === on 일때만 보여준다. GridHeader, GridFooter는 molecules로 관리해야될 것 같다. */
