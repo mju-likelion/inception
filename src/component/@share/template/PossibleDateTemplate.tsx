@@ -1,21 +1,51 @@
 import { Calendar } from '@/component';
-import { ButtonLarge } from '@/component/@share';
+import { ButtonLarge, LoadingIcon } from '@/component/@share';
 import { Information, ProgressBar } from '@/component/@share/molecules';
 import { styled } from 'styled-components';
 import CalendarIcon from '@/assets/images/Calendar.svg';
 import { getMaxDate, getMinDate } from '@/util';
 import { theme } from '@/globalStyle';
-
+import { calendarState } from '@/store';
+import { useRecoilValue } from 'recoil';
+import { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { dateListState } from '@/store';
 interface Props {
   buttonClick: () => void;
+  selectableDates?: string[];
 }
 
-export const PossibleDateTemplate = ({ buttonClick }: Props) => {
-  const selectableDates = ['2023-06', '2023-07', '2023-08']; // @TODO 더미데이터. 서버에서 선택 가능한 시간들 가져와 보여주기
+export const PossibleDateTemplate = ({
+  buttonClick,
+  selectableDates,
+}: Props) => {
+  const [isActiveButton, setIsActiveButton] = useState(true);
+  const calendarData = useRecoilValue(calendarState);
+  const [dateList, setDateList] = useRecoilState(dateListState);
 
-  const onClick = (tab: string) => {
-    // @TODO tab에 따라 라우팅하기
-    console.log('onClick!!');
+  useEffect(() => {
+    calendarData.every(function (date) {
+      return date.activeStatus !== 'active';
+    })
+      ? setIsActiveButton(true)
+      : setIsActiveButton(false);
+  }, [calendarData]);
+
+  const setActiveDatesList = () => {
+    const activeList: string[] = [];
+    calendarData.map(
+      (data) => data.activeStatus === 'active' && activeList.push(data.date)
+    );
+    setDateList(activeList);
+  };
+
+  const getPossibleMonth = (selectableDates: string[]) => {
+    const startMonth = `${+getMinDate(selectableDates).split('-')[1]}월`;
+    const endMonth = `${+getMaxDate(selectableDates).split('-')[1]}월`;
+
+    return startMonth !== endMonth
+      ? [startMonth, endMonth].join(' - ')
+      : startMonth;
   };
 
   return (
@@ -25,22 +55,37 @@ export const PossibleDateTemplate = ({ buttonClick }: Props) => {
         <Body $color="gray1">가능한 날짜들을 선택해주세요.</Body>
       </Header>
       <Content>
-        <Calendar
-          viewType="select"
-          // @TODO 선택 가능 기간이 어떻게 들어오는지 판단 필요
-          minDate={getMinDate(selectableDates)}
-          maxDate={getMaxDate(selectableDates)}
-        />
-        <Information
-          icon={CalendarIcon}
-          title="선택 가능 기간"
-          content={selectableDates
-            .map((date) => `${+date.split('-')[1]}월`)
-            .join(', ')}
-        />
+        {/* selectableDates가 빈 값이라면 캘린더를 렌더링하지 않는다. */}
+        {selectableDates ? (
+          <Calendar
+            viewType="select"
+            minDate={getMinDate(selectableDates)}
+            maxDate={getMaxDate(selectableDates)}
+            selectableDates={selectableDates}
+          />
+        ) : (
+          <LoadingIcon />
+        )}
+        {selectableDates ? (
+          <Information
+            icon={CalendarIcon}
+            title="선택 가능 기간"
+            content={getPossibleMonth(selectableDates)}
+          />
+        ) : (
+          <LoadingIcon />
+        )}
       </Content>
       <Bottom>
-        <ButtonLarge onClick={buttonClick}>다음으로</ButtonLarge>
+        <ButtonLarge
+          onClick={() => {
+            buttonClick();
+            setActiveDatesList();
+          }}
+          isDisabled={isActiveButton}
+        >
+          다음으로
+        </ButtonLarge>
       </Bottom>
     </Wrapper>
   );
