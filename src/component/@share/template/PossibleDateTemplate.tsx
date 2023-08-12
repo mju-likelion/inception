@@ -57,21 +57,19 @@ export const PossibleDateTemplate = ({
       <Content>
         {/* selectableDates가 빈 값이라면 캘린더를 렌더링하지 않는다. */}
         {selectableDates ? (
-          <Calendar
-            viewType="select"
-            minDate={getMinDate(selectableDates)}
-            maxDate={getMaxDate(selectableDates)}
-            selectableDates={selectableDates}
-          />
-        ) : (
-          <LoadingIcon />
-        )}
-        {selectableDates ? (
-          <Information
-            icon={CalendarIcon}
-            title="선택 가능 기간"
-            content={getPossibleMonth(selectableDates)}
-          />
+          <>
+            <Calendar
+              viewType="select"
+              minDate={getMinDate(selectableDates)}
+              maxDate={getMaxDate(selectableDates)}
+              selectableDates={selectableDates}
+            />
+            <Information
+              icon={CalendarIcon}
+              title="선택 가능 기간"
+              content={getPossibleMonth(selectableDates)}
+            />
+          </>
         ) : (
           <LoadingIcon />
         )}
