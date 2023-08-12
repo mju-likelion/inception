@@ -10,7 +10,9 @@ export const DuringDate = ({ start, end }: DuringDateProps) => {
   const endDate = getDateTypeToString({ date: end });
   return (
     <DuringDateBlock>
-      {startDate} - {endDate}
+      {startDate === endDate
+        ? startDate
+        : startDate.concat(' - ').concat(endDate)}
     </DuringDateBlock>
   );
 };
