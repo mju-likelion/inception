@@ -8,8 +8,6 @@ import { theme } from '@/globalStyle';
 import { calendarState } from '@/store';
 import { useRecoilValue } from 'recoil';
 import { useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import { dateListState } from '@/store';
 interface Props {
   buttonClick: () => void;
   selectableDates?: string[];
@@ -21,7 +19,6 @@ export const PossibleDateTemplate = ({
 }: Props) => {
   const [isActiveButton, setIsActiveButton] = useState(true);
   const calendarData = useRecoilValue(calendarState);
-  const [dateList, setDateList] = useRecoilState(dateListState);
 
   useEffect(() => {
     calendarData.every(function (date) {
@@ -36,7 +33,6 @@ export const PossibleDateTemplate = ({
     calendarData.map(
       (data) => data.activeStatus === 'active' && activeList.push(data.date)
     );
-    setDateList(activeList);
   };
 
   const getPossibleMonth = (selectableDates: string[]) => {
@@ -57,21 +53,19 @@ export const PossibleDateTemplate = ({
       <Content>
         {/* selectableDates가 빈 값이라면 캘린더를 렌더링하지 않는다. */}
         {selectableDates ? (
-          <Calendar
-            viewType="select"
-            minDate={getMinDate(selectableDates)}
-            maxDate={getMaxDate(selectableDates)}
-            selectableDates={selectableDates}
-          />
-        ) : (
-          <LoadingIcon />
-        )}
-        {selectableDates ? (
-          <Information
-            icon={CalendarIcon}
-            title="선택 가능 기간"
-            content={getPossibleMonth(selectableDates)}
-          />
+          <>
+            <Calendar
+              viewType="select"
+              minDate={getMinDate(selectableDates)}
+              maxDate={getMaxDate(selectableDates)}
+              selectableDates={selectableDates}
+            />
+            <Information
+              icon={CalendarIcon}
+              title="선택 가능 기간"
+              content={getPossibleMonth(selectableDates)}
+            />
+          </>
         ) : (
           <LoadingIcon />
         )}
