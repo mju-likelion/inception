@@ -10,9 +10,15 @@ import { useEffect, useState } from 'react';
 
 interface TimeBoxProps {
   onSetActiveButton: React.Dispatch<React.SetStateAction<boolean>>;
+  startTime: string;
+  endTime: string;
 }
 
-export const TimeBox = ({ onSetActiveButton }: TimeBoxProps) => {
+export const TimeBox = ({
+  onSetActiveButton,
+  startTime,
+  endTime,
+}: TimeBoxProps) => {
   const [nowPage, setNowPage] = useState(1);
   const [activeDate, setActiveDate] = useState<boolean[]>([]);
 
@@ -33,7 +39,7 @@ export const TimeBox = ({ onSetActiveButton }: TimeBoxProps) => {
       />
       <TimeBoxBlock>
         <TimeBoxContent>
-          <TimeList start="9:00" end="17:00" />
+          <TimeList start={startTime} end={endTime} />
           <TimeBlockGroup page={nowPage} onSetActiveDate={setActiveDate} />
         </TimeBoxContent>
       </TimeBoxBlock>

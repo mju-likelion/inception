@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import { TabBar } from '@/component/@share';
 import {
   LoginMasterTemplate,
@@ -8,11 +8,15 @@ import {
 } from '@/component/@share/template';
 import { RedirectPage } from '@/pages';
 import { TAB_ITEMS } from '@/pages/data';
+import { viewRoom } from '@/util/api';
+import { ViewRoomResponse } from '@/util/api';
 
 export const AppointmentStepPage = () => {
   const [searchParams] = useSearchParams();
   const step = searchParams.get('step');
   const navigate = useNavigate();
+  const params = useParams();
+  const [roomInfo, setRoomInfo] = useState<ViewRoomResponse>();
 
   const preventRefresh = (e: BeforeUnloadEvent) => {
     e.preventDefault();
@@ -20,10 +24,13 @@ export const AppointmentStepPage = () => {
   };
 
   useEffect(() => {
-    (() => {
+    (async () => {
+      const res = await viewRoom({ id: params.code ?? '' });
+      setRoomInfo(res);
+
       window.addEventListener('beforeunload', preventRefresh);
       if (step === '2' || step === '3') {
-        navigate('/appointment?step=1');
+        navigate(`/appointment/${params.code}?step=1`);
       }
     })();
     return () => {
@@ -35,7 +42,9 @@ export const AppointmentStepPage = () => {
     if (step === '3') {
       navigate('/result');
     } else {
-      step && navigate(`/appointment?step=${+step + 1}`);
+      roomInfo?.dateOnly
+        ? step && navigate(`/appointment/${params.code}?step=3`)
+        : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
     }
   };
 
@@ -46,9 +55,20 @@ export const AppointmentStepPage = () => {
   const renderPage = () => {
     switch (step) {
       case '1':
-        return <PossibleDateTemplate buttonClick={handleButtonClick} />;
+        return (
+          <PossibleDateTemplate
+            buttonClick={handleButtonClick}
+            selectableDates={roomInfo?.dates}
+          />
+        );
       case '2':
-        return <PossibleTimeTemplate buttonClick={handleButtonClick} />;
+        return (
+          <PossibleTimeTemplate
+            buttonClick={handleButtonClick}
+            startTime={roomInfo?.startTime as string}
+            endTime={roomInfo?.endTime as string}
+          />
+        );
       case '3':
         return <LoginMasterTemplate buttonClick={handleButtonClick} />;
       default:

@@ -1,7 +1,7 @@
 import { TimeBox } from '@/component/timeBlock/template';
 import { Information, TitleBox } from '@/component/@share/molecules';
 import calendar from '@/assets/images/Calendar.svg';
-import { ButtonLarge } from '@/component/@share';
+import { ButtonLarge, LoadingIcon } from '@/component/@share';
 import { styled } from 'styled-components';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -9,9 +9,15 @@ import { isMouseDownState } from '@/store/atoms';
 
 interface Props {
   buttonClick: () => void;
+  startTime: string;
+  endTime: string;
 }
 
-export const PossibleTimeTemplate = ({ buttonClick }: Props) => {
+export const PossibleTimeTemplate = ({
+  buttonClick,
+  startTime,
+  endTime,
+}: Props) => {
   const [isActive, setIsActive] = useState(true);
   const [isMouseDown, setIsMouseDown] = useRecoilState(isMouseDownState);
 
@@ -25,12 +31,20 @@ export const PossibleTimeTemplate = ({ buttonClick }: Props) => {
         <TitleBoxBlock>
           <TitleBox content="가능한 시간들을 선택해주세요" step={2} />
         </TitleBoxBlock>
-        <TimeBox onSetActiveButton={setIsActive} />
+        {startTime ? (
+          <TimeBox
+            onSetActiveButton={setIsActive}
+            startTime={startTime}
+            endTime={endTime}
+          />
+        ) : (
+          <LoadingIcon />
+        )}
         <InformationBlock>
           <Information
             icon={calendar}
             title="선택 가능 시간"
-            content="09:00 - 17:00"
+            content={startTime + ' - ' + endTime}
           />
         </InformationBlock>
         <ButtonBlock>
