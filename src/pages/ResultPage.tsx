@@ -5,18 +5,26 @@ import { ButtonSmall, TabBar, Toast } from '@/component/@share';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { ToastType } from '@/types/Toast';
 import { toastState, currentCopyType } from '@/store';
 import { useRecoilState } from 'recoil';
+import { resultRoom } from '@/util/api';
+import { appointmentResultData } from '@/store/atoms/Request';
 
 export const ResultPage = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
   const [urlToastType, setUrlToastType] = useState<ToastType>('error');
   const [codeToastType, setCodeToastType] = useState<ToastType>('error');
   const [copyType, setCopyType] = useRecoilState(currentCopyType);
+
+  // 약속 정보
+  const [appointmentData, setAppointmentData] = useRecoilState(
+    appointmentResultData
+  );
 
   const onClick = (tab: string) => {
     tab === TAB_ITEMS[0].id && navigate('/');
@@ -33,6 +41,18 @@ export const ResultPage = () => {
     setCodeToastType(copyResult);
     setCopyType('code');
   };
+
+  useEffect(() => {
+    (async () => {
+      const code = searchParams.get('code');
+      let data;
+      code && (data = await resultRoom({ id: code }));
+
+      if (data) {
+        setAppointmentData(data);
+      }
+    })();
+  }, []);
 
   return (
     <>

@@ -49,12 +49,15 @@ export const getCalendarData = (
       activeStatus = 'disabled';
     }
 
+    if (resultData?.count && resultData.count <= 2) {
+      activeStatus = 'disabled';
+    }
+
     return {
       date: dateString,
       day: convertDayNumberToString(day),
       activeStatus: activeStatus,
       count: resultData?.count,
-      selectUsers: resultData?.users,
     } as CalendarData;
   });
 
@@ -110,7 +113,15 @@ export const getMinDate = (dates: string[]) => {
 };
 
 /** 서버 결과를 UI 정보에 맞게 맵핑 */
-export const resolvePromiseResult = (data: PromiseResultData[]) => {
+export const resolvePromiseResult = (data?: PromiseResultData[]) => {
+  if (!data) {
+    const date = dateFormatToString(new Date());
+    return {
+      minDate: date.split('-'),
+      maxDate: date.split('-'),
+    };
+  }
+
   const selectedDate = data.map((item) => item.date);
 
   let minTime = Infinity;
@@ -177,4 +188,19 @@ const getCountOfMostSelectedDate = (dateOfResult: PromiseResultData[]) => {
 
   // return mostSelectedDates;
   return maxCount;
+};
+
+export const mergeEnableTimesToDates = (
+  dates: string[],
+  enableTimes: { [key: string]: number }
+): PromiseResultData[] => {
+  const resultData: PromiseResultData[] = dates.map((date) => {
+    return {
+      date: date,
+      status: 'default',
+      count: enableTimes[date],
+    };
+  });
+
+  return resultData;
 };
