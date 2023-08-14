@@ -19,13 +19,11 @@ export interface ModifyScheduleResponse {
 }
 
 export const modifySchedule = async (
+  id: string,
   params: ModifyScheduleRequest
 ): Promise<ModifyScheduleResponse | undefined> => {
   try {
-    const res = (await Axios.patch(
-      '/api/users',
-      params
-    )) as ModifyScheduleResponse;
+    const res = (await Axios.patch(`/${id}`, params)) as ModifyScheduleResponse;
     return res;
   } catch (e) {
     if (e instanceof Error) {
