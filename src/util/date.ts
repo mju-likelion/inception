@@ -1,10 +1,5 @@
 /* date = 일자 데이터, day = 요일 데이터 */
-import {
-  ActiveStatus,
-  CalendarData,
-  PromiseResultData,
-  ViewType,
-} from '@/types';
+import { ActiveStatus, CalendarData, SelectedDate, ViewType } from '@/types';
 import padStart from 'lodash/padStart';
 
 /** 월별 캘린더 기본 정보를 반환한다. */
@@ -12,58 +7,61 @@ export const getCalendarData = (
   year: string,
   month: string,
   viewType: ViewType,
-  promiseResult?: PromiseResultData[]
+  appointmentResult?: SelectedDate[]
 ): CalendarData[] => {
   const days = calcDaysByYearMonth(year, month);
 
   // 가장 많이 선택된 횟수로 status 구하기 위해 사용
   const mostSelectedCount =
-    promiseResult && getCountOfMostSelectedDate(promiseResult);
+    appointmentResult && getCountOfMostSelectedDate(appointmentResult);
 
-  const datas = days.map((date) => {
-    const dateString = `${year}-${padStart(month, 2, '0')}-${date}`;
+  const calendarDatas = days.map((day) => {
+    const date = `${year}-${padStart(month, 2, '0')}-${day}`;
     let activeStatus: ActiveStatus = 'default';
 
-    const resultData = promiseResult?.find(
-      (result) => result.date === dateString
+    const dataOfSelectedDate = appointmentResult?.find(
+      (result) => result.date === date
     );
 
-    if (
-      viewType === 'result' &&
-      resultData &&
-      mostSelectedCount === resultData.count
-    ) {
-      activeStatus = 'active';
+    if (viewType === 'result') {
+      // 가장 많이 선택된 값에 하이라이트
+      if (
+        dataOfSelectedDate &&
+        mostSelectedCount === dataOfSelectedDate.count
+      ) {
+        activeStatus = 'active';
+      }
+
+      // 선택되었지만 2개 이하로 선택받았는지 확인
+      if (
+        dataOfSelectedDate?.count === undefined ||
+        dataOfSelectedDate.count <= 2
+      ) {
+        activeStatus = 'disabled';
+      }
     }
 
     // 현재 날짜의 이전 날짜는 disable 처리
     if (
-      viewType !== 'result' &&
-      new Date(dateString) < new Date(dateFormatToString(new Date()))
+      viewType === 'result' &&
+      new Date(date) < new Date(dateFormatToString(new Date()))
     ) {
       activeStatus = 'disabled';
     }
 
-    if (promiseResult && !resultData) {
-      activeStatus = 'disabled';
-    }
-
-    // 선택되었지만 2개 이하로 선택받았는지 확인
-    if (resultData?.count === undefined || resultData.count <= 2) {
+    if (appointmentResult && !dataOfSelectedDate) {
       activeStatus = 'disabled';
     }
 
     return {
-      date: dateString,
-      day: convertDayNumberToString(
-        new Date(+year, +month - 1, +date).getDay()
-      ),
+      date: date,
+      day: convertDayNumberToString(new Date(+year, +month - 1, +day).getDay()),
       activeStatus: activeStatus,
-      count: resultData?.count,
+      count: dataOfSelectedDate?.count,
     } as CalendarData;
   });
 
-  return datas;
+  return calendarDatas;
 };
 
 /** 캘린더 날짜가 겹치는지 판별 */
@@ -115,7 +113,7 @@ export const getMinDate = (dates: string[]) => {
 };
 
 /** 서버 결과를 UI 정보에 맞게 맵핑 */
-export const resolvePromiseResult = (data?: PromiseResultData[]) => {
+export const resolvePromiseResult = (data?: SelectedDate[]) => {
   if (!data) {
     const date = dateFormatToString(new Date());
     return {
@@ -177,7 +175,7 @@ const convertDayNumberToString = (dayNumber: number): string => {
   }
 };
 
-const getCountOfMostSelectedDate = (dateOfResult: PromiseResultData[]) => {
+const getCountOfMostSelectedDate = (dateOfResult: SelectedDate[]) => {
   let maxCount = 0;
 
   for (const date of dateOfResult) {
@@ -195,8 +193,8 @@ const getCountOfMostSelectedDate = (dateOfResult: PromiseResultData[]) => {
 export const mergeEnableTimesToDates = (
   dates: string[],
   enableTimes: { [key: string]: number }
-): PromiseResultData[] => {
-  const resultData: PromiseResultData[] = dates.map((date) => {
+): SelectedDate[] => {
+  const resultData: SelectedDate[] = dates.map((date) => {
     return {
       date: date,
       status: 'default',

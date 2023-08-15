@@ -1,6 +1,6 @@
-import { PromiseResultData } from '@/types';
+import { SelectedDate } from '@/types';
 
-export const promiseResultMockData: PromiseResultData[] = [
+export const promiseResultMockData: SelectedDate[] = [
   {
     date: '2023-07-11',
     status: 'default',
