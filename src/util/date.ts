@@ -21,7 +21,6 @@ export const getCalendarData = (
     promiseResult && getCountOfMostSelectedDate(promiseResult);
 
   const datas = days.map((date) => {
-    const day = new Date(+year, +month - 1, +date).getDay();
     const dateString = `${year}-${padStart(month, 2, '0')}-${date}`;
     let activeStatus: ActiveStatus = 'default';
 
@@ -49,13 +48,16 @@ export const getCalendarData = (
       activeStatus = 'disabled';
     }
 
-    if (resultData?.count && resultData.count <= 2) {
+    // 선택되었지만 2개 이하로 선택받았는지 확인
+    if (resultData?.count === undefined || resultData.count <= 2) {
       activeStatus = 'disabled';
     }
 
     return {
       date: dateString,
-      day: convertDayNumberToString(day),
+      day: convertDayNumberToString(
+        new Date(+year, +month - 1, +date).getDay()
+      ),
       activeStatus: activeStatus,
       count: resultData?.count,
     } as CalendarData;
