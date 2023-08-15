@@ -23,7 +23,7 @@ export interface DateRangeLimit {
 
 export type ViewType = 'result' | 'create' | 'select';
 
-export interface PromiseResultData {
+export interface SelectedDate {
   date: string; // '2023-01-11'
   status: ActiveStatus;
   count?: number; // 3
