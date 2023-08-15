@@ -5,7 +5,7 @@ import { ButtonSmall, TabBar, Toast } from '@/component/@share';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ToastType } from '@/types/Toast';
 import { toastState, currentCopyType } from '@/store';
@@ -15,7 +15,7 @@ import { appointmentResultData } from '@/store/atoms/Request';
 
 export const ResultPage = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const location = useLocation();
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
   const [urlToastType, setUrlToastType] = useState<ToastType>('error');
   const [codeToastType, setCodeToastType] = useState<ToastType>('error');
@@ -44,7 +44,7 @@ export const ResultPage = () => {
 
   useEffect(() => {
     (async () => {
-      const code = searchParams.get('code');
+      const code = new URLSearchParams(location.search).get('code');
       let data;
       code && (data = await resultRoom({ id: code }));
 
@@ -83,13 +83,15 @@ export const ResultPage = () => {
             />
             <Information
               title="약속방 링크"
-              content="https://www.google.co.kr/afadsfadsfadsfadsf"
+              content={window.location.href} // url 전체를 가져오기 위해 window 사용
               isEnabled={true}
               clickButton={copyUrl}
             />
             <Information
               title="약속방 입장 코드"
-              content="A1B1C1"
+              content={
+                new URLSearchParams(location.search).get('code') ?? undefined
+              }
               isEnabled={true}
               clickButton={copyCode}
             />
