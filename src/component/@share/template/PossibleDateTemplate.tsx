@@ -8,6 +8,8 @@ import { theme } from '@/globalStyle';
 import { calendarState } from '@/store';
 import { useRecoilValue } from 'recoil';
 import { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { dateListState } from '@/store';
 interface Props {
   buttonClick: () => void;
   selectableDates?: string[];
@@ -19,6 +21,7 @@ export const PossibleDateTemplate = ({
 }: Props) => {
   const [isActiveButton, setIsActiveButton] = useState(true);
   const calendarData = useRecoilValue(calendarState);
+  const [dateList, setDateList] = useRecoilState(dateListState);
 
   useEffect(() => {
     calendarData.every(function (date) {
@@ -33,6 +36,7 @@ export const PossibleDateTemplate = ({
     calendarData.map(
       (data) => data.activeStatus === 'active' && activeList.push(data.date)
     );
+    setDateList(activeList);
   };
 
   const getPossibleMonth = (selectableDates: string[]) => {
