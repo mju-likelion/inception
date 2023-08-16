@@ -11,7 +11,14 @@ import { TAB_ITEMS } from '@/pages/data';
 import { viewRoom } from '@/util/api';
 import { ViewRoomResponse } from '@/util/api';
 import { useRecoilValue } from 'recoil';
-import { dateListState, timeListState, timeTableState } from '@/store';
+import {
+  calendarState,
+  dateListState,
+  timeListState,
+  timeTableState,
+} from '@/store';
+import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
+import { registerSchedule } from '@/util/api/user';
 
 export const AppointmentStepPage = () => {
   const [searchParams] = useSearchParams();
@@ -20,9 +27,13 @@ export const AppointmentStepPage = () => {
   const params = useParams();
   const [roomInfo, setRoomInfo] = useState<ViewRoomResponse>();
 
+  const calendar = useRecoilValue(calendarState);
   const timeBlock = useRecoilValue(timeTableState);
   const dateList = useRecoilValue(dateListState);
   const timeList = useRecoilValue(timeListState);
+  const nickname = useRecoilValue(signUpNickname);
+  const password = useRecoilValue(signUpPassword);
+
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
 
   const getDatesAsc = (dateList: string[]) => {
@@ -33,6 +44,16 @@ export const AppointmentStepPage = () => {
       });
     });
   };
+
+  useMemo(() => {
+    if (roomInfo?.dateOnly) {
+      return setSelectedDates(
+        calendar
+          .filter((state) => state.activeStatus === 'active')
+          .map((calendarState) => calendarState.date)
+      );
+    }
+  }, [calendar]);
 
   useMemo(() => {
     selectedDates.splice(0);
@@ -52,10 +73,6 @@ export const AppointmentStepPage = () => {
   };
 
   useEffect(() => {
-    console.log(selectedDates);
-  }, [timeBlock]);
-
-  useEffect(() => {
     (async () => {
       const res = await viewRoom({ id: params.code ?? '' });
       setRoomInfo(res);
@@ -70,8 +87,20 @@ export const AppointmentStepPage = () => {
     };
   }, []);
 
+  const requestCreateUser = async () => {
+    const res = await registerSchedule({
+      roomCode: params.code ?? '',
+      username: nickname,
+      password: password,
+      dateOnly: roomInfo?.dateOnly ?? !!roomInfo?.dateOnly,
+      dates: selectedDates,
+    });
+    localStorage.setItem('token', res?.data.accessToken ?? '');
+  };
+
   const handleButtonClick = () => {
     if (step === '3') {
+      requestCreateUser();
       navigate('/result');
     } else {
       roomInfo?.dateOnly
