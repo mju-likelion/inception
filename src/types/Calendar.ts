@@ -3,7 +3,6 @@ export interface CalendarData {
   day: string;
   activeStatus: ActiveStatus;
   count?: number;
-  selectUsers?: string[];
 }
 
 /**
@@ -24,9 +23,8 @@ export interface DateRangeLimit {
 
 export type ViewType = 'result' | 'create' | 'select';
 
-export interface PromiseResultData {
+export interface SelectedDate {
   date: string; // '2023-01-11'
   status: ActiveStatus;
-  users?: string[]; // ['길동', '사자', '호랑이']
   count?: number; // 3
 }
