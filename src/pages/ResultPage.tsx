@@ -6,7 +6,7 @@ import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ToastType } from '@/types/Toast';
 import { toastState, currentCopyType } from '@/store';
 import { useRecoilState } from 'recoil';
@@ -20,6 +20,7 @@ export const ResultPage = () => {
   const [urlToastType, setUrlToastType] = useState<ToastType>('error');
   const [codeToastType, setCodeToastType] = useState<ToastType>('error');
   const [copyType, setCopyType] = useRecoilState(currentCopyType);
+  const code = useRef<string>(new URLSearchParams(location.search).get('code'));
 
   // 약속 정보
   const [appointmentData, setAppointmentData] = useRecoilState(
@@ -44,9 +45,8 @@ export const ResultPage = () => {
 
   useEffect(() => {
     (async () => {
-      const code = new URLSearchParams(location.search).get('code');
       let data;
-      code && (data = await resultRoom({ id: code }));
+      code.current && (data = await resultRoom({ id: code.current }));
 
       if (data) {
         setAppointmentData(data);
@@ -83,15 +83,13 @@ export const ResultPage = () => {
             />
             <Information
               title="약속방 링크"
-              content={window.location.href} // url 전체를 가져오기 위해 window 사용
+              content={`${window.location.origin}/appointment/${code.current}?step=1`} // url 전체를 가져오기 위해 window 사용
               isEnabled={true}
               clickButton={copyUrl}
             />
             <Information
               title="약속방 입장 코드"
-              content={
-                new URLSearchParams(location.search).get('code') ?? undefined
-              }
+              content={code.current ?? undefined}
               isEnabled={true}
               clickButton={copyCode}
             />
