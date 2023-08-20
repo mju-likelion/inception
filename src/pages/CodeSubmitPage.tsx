@@ -29,7 +29,7 @@ export const CodeSubmitPage = () => {
   };
 
   const handleButtonClick = () => {
-    navigate('/result');
+    navigate(`/result?code=${value}`);
   };
 
   useEffect(() => {

@@ -72,7 +72,7 @@ const DateComponent = ({
             {/* elementFromPoint를 찾을 때 기준점을 class === 'gridInner로 한다. */}
             <div className="gridItemInner">
               <p>{removeZeroPadDate}</p>
-              {viewType === 'result' && data.count && (
+              {viewType === 'result' && data.count && data.count >= 2 && (
                 <Count count={data.count} activeStatus={data.activeStatus} />
               )}
             </div>
