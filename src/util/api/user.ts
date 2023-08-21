@@ -31,7 +31,6 @@ export const registerSchedule = async (
 };
 
 export interface ModifyScheduleRequest {
-  username: string; // "유예빈"
   dateOnly: boolean; // false
   dates: string[]; // ["2023-07-20 15:00", "2023-07-21 15:00"]
 }
@@ -47,14 +46,15 @@ export interface ModifyScheduleResponse {
 }
 
 export const modifySchedule = async (
+  token: string,
   id: string,
-  params: ModifyScheduleRequest
+  modifyData: ModifyScheduleRequest
 ): Promise<ModifyScheduleResponse | undefined> => {
   try {
-    const res = (await Axios.patch(
-      `/api/users/${id}`,
-      params
-    )) as ModifyScheduleResponse;
+    const res = (await Axios.patch(`/api/users/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+      data: modifyData,
+    })) as ModifyScheduleResponse;
     return res;
   } catch (e) {
     if (e instanceof Error) {
