@@ -5,7 +5,7 @@ import { ButtonSmall, TabBar, Toast } from '@/component/@share';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ToastType } from '@/types/Toast';
 import { toastState, currentCopyType } from '@/store';
@@ -15,7 +15,7 @@ import { appointmentResultData } from '@/store/atoms/Request';
 
 export const ResultPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
   const [urlToastType, setUrlToastType] = useState<ToastType>('error');
   const [codeToastType, setCodeToastType] = useState<ToastType>('error');
@@ -44,7 +44,7 @@ export const ResultPage = () => {
 
   useEffect(() => {
     (async () => {
-      const code = new URLSearchParams(location.search).get('code');
+      const code = searchParams.get('code');
       let data;
       code && (data = await resultRoom({ id: code }));
 
@@ -83,15 +83,13 @@ export const ResultPage = () => {
             />
             <Information
               title="약속방 링크"
-              content={window.location.href} // url 전체를 가져오기 위해 window 사용
+              content="https://www.google.co.kr/afadsfadsfadsfadsf"
               isEnabled={true}
               clickButton={copyUrl}
             />
             <Information
               title="약속방 입장 코드"
-              content={
-                new URLSearchParams(location.search).get('code') ?? undefined
-              }
+              content="A1B1C1"
               isEnabled={true}
               clickButton={copyCode}
             />
