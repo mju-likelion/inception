@@ -1,6 +1,6 @@
-import { SelectedDate } from '@/types';
+import { PromiseResultData } from '@/types';
 
-export const getDatesToCalendarData = (dates: string[]): SelectedDate[] => {
+export const getDatesToCalendarData = (dates: string[]) => {
   const result = dates.map(
     (data) =>
       ({
@@ -8,8 +8,8 @@ export const getDatesToCalendarData = (dates: string[]): SelectedDate[] => {
         status: 'default',
         count: 0,
         users: [],
-      } as SelectedDate)
+      } as PromiseResultData)
   );
 
-  return result;
+  return result as PromiseResultData[];
 };

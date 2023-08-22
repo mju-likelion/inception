@@ -7,7 +7,7 @@ import {
   ActiveStatus,
   CalendarData,
   DateRangeLimit,
-  SelectedDate,
+  PromiseResultData,
   ViewType,
 } from '@/types';
 import {
@@ -306,7 +306,7 @@ const CreateMode = ({
 type ResultModeProps = BaseCalendarModeProps;
 const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
   const promiseResultData = useRecoilValue(appointmentResultData);
-  const [calendarData, setCalendarData] = useState<SelectedDate[]>();
+  const [calendarData, setCalendarData] = useState<PromiseResultData[]>();
   const [dateRange, setDateRange] = useState(resolvePromiseResult());
 
   const [currentDate, setCurrentDate] = useState(dateRange.minDate.slice(0, 2));
