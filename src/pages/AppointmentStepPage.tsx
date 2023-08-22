@@ -8,7 +8,8 @@ import {
 } from '@/component/@share/template';
 import { RedirectPage } from '@/pages';
 import { TAB_ITEMS } from '@/pages/data';
-import { viewRoom, ViewRoomResponse, registerSchedule } from '@/util/api';
+import { viewRoom } from '@/util/api';
+import { ViewRoomResponse } from '@/util/api';
 import { useRecoilValue } from 'recoil';
 import {
   calendarState,
@@ -17,7 +18,7 @@ import {
   timeTableState,
 } from '@/store';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
-import { getDatesAsc } from '@/util';
+import { registerSchedule } from '@/util/api/user';
 
 export const AppointmentStepPage = () => {
   const [searchParams] = useSearchParams();
@@ -34,6 +35,15 @@ export const AppointmentStepPage = () => {
   const password = useRecoilValue(signUpPassword);
 
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
+
+  const getDatesAsc = (dateList: string[]) => {
+    return dateList.sort((a, b) => {
+      return a.localeCompare(b, undefined, {
+        numeric: true,
+        sensitivity: 'base',
+      });
+    });
+  };
 
   useMemo(() => {
     if (roomInfo?.dateOnly) {
@@ -91,7 +101,7 @@ export const AppointmentStepPage = () => {
   const handleButtonClick = () => {
     if (step === '3') {
       requestCreateUser();
-      navigate(`/result?code=${params.code}`);
+      navigate('/result');
     } else {
       roomInfo?.dateOnly
         ? step && navigate(`/appointment/${params.code}?step=3`)
