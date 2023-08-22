@@ -22,7 +22,6 @@ export const CodeSubmitPage = () => {
   const onKeyUp = () => {
     const index = value.length;
     index > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
-    alert(index);
   };
 
   const onClick = (tab: string) => {
