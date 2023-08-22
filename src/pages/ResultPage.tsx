@@ -5,18 +5,27 @@ import { ButtonSmall, TabBar, Toast } from '@/component/@share';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 import { ToastType } from '@/types/Toast';
 import { toastState, currentCopyType } from '@/store';
 import { useRecoilState } from 'recoil';
+import { resultRoom } from '@/util/api';
+import { appointmentResultData } from '@/store/atoms/Request';
 
 export const ResultPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
   const [urlToastType, setUrlToastType] = useState<ToastType>('error');
   const [codeToastType, setCodeToastType] = useState<ToastType>('error');
   const [copyType, setCopyType] = useRecoilState(currentCopyType);
+  const code = useRef<string>(new URLSearchParams(location.search).get('code'));
+
+  // 약속 정보
+  const [appointmentData, setAppointmentData] = useRecoilState(
+    appointmentResultData
+  );
 
   const onClick = (tab: string) => {
     tab === TAB_ITEMS[0].id && navigate('/');
@@ -34,6 +43,21 @@ export const ResultPage = () => {
     setCopyType('code');
   };
 
+  const routeModifyPage = () => {
+    navigate(`/appointment/${code.current}?step=1`);
+  };
+
+  useEffect(() => {
+    (async () => {
+      let data;
+      code.current && (data = await resultRoom({ id: code.current }));
+
+      if (data) {
+        setAppointmentData(data);
+      }
+    })();
+  }, []);
+
   return (
     <>
       <TabBar onClick={onClick} tabItems={TAB_ITEMS} />
@@ -47,7 +71,7 @@ export const ResultPage = () => {
           </TitleBoxBlock>
           <Calendar viewType="result" />
           <GridFooter>
-            <ButtonSmall>일정 수정</ButtonSmall>
+            <ButtonSmall onClick={routeModifyPage}>일정 수정</ButtonSmall>
           </GridFooter>
           <InformationBlock>
             <Information
@@ -63,13 +87,13 @@ export const ResultPage = () => {
             />
             <Information
               title="약속방 링크"
-              content="https://www.google.co.kr/afadsfadsfadsfadsf"
+              content={`${window.location.origin}/appointment/${code.current}?step=1`} // url 전체를 가져오기 위해 window 사용
               isEnabled={true}
               clickButton={copyUrl}
             />
             <Information
               title="약속방 입장 코드"
-              content="A1B1C1"
+              content={code.current ?? undefined}
               isEnabled={true}
               clickButton={copyCode}
             />
