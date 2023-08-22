@@ -4,15 +4,13 @@ import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
 interface Props {
   buttonClick: () => void;
 }
 
 export const LoginMasterTemplate = ({ buttonClick }: Props) => {
-  const [nicknameValue, setNicknameValue] = useRecoilState(signUpNickname);
-  const [passwordValue, setPasswordValue] = useRecoilState(signUpPassword);
+  const [nicknameValue, setNicknameValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
   const [isButtonInactive, setIsButtonInactive] = useState(true);
 
   const navigate = useNavigate();
