@@ -86,12 +86,12 @@ export const AppointmentStepPage = () => {
       dates: selectedDates,
     });
     localStorage.setItem('token', res?.data.accessToken ?? '');
-    navigate(`/result?code=${params.code}`);
   };
 
   const handleButtonClick = () => {
     if (step === '3') {
       requestCreateUser();
+      navigate(`/result?code=${params.code}`);
     } else {
       roomInfo?.dateOnly
         ? step && navigate(`/appointment/${params.code}?step=3`)
