@@ -43,6 +43,10 @@ export const ResultPage = () => {
     setCopyType('code');
   };
 
+  const routeModifyPage = () => {
+    navigate(`/appointment/${code.current}?step=1`);
+  };
+
   useEffect(() => {
     (async () => {
       let data;
@@ -67,7 +71,7 @@ export const ResultPage = () => {
           </TitleBoxBlock>
           <Calendar viewType="result" />
           <GridFooter>
-            <ButtonSmall>일정 수정</ButtonSmall>
+            <ButtonSmall onClick={routeModifyPage}>일정 수정</ButtonSmall>
           </GridFooter>
           <InformationBlock>
             <Information
