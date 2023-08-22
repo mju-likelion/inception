@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import { TabBar } from '@/component/@share';
 import {
@@ -10,8 +10,6 @@ import { RedirectPage } from '@/pages';
 import { TAB_ITEMS } from '@/pages/data';
 import { viewRoom } from '@/util/api';
 import { ViewRoomResponse } from '@/util/api';
-import { useRecoilValue } from 'recoil';
-import { dateListState, timeListState, timeTableState } from '@/store';
 
 export const AppointmentStepPage = () => {
   const [searchParams] = useSearchParams();
@@ -20,40 +18,10 @@ export const AppointmentStepPage = () => {
   const params = useParams();
   const [roomInfo, setRoomInfo] = useState<ViewRoomResponse>();
 
-  const timeBlock = useRecoilValue(timeTableState);
-  const dateList = useRecoilValue(dateListState);
-  const timeList = useRecoilValue(timeListState);
-  const [selectedDates, setSelectedDates] = useState<string[]>([]);
-
-  const getDatesAsc = (dateList: string[]) => {
-    return dateList.sort((a, b) => {
-      return a.localeCompare(b, undefined, {
-        numeric: true,
-        sensitivity: 'base',
-      });
-    });
-  };
-
-  useMemo(() => {
-    selectedDates.splice(0);
-    return timeBlock.map((itemList, timeIndex) => {
-      itemList.filter((item, dateIndex) => {
-        const date = dateList[dateIndex] + ' ' + timeList[timeIndex];
-
-        item && selectedDates.push(date);
-      });
-      getDatesAsc(selectedDates);
-    });
-  }, [timeBlock]);
-
   const preventRefresh = (e: BeforeUnloadEvent) => {
     e.preventDefault();
     e.returnValue = '';
   };
-
-  useEffect(() => {
-    console.log(selectedDates);
-  }, [timeBlock]);
 
   useEffect(() => {
     (async () => {
