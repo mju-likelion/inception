@@ -43,7 +43,7 @@ export const getCalendarData = (
 
     // 현재 날짜의 이전 날짜는 disable 처리
     if (
-      viewType !== 'result' &&
+      viewType === 'result' &&
       new Date(date) < new Date(dateFormatToString(new Date()))
     ) {
       activeStatus = 'disabled';
