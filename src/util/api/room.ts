@@ -64,11 +64,11 @@ export const viewRoom = async ({
   }
 };
 
-export interface ResultRoomRequest {
+interface ResultRoomRequest {
   id: string;
 }
 
-export interface ResultRoomResponse {
+interface ResultRoomResponse {
   code: string;
   dateOnly: boolean;
   dates: string[];

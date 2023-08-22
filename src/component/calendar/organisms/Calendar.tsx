@@ -3,28 +3,21 @@ import {
   Date as DateComponent,
   DateHeader,
 } from '@/component/calendar/molecules';
-import {
-  ActiveStatus,
-  CalendarData,
-  DateRangeLimit,
-  PromiseResultData,
-  ViewType,
-} from '@/types';
+import { ActiveStatus, CalendarData, DateRangeLimit, ViewType } from '@/types';
 import {
   calcDateFewMonth,
   dateFormatToString,
   getCalendarData,
   isDuplicatedDate,
-  mergeEnableTimesToDates,
   resolvePromiseResult,
 } from '@/util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
+import { promiseResultMockData } from '../data';
 import padStart from 'lodash/padStart';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { calendarState } from '@/store/atoms';
 import { getDatesToCalendarData } from '@/util/getDatesToCalendarData';
-import { appointmentResultData } from '@/store/atoms/Request';
 
 interface CalendarProps {
   viewType: ViewType;
@@ -305,15 +298,14 @@ const CreateMode = ({
 
 type ResultModeProps = BaseCalendarModeProps;
 const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
-  const promiseResultData = useRecoilValue(appointmentResultData);
-  const [calendarData, setCalendarData] = useState<PromiseResultData[]>();
-  const [dateRange, setDateRange] = useState(resolvePromiseResult());
+  /** @TODO 데이터 패치 로직으로 변경 필요 */
+  const { minDate, maxDate } = resolvePromiseResult(promiseResultMockData);
 
-  const [currentDate, setCurrentDate] = useState(dateRange.minDate.slice(0, 2));
+  const [currentDate, setCurrentDate] = useState(minDate.slice(0, 2));
   const [calendar, setCalendar] = useRecoilState<CalendarData[]>(calendarState);
 
   const [dateRangeLimit, setDateRangeLimit] = useState<DateRangeLimit>(
-    checkLimitDate(currentDate, dateRange.minDate, dateRange.maxDate)
+    checkLimitDate(currentDate, minDate, maxDate)
   );
 
   const handleChangeCalendar = (type: 'prev' | 'next') => {
@@ -327,15 +319,15 @@ const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
       changedYear,
       changedMonth,
       'result',
-      calendarData
+      promiseResultMockData
     );
 
     setCurrentDate([changedYear, changedMonth]);
     setDateRangeLimit(
       checkLimitDate(
         [changedYear, changedMonth],
-        dateRange.minDate.slice(0, 2),
-        dateRange.maxDate.slice(0, 2)
+        minDate.slice(0, 2),
+        maxDate.slice(0, 2)
       )
     );
 
@@ -357,29 +349,9 @@ const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
 
   useEffect(() => {
     setCalendar(
-      getCalendarData(
-        dateRange.minDate[0],
-        dateRange.minDate[1],
-        'result',
-        calendarData
-      )
+      getCalendarData(minDate[0], minDate[1], 'result', promiseResultMockData)
     );
-  }, [dateRange, calendarData]);
-
-  useEffect(() => {
-    if (promiseResultData) {
-      setCalendarData(
-        mergeEnableTimesToDates(
-          promiseResultData.dates,
-          promiseResultData.enableTimes
-        )
-      );
-    }
-  }, [promiseResultData]);
-
-  useEffect(() => {
-    setDateRange(resolvePromiseResult(calendarData));
-  }, [calendarData]);
+  }, []);
 
   return (
     <Grid>

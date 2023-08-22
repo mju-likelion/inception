@@ -35,7 +35,7 @@ export const CodeSubmitPage = () => {
   }; // enter 로 input submit
 
   const handleButtonClick = () => {
-    navigate(`/result?code=${value}`);
+    navigate('/result');
   };
 
   useEffect(() => {
