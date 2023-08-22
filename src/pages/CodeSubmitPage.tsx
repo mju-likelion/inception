@@ -32,7 +32,7 @@ export const CodeSubmitPage = () => {
     if (event.key === 'Enter') {
       handleButtonClick();
     }
-  }; // enter 로 input submit
+  };
 
   const handleButtonClick = () => {
     navigate(`/result?code=${value}`);
