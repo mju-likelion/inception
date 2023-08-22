@@ -20,7 +20,7 @@ export const SelectDate = ({
   const dateList = useRecoilValue(dateListState);
   const start = dateList[0];
   const end = dateList[dateList.length - 1];
-  const totalPageLength = Math.trunc((dateList.length - 1) / size + 1);
+  const totalPageLength = Math.trunc(dateList.length / size + 1);
 
   return (
     <SelectDateBlock>
