@@ -5,13 +5,11 @@ export interface RegisterScheduleRequest {
   username: string;
   password: string;
   dateOnly: boolean;
-  dates: string[];
+  dates: [];
 }
 
 export interface RegisterScheduleResponse {
-  data: {
-    accessToken: string;
-  };
+  accessToken: string;
 }
 
 export const registerSchedule = async (
