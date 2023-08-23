@@ -32,10 +32,10 @@ export const getCalendarData = (
         activeStatus = 'active';
       }
 
-      // 선택되었지만 2개 이하로 선택받았는지 확인
+      // 선택되었지만 1개 이하로 선택받았는지 확인
       if (
         dataOfSelectedDate?.count === undefined ||
-        dataOfSelectedDate.count <= 2
+        dataOfSelectedDate.count <= 1
       ) {
         activeStatus = 'disabled';
       }

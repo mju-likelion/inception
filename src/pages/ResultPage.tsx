@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Information, TitleBox } from '@/component/@share/molecules';
 import { Calendar } from '@/component';
-import { ButtonSmall, TabBar, Toast } from '@/component/@share';
+import { ButtonSmall, LoadingIcon, TabBar, Toast } from '@/component/@share';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
@@ -16,11 +16,12 @@ import { appointmentResultData } from '@/store/atoms/Request';
 export const ResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const code = new URLSearchParams(location.search).get('code');
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
   const [urlToastType, setUrlToastType] = useState<ToastType>('error');
   const [codeToastType, setCodeToastType] = useState<ToastType>('error');
   const [copyType, setCopyType] = useRecoilState(currentCopyType);
-  const code = useRef<string>(new URLSearchParams(location.search).get('code'));
+  const [isFetched, setIsFetched] = useState(false);
 
   // 약속 정보
   const [appointmentData, setAppointmentData] = useRecoilState(
@@ -44,16 +45,17 @@ export const ResultPage = () => {
   };
 
   const routeModifyPage = () => {
-    navigate(`/appointment/${code.current}?step=1`);
+    navigate(`/appointment/${code}?step=1`);
   };
 
   useEffect(() => {
     (async () => {
       let data;
-      code.current && (data = await resultRoom({ id: code.current }));
+      code && (data = await resultRoom({ id: code }));
 
       if (data) {
         setAppointmentData(data);
+        setIsFetched(true);
       }
     })();
   }, []);
@@ -61,45 +63,49 @@ export const ResultPage = () => {
   return (
     <>
       <TabBar onClick={onClick} tabItems={TAB_ITEMS} />
-      <ResultPageBlock>
-        <ContentBlock>
-          <TitleBoxBlock>
-            <TitleBox
-              title="일정들을 모아보니"
-              content="링크를 공유한 사람들과 겹치는 가능 날짜에 인원수와 함께 표시됩니다"
-            />
-          </TitleBoxBlock>
-          <Calendar viewType="result" />
-          <GridFooter>
-            <ButtonSmall onClick={routeModifyPage}>일정 수정</ButtonSmall>
-          </GridFooter>
-          <InformationBlock>
-            <Information
-              icon={Time}
-              title="겹치는 시간을 확인하려면 날짜를 선택하세요"
-              isNull={true}
-              isEnabled={false}
-            />
-            <Information
-              icon={People}
-              title="제출한 사람"
-              content="학수, 원유, 해빈"
-            />
-            <Information
-              title="약속방 링크"
-              content={`${window.location.origin}/appointment/${code.current}?step=1`} // url 전체를 가져오기 위해 window 사용
-              isEnabled={true}
-              clickButton={copyUrl}
-            />
-            <Information
-              title="약속방 입장 코드"
-              content={code.current ?? undefined}
-              isEnabled={true}
-              clickButton={copyCode}
-            />
-          </InformationBlock>
-        </ContentBlock>
-      </ResultPageBlock>
+      {isFetched ? (
+        <ResultPageBlock>
+          <ContentBlock>
+            <TitleBoxBlock>
+              <TitleBox
+                title="일정들을 모아보니"
+                content="링크를 공유한 사람들과 겹치는 가능 날짜에 인원수와 함께 표시됩니다"
+              />
+            </TitleBoxBlock>
+            <Calendar viewType="result" />
+            <GridFooter>
+              <ButtonSmall onClick={routeModifyPage}>일정 수정</ButtonSmall>
+            </GridFooter>
+            <InformationBlock>
+              <Information
+                icon={Time}
+                title="겹치는 시간을 확인하려면 날짜를 선택하세요"
+                isNull={true}
+                isEnabled={false}
+              />
+              <Information
+                icon={People}
+                title="제출한 사람"
+                content="학수, 원유, 해빈"
+              />
+              <Information
+                title="약속방 링크"
+                content={`${window.location.origin}/appointment/${code}?step=1`} // url 전체를 가져오기 위해 window 사용
+                isEnabled={true}
+                clickButton={copyUrl}
+              />
+              <Information
+                title="약속방 입장 코드"
+                content={code ?? undefined}
+                isEnabled={true}
+                clickButton={copyCode}
+              />
+            </InformationBlock>
+          </ContentBlock>
+        </ResultPageBlock>
+      ) : (
+        <LoadingIcon spinnerType="mintSpinner" />
+      )}
       {isToastOpened && copyType === 'url' && (
         <Toast type={urlToastType} copyType={copyType} />
       )}
