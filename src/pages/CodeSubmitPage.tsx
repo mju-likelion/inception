@@ -28,6 +28,12 @@ export const CodeSubmitPage = () => {
     tab === TAB_ITEMS[0].id && navigate('/');
   };
 
+  const activeEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleButtonClick();
+    }
+  };
+
   const handleButtonClick = () => {
     navigate(`/result?code=${value}`);
   };
@@ -54,6 +60,7 @@ export const CodeSubmitPage = () => {
               placeholder={'약속방 입력 코드'}
               onChange={onChange}
               onKeyUp={onKeyUp}
+              onKeyDown={activeEnter}
               value={value}
               maxLength={6}
             />
@@ -88,7 +95,7 @@ const WrapTitleBoxInput = styled.div`
   margin: 0px 20px 0px 20px;
 `;
 
-const WrapInput = styled.div`
+const WrapInput = styled.form`
   display: flex;
   margin-top: 24px;
 

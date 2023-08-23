@@ -101,7 +101,7 @@ const WrapUpperContents = styled.div`
   margin: 0px 20px 0px 20px;
 `;
 
-const WrapInput = styled.div`
+const WrapInput = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
