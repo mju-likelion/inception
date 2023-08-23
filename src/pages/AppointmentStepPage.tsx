@@ -96,7 +96,6 @@ export const AppointmentStepPage = () => {
 
   const modifyUser = async (token: string) => {
     await modifySchedule(token, params.code ?? '', {
-      dateOnly: roomInfo?.dateOnly ?? !!roomInfo?.dateOnly,
       dates: selectedDates,
     });
     navigate(`/result?code=${params.code}`);

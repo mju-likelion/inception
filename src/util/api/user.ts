@@ -31,7 +31,6 @@ export const registerSchedule = async (
 };
 
 export interface ModifyScheduleRequest {
-  dateOnly: boolean; // false
   dates: string[]; // ["2023-07-20 15:00", "2023-07-21 15:00"]
 }
 
