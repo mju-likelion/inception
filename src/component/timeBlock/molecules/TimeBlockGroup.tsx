@@ -26,12 +26,19 @@ export const TimeBlockGroup = ({
   const [timeTable, setTimeTable] = useRecoilState(timeTableState);
   const isMouseDown = useRecoilValue(isMouseDownState);
   const [previousTarget, setPreviousTarget] = useState<HTMLButtonElement>();
+  const [pastTime, setPastTime] = useState<number>(0);
+
+  const nowDate = new Date();
 
   useEffect(() => {
     const newTimeTable = range(timeList.length)?.map(() =>
       new Array(dateList.length).fill(false)
     );
     setTimeTable(newTimeTable);
+
+    timeList.map((time, index) => {
+      if (new Date() > new Date(dateList[0] + ' ' + time)) setPastTime(index);
+    });
   }, [timeList, dateList]);
 
   const newDateList = getPaginationDate({ page, dateList });
@@ -64,15 +71,29 @@ export const TimeBlockGroup = ({
         touchMoveDrag({ event, isMouseDown, previousTarget, setPreviousTarget })
       }
     >
-      {nowTimeTable.map((row, rowIndex) =>
-        row.map((_, columnIndex) => (
-          <TimeBlock
-            key={columnIndex}
-            active={nowTimeTable[rowIndex][columnIndex] ? true : false}
-            onClick={() => handleClick(rowIndex, columnIndex)}
-          />
-        ))
-      )}
+      {nowDate < new Date(dateList[0])
+        ? nowTimeTable.map((row, rowIndex) =>
+            row.map((_, columnIndex) => (
+              <TimeBlock
+                key={columnIndex}
+                active={nowTimeTable[rowIndex][columnIndex] ? true : false}
+                onClick={() => handleClick(rowIndex, columnIndex)}
+                disabled={
+                  columnIndex === 0 && rowIndex <= pastTime ? true : false
+                }
+              />
+            ))
+          )
+        : nowTimeTable.map((row, rowIndex) =>
+            row.map((_, columnIndex) => (
+              <TimeBlock
+                key={columnIndex}
+                active={nowTimeTable[rowIndex][columnIndex] ? true : false}
+                onClick={() => handleClick(rowIndex, columnIndex)}
+                disabled={false}
+              />
+            ))
+          )}
     </TimeBlockGroupBlock>
   );
 };

@@ -3,13 +3,15 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { useWindowResize } from '@/hooks';
 import { devices } from '@/globalStyle';
+import { Toast } from '@/component/@share';
 
 interface TimeBlockProps {
   active: boolean;
   onClick: () => void;
+  disabled: boolean;
 }
 
-export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
+export const TimeBlock = ({ active, onClick, disabled }: TimeBlockProps) => {
   const windowSize = useWindowResize();
 
   const [isMouseDown, setIsMouseDown] = useRecoilState(isMouseDownState);
@@ -27,12 +29,20 @@ export const TimeBlock = ({ active, onClick }: TimeBlockProps) => {
   };
 
   return (
-    <TimeBlockAtom
-      $isActive={active}
-      onPointerDown={() => mouseDown()}
-      onPointerEnter={() => mouseEnter()}
-      onClick={() => windowSize.width < devices.web && onClick()}
-    />
+    <>
+      {disabled ? (
+        <>
+          <DisabledTimeBlock disabled={true} />
+        </>
+      ) : (
+        <TimeBlockAtom
+          $isActive={active}
+          onPointerDown={() => mouseDown()}
+          onPointerEnter={() => mouseEnter()}
+          onClick={() => windowSize.width < devices.web && onClick()}
+        />
+      )}
+    </>
   );
 };
 
@@ -48,4 +58,12 @@ const TimeBlockAtom = styled.button<{ $isActive: boolean }>`
       background-color: ${({ theme }) => theme.colors.mint2};
     }
   }
+`;
+
+const DisabledTimeBlock = styled.button`
+  touch-action: none;
+  width: 52px;
+  height: 46px;
+  border-radius: 8px;
+  background-color: ${({ theme }) => theme.colors.gray5};
 `;
