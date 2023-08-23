@@ -4,7 +4,7 @@ import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
 interface Props {
   buttonClick: () => void;
@@ -14,6 +14,8 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
   const [nicknameValue, setNicknameValue] = useRecoilState(signUpNickname);
   const [passwordValue, setPasswordValue] = useRecoilState(signUpPassword);
   const [isButtonInactive, setIsButtonInactive] = useState(true);
+  const resetNickname = useResetRecoilState(signUpNickname);
+  const resetPassword = useResetRecoilState(signUpPassword);
 
   const navigate = useNavigate();
 
@@ -27,6 +29,13 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
   useEffect(() => {
     activeEvent;
   }, [isButtonInactive]);
+
+  useEffect(() => {
+    return () => {
+      resetNickname();
+      resetPassword();
+    };
+  }, []);
 
   const activeEvent = () => {
     nicknameValue.length >= 1 && passwordValue.length >= 1

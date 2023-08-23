@@ -5,9 +5,9 @@ import { Calendar, TimePicker } from '@/component';
 import { TAB_ITEMS } from '@/pages/data';
 import { theme } from '@/globalStyle';
 import { createRoom } from '@/util/api';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { calcDateFewMonth, dateFormatToString } from '@/util';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import {
   selectedEndTime,
   selectedStartTime,
@@ -24,6 +24,17 @@ export const Home = () => {
   const endTime = useRecoilValue(selectedEndTime);
   const calendar = useRecoilValue(calendarState);
   const isTimeRangeError = useRecoilValue(timeErrorState);
+  const resetStartTime = useResetRecoilState(selectedStartTime);
+  const resetEndTime = useResetRecoilState(selectedEndTime);
+  const resetDateOnly = useResetRecoilState(titleCheckState);
+
+  useEffect(() => {
+    return () => {
+      resetStartTime();
+      resetEndTime();
+      resetDateOnly();
+    };
+  }, []);
 
   const selectableDate = useMemo(() => {
     const date = new Date();
