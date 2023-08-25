@@ -18,9 +18,9 @@ export const ResultPage = () => {
   const location = useLocation();
   const code = new URLSearchParams(location.search).get('code');
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
-  const [urlToastType, setUrlToastType] = useState<ToastStatus>('error');
-  const [codeToastType, setCodeToastType] = useState<ToastStatus>('error');
-  const [copyType, setCopyType] = useRecoilState(currentToastType);
+  const [urlToastStatus, setUrlToastStatus] = useState<ToastStatus>('error');
+  const [codeToastStatus, setCodeToastStatus] = useState<ToastStatus>('error');
+  const [toastType, setToastType] = useRecoilState(currentToastType);
   const [isFetched, setIsFetched] = useState(false);
 
   // 약속 정보
@@ -34,14 +34,14 @@ export const ResultPage = () => {
 
   const copyUrl = (copyResult: ToastStatus) => {
     setIsToastOpened(true);
-    setUrlToastType(copyResult);
-    setCopyType('url');
+    setUrlToastStatus(copyResult);
+    setToastType('url');
   };
 
   const copyCode = (copyResult: ToastStatus) => {
     setIsToastOpened(true);
-    setCodeToastType(copyResult);
-    setCopyType('code');
+    setCodeToastStatus(copyResult);
+    setToastType('code');
   };
 
   const routeModifyPage = () => {
@@ -106,17 +106,17 @@ export const ResultPage = () => {
       ) : (
         <LoadingIcon spinnerType="mintSpinner" />
       )}
-      {isToastOpened && copyType === 'url' && (
+      {isToastOpened && toastType === 'url' && (
         <Toast
-          status={urlToastType}
-          toastType={copyType}
+          status={urlToastStatus}
+          toastType={toastType}
           descriptionActive="error"
         />
       )}
-      {isToastOpened && copyType === 'code' && (
+      {isToastOpened && toastType === 'code' && (
         <Toast
-          status={codeToastType}
-          toastType={copyType}
+          status={codeToastStatus}
+          toastType={toastType}
           descriptionActive="error"
         />
       )}

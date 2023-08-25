@@ -13,13 +13,13 @@ import { SquareButton } from '@/component/@share/atom/SquareButton';
 export const Footer = () => {
   const windowSize = useWindowResize();
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
-  const [copyType, setCopyType] = useRecoilState(currentToastType);
-  const [toastType, setToastType] = useState<ToastStatus>('error');
+  const [toastType, setToastType] = useRecoilState(currentToastType);
+  const [toastStatus, setToastStatus] = useState<ToastStatus>('error');
 
   const copyEmail = (copyResult: ToastStatus) => {
     setIsToastOpened(true);
-    setToastType(copyResult);
-    setCopyType('email');
+    setToastStatus(copyResult);
+    setToastType('email');
   };
 
   return (
@@ -51,10 +51,10 @@ export const Footer = () => {
           />
         </WebContainer>
       )}
-      {isToastOpened && copyType === 'email' && (
+      {isToastOpened && toastType === 'email' && (
         <Toast
-          status={toastType}
-          toastType={copyType}
+          status={toastStatus}
+          toastType={toastType}
           descriptionActive="error"
         />
       )}
