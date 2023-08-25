@@ -1,3 +1,11 @@
-export type ToastType = 'success' | 'error';
+export type ToastStatus = 'success' | 'error';
 
-export type CopyType = 'email' | 'url' | 'code' | '';
+export type ToastType =
+  | ''
+  | 'email'
+  | 'url'
+  | 'code'
+  | 'timeBlock'
+  | 'schedule';
+
+export type DescriptionActiveStatus = 'success' | 'error' | 'both';

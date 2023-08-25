@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
-import { CopyType } from '@/types/Toast';
+import { ToastType } from '@/types/Toast';
 
-export const currentCopyType = atom<CopyType>({
-  key: 'currentCopyType',
+export const currentToastType = atom<ToastType>({
+  key: 'currentToastType',
   default: '',
 });
 
