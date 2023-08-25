@@ -71,7 +71,7 @@ export const TimeBlockGroup = ({
         touchMoveDrag({ event, isMouseDown, previousTarget, setPreviousTarget })
       }
     >
-      {nowDate < new Date(dateList[0])
+      {nowDate > new Date(dateList[0])
         ? nowTimeTable.map((row, rowIndex) =>
             row.map((_, columnIndex) => (
               <TimeBlock
