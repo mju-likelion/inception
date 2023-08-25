@@ -31,7 +31,10 @@ export const TimeBlockGroup = ({
     const newTimeTable = range(timeList.length)?.map(() =>
       new Array(dateList.length).fill(false)
     );
-    setTimeTable(newTimeTable);
+
+    timeTable.length === 0
+      ? setTimeTable(newTimeTable)
+      : setTimeTable(timeTable);
   }, [timeList, dateList]);
 
   const newDateList = getPaginationDate({ page, dateList });
