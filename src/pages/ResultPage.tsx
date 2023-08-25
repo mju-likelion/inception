@@ -7,8 +7,8 @@ import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { ToastType } from '@/types/Toast';
-import { toastState, currentCopyType } from '@/store';
+import { ToastStatus } from '@/types/Toast';
+import { toastState, currentToastType } from '@/store';
 import { useRecoilState } from 'recoil';
 import { resultRoom } from '@/util/api';
 import { appointmentResultData } from '@/store/atoms/Request';
@@ -18,9 +18,9 @@ export const ResultPage = () => {
   const location = useLocation();
   const code = new URLSearchParams(location.search).get('code');
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
-  const [urlToastType, setUrlToastType] = useState<ToastType>('error');
-  const [codeToastType, setCodeToastType] = useState<ToastType>('error');
-  const [copyType, setCopyType] = useRecoilState(currentCopyType);
+  const [urlToastType, setUrlToastType] = useState<ToastStatus>('error');
+  const [codeToastType, setCodeToastType] = useState<ToastStatus>('error');
+  const [copyType, setCopyType] = useRecoilState(currentToastType);
   const [isFetched, setIsFetched] = useState(false);
 
   // 약속 정보
@@ -32,13 +32,13 @@ export const ResultPage = () => {
     tab === TAB_ITEMS[0].id && navigate('/');
   };
 
-  const copyUrl = (copyResult: ToastType) => {
+  const copyUrl = (copyResult: ToastStatus) => {
     setIsToastOpened(true);
     setUrlToastType(copyResult);
     setCopyType('url');
   };
 
-  const copyCode = (copyResult: ToastType) => {
+  const copyCode = (copyResult: ToastStatus) => {
     setIsToastOpened(true);
     setCodeToastType(copyResult);
     setCopyType('code');
@@ -107,10 +107,18 @@ export const ResultPage = () => {
         <LoadingIcon spinnerType="mintSpinner" />
       )}
       {isToastOpened && copyType === 'url' && (
-        <Toast type={urlToastType} copyType={copyType} />
+        <Toast
+          status={urlToastType}
+          toastType={copyType}
+          descriptionActive="error"
+        />
       )}
       {isToastOpened && copyType === 'code' && (
-        <Toast type={codeToastType} copyType={copyType} />
+        <Toast
+          status={codeToastType}
+          toastType={copyType}
+          descriptionActive="error"
+        />
       )}
     </>
   );

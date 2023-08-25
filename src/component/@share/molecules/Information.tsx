@@ -1,7 +1,7 @@
 import { css, styled } from 'styled-components';
 import { ButtonSmall } from '@/component/@share/atom/ButtonSmall';
 import { theme } from '@/globalStyle';
-import { ToastType } from '@/types/Toast';
+import { ToastStatus } from '@/types/Toast';
 
 interface Props {
   icon?: string;
@@ -9,7 +9,7 @@ interface Props {
   content?: string;
   isNull?: boolean;
   isEnabled?: boolean;
-  clickButton?: (copyResult: ToastType) => void;
+  clickButton?: (copyResult: ToastStatus) => void;
 }
 
 export const Information = ({
