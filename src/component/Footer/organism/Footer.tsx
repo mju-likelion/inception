@@ -5,21 +5,21 @@ import { OrganizationInfo } from '@/component/Footer/data';
 import { Toast } from '@/component/@share';
 import { devices } from '@/globalStyle';
 import { useWindowResize } from '@/hooks';
-import { ToastType } from '@/types/Toast';
+import { ToastStatus } from '@/types/Toast';
 import { useRecoilState } from 'recoil';
-import { currentCopyType, toastState } from '@/store';
+import { currentToastType, toastState } from '@/store';
 import { SquareButton } from '@/component/@share/atom/SquareButton';
 
 export const Footer = () => {
   const windowSize = useWindowResize();
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
-  const [copyType, setCopyType] = useRecoilState(currentCopyType);
-  const [toastType, setToastType] = useState<ToastType>('error');
+  const [toastType, setToastType] = useRecoilState(currentToastType);
+  const [toastStatus, setToastStatus] = useState<ToastStatus>('error');
 
-  const copyEmail = (copyResult: ToastType) => {
+  const copyEmail = (copyResult: ToastStatus) => {
     setIsToastOpened(true);
-    setToastType(copyResult);
-    setCopyType('email');
+    setToastStatus(copyResult);
+    setToastType('email');
   };
 
   return (
@@ -51,8 +51,12 @@ export const Footer = () => {
           />
         </WebContainer>
       )}
-      {isToastOpened && copyType === 'email' && (
-        <Toast type={toastType} copyType={copyType} />
+      {isToastOpened && toastType === 'email' && (
+        <Toast
+          status={toastStatus}
+          toastType={toastType}
+          descriptionActive="error"
+        />
       )}
     </Container>
   );

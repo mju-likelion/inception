@@ -1,11 +1,11 @@
 import { theme } from '@/globalStyle';
 import styled from 'styled-components';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { ToastType } from '@/types/Toast';
+import { ToastStatus } from '@/types/Toast';
 
 interface MailProps {
   email: string;
-  onClick: (copyResult: ToastType) => void;
+  onClick: (copyResult: ToastStatus) => void;
 }
 
 export const Mail = ({ email, onClick }: MailProps) => {
