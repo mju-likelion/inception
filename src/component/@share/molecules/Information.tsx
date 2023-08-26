@@ -8,7 +8,7 @@ interface Props {
   title: string;
   content?: string;
   isOnlyTitle?: boolean;
-  isEnabled?: boolean;
+  enableCopy?: boolean;
   clickButton?: (copyResult: ToastType) => void;
 }
 
@@ -17,15 +17,15 @@ export const Information = ({
   title,
   content,
   isOnlyTitle = false,
-  isEnabled = false,
+  enableCopy = false,
   clickButton,
 }: Props) => {
   return (
-    <InformationBlock $isEnabled={isEnabled} $isOnlyTitle={isOnlyTitle}>
+    <InformationBlock $enableCopy={enableCopy} $isOnlyTitle={isOnlyTitle}>
       <ContentBlock>
-        {isEnabled || <Icon src={icon} />}
-        <TextBlock $isEnabled={isEnabled}>
-          {isEnabled ? (
+        {enableCopy || <Icon src={icon} />}
+        <TextBlock $enableCopy={enableCopy}>
+          {enableCopy ? (
             <Body ag="Body1SemiBold" $color="gray1">
               {title}
             </Body>
@@ -35,7 +35,7 @@ export const Information = ({
             </Body>
           )}
           {isOnlyTitle ||
-            (isEnabled ? (
+            (enableCopy ? (
               <Body ag="Body3" $color="gray2">
                 {content}
               </Body>
@@ -45,7 +45,7 @@ export const Information = ({
               </Body>
             ))}
         </TextBlock>
-        {isEnabled && (
+        {enableCopy && (
           <ButtonSmall copyContent={content} onCopy={clickButton}>
             복사하기
           </ButtonSmall>
@@ -56,7 +56,7 @@ export const Information = ({
 };
 
 const InformationBlock = styled.div<{
-  $isEnabled: boolean;
+  $enableCopy: boolean;
   $isOnlyTitle: boolean;
 }>`
   min-width: 320px;
@@ -66,8 +66,8 @@ const InformationBlock = styled.div<{
   align-items: flex-start;
   display: flex;
   padding: 12px;
-  background-color: ${({ $isEnabled }) =>
-    $isEnabled
+  background-color: ${({ $enableCopy }) =>
+    $enableCopy
       ? ({ theme }) => theme.colors.white
       : ({ theme }) => theme.colors.gray5};
   border-radius: 8px;
@@ -87,8 +87,8 @@ const Icon = styled.img`
   height: 24px;
 `;
 
-const TextBlock = styled.div<{ $isEnabled: boolean }>`
-  flex: ${({ $isEnabled }) => $isEnabled && 1};
+const TextBlock = styled.div<{ $enableCopy: boolean }>`
+  flex: ${({ $enableCopy }) => $enableCopy && 1};
   display: flex;
   flex-direction: column;
   align-items: flex-start;

@@ -97,7 +97,6 @@ export const ResultPage = () => {
                 title="겹치는 시간을 확인하려면 날짜를 선택하세요"
                 content={mostSelectedTime?.join(', ')}
                 isOnlyTitle={!mostSelectedTime ? true : false}
-                isEnabled={false}
               />
               <Information
                 icon={People}
@@ -107,13 +106,13 @@ export const ResultPage = () => {
               <Information
                 title="약속방 링크"
                 content={`${window.location.origin}/appointment/${code}?step=1`} // url 전체를 가져오기 위해 window 사용
-                isEnabled={true}
+                enableCopy={true}
                 clickButton={copyUrl}
               />
               <Information
                 title="약속방 입장 코드"
                 content={code ?? undefined}
-                isEnabled={true}
+                enableCopy={true}
                 clickButton={copyCode}
               />
             </InformationBlock>
