@@ -76,6 +76,7 @@ export interface ResultRoomResponse {
   createdAt: string;
   updatedAt: string;
   enableTimes: { [time: string]: number };
+  votingUsers: string[];
 }
 
 export const resultRoom = async ({ id }: ResultRoomRequest) => {

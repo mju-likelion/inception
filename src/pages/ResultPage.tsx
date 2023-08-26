@@ -10,8 +10,10 @@ import { useEffect, useRef, useState } from 'react';
 import { ToastType } from '@/types/Toast';
 import { toastState, currentCopyType } from '@/store';
 import { useRecoilState } from 'recoil';
-import { resultRoom } from '@/util/api';
+import { resultRoom, resultRoomByDate } from '@/util/api';
 import { appointmentResultData } from '@/store/atoms/Request';
+
+export type FetchMostSelectedTimeForDate = (date: string) => Promise<void>;
 
 export const ResultPage = () => {
   const navigate = useNavigate();
@@ -22,13 +24,14 @@ export const ResultPage = () => {
   const [codeToastType, setCodeToastType] = useState<ToastType>('error');
   const [copyType, setCopyType] = useRecoilState(currentCopyType);
   const [isFetched, setIsFetched] = useState(false);
+  const [mostSelectedTime, setMostSelectedTime] = useState<string[]>();
 
   // 약속 정보
   const [appointmentData, setAppointmentData] = useRecoilState(
     appointmentResultData
   );
 
-  const onClick = (tab: string) => {
+  const handleTabNavigate = (tab: string) => {
     tab === TAB_ITEMS[0].id && navigate('/');
   };
 
@@ -44,8 +47,17 @@ export const ResultPage = () => {
     setCopyType('code');
   };
 
-  const routeModifyPage = () => {
+  const navigateModifyPage = () => {
     navigate(`/appointment/${code}?step=1`);
+  };
+
+  const fetchMostSelectedTimeForDate: FetchMostSelectedTimeForDate = async (
+    date: string
+  ) => {
+    if (code) {
+      const mostSelectedTime = await resultRoomByDate({ date, id: code });
+      setMostSelectedTime(mostSelectedTime?.everyoneSelectedTimes);
+    }
   };
 
   useEffect(() => {
@@ -62,7 +74,7 @@ export const ResultPage = () => {
 
   return (
     <>
-      <TabBar onClick={onClick} tabItems={TAB_ITEMS} />
+      <TabBar onClick={handleTabNavigate} tabItems={TAB_ITEMS} />
       {isFetched ? (
         <ResultPageBlock>
           <ContentBlock>
@@ -72,21 +84,25 @@ export const ResultPage = () => {
                 content="링크를 공유한 사람들과 겹치는 가능 날짜에 인원수와 함께 표시됩니다"
               />
             </TitleBoxBlock>
-            <Calendar viewType="result" />
+            <Calendar
+              viewType="result"
+              fetchMostSelectedTimeForDate={fetchMostSelectedTimeForDate}
+            />
             <GridFooter>
-              <ButtonSmall onClick={routeModifyPage}>일정 수정</ButtonSmall>
+              <ButtonSmall onClick={navigateModifyPage}>일정 수정</ButtonSmall>
             </GridFooter>
             <InformationBlock>
               <Information
                 icon={Time}
                 title="겹치는 시간을 확인하려면 날짜를 선택하세요"
-                isNull={true}
+                content={mostSelectedTime?.join(', ')}
+                isOnlyTitle={!mostSelectedTime ? true : false}
                 isEnabled={false}
               />
               <Information
                 icon={People}
                 title="제출한 사람"
-                content="학수, 원유, 해빈"
+                content={appointmentData.votingUsers.join(', ')}
               />
               <Information
                 title="약속방 링크"

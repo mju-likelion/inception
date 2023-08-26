@@ -7,7 +7,7 @@ interface Props {
   icon?: string;
   title: string;
   content?: string;
-  isNull?: boolean;
+  isOnlyTitle?: boolean;
   isEnabled?: boolean;
   clickButton?: (copyResult: ToastType) => void;
 }
@@ -16,12 +16,12 @@ export const Information = ({
   icon,
   title,
   content,
-  isNull = false,
+  isOnlyTitle = false,
   isEnabled = false,
   clickButton,
 }: Props) => {
   return (
-    <InformationBlock $isEnabled={isEnabled} $isNull={isNull}>
+    <InformationBlock $isEnabled={isEnabled} $isOnlyTitle={isOnlyTitle}>
       <ContentBlock>
         {isEnabled || <Icon src={icon} />}
         <TextBlock $isEnabled={isEnabled}>
@@ -34,7 +34,7 @@ export const Information = ({
               {title}
             </Body>
           )}
-          {isNull ||
+          {isOnlyTitle ||
             (isEnabled ? (
               <Body ag="Body3" $color="gray2">
                 {content}
@@ -55,10 +55,13 @@ export const Information = ({
   );
 };
 
-const InformationBlock = styled.div<{ $isEnabled: boolean; $isNull: boolean }>`
+const InformationBlock = styled.div<{
+  $isEnabled: boolean;
+  $isOnlyTitle: boolean;
+}>`
   min-width: 320px;
   max-width: 500px;
-  height: ${({ $isNull }) => $isNull && '70px'};
+  height: ${({ $isOnlyTitle }) => $isOnlyTitle && '70px'};
   flex-direction: column;
   align-items: flex-start;
   display: flex;
