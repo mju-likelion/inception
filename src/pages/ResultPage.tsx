@@ -6,7 +6,7 @@ import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastType } from '@/types/Toast';
 import { toastState, currentCopyType } from '@/store';
 import { useRecoilState } from 'recoil';
@@ -23,8 +23,10 @@ export const ResultPage = () => {
   const [urlToastType, setUrlToastType] = useState<ToastType>('error');
   const [codeToastType, setCodeToastType] = useState<ToastType>('error');
   const [copyType, setCopyType] = useRecoilState(currentCopyType);
-  const [isFetched, setIsFetched] = useState(false);
   const [mostSelectedTime, setMostSelectedTime] = useState<string[]>();
+  const [isCalendarFetched, setIsCalendarFetched] = useState(false);
+  const [isMostSelectedTimeFetched, setIsMostSelectedTimeFetched] =
+    useState<boolean>(true);
 
   // 약속 정보
   const [appointmentData, setAppointmentData] = useRecoilState(
@@ -54,9 +56,11 @@ export const ResultPage = () => {
   const fetchMostSelectedTimeForDate: FetchMostSelectedTimeForDate = async (
     date: string
   ) => {
+    setIsMostSelectedTimeFetched(false);
     if (code) {
       const mostSelectedTime = await resultRoomByDate({ date, id: code });
       setMostSelectedTime(mostSelectedTime?.everyoneSelectedTimes);
+      setIsMostSelectedTimeFetched(true);
     }
   };
 
@@ -67,7 +71,7 @@ export const ResultPage = () => {
 
       if (data) {
         setAppointmentData(data);
-        setIsFetched(true);
+        setIsCalendarFetched(true);
       }
     })();
   }, []);
@@ -75,7 +79,7 @@ export const ResultPage = () => {
   return (
     <>
       <TabBar onClick={handleTabNavigate} tabItems={TAB_ITEMS} />
-      {isFetched ? (
+      {isCalendarFetched ? (
         <ResultPageBlock>
           <ContentBlock>
             <TitleBoxBlock>
@@ -97,6 +101,7 @@ export const ResultPage = () => {
                 title="겹치는 시간을 확인하려면 날짜를 선택하세요"
                 content={mostSelectedTime?.join(', ')}
                 isOnlyTitle={!mostSelectedTime ? true : false}
+                isLoading={!isMostSelectedTimeFetched ? true : false}
               />
               <Information
                 icon={People}

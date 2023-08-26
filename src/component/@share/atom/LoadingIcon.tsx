@@ -1,7 +1,8 @@
+import { theme } from '@/globalStyle';
 import styled from 'styled-components';
 
 interface Props {
-  spinnerType?: 'whiteSpinner' | 'mintSpinner';
+  spinnerType?: 'whiteSpinner' | 'mintSpinner' | 'graySpinner';
 }
 
 export const LoadingIcon = ({ spinnerType = 'mintSpinner' }: Props) => {
@@ -10,6 +11,8 @@ export const LoadingIcon = ({ spinnerType = 'mintSpinner' }: Props) => {
       return <MintSpinner />;
     case 'whiteSpinner':
       return <WhiteSpinner />;
+    case 'graySpinner':
+      return <GraySpinner />;
     default:
       return <h1>{spinnerType}에 맞는 스피너가 없습니다.</h1>;
   }
@@ -36,6 +39,19 @@ const WhiteSpinner = () => {
       </WrapBg>
       <WrapSpinner>
         <Spinner color={'white'} />
+      </WrapSpinner>
+    </>
+  );
+};
+
+const GraySpinner = () => {
+  return (
+    <>
+      <WrapBg>
+        <SpinnerBackground color={theme.colors.gray4} />
+      </WrapBg>
+      <WrapSpinner>
+        <Spinner color={theme.colors.gray3} />
       </WrapSpinner>
     </>
   );

@@ -2,6 +2,7 @@ import { css, styled } from 'styled-components';
 import { ButtonSmall } from '@/component/@share/atom/ButtonSmall';
 import { theme } from '@/globalStyle';
 import { ToastType } from '@/types/Toast';
+import { LoadingIcon } from '../atom';
 
 interface Props {
   icon?: string;
@@ -9,10 +10,30 @@ interface Props {
   content?: string;
   isOnlyTitle?: boolean;
   enableCopy?: boolean;
+  isLoading?: boolean;
   clickButton?: (copyResult: ToastType) => void;
 }
 
-export const Information = ({
+export const Information = (props: Props) => {
+  return (
+    <InformationBlock
+      $enableCopy={props.enableCopy || false}
+      $isOnlyTitle={props.isOnlyTitle || false}
+    >
+      {props.isLoading ? <LoadingContent /> : <Content {...props} />}
+    </InformationBlock>
+  );
+};
+
+const LoadingContent = () => {
+  return (
+    <LoadingBlock>
+      <LoadingIcon spinnerType="graySpinner" />
+    </LoadingBlock>
+  );
+};
+
+const Content = ({
   icon,
   title,
   content,
@@ -21,37 +42,35 @@ export const Information = ({
   clickButton,
 }: Props) => {
   return (
-    <InformationBlock $enableCopy={enableCopy} $isOnlyTitle={isOnlyTitle}>
-      <ContentBlock>
-        {enableCopy || <Icon src={icon} />}
-        <TextBlock $enableCopy={enableCopy}>
-          {enableCopy ? (
-            <Body ag="Body1SemiBold" $color="gray1">
-              {title}
+    <ContentBlock>
+      {enableCopy || <Icon src={icon} />}
+      <TextBlock $enableCopy={enableCopy}>
+        {enableCopy ? (
+          <Body ag="Body1SemiBold" $color="gray1">
+            {title}
+          </Body>
+        ) : (
+          <Body ag="Body3" $color="gray2">
+            {title}
+          </Body>
+        )}
+        {isOnlyTitle ||
+          (enableCopy ? (
+            <Body ag="Body3" $color="gray2">
+              {content}
             </Body>
           ) : (
-            <Body ag="Body3" $color="gray2">
-              {title}
+            <Body ag="Body1SemiBold" $color="gray1">
+              {content}
             </Body>
-          )}
-          {isOnlyTitle ||
-            (enableCopy ? (
-              <Body ag="Body3" $color="gray2">
-                {content}
-              </Body>
-            ) : (
-              <Body ag="Body1SemiBold" $color="gray1">
-                {content}
-              </Body>
-            ))}
-        </TextBlock>
-        {enableCopy && (
-          <ButtonSmall copyContent={content} onCopy={clickButton}>
-            복사하기
-          </ButtonSmall>
-        )}
-      </ContentBlock>
-    </InformationBlock>
+          ))}
+      </TextBlock>
+      {enableCopy && (
+        <ButtonSmall copyContent={content} onCopy={clickButton}>
+          복사하기
+        </ButtonSmall>
+      )}
+    </ContentBlock>
   );
 };
 
@@ -80,6 +99,12 @@ const ContentBlock = styled.div`
   gap: 12px;
   flex: 1 0 0;
   align-self: stretch;
+`;
+
+const LoadingBlock = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 const Icon = styled.img`
