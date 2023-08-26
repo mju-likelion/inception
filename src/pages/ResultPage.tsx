@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Information, TitleBox } from '@/component/@share/molecules';
 import { Calendar } from '@/component';
@@ -6,9 +7,8 @@ import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { ToastType } from '@/types/Toast';
-import { toastState, currentCopyType } from '@/store';
+import { ToastStatus } from '@/types/Toast';
+import { toastState, currentToastType } from '@/store';
 import { useRecoilState } from 'recoil';
 import { resultRoom, resultRoomByDate } from '@/util/api';
 import { appointmentResultData } from '@/store/atoms/Request';
@@ -20,13 +20,13 @@ export const ResultPage = () => {
   const location = useLocation();
   const code = new URLSearchParams(location.search).get('code');
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
-  const [urlToastType, setUrlToastType] = useState<ToastType>('error');
-  const [codeToastType, setCodeToastType] = useState<ToastType>('error');
-  const [copyType, setCopyType] = useRecoilState(currentCopyType);
   const [mostSelectedTime, setMostSelectedTime] = useState<string[]>();
   const [isCalendarFetched, setIsCalendarFetched] = useState(false);
   const [isMostSelectedTimeFetched, setIsMostSelectedTimeFetched] =
     useState<boolean>(true);
+  const [urlToastStatus, setUrlToastStatus] = useState<ToastStatus>('error');
+  const [codeToastStatus, setCodeToastStatus] = useState<ToastStatus>('error');
+  const [toastType, setToastType] = useRecoilState(currentToastType);
 
   // 약속 정보
   const [appointmentData, setAppointmentData] = useRecoilState(
@@ -37,16 +37,16 @@ export const ResultPage = () => {
     tab === TAB_ITEMS[0].id && navigate('/');
   };
 
-  const copyUrl = (copyResult: ToastType) => {
+  const copyUrl = (copyResult: ToastStatus) => {
     setIsToastOpened(true);
-    setUrlToastType(copyResult);
-    setCopyType('url');
+    setUrlToastStatus(copyResult);
+    setToastType('url');
   };
 
-  const copyCode = (copyResult: ToastType) => {
+  const copyCode = (copyResult: ToastStatus) => {
     setIsToastOpened(true);
-    setCodeToastType(copyResult);
-    setCopyType('code');
+    setCodeToastStatus(copyResult);
+    setToastType('code');
   };
 
   const navigateModifyPage = () => {
@@ -126,11 +126,19 @@ export const ResultPage = () => {
       ) : (
         <LoadingIcon spinnerType="mintSpinner" />
       )}
-      {isToastOpened && copyType === 'url' && (
-        <Toast type={urlToastType} copyType={copyType} />
+      {isToastOpened && toastType === 'url' && (
+        <Toast
+          status={urlToastStatus}
+          toastType={toastType}
+          descriptionActive="error"
+        />
       )}
-      {isToastOpened && copyType === 'code' && (
-        <Toast type={codeToastType} copyType={copyType} />
+      {isToastOpened && toastType === 'code' && (
+        <Toast
+          status={codeToastStatus}
+          toastType={toastType}
+          descriptionActive="error"
+        />
       )}
     </>
   );

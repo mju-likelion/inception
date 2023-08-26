@@ -9,7 +9,7 @@ import { calendarState } from '@/store';
 import { useRecoilValue } from 'recoil';
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { dateListState } from '@/store';
+import { dateListState, timeTableState } from '@/store';
 interface Props {
   buttonClick: () => void;
   selectableDates?: string[];
@@ -22,8 +22,10 @@ export const PossibleDateTemplate = ({
   const [isActiveButton, setIsActiveButton] = useState(true);
   const calendarData = useRecoilValue(calendarState);
   const [dateList, setDateList] = useRecoilState(dateListState);
+  const [timeTable, setTimeTable] = useRecoilState(timeTableState);
 
   useEffect(() => {
+    setTimeTable([]);
     calendarData.every(function (date) {
       return date.activeStatus !== 'active';
     })

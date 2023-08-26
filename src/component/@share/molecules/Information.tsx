@@ -1,8 +1,8 @@
 import { css, styled } from 'styled-components';
 import { ButtonSmall } from '@/component/@share/atom/ButtonSmall';
 import { theme } from '@/globalStyle';
-import { ToastType } from '@/types/Toast';
 import { LoadingIcon } from '../atom';
+import { ToastStatus } from '@/types/Toast';
 
 interface Props {
   icon?: string;
@@ -11,7 +11,7 @@ interface Props {
   isOnlyTitle?: boolean;
   enableCopy?: boolean;
   isLoading?: boolean;
-  clickButton?: (copyResult: ToastType) => void;
+  clickButton?: (copyResult: ToastStatus) => void;
 }
 
 export const Information = (props: Props) => {

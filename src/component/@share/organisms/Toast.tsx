@@ -6,17 +6,21 @@ import { useSetRecoilState } from 'recoil';
 import { toastState } from '@/store';
 import { theme } from '@/globalStyle';
 import { css } from 'styled-components';
-import { CopyType, ToastType } from '@/types/Toast';
-import { getToastMessage } from '@/util';
+import { ToastType, ToastStatus, DescriptionActiveStatus } from '@/types/Toast';
+import { getToastMessage, getToastDescription } from '@/util';
 
 interface ToastProps {
-  type: ToastType;
-  copyType: CopyType;
+  status: ToastStatus;
+  toastType: ToastType;
+  descriptionActive?: DescriptionActiveStatus;
 }
 
-export const Toast = ({ type, copyType }: ToastProps) => {
+export const Toast = ({ status, toastType, descriptionActive }: ToastProps) => {
   const setToast = useSetRecoilState(toastState);
-  const message = getToastMessage(type, copyType);
+  const message = getToastMessage(status, toastType);
+  const description =
+    descriptionActive &&
+    getToastDescription(status, toastType, descriptionActive);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -29,14 +33,14 @@ export const Toast = ({ type, copyType }: ToastProps) => {
 
   return (
     <Container>
-      {type === 'success' ? <SuccessIcon /> : <ErrorIcon />}
+      {status === 'success' ? <SuccessIcon /> : <ErrorIcon />}
       <MessageBox>
         <Body ag="Body1Regular" $color="white">
           {message}
         </Body>
-        {type === 'error' && (
+        {description && (
           <Body ag="Body3" $color="gray3">
-            잠시 후 다시 시도해주세요
+            {description}
           </Body>
         )}
       </MessageBox>
