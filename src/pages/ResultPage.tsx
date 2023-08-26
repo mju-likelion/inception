@@ -12,6 +12,7 @@ import { toastState, currentToastType } from '@/store';
 import { useRecoilState } from 'recoil';
 import { resultRoom, resultRoomByDate } from '@/util/api';
 import { appointmentResultData } from '@/store/atoms/Request';
+import { useResultTimeTitle, useResultTitle } from '@/hooks';
 
 export type FetchMostSelectedTimeForDate = (date: string) => Promise<void>;
 
@@ -19,18 +20,27 @@ export const ResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const code = new URLSearchParams(location.search).get('code');
-  const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
-  const [mostSelectedTime, setMostSelectedTime] = useState<string[]>();
-  const [isCalendarFetched, setIsCalendarFetched] = useState(false);
-  const [isMostSelectedTimeFetched, setIsMostSelectedTimeFetched] =
-    useState<boolean>(true);
-  const [urlToastStatus, setUrlToastStatus] = useState<ToastStatus>('error');
-  const [codeToastStatus, setCodeToastStatus] = useState<ToastStatus>('error');
-  const [toastType, setToastType] = useRecoilState(currentToastType);
 
   // 약속 정보
   const [appointmentData, setAppointmentData] = useRecoilState(
     appointmentResultData
+  );
+  const [mostSelectedTime, setMostSelectedTime] = useState<string[]>();
+  const [isCalendarFetched, setIsCalendarFetched] = useState(false);
+  const [isMostSelectedTimeFetched, setIsMostSelectedTimeFetched] =
+    useState(true);
+
+  const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
+  const [urlToastStatus, setUrlToastStatus] = useState<ToastStatus>('error');
+  const [codeToastStatus, setCodeToastStatus] = useState<ToastStatus>('error');
+  const [toastType, setToastType] = useRecoilState(currentToastType);
+
+  const { title, subTitle } = useResultTitle(appointmentData);
+  const timeInformationTitle = useResultTimeTitle(
+    appointmentData?.votingUsers,
+    appointmentData?.dateOnly,
+    appointmentData?.enableTimes,
+    mostSelectedTime
   );
 
   const handleTabNavigate = (tab: string) => {
@@ -83,10 +93,7 @@ export const ResultPage = () => {
         <ResultPageBlock>
           <ContentBlock>
             <TitleBoxBlock>
-              <TitleBox
-                title="일정들을 모아보니"
-                content="링크를 공유한 사람들과 겹치는 가능 날짜에 인원수와 함께 표시됩니다"
-              />
+              <TitleBox title={title} content={subTitle} />
             </TitleBoxBlock>
             <Calendar
               viewType="result"
@@ -98,7 +105,7 @@ export const ResultPage = () => {
             <InformationBlock>
               <Information
                 icon={Time}
-                title="겹치는 시간을 확인하려면 날짜를 선택하세요"
+                title={timeInformationTitle}
                 content={mostSelectedTime?.join(', ')}
                 isOnlyTitle={!mostSelectedTime ? true : false}
                 isLoading={!isMostSelectedTimeFetched ? true : false}
