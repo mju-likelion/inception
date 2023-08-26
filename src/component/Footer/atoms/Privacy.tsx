@@ -6,10 +6,10 @@ interface PrivacyProps {
 }
 
 const PrivacyLink =
-  'https://www.notion.so/likelion-11th/9122afea432645408dafbc37e334d32a?pvs=4';
+  'https://gatherplz.notion.site/d5d9382a071b4b7d93d2fd2931ce6d63';
 
 const TermsOfUseLink =
-  'https://www.notion.so/likelion-11th/9122afea432645408dafbc37e334d32a?pvs=4';
+  'https://gatherplz.notion.site/c04613ccc6cf418c8b008e924f7b4f17?pvs=4';
 
 export const Privacy = ({ firstContent, secondContent }: PrivacyProps) => {
   return (

@@ -34,11 +34,12 @@ export const TimeBlockGroup = ({
     const newTimeTable = range(timeList.length)?.map(() =>
       new Array(dateList.length).fill(false)
     );
-    setTimeTable(newTimeTable);
 
     timeList.map((time, index) => {
       if (new Date() > new Date(dateList[0] + ' ' + time)) setPastTime(index);
     });
+
+    setTimeTable(newTimeTable);
   }, [timeList, dateList]);
 
   const newDateList = getPaginationDate({ page, dateList });
