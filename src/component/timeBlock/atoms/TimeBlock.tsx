@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useWindowResize } from '@/hooks';
 import { devices } from '@/globalStyle';
 import { Toast } from '@/component/@share';
+import { useState } from 'react';
 
 interface TimeBlockProps {
   active: boolean;
@@ -12,9 +13,15 @@ interface TimeBlockProps {
 }
 
 export const TimeBlock = ({ active, onClick, disabled }: TimeBlockProps) => {
+  const [isToastOpened, setIsToastOpened] = useState(false);
+  const [isMouseDown, setIsMouseDown] = useRecoilState(isMouseDownState);
+
   const windowSize = useWindowResize();
 
-  const [isMouseDown, setIsMouseDown] = useRecoilState(isMouseDownState);
+  const handleDisabledBlock = () => {
+    setIsToastOpened(true);
+  };
+
   const mouseDown = () => {
     if (!isMouseDown && windowSize.width >= devices.web) {
       onClick();
@@ -32,7 +39,14 @@ export const TimeBlock = ({ active, onClick, disabled }: TimeBlockProps) => {
     <>
       {disabled ? (
         <>
-          <DisabledTimeBlock disabled={true} />
+          <DisabledTimeBlock onClick={handleDisabledBlock} />
+          {isToastOpened && (
+            <Toast
+              status={'error'}
+              toastType={'timeBlock'}
+              descriptionActive="error"
+            />
+          )}
         </>
       ) : (
         <TimeBlockAtom
