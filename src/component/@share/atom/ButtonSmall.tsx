@@ -1,12 +1,12 @@
 import { PropsWithChildren } from 'react';
 import { styled } from 'styled-components';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { ToastType } from '@/types/Toast';
+import { ToastStatus } from '@/types/Toast';
 
 interface Props {
   copyContent?: string;
   onClick?: () => void;
-  onCopy?: (copyResult: ToastType) => void;
+  onCopy?: (copyResult: ToastStatus) => void;
 }
 
 export const ButtonSmall = ({
@@ -15,7 +15,7 @@ export const ButtonSmall = ({
   onClick,
   onCopy,
 }: PropsWithChildren<Props>) => {
-  const handleCopy = (copyResult: ToastType) => {
+  const handleCopy = (copyResult: ToastStatus) => {
     onCopy && onCopy(copyResult);
   };
   return copyContent ? (
