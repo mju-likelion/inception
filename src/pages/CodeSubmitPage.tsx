@@ -17,6 +17,7 @@ export const CodeSubmitPage = () => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     setValue(event.target.value.toUpperCase()); //입력코드 대문자 변환
+    alert('테스트');
   };
 
   const onKeyUp = () => {
