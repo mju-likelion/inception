@@ -25,6 +25,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { calendarState } from '@/store/atoms';
 import { getDatesToCalendarData } from '@/util/getDatesToCalendarData';
 import { appointmentResultData } from '@/store/atoms/Request';
+import { FetchMostSelectedTimeForDate } from '@/pages';
 
 interface CalendarProps {
   viewType: ViewType;
@@ -32,6 +33,7 @@ interface CalendarProps {
   minDate?: string;
   maxDate?: string;
   selectableDates?: string[];
+  fetchMostSelectedTimeForDate?: FetchMostSelectedTimeForDate;
 }
 
 type GetActiveStatus = (
@@ -66,6 +68,7 @@ export const Calendar = ({
   minDate,
   maxDate,
   selectableDates,
+  fetchMostSelectedTimeForDate,
 }: CalendarProps) => {
   const minimumDate = minDate ?? dateFormatToString(new Date());
   const maximumDate =
@@ -162,6 +165,7 @@ export const Calendar = ({
         <ResultMode
           checkLimitDate={checkLimitDate}
           changedDateColor={changedDateColor}
+          fetchMostSelectedTimeForDate={fetchMostSelectedTimeForDate}
         />
       );
     case 'select':
@@ -303,8 +307,14 @@ const CreateMode = ({
   );
 };
 
-type ResultModeProps = BaseCalendarModeProps;
-const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
+interface ResultModeProps extends BaseCalendarModeProps {
+  fetchMostSelectedTimeForDate?: FetchMostSelectedTimeForDate;
+}
+const ResultMode = ({
+  checkLimitDate,
+  changedDateColor,
+  fetchMostSelectedTimeForDate,
+}: ResultModeProps) => {
   const promiseResultData = useRecoilValue(appointmentResultData);
   const [calendarData, setCalendarData] = useState<SelectedDate[]>();
   const [dateRange, setDateRange] = useState(resolvePromiseResult());
@@ -353,6 +363,10 @@ const ResultMode = ({ checkLimitDate, changedDateColor }: ResultModeProps) => {
     setCalendar(changedCalendar);
 
     // @TODO 클릭한 날짜에서 선택된 날짜 정보를 가져오는 api 작성 필요
+    const count = calendar.find((item) => item.date === date)?.count;
+    if (count && count >= 2) {
+      fetchMostSelectedTimeForDate?.(date);
+    }
   };
 
   useEffect(() => {

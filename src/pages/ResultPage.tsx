@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Information, TitleBox } from '@/component/@share/molecules';
 import { Calendar } from '@/component';
@@ -6,29 +7,43 @@ import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
 import { ToastStatus } from '@/types/Toast';
 import { toastState, currentToastType } from '@/store';
 import { useRecoilState } from 'recoil';
-import { resultRoom } from '@/util/api';
+import { resultRoom, resultRoomByDate } from '@/util/api';
 import { appointmentResultData } from '@/store/atoms/Request';
+import { useResultTimeTitle, useResultTitle } from '@/hooks';
+
+export type FetchMostSelectedTimeForDate = (date: string) => Promise<void>;
 
 export const ResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const code = new URLSearchParams(location.search).get('code');
-  const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
-  const [urlToastStatus, setUrlToastStatus] = useState<ToastStatus>('error');
-  const [codeToastStatus, setCodeToastStatus] = useState<ToastStatus>('error');
-  const [toastType, setToastType] = useRecoilState(currentToastType);
-  const [isFetched, setIsFetched] = useState(false);
 
   // 약속 정보
   const [appointmentData, setAppointmentData] = useRecoilState(
     appointmentResultData
   );
+  const [mostSelectedTime, setMostSelectedTime] = useState<string[]>();
+  const [isCalendarFetched, setIsCalendarFetched] = useState(false);
+  const [isMostSelectedTimeFetched, setIsMostSelectedTimeFetched] =
+    useState(true);
 
-  const onClick = (tab: string) => {
+  const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
+  const [urlToastStatus, setUrlToastStatus] = useState<ToastStatus>('error');
+  const [codeToastStatus, setCodeToastStatus] = useState<ToastStatus>('error');
+  const [toastType, setToastType] = useRecoilState(currentToastType);
+
+  const { title, subTitle } = useResultTitle(appointmentData);
+  const timeInformationTitle = useResultTimeTitle(
+    appointmentData?.votingUsers,
+    appointmentData?.dateOnly,
+    appointmentData?.enableTimes,
+    mostSelectedTime
+  );
+
+  const handleTabNavigate = (tab: string) => {
     tab === TAB_ITEMS[0].id && navigate('/');
   };
 
@@ -44,8 +59,19 @@ export const ResultPage = () => {
     setToastType('code');
   };
 
-  const routeModifyPage = () => {
+  const navigateModifyPage = () => {
     navigate(`/appointment/${code}?step=1`);
+  };
+
+  const fetchMostSelectedTimeForDate: FetchMostSelectedTimeForDate = async (
+    date: string
+  ) => {
+    setIsMostSelectedTimeFetched(false);
+    if (code) {
+      const mostSelectedTime = await resultRoomByDate({ date, id: code });
+      setMostSelectedTime(mostSelectedTime?.everyoneSelectedTimes);
+      setIsMostSelectedTimeFetched(true);
+    }
   };
 
   useEffect(() => {
@@ -55,56 +81,61 @@ export const ResultPage = () => {
 
       if (data) {
         setAppointmentData(data);
-        setIsFetched(true);
+        setIsCalendarFetched(true);
       }
     })();
   }, []);
 
   return (
     <>
-      <TabBar onClick={onClick} tabItems={TAB_ITEMS} />
-      {isFetched ? (
+      <TabBar onClick={handleTabNavigate} tabItems={TAB_ITEMS} />
+      {isCalendarFetched ? (
         <ResultPageBlock>
           <ContentBlock>
             <TitleBoxBlock>
-              <TitleBox
-                title="일정들을 모아보니"
-                content="링크를 공유한 사람들과 겹치는 가능 날짜에 인원수와 함께 표시됩니다"
-              />
+              <TitleBox title={title} content={subTitle} />
             </TitleBoxBlock>
-            <Calendar viewType="result" />
+            <Calendar
+              viewType="result"
+              fetchMostSelectedTimeForDate={fetchMostSelectedTimeForDate}
+            />
             <GridFooter>
-              <ButtonSmall onClick={routeModifyPage}>일정 수정</ButtonSmall>
+              <ButtonSmall onClick={navigateModifyPage}>일정 수정</ButtonSmall>
             </GridFooter>
             <InformationBlock>
               <Information
                 icon={Time}
-                title="겹치는 시간을 확인하려면 날짜를 선택하세요"
-                isNull={true}
-                isEnabled={false}
+                title={timeInformationTitle}
+                content={mostSelectedTime?.join(', ')}
+                isOnlyTitle={!mostSelectedTime ? true : false}
+                isLoading={!isMostSelectedTimeFetched ? true : false}
               />
               <Information
                 icon={People}
                 title="제출한 사람"
-                content="학수, 원유, 해빈"
+                content={appointmentData.votingUsers.join(', ')}
               />
               <Information
                 title="약속방 링크"
                 content={`${window.location.origin}/appointment/${code}?step=1`} // url 전체를 가져오기 위해 window 사용
-                isEnabled={true}
+                enableCopy={true}
                 clickButton={copyUrl}
               />
               <Information
                 title="약속방 입장 코드"
                 content={code ?? undefined}
-                isEnabled={true}
+                enableCopy={true}
                 clickButton={copyCode}
               />
             </InformationBlock>
           </ContentBlock>
         </ResultPageBlock>
       ) : (
-        <LoadingIcon spinnerType="mintSpinner" />
+        <LoadingContent>
+          <ContentBlock>
+            <LoadingIcon spinnerType="mintSpinner" />
+          </ContentBlock>
+        </LoadingContent>
       )}
       {isToastOpened && toastType === 'url' && (
         <Toast
@@ -142,6 +173,25 @@ const TitleBoxBlock = styled.div`
   }
   @media ${({ theme }) => theme.size.web} {
     margin-top: 80px;
+  }
+`;
+
+const LoadingContent = styled.div`
+  display: flex;
+  min-width: 320px;
+  max-width: 500px;
+  min-height: 368px;
+  max-height: 668px;
+  margin: 30px 20px 0 20px;
+  justify-content: center;
+  align-items: center;
+
+  @media ${({ theme }) => theme.size.tablet} {
+    margin: 60px auto 0 auto;
+  }
+
+  @media ${({ theme }) => theme.size.web} {
+    margin: 80px auto 0 auto;
   }
 `;
 

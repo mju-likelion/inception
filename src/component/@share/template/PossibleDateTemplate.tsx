@@ -73,7 +73,12 @@ export const PossibleDateTemplate = ({
             />
           </>
         ) : (
-          <LoadingIcon />
+          <LoadingContent>
+            <Header />
+            <Content>
+              <LoadingIcon />
+            </Content>
+          </LoadingContent>
         )}
       </Content>
       <Bottom>
@@ -119,6 +124,25 @@ const Content = styled.div`
   @media ${({ theme }) => theme.size.tablet} {
     margin-top: 24px;
     gap: 30px;
+  }
+`;
+
+const LoadingContent = styled.div`
+  display: flex;
+  min-width: 320px;
+  max-width: 500px;
+  min-height: 368px;
+  max-height: 668px;
+  margin: 30px 20px 0 20px;
+  justify-content: center;
+  align-items: center;
+
+  @media ${({ theme }) => theme.size.tablet} {
+    margin: 60px auto 0 auto;
+  }
+
+  @media ${({ theme }) => theme.size.web} {
+    margin: 80px auto 0 auto;
   }
 `;
 

@@ -1,70 +1,92 @@
 import { css, styled } from 'styled-components';
 import { ButtonSmall } from '@/component/@share/atom/ButtonSmall';
 import { theme } from '@/globalStyle';
+import { LoadingIcon } from '../atom';
 import { ToastStatus } from '@/types/Toast';
 
 interface Props {
   icon?: string;
   title: string;
   content?: string;
-  isNull?: boolean;
-  isEnabled?: boolean;
+  isOnlyTitle?: boolean;
+  enableCopy?: boolean;
+  isLoading?: boolean;
   clickButton?: (copyResult: ToastStatus) => void;
 }
 
-export const Information = ({
-  icon,
-  title,
-  content,
-  isNull = false,
-  isEnabled = false,
-  clickButton,
-}: Props) => {
+export const Information = (props: Props) => {
   return (
-    <InformationBlock $isEnabled={isEnabled} $isNull={isNull}>
-      <ContentBlock>
-        {isEnabled || <Icon src={icon} />}
-        <TextBlock $isEnabled={isEnabled}>
-          {isEnabled ? (
-            <Body ag="Body1SemiBold" $color="gray1">
-              {title}
-            </Body>
-          ) : (
-            <Body ag="Body3" $color="gray2">
-              {title}
-            </Body>
-          )}
-          {isNull ||
-            (isEnabled ? (
-              <Body ag="Body3" $color="gray2">
-                {content}
-              </Body>
-            ) : (
-              <Body ag="Body1SemiBold" $color="gray1">
-                {content}
-              </Body>
-            ))}
-        </TextBlock>
-        {isEnabled && (
-          <ButtonSmall copyContent={content} onCopy={clickButton}>
-            복사하기
-          </ButtonSmall>
-        )}
-      </ContentBlock>
+    <InformationBlock
+      $enableCopy={props.enableCopy || false}
+      $isOnlyTitle={props.isOnlyTitle || false}
+    >
+      {props.isLoading ? <LoadingContent /> : <Content {...props} />}
     </InformationBlock>
   );
 };
 
-const InformationBlock = styled.div<{ $isEnabled: boolean; $isNull: boolean }>`
+const LoadingContent = () => {
+  return (
+    <LoadingBlock>
+      <LoadingIcon spinnerType="graySpinner" />
+    </LoadingBlock>
+  );
+};
+
+const Content = ({
+  icon,
+  title,
+  content,
+  isOnlyTitle = false,
+  enableCopy = false,
+  clickButton,
+}: Props) => {
+  return (
+    <ContentBlock>
+      {enableCopy || <Icon src={icon} />}
+      <TextBlock $enableCopy={enableCopy}>
+        {enableCopy ? (
+          <Body ag="Body1SemiBold" $color="gray1">
+            {title}
+          </Body>
+        ) : (
+          <Body ag="Body3" $color="gray2">
+            {title}
+          </Body>
+        )}
+        {isOnlyTitle ||
+          (enableCopy ? (
+            <Body ag="Body3" $color="gray2">
+              {content}
+            </Body>
+          ) : (
+            <Body ag="Body1SemiBold" $color="gray1">
+              {content}
+            </Body>
+          ))}
+      </TextBlock>
+      {enableCopy && (
+        <ButtonSmall copyContent={content} onCopy={clickButton}>
+          복사하기
+        </ButtonSmall>
+      )}
+    </ContentBlock>
+  );
+};
+
+const InformationBlock = styled.div<{
+  $enableCopy: boolean;
+  $isOnlyTitle: boolean;
+}>`
   min-width: 320px;
   max-width: 500px;
-  height: ${({ $isNull }) => $isNull && '70px'};
+  height: ${({ $isOnlyTitle }) => $isOnlyTitle && '70px'};
   flex-direction: column;
   align-items: flex-start;
   display: flex;
   padding: 12px;
-  background-color: ${({ $isEnabled }) =>
-    $isEnabled
+  background-color: ${({ $enableCopy }) =>
+    $enableCopy
       ? ({ theme }) => theme.colors.white
       : ({ theme }) => theme.colors.gray5};
   border-radius: 8px;
@@ -79,13 +101,19 @@ const ContentBlock = styled.div`
   align-self: stretch;
 `;
 
+const LoadingBlock = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 const Icon = styled.img`
   width: 24px;
   height: 24px;
 `;
 
-const TextBlock = styled.div<{ $isEnabled: boolean }>`
-  flex: ${({ $isEnabled }) => $isEnabled && 1};
+const TextBlock = styled.div<{ $enableCopy: boolean }>`
+  flex: ${({ $enableCopy }) => $enableCopy && 1};
   display: flex;
   flex-direction: column;
   align-items: flex-start;

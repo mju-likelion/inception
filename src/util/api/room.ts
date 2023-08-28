@@ -1,6 +1,5 @@
 import { Axios } from '@/util/axios';
 
-/** @TODO dates는 string[]으로 바뀔 예정?? */
 export interface CreateRoomRequest {
   dates: string[]; // '2023-07-07,2023-07-08' | ['2023-07-07', '2023-07-08']
   dateOnly: boolean; // true: 날짜, false: 날짜+시간
@@ -77,6 +76,7 @@ export interface ResultRoomResponse {
   createdAt: string;
   updatedAt: string;
   enableTimes: { [time: string]: number };
+  votingUsers: string[];
 }
 
 export const resultRoom = async ({ id }: ResultRoomRequest) => {
@@ -86,6 +86,35 @@ export const resultRoom = async ({ id }: ResultRoomRequest) => {
   } catch (e) {
     if (e instanceof Error) {
       throw new Error('resultRoom Error', e);
+    }
+  }
+};
+
+export interface ResultRoomByDateRequest {
+  id: string; // ^[A-Z\d]{6}$
+  date: string; // ^\d{4}-\d{2}-\d{2}$
+}
+
+export interface ResultRoomByDateResponse {
+  code: string; // "3SDXQI"
+  selectedDate: string; // "2023-08-31"
+  dateOnly: boolean; // false일땐 시간도 정보도 포함됨
+  votingUsers: string[]; // ["유저1", "유저2"]
+  startTime?: string; // "09:00"
+  endTime?: string; // "17:00"
+  everyoneSelectedTimes?: string[]; // ["09:00", "09:30", "11:00", "11:30"]
+}
+
+export const resultRoomByDate = async ({
+  id,
+  date,
+}: ResultRoomByDateRequest) => {
+  try {
+    const res = await Axios.get(`/api/rooms/${id}/result/${date}`);
+    return res.data as ResultRoomByDateResponse;
+  } catch (e) {
+    if (e instanceof Error) {
+      throw new Error('resultRoomByDate Error', e);
     }
   }
 };
