@@ -131,7 +131,11 @@ export const ResultPage = () => {
           </ContentBlock>
         </ResultPageBlock>
       ) : (
-        <LoadingIcon spinnerType="mintSpinner" />
+        <LoadingContent>
+          <ContentBlock>
+            <LoadingIcon spinnerType="mintSpinner" />
+          </ContentBlock>
+        </LoadingContent>
       )}
       {isToastOpened && toastType === 'url' && (
         <Toast
@@ -169,6 +173,25 @@ const TitleBoxBlock = styled.div`
   }
   @media ${({ theme }) => theme.size.web} {
     margin-top: 80px;
+  }
+`;
+
+const LoadingContent = styled.div`
+  display: flex;
+  min-width: 320px;
+  max-width: 500px;
+  min-height: 368px;
+  max-height: 668px;
+  margin: 30px 20px 0 20px;
+  justify-content: center;
+  align-items: center;
+
+  @media ${({ theme }) => theme.size.tablet} {
+    margin: 60px auto 0 auto;
+  }
+
+  @media ${({ theme }) => theme.size.web} {
+    margin: 80px auto 0 auto;
   }
 `;
 
