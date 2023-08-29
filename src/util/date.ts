@@ -7,13 +7,25 @@ export const getCalendarData = (
   year: string,
   month: string,
   viewType: ViewType,
-  appointmentResult?: SelectedDate[]
+  appointmentResult?: SelectedDate[],
+  calendarState?: CalendarData[], // select mode에서 기존에 선택한 값을 다시 적용시키기 위해 사용
+  prevCalendarDataExist?: boolean // 이전 값이 존재하는지 판별
 ): CalendarData[] => {
   const days = calcDaysByYearMonth(year, month);
 
   // 가장 많이 선택된 횟수로 status 구하기 위해 사용
   const mostSelectedCount =
     appointmentResult && getCountOfMostSelectedDate(appointmentResult);
+
+  // 이미 선택된 값이 있다면 해당 state를 사용
+  if (
+    viewType === 'select' &&
+    prevCalendarDataExist &&
+    calendarState &&
+    calendarState?.length > 0
+  ) {
+    return calendarState;
+  }
 
   const calendarDatas = days.map((day) => {
     const date = `${year}-${padStart(month, 2, '0')}-${day}`;

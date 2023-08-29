@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import { TabBar } from '@/component/@share';
 import {
@@ -26,6 +26,10 @@ export const AppointmentStepPage = () => {
   const params = useParams();
   const [roomInfo, setRoomInfo] = useState<ViewRoomResponse>();
 
+  // 이전에 선택한 값이 있는지 판별하기 위함.
+  // appointment step에 이동이 발생했을 때만 선택한 값이 있다고 판별한다.
+  const prevCalendarDataExist = useRef(false);
+
   const calendar = useRecoilValue(calendarState);
   const timeBlock = useRecoilValue(timeTableState);
   const dateList = useRecoilValue(dateListState);
@@ -35,7 +39,7 @@ export const AppointmentStepPage = () => {
 
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
 
-  useMemo(() => {
+  useEffect(() => {
     if (roomInfo?.dateOnly) {
       return setSelectedDates(
         calendar
@@ -45,16 +49,18 @@ export const AppointmentStepPage = () => {
     }
   }, [calendar]);
 
-  useMemo(() => {
-    selectedDates.splice(0);
-    return timeBlock.map((itemList, timeIndex) => {
+  useEffect(() => {
+    // 시간도 선택할 수 있는 경우 (2023-08-29를 2023-08-29 09:00)과 같이 형태를 변경
+    const dateWithTime: string[] = [];
+    timeBlock.map((itemList, timeIndex) => {
       itemList.filter((item, dateIndex) => {
         const date = dateList[dateIndex] + ' ' + timeList[timeIndex];
 
-        item && selectedDates.push(date);
+        item && dateWithTime.push(date);
       });
-      getDatesAsc(selectedDates);
+      getDatesAsc(dateWithTime);
     });
+    setSelectedDates(dateWithTime);
   }, [timeBlock]);
 
   const preventRefresh = (e: BeforeUnloadEvent) => {
@@ -91,8 +97,10 @@ export const AppointmentStepPage = () => {
 
   const handleButtonClick = () => {
     if (step === '3') {
+      prevCalendarDataExist.current = false;
       requestCreateUser();
     } else {
+      prevCalendarDataExist.current = true;
       roomInfo?.dateOnly
         ? step && navigate(`/appointment/${params.code}?step=3`)
         : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
@@ -110,6 +118,7 @@ export const AppointmentStepPage = () => {
           <PossibleDateTemplate
             buttonClick={handleButtonClick}
             selectableDates={roomInfo?.dates}
+            prevCalendarDataExist={prevCalendarDataExist.current}
           />
         );
       case '2':
