@@ -34,8 +34,17 @@ export const AppointmentStepPage = () => {
   const password = useRecoilValue(signUpPassword);
 
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
+  console.log('selectedDates >>', selectedDates);
+  console.log('dateList >>', dateList);
+  console.log('calendar >>', calendar);
 
-  useMemo(() => {
+  /**
+   *  useMemo는 depts에 있는 내용이 같으면 연산 결과를 재실행 하지 않는다.
+   *  useMemo는 결과를 반환하는 로직에 쓰임
+   *  따라서 useMemo 내부 callback에서 set을 하여 sideEffect를 일으키는 것은 useMemo의 동작과 맞지 않음
+   *  때문에 useMemo 동작을 useEffect로 변환
+   * */
+  useEffect(() => {
     if (roomInfo?.dateOnly) {
       return setSelectedDates(
         calendar
@@ -45,16 +54,23 @@ export const AppointmentStepPage = () => {
     }
   }, [calendar]);
 
-  useMemo(() => {
-    selectedDates.splice(0);
-    return timeBlock.map((itemList, timeIndex) => {
+  // 위 주석과 마찬가지로 useMemo는 결과를 반환하기 위해 사용함
+  // 하지만 이전 코드에선 반환 값을 사용하고 있지 않고 sideEffect를 발생시키고 있었음.
+  // 따라서 useEffect로 변경.
+  useEffect(() => {
+    // 시간도 선택할 수 있다면 (2023-08-29를 2023-08-29 09:00)과 같이 형태를 변경
+    // splice는 원본 값을 변경시키는 매우 위험한 코드. 리렌더링을 발생시키지 않아 state 흐름을 파악하기 어렵게 만든다.
+    // 아래와 같이 새로운 값을 만들어 덮어씌우는 형태로 만들기
+    const dateWithTime: string[] = [];
+    timeBlock.map((itemList, timeIndex) => {
       itemList.filter((item, dateIndex) => {
         const date = dateList[dateIndex] + ' ' + timeList[timeIndex];
 
-        item && selectedDates.push(date);
+        item && dateWithTime.push(date);
       });
-      getDatesAsc(selectedDates);
+      getDatesAsc(dateWithTime);
     });
+    setSelectedDates(dateWithTime);
   }, [timeBlock]);
 
   const preventRefresh = (e: BeforeUnloadEvent) => {

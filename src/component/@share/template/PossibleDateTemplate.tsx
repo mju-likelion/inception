@@ -10,6 +10,7 @@ import { useRecoilValue } from 'recoil';
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { dateListState, timeTableState } from '@/store';
+import { CalendarData } from '@/types';
 interface Props {
   buttonClick: () => void;
   selectableDates?: string[];
@@ -31,6 +32,20 @@ export const PossibleDateTemplate = ({
       ? setIsActiveButton(true)
       : setIsActiveButton(false);
   }, [calendarData]);
+
+  // 여기 이어서 작성하기
+  useEffect(() => {
+    const recorveryCalendarData = calendarData.map((data) => {
+      const correctData = dateList.find((date) => date === data.date);
+      if (correctData) {
+        return { ...data, activeStatus: 'active' } as CalendarData;
+      } else {
+        return data;
+      }
+    });
+
+    console.log(recorveryCalendarData);
+  }, [dateList]);
 
   const setActiveDatesList = () => {
     const activeList: string[] = [];

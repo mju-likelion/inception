@@ -169,7 +169,6 @@ export const Calendar = ({
         />
       );
     case 'select':
-      /** @TODO Select Mode 개발하기 */
       return (
         <SelectMode
           checkLimitDate={checkLimitDate}
@@ -362,7 +361,6 @@ const ResultMode = ({
     const changedCalendar = changedDateColor(calendar, date, 'result');
     setCalendar(changedCalendar);
 
-    // @TODO 클릭한 날짜에서 선택된 날짜 정보를 가져오는 api 작성 필요
     const count = calendar.find((item) => item.date === date)?.count;
     if (count && count >= 2) {
       fetchMostSelectedTimeForDate?.(date);
@@ -442,7 +440,6 @@ const SelectMode = ({
     checkLimitDate(currentDate, minDate, maxDate)
   );
 
-  /** @TODO atom으로 관리해야할까? */
   const isMouseDown = useRef(false);
   const currentTouchTargetText = useRef<string>();
   const setCurrentTouchTargetText = (text: string) => {
@@ -507,7 +504,14 @@ const SelectMode = ({
   };
 
   useEffect(() => {
-    setCalendar(getCalendarData(minDate[0], minDate[1], 'select', resultData));
+    const data = getCalendarData(
+      minDate[0],
+      minDate[1],
+      'select',
+      resultData,
+      calendar
+    );
+    setCalendar(data);
   }, []);
 
   /** @TODO GridFooter는 result === on 일때만 보여준다. GridHeader, GridFooter는 molecules로 관리해야될 것 같다. */

@@ -7,7 +7,8 @@ export const getCalendarData = (
   year: string,
   month: string,
   viewType: ViewType,
-  appointmentResult?: SelectedDate[]
+  appointmentResult?: SelectedDate[],
+  calendarState?: CalendarData[] // select mode에서 기존에 선택한 값을 다시 적용시키기 위해 사용
 ): CalendarData[] => {
   const days = calcDaysByYearMonth(year, month);
 
@@ -39,6 +40,14 @@ export const getCalendarData = (
       ) {
         activeStatus = 'disabled';
       }
+    }
+
+    // 이미 선택된 값이 있다면 해당 state를 참고해 activeStatus 만들기
+    if (viewType === 'select' && calendarState) {
+      const getPrevActiveData = calendarState?.find(
+        (state) => state.date === date && state.activeStatus === 'active'
+      );
+      getPrevActiveData && (activeStatus = 'active');
     }
 
     // 현재 날짜의 이전 날짜는 disable 처리
