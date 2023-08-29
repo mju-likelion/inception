@@ -27,8 +27,8 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
   };
 
   useEffect(() => {
-    activeEvent;
-  }, [isButtonInactive]);
+    activeEvent();
+  }, [nicknameValue, passwordValue]);
 
   useEffect(() => {
     return () => {

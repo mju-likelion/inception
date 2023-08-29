@@ -23,8 +23,8 @@ export const LoginCodeTemplate = ({ buttonClick }: Props) => {
   };
 
   useEffect(() => {
-    activeEvent;
-  }, [isButtonInactive]);
+    activeEvent();
+  }, [nicknameValue, passwordValue]);
 
   const activeEvent = () => {
     nicknameValue.length >= 1 && passwordValue.length >= 1

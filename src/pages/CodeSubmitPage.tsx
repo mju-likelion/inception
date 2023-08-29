@@ -20,7 +20,7 @@ export const CodeSubmitPage = () => {
     alert('테스트');
   };
 
-  const onKeyUp = () => {
+  const activeEvent = () => {
     const index = value.length;
     index > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
   };
@@ -31,6 +31,7 @@ export const CodeSubmitPage = () => {
 
   const activeEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
+      event.preventDefault();
       handleButtonClick();
     }
   };
@@ -40,9 +41,8 @@ export const CodeSubmitPage = () => {
   };
 
   useEffect(() => {
-    onKeyUp;
-    buttonInactive;
-  });
+    activeEvent();
+  }, [value]);
 
   return (
     <>
@@ -60,7 +60,7 @@ export const CodeSubmitPage = () => {
             <Input
               placeholder={'약속방 입력 코드'}
               onChange={onChange}
-              onKeyUp={onKeyUp}
+              onKeyUp={activeEvent}
               onKeyDown={activeEnter}
               value={value}
               maxLength={6}
