@@ -10,13 +10,16 @@ import { useRecoilValue } from 'recoil';
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { dateListState, timeTableState } from '@/store';
+import { CalendarData } from '@/types';
 interface Props {
   buttonClick: () => void;
+  prevCalendarDataExist: boolean;
   selectableDates?: string[];
 }
 
 export const PossibleDateTemplate = ({
   buttonClick,
+  prevCalendarDataExist,
   selectableDates,
 }: Props) => {
   const [isActiveButton, setIsActiveButton] = useState(true);
@@ -64,6 +67,7 @@ export const PossibleDateTemplate = ({
               minDate={getMinDate(selectableDates)}
               maxDate={getMaxDate(selectableDates)}
               selectableDates={selectableDates}
+              prevCalendarDataExist={prevCalendarDataExist}
             />
             <Information
               icon={CalendarIcon}
