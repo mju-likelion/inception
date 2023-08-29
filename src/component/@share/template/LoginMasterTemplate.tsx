@@ -44,7 +44,7 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
   };
 
   const activeEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && nicknameValue.length >= 1) {
       event.preventDefault();
       buttonClick();
     }
@@ -66,7 +66,6 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
             type="text"
             placeholder="닉네임"
             onKeyUp={activeEvent}
-            onKeyDown={activeEnter}
             onChange={onChangeNickname}
             value={nicknameValue}
           />
