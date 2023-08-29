@@ -28,13 +28,17 @@ export const TimeBlockGroup = ({
   const [previousTarget, setPreviousTarget] = useState<HTMLButtonElement>();
   const [pastTime, setPastTime] = useState<number>(0);
 
-  const nowDate = new Date();
-
   useEffect(() => {
     const newTimeTable = range(timeList.length)?.map(() =>
       new Array(dateList.length).fill(false)
     );
-    setTimeTable(newTimeTable);
+
+    //선택된 타임 테이블이 존재 하는 경우 기존에 있던 타임 테이블로 세팅
+    timeTable.flat().every((selected) => {
+      return selected === false;
+    })
+      ? setTimeTable(newTimeTable)
+      : setTimeTable(timeTable);
 
     timeList.map((time, index) => {
       if (new Date() > new Date(dateList[0] + ' ' + time)) setPastTime(index);

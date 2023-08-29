@@ -26,6 +26,7 @@ import { calendarState } from '@/store/atoms';
 import { getDatesToCalendarData } from '@/util/getDatesToCalendarData';
 import { appointmentResultData } from '@/store/atoms/Request';
 import { FetchMostSelectedTimeForDate } from '@/pages';
+import { timeTableState } from '@/store';
 
 interface CalendarProps {
   viewType: ViewType;
@@ -432,6 +433,8 @@ const SelectMode = ({
   selectableDates,
   prevCalendarDataExist,
 }: SelectModeProps) => {
+  const [timeTable, setTimeTable] = useRecoilState(timeTableState);
+
   const resultData = getDatesToCalendarData(selectableDates);
   const { minDate, maxDate } = resolvePromiseResult(resultData);
 
@@ -456,6 +459,8 @@ const SelectMode = ({
     currentTouchTargetText.current = date.split('-')[2];
     const changedCalendar = changedDateColor(calendar, date, 'create');
     setCalendar(changedCalendar);
+    // 캘린더 날짜 변경에 따라 타임 테이블 초기화
+    setTimeTable([]);
   };
 
   const handleMouseUp = () => {
@@ -467,6 +472,8 @@ const SelectMode = ({
     if (!isMouseDown.current) return;
     const changedCalendar = changedDateColor(calendar, date, 'select');
     setCalendar(changedCalendar);
+    // 캘린더 날짜 변경에 따라 타임 테이블 초기화
+    setTimeTable([]);
   };
 
   const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
