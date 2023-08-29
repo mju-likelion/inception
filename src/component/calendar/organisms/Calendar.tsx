@@ -34,6 +34,7 @@ interface CalendarProps {
   maxDate?: string;
   selectableDates?: string[];
   fetchMostSelectedTimeForDate?: FetchMostSelectedTimeForDate;
+  prevCalendarDataExist?: boolean;
 }
 
 type GetActiveStatus = (
@@ -69,6 +70,7 @@ export const Calendar = ({
   maxDate,
   selectableDates,
   fetchMostSelectedTimeForDate,
+  prevCalendarDataExist,
 }: CalendarProps) => {
   const minimumDate = minDate ?? dateFormatToString(new Date());
   const maximumDate =
@@ -175,6 +177,7 @@ export const Calendar = ({
           changedDateColor={changedDateColor}
           calendarTouchMoveDrag={calendarTouchMoveDrag}
           selectableDates={selectableDates || []}
+          prevCalendarDataExist={prevCalendarDataExist ?? false}
         />
       );
     default:
@@ -419,6 +422,7 @@ const ResultMode = ({
 interface SelectModeProps extends BaseCalendarModeProps {
   calendarTouchMoveDrag: (param: ICalendarTouchMoveDrag) => void;
   selectableDates: string[];
+  prevCalendarDataExist: boolean;
 }
 
 const SelectMode = ({
@@ -426,6 +430,7 @@ const SelectMode = ({
   changedDateColor,
   calendarTouchMoveDrag,
   selectableDates,
+  prevCalendarDataExist,
 }: SelectModeProps) => {
   const resultData = getDatesToCalendarData(selectableDates);
   const { minDate, maxDate } = resolvePromiseResult(resultData);
@@ -509,7 +514,8 @@ const SelectMode = ({
       minDate[1],
       'select',
       resultData,
-      calendar
+      calendar,
+      prevCalendarDataExist
     );
     setCalendar(data);
   }, []);

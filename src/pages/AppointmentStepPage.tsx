@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import { TabBar } from '@/component/@share';
 import {
@@ -26,6 +26,10 @@ export const AppointmentStepPage = () => {
   const params = useParams();
   const [roomInfo, setRoomInfo] = useState<ViewRoomResponse>();
 
+  // 이전에 선택한 값이 있는지 판별하기 위함.
+  // appointment step에 이동이 발생했을 때만 선택한 값이 있다고 판별한다.
+  const prevCalendarDataExist = useRef(false);
+
   const calendar = useRecoilValue(calendarState);
   const timeBlock = useRecoilValue(timeTableState);
   const dateList = useRecoilValue(dateListState);
@@ -34,16 +38,7 @@ export const AppointmentStepPage = () => {
   const password = useRecoilValue(signUpPassword);
 
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
-  console.log('selectedDates >>', selectedDates);
-  console.log('dateList >>', dateList);
-  console.log('calendar >>', calendar);
 
-  /**
-   *  useMemo는 depts에 있는 내용이 같으면 연산 결과를 재실행 하지 않는다.
-   *  useMemo는 결과를 반환하는 로직에 쓰임
-   *  따라서 useMemo 내부 callback에서 set을 하여 sideEffect를 일으키는 것은 useMemo의 동작과 맞지 않음
-   *  때문에 useMemo 동작을 useEffect로 변환
-   * */
   useEffect(() => {
     if (roomInfo?.dateOnly) {
       return setSelectedDates(
@@ -54,13 +49,8 @@ export const AppointmentStepPage = () => {
     }
   }, [calendar]);
 
-  // 위 주석과 마찬가지로 useMemo는 결과를 반환하기 위해 사용함
-  // 하지만 이전 코드에선 반환 값을 사용하고 있지 않고 sideEffect를 발생시키고 있었음.
-  // 따라서 useEffect로 변경.
   useEffect(() => {
-    // 시간도 선택할 수 있다면 (2023-08-29를 2023-08-29 09:00)과 같이 형태를 변경
-    // splice는 원본 값을 변경시키는 매우 위험한 코드. 리렌더링을 발생시키지 않아 state 흐름을 파악하기 어렵게 만든다.
-    // 아래와 같이 새로운 값을 만들어 덮어씌우는 형태로 만들기
+    // 시간도 선택할 수 있는 경우 (2023-08-29를 2023-08-29 09:00)과 같이 형태를 변경
     const dateWithTime: string[] = [];
     timeBlock.map((itemList, timeIndex) => {
       itemList.filter((item, dateIndex) => {
@@ -107,8 +97,10 @@ export const AppointmentStepPage = () => {
 
   const handleButtonClick = () => {
     if (step === '3') {
+      prevCalendarDataExist.current = false;
       requestCreateUser();
     } else {
+      prevCalendarDataExist.current = true;
       roomInfo?.dateOnly
         ? step && navigate(`/appointment/${params.code}?step=3`)
         : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
@@ -126,6 +118,7 @@ export const AppointmentStepPage = () => {
           <PossibleDateTemplate
             buttonClick={handleButtonClick}
             selectableDates={roomInfo?.dates}
+            prevCalendarDataExist={prevCalendarDataExist.current}
           />
         );
       case '2':
