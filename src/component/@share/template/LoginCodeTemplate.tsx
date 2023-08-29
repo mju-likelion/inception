@@ -32,6 +32,17 @@ export const LoginCodeTemplate = ({ buttonClick }: Props) => {
       : setIsButtonInactive(true);
   };
 
+  const activeEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (
+      event.key === 'Enter' &&
+      nicknameValue.length >= 1 &&
+      passwordValue.length >= 1
+    ) {
+      event.preventDefault();
+      buttonClick();
+    }
+  };
+
   const tabItems: TabItem[] = [
     {
       id: 'default',
@@ -57,6 +68,7 @@ export const LoginCodeTemplate = ({ buttonClick }: Props) => {
               type="text"
               placeholder="닉네임"
               onKeyUp={activeEvent}
+              onKeyDown={activeEnter}
               onChange={onChangeNickname}
               value={nicknameValue}
             />
@@ -64,6 +76,7 @@ export const LoginCodeTemplate = ({ buttonClick }: Props) => {
               type="password"
               placeholder="비밀번호"
               onKeyUp={activeEvent}
+              onKeyDown={activeEnter}
               onChange={onChangePassword}
               value={passwordValue}
             />
