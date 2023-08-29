@@ -19,7 +19,7 @@ export const CodeSubmitPage = () => {
     setValue(event.target.value.toUpperCase()); //입력코드 대문자 변환
   };
 
-  const onKeyUp = () => {
+  const activeEvent = () => {
     const index = value.length;
     index > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
   };
@@ -39,9 +39,8 @@ export const CodeSubmitPage = () => {
   };
 
   useEffect(() => {
-    onKeyUp;
-    buttonInactive;
-  });
+    activeEvent();
+  }, [value]);
 
   return (
     <>
@@ -59,7 +58,7 @@ export const CodeSubmitPage = () => {
             <Input
               placeholder={'약속방 입력 코드'}
               onChange={onChange}
-              onKeyUp={onKeyUp}
+              onKeyUp={activeEvent}
               onKeyDown={activeEnter}
               value={value}
               maxLength={6}
