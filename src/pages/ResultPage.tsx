@@ -13,6 +13,7 @@ import { useRecoilState } from 'recoil';
 import { resultRoom, resultRoomByDate } from '@/util/api';
 import { appointmentResultData } from '@/store/atoms/Request';
 import { useResultTimeTitle, useResultTitle } from '@/hooks';
+import { Modal } from '@/component/@share/organisms/Modal';
 
 export type FetchMostSelectedTimeForDate = (date: string) => Promise<void>;
 
@@ -34,8 +35,9 @@ export const ResultPage = () => {
   const [urlToastStatus, setUrlToastStatus] = useState<ToastStatus>('error');
   const [codeToastStatus, setCodeToastStatus] = useState<ToastStatus>('error');
   const [toastType, setToastType] = useRecoilState(currentToastType);
-
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const { title, subTitle } = useResultTitle(appointmentData);
+
   const timeInformationTitle = useResultTimeTitle(
     appointmentData?.votingUsers,
     appointmentData?.dateOnly,
@@ -74,6 +76,11 @@ export const ResultPage = () => {
     }
   };
 
+  const handleCodeModal = () => {
+    setIsOpenModal(false);
+    navigate('/submit-code');
+  };
+
   useEffect(() => {
     (async () => {
       let data;
@@ -82,6 +89,8 @@ export const ResultPage = () => {
       if (data) {
         setAppointmentData(data);
         setIsCalendarFetched(true);
+      } else {
+        setIsOpenModal(true);
       }
     })();
   }, []);
@@ -132,9 +141,7 @@ export const ResultPage = () => {
         </ResultPageBlock>
       ) : (
         <LoadingContent>
-          <ContentBlock>
-            <LoadingIcon spinnerType="mintSpinner" />
-          </ContentBlock>
+          <LoadingIcon spinnerType="mintSpinner" />
         </LoadingContent>
       )}
       {isToastOpened && toastType === 'url' && (
@@ -151,6 +158,11 @@ export const ResultPage = () => {
           descriptionActive="error"
         />
       )}
+      <Modal
+        error="codeError"
+        isOpen={isOpenModal}
+        onCloseModal={handleCodeModal}
+      />
     </>
   );
 };
@@ -178,21 +190,9 @@ const TitleBoxBlock = styled.div`
 
 const LoadingContent = styled.div`
   display: flex;
-  min-width: 320px;
-  max-width: 500px;
-  min-height: 368px;
-  max-height: 668px;
-  margin: 30px 20px 0 20px;
   justify-content: center;
   align-items: center;
-
-  @media ${({ theme }) => theme.size.tablet} {
-    margin: 60px auto 0 auto;
-  }
-
-  @media ${({ theme }) => theme.size.web} {
-    margin: 80px auto 0 auto;
-  }
+  height: calc(100vh - 274px);
 `;
 
 const GridFooter = styled.div`

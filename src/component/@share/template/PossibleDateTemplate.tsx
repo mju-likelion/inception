@@ -25,7 +25,6 @@ export const PossibleDateTemplate = ({
   const [timeTable, setTimeTable] = useRecoilState(timeTableState);
 
   useEffect(() => {
-    setTimeTable([]);
     calendarData.every(function (date) {
       return date.activeStatus !== 'active';
     })
