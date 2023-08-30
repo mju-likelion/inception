@@ -15,6 +15,7 @@ import {
   titleCheckState,
 } from '@/store';
 import { calendarState } from '@/store/atoms/Calendar';
+import { useGaApi } from '@/hooks/useGA';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -29,7 +30,15 @@ export const Home = () => {
   const resetEndTime = useResetRecoilState(selectedEndTime);
   const resetDateOnly = useResetRecoilState(titleCheckState);
 
+  const { gaApi } = useGaApi();
+
   useEffect(() => {
+    gaApi.sendEvent({
+      eventName: 't_view',
+      tEventId: 101,
+      tPath: '/create-room',
+    });
+
     return () => {
       resetStartTime();
       resetEndTime();
