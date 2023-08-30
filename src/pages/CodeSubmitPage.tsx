@@ -3,26 +3,27 @@ import { TabBar } from '@/component/@share/organisms';
 import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { TAB_ITEMS } from '@/pages/data';
 import { useNavigate } from 'react-router-dom';
+import { Modal } from '@/component/@share/organisms/Modal';
+import { resultRoom } from '@/util/api';
 
 export const CodeSubmitPage = () => {
-  const [value, setValue] = useState('');
-
-  const [buttonInactive, setButtonInactive] = useState(true);
-
   const navigate = useNavigate();
+  const [code, setCode] = useState('');
+  const [buttonInactive, setButtonInactive] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-    setValue(event.target.value.toUpperCase()); //입력코드 대문자 변환
+    const code = event.target.value.toUpperCase();
+    code.length > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
+    setCode(event.target.value.toUpperCase()); //입력코드 대문자 변환
   };
 
-  const activeEvent = () => {
-    const index = value.length;
-    index > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
-  };
+  // const validateCode = () => {
+  //   code.length > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
+  // };
 
   const onClick = (tab: string) => {
     tab === TAB_ITEMS[0].id && navigate('/');
@@ -35,13 +36,15 @@ export const CodeSubmitPage = () => {
     }
   };
 
-  const handleButtonClick = () => {
-    navigate(`/result?code=${value}`);
+  const handleButtonClick = async () => {
+    // api 요청
+    const res = await resultRoom({ id: code });
+    if (!res) {
+      setModalOpen(true);
+    } else {
+      navigate(`/result?code=${code}`);
+    }
   };
-
-  useEffect(() => {
-    activeEvent();
-  }, [value]);
 
   return (
     <>
@@ -59,9 +62,10 @@ export const CodeSubmitPage = () => {
             <Input
               placeholder={'약속방 입력 코드'}
               onChange={onChange}
-              onKeyUp={activeEvent}
+              /** @TODO keyUp과 keyDown을 구분할 필요가 있을지 */
+              // onKeyUp={validateCode}
               onKeyDown={activeEnter}
-              value={value}
+              value={code}
               maxLength={6}
             />
           </WrapInput>
@@ -72,6 +76,11 @@ export const CodeSubmitPage = () => {
           </ButtonLarge>
         </WrapButton>
       </WrapperContents>
+      <Modal
+        error="codeError"
+        isOpen={modalOpen}
+        onCloseModal={() => setModalOpen(false)}
+      />
     </>
   );
 };
