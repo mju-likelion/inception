@@ -22,6 +22,7 @@ export const Footer = () => {
   const [searchParams] = useSearchParams();
   const stepParams = searchParams.get('step');
   const { changePathnameToTPath, gaApi } = useGaApi();
+  const tStep = stepParams ? (+stepParams as 1 | 2 | 3) : null;
 
   const onContactClick = () => {
     gaApi.sendEvent({
@@ -29,7 +30,7 @@ export const Footer = () => {
       tEventId: 203,
       tPath: changePathnameToTPath(location.pathname),
       tTarget: 'contact',
-      tStep: stepParams ? (+stepParams as 1 | 2 | 3) : null,
+      tStep,
     });
   };
 
@@ -39,12 +40,22 @@ export const Footer = () => {
       tEventId: 204,
       tPath: changePathnameToTPath(location.pathname),
       tTarget: 'email',
-      tStep: stepParams ? (+stepParams as 1 | 2 | 3) : null,
+      tStep,
     });
 
     setIsToastOpened(true);
     setToastStatus(copyResult);
     setToastType('email');
+  };
+
+  const onPrivacyPolicyClick = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 205,
+      tPath: changePathnameToTPath(location.pathname),
+      tTarget: 'privacy_policy',
+      tStep,
+    });
   };
 
   return (
@@ -62,6 +73,7 @@ export const Footer = () => {
           <Privacy
             firstContent="개인정보 처리 방침"
             secondContent="서비스 이용약관"
+            onFirstContentClick={onPrivacyPolicyClick}
           />
           <CopyRight content={OrganizationInfo.COPYRIGHT} />
         </>
