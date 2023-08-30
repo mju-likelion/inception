@@ -101,10 +101,17 @@ export const AppointmentStepPage = () => {
   };
 
   const modifyUser = async (token: string) => {
-    await modifySchedule(token, params.code ?? '', {
+    const res = await modifySchedule(token, params.code ?? '', {
       dates: selectedDates,
     });
-    navigate(`/result?code=${params.code}`);
+
+    if (res) {
+      navigate(`/result?code=${params.code}`);
+    } else {
+      roomInfo?.dateOnly
+        ? step && navigate(`/appointment/${params.code}?step=3`)
+        : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
+    }
   };
 
   const handleButtonClick = () => {

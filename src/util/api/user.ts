@@ -50,14 +50,13 @@ export const modifySchedule = async (
   modifyData: ModifyScheduleRequest
 ): Promise<ModifyScheduleResponse | undefined> => {
   try {
-    const res = (await Axios.patch(`/api/users/${id}`, {
+    const res = (await Axios.patch(`/api/users/${id}`, modifyData, {
       headers: { Authorization: `Bearer ${token}` },
-      data: modifyData,
     })) as ModifyScheduleResponse;
     return res;
   } catch (e) {
     if (e instanceof Error) {
-      throw new Error('modifySchedule Error', e);
+      console.log(e);
     }
   }
 };
