@@ -21,6 +21,8 @@ export const ResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const code = new URLSearchParams(location.search).get('code');
+  const token = localStorage.getItem((code ?? '') + 'token');
+  //disabled상태를 판단하기 위한 로컬스토로지 토큰을 가져옵니다.
 
   // 약속 정보
   const [appointmentData, setAppointmentData] = useRecoilState(
@@ -109,7 +111,9 @@ export const ResultPage = () => {
               fetchMostSelectedTimeForDate={fetchMostSelectedTimeForDate}
             />
             <GridFooter>
-              <ButtonSmall onClick={navigateModifyPage}>일정 수정</ButtonSmall>
+              <ButtonSmall onClick={navigateModifyPage} isDisabled={!!token}>
+                일정 수정
+              </ButtonSmall>
             </GridFooter>
             <InformationBlock>
               <Information
