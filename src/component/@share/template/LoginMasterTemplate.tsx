@@ -8,9 +8,10 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
 interface Props {
   buttonClick: () => void;
+  isDateOnly?: boolean;
 }
 
-export const LoginMasterTemplate = ({ buttonClick }: Props) => {
+export const LoginMasterTemplate = ({ buttonClick, isDateOnly }: Props) => {
   const [nicknameValue, setNicknameValue] = useRecoilState(signUpNickname);
   const [passwordValue, setPasswordValue] = useRecoilState(signUpPassword);
   const [isButtonInactive, setIsButtonInactive] = useState(true);
@@ -43,14 +44,25 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
       : setIsButtonInactive(true);
   };
 
+  const activeEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (
+      event.key === 'Enter' &&
+      nicknameValue.length >= 1 &&
+      passwordValue.length >= 1
+    ) {
+      event.preventDefault();
+      buttonClick();
+    }
+  };
+
   const onClick = (tab: string) => {};
 
   return (
     <WrapContents>
       <WrapUpperContents>
         <TitleBox
-          total={3}
-          step={3}
+          total={isDateOnly ? 2 : 3}
+          step={isDateOnly ? 2 : 3}
           title=""
           content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
         />
@@ -59,6 +71,7 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
             type="text"
             placeholder="닉네임"
             onKeyUp={activeEvent}
+            onKeyDown={activeEnter}
             onChange={onChangeNickname}
             value={nicknameValue}
           />
@@ -66,6 +79,7 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
             type="password"
             placeholder="비밀번호"
             onKeyUp={activeEvent}
+            onKeyDown={activeEnter}
             onChange={onChangePassword}
             value={passwordValue}
           />

@@ -10,22 +10,25 @@ import { useRecoilValue } from 'recoil';
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { dateListState, timeTableState } from '@/store';
+import { CalendarData } from '@/types';
 interface Props {
   buttonClick: () => void;
+  prevCalendarDataExist: boolean;
   selectableDates?: string[];
+  isDateOnly?: boolean;
 }
 
 export const PossibleDateTemplate = ({
   buttonClick,
+  prevCalendarDataExist,
   selectableDates,
+  isDateOnly,
 }: Props) => {
   const [isActiveButton, setIsActiveButton] = useState(true);
   const calendarData = useRecoilValue(calendarState);
   const [dateList, setDateList] = useRecoilState(dateListState);
-  const [timeTable, setTimeTable] = useRecoilState(timeTableState);
 
   useEffect(() => {
-    setTimeTable([]);
     calendarData.every(function (date) {
       return date.activeStatus !== 'active';
     })
@@ -53,7 +56,7 @@ export const PossibleDateTemplate = ({
   return (
     <Wrapper>
       <Header>
-        <ProgressBar total={3} step={1} />
+        <ProgressBar total={isDateOnly ? 2 : 3} step={1} />
         <Body $color="gray1">가능한 날짜들을 선택해주세요.</Body>
       </Header>
       <Content>
@@ -65,6 +68,7 @@ export const PossibleDateTemplate = ({
               minDate={getMinDate(selectableDates)}
               maxDate={getMaxDate(selectableDates)}
               selectableDates={selectableDates}
+              prevCalendarDataExist={prevCalendarDataExist}
             />
             <Information
               icon={CalendarIcon}

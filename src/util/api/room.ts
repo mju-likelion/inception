@@ -85,7 +85,7 @@ export const resultRoom = async ({ id }: ResultRoomRequest) => {
     return res.data as ResultRoomResponse;
   } catch (e) {
     if (e instanceof Error) {
-      throw new Error('resultRoom Error', e);
+      console.log(e);
     }
   }
 };

@@ -13,6 +13,7 @@ import { useRecoilState } from 'recoil';
 import { resultRoom, resultRoomByDate } from '@/util/api';
 import { appointmentResultData } from '@/store/atoms/Request';
 import { useResultTimeTitle, useResultTitle } from '@/hooks';
+import { Modal } from '@/component/@share/organisms/Modal';
 
 export type FetchMostSelectedTimeForDate = (date: string) => Promise<void>;
 
@@ -34,8 +35,9 @@ export const ResultPage = () => {
   const [urlToastStatus, setUrlToastStatus] = useState<ToastStatus>('error');
   const [codeToastStatus, setCodeToastStatus] = useState<ToastStatus>('error');
   const [toastType, setToastType] = useRecoilState(currentToastType);
-
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const { title, subTitle } = useResultTitle(appointmentData);
+
   const timeInformationTitle = useResultTimeTitle(
     appointmentData?.votingUsers,
     appointmentData?.dateOnly,
@@ -74,6 +76,11 @@ export const ResultPage = () => {
     }
   };
 
+  const handleCodeModal = () => {
+    setIsOpenModal(false);
+    navigate('/submit-code');
+  };
+
   useEffect(() => {
     (async () => {
       let data;
@@ -82,6 +89,8 @@ export const ResultPage = () => {
       if (data) {
         setAppointmentData(data);
         setIsCalendarFetched(true);
+      } else {
+        setIsOpenModal(true);
       }
     })();
   }, []);
@@ -149,6 +158,11 @@ export const ResultPage = () => {
           descriptionActive="error"
         />
       )}
+      <Modal
+        error="codeError"
+        isOpen={isOpenModal}
+        onCloseModal={handleCodeModal}
+      />
     </>
   );
 };

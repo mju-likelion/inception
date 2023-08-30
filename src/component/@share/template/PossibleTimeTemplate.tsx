@@ -90,4 +90,6 @@ const InformationBlock = styled.div`
 
 const ButtonBlock = styled.div`
   margin: 100px 0;
+  display: flex;
+  justify-content: center;
 `;
