@@ -43,17 +43,6 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
       : setIsButtonInactive(true);
   };
 
-  const activeEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (
-      event.key === 'Enter' &&
-      nicknameValue.length >= 1 &&
-      passwordValue.length >= 1
-    ) {
-      event.preventDefault();
-      buttonClick();
-    }
-  };
-
   const onClick = (tab: string) => {};
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -76,7 +65,6 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
               type="text"
               placeholder="닉네임"
               onKeyUp={activeEvent}
-              // onKeyDown={activeEnter}
               onChange={onChangeNickname}
               value={nicknameValue}
             />
@@ -84,7 +72,6 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
               type="password"
               placeholder="비밀번호"
               onKeyUp={activeEvent}
-              // onKeyDown={activeEnter}
               onChange={onChangePassword}
               value={passwordValue}
             />
