@@ -60,7 +60,7 @@ export const CodeSubmitPage = () => {
 
           <WrapInput>
             <Input
-              placeholder={'약속방 입력 코드'}
+              placeholder={'약속방 입장코드'}
               onChange={onChange}
               /** @TODO keyUp과 keyDown을 구분할 필요가 있을지 */
               // onKeyUp={validateCode}
