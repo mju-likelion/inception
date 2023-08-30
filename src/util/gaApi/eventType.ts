@@ -61,4 +61,12 @@ export type TBinEvent =
       tTarget: 'privacy_policy';
       // tStep은 tPath가 /vote-room일 때만 존재
       tStep?: 1 | 2 | 3 | null;
+    }
+  | {
+      eventName: 't_click';
+      tEventId: 206;
+      tPath: '/create-room' | '/vote-room' | '/search-room' | '/room-result';
+      tTarget: 'terms_of_service';
+      // tStep은 tPath가 /vote-room일 때만 존재
+      tStep?: 1 | 2 | 3 | null;
     };

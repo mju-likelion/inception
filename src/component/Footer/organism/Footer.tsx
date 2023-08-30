@@ -58,6 +58,16 @@ export const Footer = () => {
     });
   };
 
+  const onTermsOfServiceClick = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 206,
+      tPath: changePathnameToTPath(location.pathname),
+      tTarget: 'terms_of_service',
+      tStep,
+    });
+  };
+
   return (
     <Container>
       {windowSize.width < devices.web ? (
@@ -74,6 +84,7 @@ export const Footer = () => {
             firstContent="개인정보 처리 방침"
             secondContent="서비스 이용약관"
             onFirstContentClick={onPrivacyPolicyClick}
+            onSecondContentClick={onTermsOfServiceClick}
           />
           <CopyRight content={OrganizationInfo.COPYRIGHT} />
         </>
