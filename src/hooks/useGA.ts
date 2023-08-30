@@ -10,8 +10,12 @@ export const useGAInitialize = () => {
       throw new Error('Google Analytics ID not found');
     }
 
-    console.log('gaDebugMode', gaDebug);
+    if (gaDebug) {
+      console.log('Google Analytics Debug Mode');
+      ReactGA.initialize(gaId, { gaOptions: { debug: gaDebug === 'true' } });
+      return;
+    }
 
-    ReactGA.initialize(gaId, { gaOptions: { debug: gaDebug === 'true' } });
+    ReactGA.initialize(gaId);
   }, []);
 };
