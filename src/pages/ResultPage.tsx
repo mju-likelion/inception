@@ -14,6 +14,7 @@ import { resultRoom, resultRoomByDate } from '@/util/api';
 import { appointmentResultData } from '@/store/atoms/Request';
 import { useResultTimeTitle, useResultTitle } from '@/hooks';
 import { Modal } from '@/component/@share/organisms/Modal';
+import { useGaApi } from '@/hooks/useGA';
 
 export type FetchMostSelectedTimeForDate = (date: string) => Promise<void>;
 
@@ -21,8 +22,9 @@ export const ResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const code = new URLSearchParams(location.search).get('code');
+  // disabled상태를 판단하기 위한 로컬스토로지 토큰을 가져옵니다.
   const token = localStorage.getItem((code ?? '') + 'token');
-  //disabled상태를 판단하기 위한 로컬스토로지 토큰을 가져옵니다.
+  const { gaApi } = useGaApi();
 
   // 약속 정보
   const [appointmentData, setAppointmentData] = useRecoilState(
@@ -96,6 +98,19 @@ export const ResultPage = () => {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    if (appointmentData) {
+      gaApi.sendEvent({
+        eventName: 't_view',
+        tEventId: 104,
+        tPath: '/room-result',
+        // TODO: 추후 code 가 없을 경우도 대비해야 함
+        tRoomCode: code!,
+        tCount: appointmentData.votingUsers.length,
+      });
+    }
+  }, [appointmentData]);
 
   return (
     <>
