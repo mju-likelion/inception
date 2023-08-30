@@ -65,7 +65,7 @@ export const AppointmentStepPage = () => {
       });
       getDatesAsc(dateWithTime);
     });
-    setSelectedDates(dateWithTime);
+    !roomInfo?.dateOnly && setSelectedDates(dateWithTime);
   }, [timeBlock]);
 
   const preventRefresh = (e: BeforeUnloadEvent) => {
