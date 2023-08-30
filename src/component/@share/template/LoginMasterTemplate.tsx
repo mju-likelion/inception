@@ -56,39 +56,50 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
 
   const onClick = (tab: string) => {};
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    buttonClick();
+  };
+
   return (
     <WrapContents>
-      <WrapUpperContents>
-        <TitleBox
-          total={3}
-          step={3}
-          title=""
-          content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
-        />
-        <WrapInput>
-          <Input
-            type="text"
-            placeholder="닉네임"
-            onKeyUp={activeEvent}
-            onKeyDown={activeEnter}
-            onChange={onChangeNickname}
-            value={nicknameValue}
+      <form onSubmit={handleSubmit}>
+        <WrapUpperContents>
+          <TitleBox
+            total={3}
+            step={3}
+            title=""
+            content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
           />
-          <Input
-            type="password"
-            placeholder="비밀번호"
-            onKeyUp={activeEvent}
-            onKeyDown={activeEnter}
-            onChange={onChangePassword}
-            value={passwordValue}
-          />
-        </WrapInput>
-      </WrapUpperContents>
-      <WrapButton>
-        <ButtonLarge isDisabled={isButtonInactive} onClick={buttonClick}>
-          입력 완료
-        </ButtonLarge>
-      </WrapButton>
+          <WrapInput>
+            <Input
+              type="text"
+              placeholder="닉네임"
+              onKeyUp={activeEvent}
+              // onKeyDown={activeEnter}
+              onChange={onChangeNickname}
+              value={nicknameValue}
+            />
+            <Input
+              type="password"
+              placeholder="비밀번호"
+              onKeyUp={activeEvent}
+              // onKeyDown={activeEnter}
+              onChange={onChangePassword}
+              value={passwordValue}
+            />
+          </WrapInput>
+        </WrapUpperContents>
+        <WrapButton>
+          <ButtonLarge
+            type="submit"
+            isDisabled={isButtonInactive}
+            onClick={buttonClick}
+          >
+            입력 완료
+          </ButtonLarge>
+        </WrapButton>
+      </form>
     </WrapContents>
   );
 };
