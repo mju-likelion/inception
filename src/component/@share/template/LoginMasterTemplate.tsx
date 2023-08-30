@@ -8,9 +8,10 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
 interface Props {
   buttonClick: () => void;
+  isDateOnly?: boolean;
 }
 
-export const LoginMasterTemplate = ({ buttonClick }: Props) => {
+export const LoginMasterTemplate = ({ buttonClick, isDateOnly }: Props) => {
   const [nicknameValue, setNicknameValue] = useRecoilState(signUpNickname);
   const [passwordValue, setPasswordValue] = useRecoilState(signUpPassword);
   const [isButtonInactive, setIsButtonInactive] = useState(true);
@@ -60,8 +61,8 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
     <WrapContents>
       <WrapUpperContents>
         <TitleBox
-          total={3}
-          step={3}
+          total={isDateOnly ? 2 : 3}
+          step={isDateOnly ? 2 : 3}
           title=""
           content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
         />

@@ -15,12 +15,14 @@ interface Props {
   buttonClick: () => void;
   prevCalendarDataExist: boolean;
   selectableDates?: string[];
+  isDateOnly?: boolean;
 }
 
 export const PossibleDateTemplate = ({
   buttonClick,
   prevCalendarDataExist,
   selectableDates,
+  isDateOnly,
 }: Props) => {
   const [isActiveButton, setIsActiveButton] = useState(true);
   const calendarData = useRecoilValue(calendarState);
@@ -54,7 +56,7 @@ export const PossibleDateTemplate = ({
   return (
     <Wrapper>
       <Header>
-        <ProgressBar total={3} step={1} />
+        <ProgressBar total={isDateOnly ? 2 : 3} step={1} />
         <Body $color="gray1">가능한 날짜들을 선택해주세요.</Body>
       </Header>
       <Content>

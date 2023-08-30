@@ -144,6 +144,7 @@ export const AppointmentStepPage = () => {
             buttonClick={handleButtonClick}
             selectableDates={roomInfo?.dates}
             prevCalendarDataExist={prevCalendarDataExist.current}
+            isDateOnly={roomInfo?.dateOnly}
           />
         );
       case '2':
@@ -155,7 +156,12 @@ export const AppointmentStepPage = () => {
           />
         );
       case '3':
-        return <LoginMasterTemplate buttonClick={handleButtonClick} />;
+        return (
+          <LoginMasterTemplate
+            buttonClick={handleButtonClick}
+            isDateOnly={roomInfo?.dateOnly}
+          />
+        );
       default:
         return <RedirectPage />;
     }
