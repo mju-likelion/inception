@@ -34,6 +34,14 @@ export const Footer = () => {
   };
 
   const copyEmail = (copyResult: ToastStatus) => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 204,
+      tPath: changePathnameToTPath(location.pathname),
+      tTarget: 'email',
+      tStep: stepParams ? (+stepParams as 1 | 2 | 3) : null,
+    });
+
     setIsToastOpened(true);
     setToastStatus(copyResult);
     setToastType('email');

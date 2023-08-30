@@ -45,4 +45,12 @@ export type TBinEvent =
       tTarget: 'contact';
       // tStep은 tPath가 /vote-room일 때만 존재
       tStep?: 1 | 2 | 3 | null;
+    }
+  | {
+      eventName: 't_click';
+      tEventId: 204;
+      tPath: '/create-room' | '/vote-room' | '/search-room' | '/room-result';
+      tTarget: 'email';
+      // tStep은 tPath가 /vote-room일 때만 존재
+      tStep?: 1 | 2 | 3 | null;
     };
