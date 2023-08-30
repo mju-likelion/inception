@@ -16,13 +16,29 @@ interface Props {
   prevCalendarDataExist: boolean;
   selectableDates?: string[];
   isDateOnly?: boolean;
+  token?: string;
 }
+
+export const getProgressBarTotalLength = (
+  isDateOnly?: boolean,
+  token?: string
+) => {
+  if (token && isDateOnly)
+    //제출한적도 있고, 시간 선택을 안할 경우 총길이는 1
+    return 1;
+  else if (token || isDateOnly)
+    //둘 다 해당 되는것은 아니지만 하나는 해당 되는 경우 총 길이는 2
+    return 2;
+  else return 3;
+  //모두 아니라면 총 길이는 3
+};
 
 export const PossibleDateTemplate = ({
   buttonClick,
   prevCalendarDataExist,
   selectableDates,
   isDateOnly,
+  token,
 }: Props) => {
   const [isActiveButton, setIsActiveButton] = useState(true);
   const calendarData = useRecoilValue(calendarState);
@@ -56,7 +72,10 @@ export const PossibleDateTemplate = ({
   return (
     <Wrapper>
       <Header>
-        <ProgressBar total={isDateOnly ? 2 : 3} step={1} />
+        <ProgressBar
+          total={getProgressBarTotalLength(isDateOnly, token)}
+          step={1}
+        />
         <Body $color="gray1">가능한 날짜들을 선택해주세요.</Body>
       </Header>
       <Content>

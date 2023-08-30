@@ -30,6 +30,7 @@ export const AppointmentStepPage = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [roomInfo, setRoomInfo] = useState<ViewRoomResponse>();
+  const token = localStorage.getItem((params.code ?? '') + 'token');
 
   // 이전에 선택한 값이 있는지 판별하기 위함.
   // appointment step에 이동이 발생했을 때만 선택한 값이 있다고 판별한다.
@@ -77,7 +78,7 @@ export const AppointmentStepPage = () => {
     (async () => {
       const res = await viewRoom({ id: params.code ?? '' });
       setRoomInfo(res);
-      const token = localStorage.getItem((params.code ?? '') + 'token');
+
       window.addEventListener('beforeunload', preventRefresh);
       if (!token && (step === '2' || step === '3')) {
         navigate(`/appointment/${params.code}?step=1`);
@@ -121,6 +122,10 @@ export const AppointmentStepPage = () => {
     const token = localStorage.getItem((params.code ?? '') + 'token');
     if (step === '3') {
       prevCalendarDataExist.current = false;
+      if (token) {
+        modifyUser(token);
+        //step 3에서 토큰이 이미 있다면, 이건 수정
+      }
       requestCreateUser();
     } else {
       prevCalendarDataExist.current = true;
@@ -128,6 +133,10 @@ export const AppointmentStepPage = () => {
       if (step === '2' && token) {
         modifyUser(token);
       } else {
+        if (token && roomInfo?.dateOnly) {
+          modifyUser(token);
+          //이미 제출했고, 날짜만 지정한 상태에서 다시 1단계에 입장한다면 시간 수정도 로그인도 불필요하므로 바로 결과창으로 라우팅
+        }
         roomInfo?.dateOnly
           ? step && navigate(`/appointment/${params.code}?step=3`)
           : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
@@ -148,6 +157,7 @@ export const AppointmentStepPage = () => {
             selectableDates={roomInfo?.dates}
             prevCalendarDataExist={prevCalendarDataExist.current}
             isDateOnly={roomInfo?.dateOnly}
+            token={token ? token : ''}
           />
         );
       case '2':
@@ -156,6 +166,7 @@ export const AppointmentStepPage = () => {
             buttonClick={handleButtonClick}
             startTime={roomInfo?.startTime as string}
             endTime={roomInfo?.endTime as string}
+            token={token ? token : ''}
           />
         );
       case '3':
@@ -163,6 +174,7 @@ export const AppointmentStepPage = () => {
           <LoginMasterTemplate
             buttonClick={handleButtonClick}
             isDateOnly={roomInfo?.dateOnly}
+            token={token ? token : ''}
           />
         );
       default:

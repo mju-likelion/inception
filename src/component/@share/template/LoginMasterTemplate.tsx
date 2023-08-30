@@ -6,12 +6,18 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
+
 interface Props {
   buttonClick: () => void;
   isDateOnly?: boolean;
+  token: string;
 }
 
-export const LoginMasterTemplate = ({ buttonClick, isDateOnly }: Props) => {
+export const LoginMasterTemplate = ({
+  buttonClick,
+  isDateOnly,
+  token,
+}: Props) => {
   const [nicknameValue, setNicknameValue] = useRecoilState(signUpNickname);
   const [passwordValue, setPasswordValue] = useRecoilState(signUpPassword);
   const [isButtonInactive, setIsButtonInactive] = useState(true);
@@ -32,6 +38,10 @@ export const LoginMasterTemplate = ({ buttonClick, isDateOnly }: Props) => {
   }, [nicknameValue, passwordValue]);
 
   useEffect(() => {
+    // if (token) {
+    //   //이미 제출한 유저라면
+    //   buttonClick();
+    // }
     return () => {
       resetNickname();
       resetPassword();
@@ -62,7 +72,8 @@ export const LoginMasterTemplate = ({ buttonClick, isDateOnly }: Props) => {
       <WrapUpperContents>
         <TitleBox
           total={isDateOnly ? 2 : 3}
-          step={isDateOnly ? 2 : 3}
+          step={token || isDateOnly ? 2 : 3}
+          //토큰이 있거나 날짜만 고르는 경우는 로그인 페이지가 2번째 스텝(물론 둘 다 있을 경우는 1번째 스텝이지만, AppointmentStepPage에서 modifier로직에 따라 step을 2로 고정)
           title=""
           content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
         />

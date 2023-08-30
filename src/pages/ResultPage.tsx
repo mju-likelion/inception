@@ -104,7 +104,7 @@ export const ResultPage = () => {
         <ResultPageBlock>
           <ContentBlock>
             <TitleBoxBlock>
-              <TitleBox title={title} content={subTitle} />
+              <TitleBox title={title} content={subTitle} total={3} />
             </TitleBoxBlock>
             <Calendar
               viewType="result"
