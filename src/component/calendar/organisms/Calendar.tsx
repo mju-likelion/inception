@@ -27,6 +27,7 @@ import { getDatesToCalendarData } from '@/util/getDatesToCalendarData';
 import { appointmentResultData } from '@/store/atoms/Request';
 import { FetchMostSelectedTimeForDate } from '@/pages';
 import { timeTableState } from '@/store';
+import { useGaApi } from '@/hooks/useGA';
 
 interface CalendarProps {
   viewType: ViewType;
@@ -216,6 +217,9 @@ const CreateMode = ({
 
   const isMouseDown = useRef(false);
   const currentTouchTargetText = useRef<string>();
+
+  const { gaApi } = useGaApi();
+
   const setCurrentTouchTargetText = (text: string) => {
     currentTouchTargetText.current = text;
   };
@@ -249,6 +253,16 @@ const CreateMode = ({
 
   const handleChangeCalendar = (type: 'prev' | 'next') => {
     const date = new Date(+currentDate[0], +currentDate[1] - 1); // Date 객체에선 month는 제로베이스임
+
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 207,
+      tPath: '/create-room',
+      tTarget: 'move_month',
+      tFrom: date.getMonth() + 1,
+      tTo: type === 'prev' ? date.getMonth() : date.getMonth() + 2,
+      tDirection: type,
+    });
 
     date.setMonth(type === 'prev' ? date.getMonth() - 1 : date.getMonth() + 1);
 
@@ -329,8 +343,20 @@ const ResultMode = ({
     checkLimitDate(currentDate, dateRange.minDate, dateRange.maxDate)
   );
 
+  const { gaApi } = useGaApi();
+
   const handleChangeCalendar = (type: 'prev' | 'next') => {
     const date = new Date(+currentDate[0], +currentDate[1] - 1); // Date 객체에선 month는 제로베이스임
+
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 221,
+      tPath: '/room-result',
+      tTarget: 'move_month',
+      tFrom: date.getMonth() + 1,
+      tTo: type === 'prev' ? date.getMonth() : date.getMonth() + 2,
+      tDirection: type,
+    });
 
     date.setMonth(type === 'prev' ? date.getMonth() - 1 : date.getMonth() + 1);
 
@@ -456,6 +482,9 @@ const SelectMode = ({
 
   const isMouseDown = useRef(false);
   const currentTouchTargetText = useRef<string>();
+
+  const { gaApi } = useGaApi();
+
   const setCurrentTouchTargetText = (text: string) => {
     currentTouchTargetText.current = text;
   };
@@ -493,6 +522,16 @@ const SelectMode = ({
 
   const handleChangeCalendar = (type: 'prev' | 'next') => {
     const date = new Date(+currentDate[0], +currentDate[1] - 1); // Date 객체에선 month는 제로베이스임
+
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 212,
+      tPath: '/vote-room',
+      tTarget: 'move_month',
+      tFrom: date.getMonth() + 1,
+      tTo: type === 'prev' ? date.getMonth() : date.getMonth() + 2,
+      tDirection: type,
+    });
 
     date.setMonth(type === 'prev' ? date.getMonth() - 1 : date.getMonth() + 1);
 

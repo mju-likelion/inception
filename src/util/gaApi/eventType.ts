@@ -69,4 +69,31 @@ export type TBinEvent =
       tTarget: 'terms_of_service';
       // tStep은 tPath가 /vote-room일 때만 존재
       tStep?: 1 | 2 | 3 | null;
+    }
+  | {
+      eventName: 't_click';
+      tEventId: 207;
+      tPath: '/create-room';
+      tTarget: 'move_month';
+      tFrom: number;
+      tTo: number;
+      tDirection: 'prev' | 'next';
+    }
+  | {
+      eventName: 't_click';
+      tEventId: 212;
+      tPath: '/vote-room';
+      tTarget: 'move_month';
+      tFrom: number;
+      tTo: number;
+      tDirection: 'prev' | 'next';
+    }
+  | {
+      eventName: 't_click';
+      tEventId: 221;
+      tPath: '/room-result';
+      tTarget: 'move_month';
+      tFrom: number;
+      tTo: number;
+      tDirection: 'prev' | 'next';
     };
