@@ -3,7 +3,6 @@ import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
 interface Props {
@@ -17,8 +16,6 @@ export const LoginMasterTemplate = ({ buttonClick, isDateOnly }: Props) => {
   const [isButtonInactive, setIsButtonInactive] = useState(true);
   const resetNickname = useResetRecoilState(signUpNickname);
   const resetPassword = useResetRecoilState(signUpPassword);
-
-  const navigate = useNavigate();
 
   const onChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNicknameValue(event.target.value);
@@ -54,8 +51,6 @@ export const LoginMasterTemplate = ({ buttonClick, isDateOnly }: Props) => {
       buttonClick();
     }
   };
-
-  const onClick = (tab: string) => {};
 
   return (
     <WrapContents>
