@@ -38,10 +38,10 @@ export const LoginMasterTemplate = ({
   }, [nicknameValue, passwordValue]);
 
   useEffect(() => {
-    // if (token) {
-    //   //이미 제출한 유저라면
-    //   buttonClick();
-    // }
+    if (token) {
+      window.confirm('이미 제출한 기록이 있으므로 결과창으로 이동합니다.') &&
+        navigate(1);
+    }
     return () => {
       resetNickname();
       resetPassword();
@@ -65,7 +65,7 @@ export const LoginMasterTemplate = ({
     }
   };
 
-  const onClick = (tab: string) => {};
+  // const onClick = (tab: string) => {}; 누가 작성했는지는 모르겠지만, 우선 주석 처리 해놓겠숩니당
 
   return (
     <WrapContents>
