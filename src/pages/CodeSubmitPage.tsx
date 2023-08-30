@@ -3,17 +3,27 @@ import { TabBar } from '@/component/@share/organisms';
 import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TAB_ITEMS } from '@/pages/data';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '@/component/@share/organisms/Modal';
 import { resultRoom } from '@/util/api';
+import { useGaApi } from '@/hooks/useGA';
 
 export const CodeSubmitPage = () => {
   const navigate = useNavigate();
   const [code, setCode] = useState('');
   const [buttonInactive, setButtonInactive] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const { gaApi } = useGaApi();
+
+  useEffect(() => {
+    gaApi.sendEvent({
+      eventName: 't_view',
+      tEventId: 103,
+      tPath: '/search-room',
+    });
+  }, []);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const code = event.target.value.toUpperCase();
