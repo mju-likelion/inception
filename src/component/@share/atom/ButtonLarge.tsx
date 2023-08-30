@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react';
 import { styled } from 'styled-components';
 
 interface Props {
+  type?: React.HTMLInputTypeAttribute;
   isDisabled?: boolean;
   onClick?: () => void;
 }
