@@ -372,14 +372,20 @@ const ResultMode = ({
   };
 
   useEffect(() => {
-    setCalendar(
-      getCalendarData(
-        dateRange.minDate[0],
-        dateRange.minDate[1],
-        'result',
-        calendarData
-      )
+    const calendar = getCalendarData(
+      dateRange.minDate[0],
+      dateRange.minDate[1],
+      'result',
+      calendarData
     );
+    setCalendar(calendar);
+
+    // currentMonth가 선택가능한 날짜의 월보다 작을 때 currentMonth 업데이트
+    const currentMonth = currentDate.join('-');
+    const calendarMonth = calendar.map((item) => item.date)[0].slice(0, 7);
+    if (new Date(currentMonth) < new Date(calendarMonth)) {
+      setCurrentDate(calendarMonth.split('-'));
+    }
   }, [dateRange, calendarData]);
 
   useEffect(() => {

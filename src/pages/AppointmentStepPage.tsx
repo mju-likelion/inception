@@ -23,6 +23,8 @@ import {
 } from '@/store';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
 import { getDatesAsc } from '@/util';
+import { toastState, currentToastType } from '@/store';
+import { useRecoilState } from 'recoil';
 
 export const AppointmentStepPage = () => {
   const [searchParams] = useSearchParams();
@@ -31,6 +33,8 @@ export const AppointmentStepPage = () => {
   const params = useParams();
   const [roomInfo, setRoomInfo] = useState<ViewRoomResponse>();
   const token = localStorage.getItem((params.code ?? '') + 'token');
+  const [, setIsToastOpened] = useRecoilState(toastState);
+  const [, setToastType] = useRecoilState(currentToastType);
 
   // 이전에 선택한 값이 있는지 판별하기 위함.
   // appointment step에 이동이 발생했을 때만 선택한 값이 있다고 판별한다.
@@ -110,6 +114,8 @@ export const AppointmentStepPage = () => {
     });
 
     if (res) {
+      setIsToastOpened(true);
+      setToastType('schedule');
       navigate(`/result?code=${params.code}`);
     } else {
       roomInfo?.dateOnly

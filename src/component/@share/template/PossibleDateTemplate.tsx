@@ -9,8 +9,7 @@ import { calendarState } from '@/store';
 import { useRecoilValue } from 'recoil';
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { dateListState, timeTableState } from '@/store';
-import { CalendarData } from '@/types';
+import { dateListState } from '@/store';
 interface Props {
   buttonClick: () => void;
   prevCalendarDataExist: boolean;

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
 
