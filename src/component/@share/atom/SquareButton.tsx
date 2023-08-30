@@ -4,19 +4,21 @@ import styled from 'styled-components';
 interface ButtonProps {
   isAnchor?: boolean;
   href?: string;
+  onClick?: () => void;
 }
 
 export const SquareButton = ({
   isAnchor,
   href,
+  onClick,
   children,
 }: PropsWithChildren<ButtonProps>) => {
   return isAnchor ? (
-    <a href={href} target="_blank" rel="noopener noreferrer">
+    <a href={href} target="_blank" rel="noopener noreferrer" onClick={onClick}>
       <Button>{children}</Button>
     </a>
   ) : (
-    <Button>{children}</Button>
+    <Button onClick={onClick}>{children}</Button>
   );
 };
 

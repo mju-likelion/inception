@@ -9,12 +9,29 @@ import { ToastStatus } from '@/types/Toast';
 import { useRecoilState } from 'recoil';
 import { currentToastType, toastState } from '@/store';
 import { SquareButton } from '@/component/@share/atom/SquareButton';
+import { useGaApi } from '@/hooks/useGA';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 export const Footer = () => {
   const windowSize = useWindowResize();
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
   const [toastType, setToastType] = useRecoilState(currentToastType);
   const [toastStatus, setToastStatus] = useState<ToastStatus>('error');
+
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const stepParams = searchParams.get('step');
+  const { changePathnameToTPath, gaApi } = useGaApi();
+
+  const onContactClick = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 203,
+      tPath: changePathnameToTPath(location.pathname),
+      tTarget: 'contact',
+      tStep: stepParams ? (+stepParams as 1 | 2 | 3) : null,
+    });
+  };
 
   const copyEmail = (copyResult: ToastStatus) => {
     setIsToastOpened(true);
@@ -26,7 +43,11 @@ export const Footer = () => {
     <Container>
       {windowSize.width < devices.web ? (
         <>
-          <SquareButton isAnchor href={OrganizationInfo.CHANNEL_TALK}>
+          <SquareButton
+            isAnchor
+            href={OrganizationInfo.CHANNEL_TALK}
+            onClick={onContactClick}
+          >
             문의하기
           </SquareButton>
           <Mail email={OrganizationInfo.EMAIL} onClick={copyEmail} />
@@ -39,7 +60,11 @@ export const Footer = () => {
       ) : (
         <WebContainer>
           <InnerContainer>
-            <SquareButton isAnchor href={OrganizationInfo.CHANNEL_TALK}>
+            <SquareButton
+              isAnchor
+              href={OrganizationInfo.CHANNEL_TALK}
+              onClick={onContactClick}
+            >
               문의하기
             </SquareButton>
             <Mail email={OrganizationInfo.EMAIL} onClick={copyEmail} />
