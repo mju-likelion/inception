@@ -27,6 +27,8 @@ const Button = styled.button`
   border-radius: 30px;
   background-color: ${({ theme }) => theme.colors.mint1};
   color: ${({ theme }) => theme.colors.white};
+  display: flex;
+  align-items: center;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.mint3};
@@ -38,7 +40,10 @@ const Button = styled.button`
   }
 `;
 
-const ButtonText = styled.p`
+const ButtonText = styled.div`
   ${({ theme }) => theme.typographies.subTitle};
   width: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

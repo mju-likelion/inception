@@ -26,6 +26,7 @@ import { calendarState } from '@/store/atoms';
 import { getDatesToCalendarData } from '@/util/getDatesToCalendarData';
 import { appointmentResultData } from '@/store/atoms/Request';
 import { FetchMostSelectedTimeForDate } from '@/pages';
+import { timeTableState } from '@/store';
 
 interface CalendarProps {
   viewType: ViewType;
@@ -34,6 +35,7 @@ interface CalendarProps {
   maxDate?: string;
   selectableDates?: string[];
   fetchMostSelectedTimeForDate?: FetchMostSelectedTimeForDate;
+  prevCalendarDataExist?: boolean;
 }
 
 type GetActiveStatus = (
@@ -69,6 +71,7 @@ export const Calendar = ({
   maxDate,
   selectableDates,
   fetchMostSelectedTimeForDate,
+  prevCalendarDataExist,
 }: CalendarProps) => {
   const minimumDate = minDate ?? dateFormatToString(new Date());
   const maximumDate =
@@ -169,13 +172,13 @@ export const Calendar = ({
         />
       );
     case 'select':
-      /** @TODO Select Mode 개발하기 */
       return (
         <SelectMode
           checkLimitDate={checkLimitDate}
           changedDateColor={changedDateColor}
           calendarTouchMoveDrag={calendarTouchMoveDrag}
           selectableDates={selectableDates || []}
+          prevCalendarDataExist={prevCalendarDataExist ?? false}
         />
       );
     default:
@@ -362,7 +365,6 @@ const ResultMode = ({
     const changedCalendar = changedDateColor(calendar, date, 'result');
     setCalendar(changedCalendar);
 
-    // @TODO 클릭한 날짜에서 선택된 날짜 정보를 가져오는 api 작성 필요
     const count = calendar.find((item) => item.date === date)?.count;
     if (count && count >= 2) {
       fetchMostSelectedTimeForDate?.(date);
@@ -421,6 +423,7 @@ const ResultMode = ({
 interface SelectModeProps extends BaseCalendarModeProps {
   calendarTouchMoveDrag: (param: ICalendarTouchMoveDrag) => void;
   selectableDates: string[];
+  prevCalendarDataExist: boolean;
 }
 
 const SelectMode = ({
@@ -428,7 +431,10 @@ const SelectMode = ({
   changedDateColor,
   calendarTouchMoveDrag,
   selectableDates,
+  prevCalendarDataExist,
 }: SelectModeProps) => {
+  const [timeTable, setTimeTable] = useRecoilState(timeTableState);
+
   const resultData = getDatesToCalendarData(selectableDates);
   const { minDate, maxDate } = resolvePromiseResult(resultData);
 
@@ -442,7 +448,6 @@ const SelectMode = ({
     checkLimitDate(currentDate, minDate, maxDate)
   );
 
-  /** @TODO atom으로 관리해야할까? */
   const isMouseDown = useRef(false);
   const currentTouchTargetText = useRef<string>();
   const setCurrentTouchTargetText = (text: string) => {
@@ -454,6 +459,8 @@ const SelectMode = ({
     currentTouchTargetText.current = date.split('-')[2];
     const changedCalendar = changedDateColor(calendar, date, 'create');
     setCalendar(changedCalendar);
+    // 캘린더 날짜 변경에 따라 타임 테이블 초기화
+    setTimeTable([]);
   };
 
   const handleMouseUp = () => {
@@ -465,6 +472,8 @@ const SelectMode = ({
     if (!isMouseDown.current) return;
     const changedCalendar = changedDateColor(calendar, date, 'select');
     setCalendar(changedCalendar);
+    // 캘린더 날짜 변경에 따라 타임 테이블 초기화
+    setTimeTable([]);
   };
 
   const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -507,7 +516,15 @@ const SelectMode = ({
   };
 
   useEffect(() => {
-    setCalendar(getCalendarData(minDate[0], minDate[1], 'select', resultData));
+    const data = getCalendarData(
+      minDate[0],
+      minDate[1],
+      'select',
+      resultData,
+      calendar,
+      prevCalendarDataExist
+    );
+    setCalendar(data);
   }, []);
 
   /** @TODO GridFooter는 result === on 일때만 보여준다. GridHeader, GridFooter는 molecules로 관리해야될 것 같다. */

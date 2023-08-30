@@ -105,5 +105,7 @@ const TopBlock = styled.div`
 `;
 
 const ButtonBlock = styled.div`
+  display: flex;
+  justify-content: center;
   text-align: center;
 `;

@@ -1,11 +1,11 @@
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { TabBar, TitleBox, ButtonLarge } from '@/component/@share';
+import { TabBar, TitleBox, ButtonLarge, LoadingIcon } from '@/component/@share';
 import { Calendar, TimePicker } from '@/component';
 import { TAB_ITEMS } from '@/pages/data';
 import { theme } from '@/globalStyle';
 import { createRoom } from '@/util/api';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { calcDateFewMonth, dateFormatToString } from '@/util';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import {
@@ -18,6 +18,7 @@ import { calendarState } from '@/store/atoms/Calendar';
 
 export const Home = () => {
   const navigate = useNavigate();
+  const [isRoomCreate, setIsRoomCreate] = useState(true);
 
   const dateOnly = useRecoilValue(titleCheckState);
   const startTime = useRecoilValue(selectedStartTime);
@@ -55,12 +56,14 @@ export const Home = () => {
   };
 
   const handleButtonClick = async () => {
+    setIsRoomCreate(false);
     const res = await createRoom({
       dates: dates,
       dateOnly,
       startTime: dateOnly ? undefined : startTime,
       endTime: dateOnly ? undefined : endTime,
     });
+    setIsRoomCreate(true);
     navigate(`/appointment/${res?.data.code}?step=1`); // api 요청 후 응답이 정상적이라면 navigate 실행
   };
 
@@ -93,7 +96,11 @@ export const Home = () => {
             isDisabled={dates.length <= 0 || (!dateOnly && isTimeRangeError)}
             onClick={handleButtonClick}
           >
-            약속방 생성
+            {isRoomCreate ? (
+              '약속방 생성'
+            ) : (
+              <LoadingIcon spinnerType="whiteSpinner" />
+            )}
           </ButtonLarge>
         </ButtonBox>
       </Container>

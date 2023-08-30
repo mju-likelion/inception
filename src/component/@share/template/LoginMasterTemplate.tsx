@@ -8,9 +8,10 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
 interface Props {
   buttonClick: () => void;
+  isDateOnly?: boolean;
 }
 
-export const LoginMasterTemplate = ({ buttonClick }: Props) => {
+export const LoginMasterTemplate = ({ buttonClick, isDateOnly }: Props) => {
   const [nicknameValue, setNicknameValue] = useRecoilState(signUpNickname);
   const [passwordValue, setPasswordValue] = useRecoilState(signUpPassword);
   const [isButtonInactive, setIsButtonInactive] = useState(true);
@@ -52,41 +53,35 @@ export const LoginMasterTemplate = ({ buttonClick }: Props) => {
 
   return (
     <WrapContents>
-      <form onSubmit={handleSubmit}>
-        <WrapUpperContents>
-          <TitleBox
-            total={3}
-            step={3}
-            title=""
-            content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
+      <WrapUpperContents>
+        <TitleBox
+          total={isDateOnly ? 2 : 3}
+          step={isDateOnly ? 2 : 3}
+          title=""
+          content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
+        />
+        <WrapInput>
+          <Input
+            type="text"
+            placeholder="닉네임"
+            onKeyUp={activeEvent}
+            onChange={onChangeNickname}
+            value={nicknameValue}
           />
-          <WrapInput>
-            <Input
-              type="text"
-              placeholder="닉네임"
-              onKeyUp={activeEvent}
-              onChange={onChangeNickname}
-              value={nicknameValue}
-            />
-            <Input
-              type="password"
-              placeholder="비밀번호"
-              onKeyUp={activeEvent}
-              onChange={onChangePassword}
-              value={passwordValue}
-            />
-          </WrapInput>
-        </WrapUpperContents>
-        <WrapButton>
-          <ButtonLarge
-            type="submit"
-            isDisabled={isButtonInactive}
-            onClick={buttonClick}
-          >
-            입력 완료
-          </ButtonLarge>
-        </WrapButton>
-      </form>
+          <Input
+            type="password"
+            placeholder="비밀번호"
+            onKeyUp={activeEvent}
+            onChange={onChangePassword}
+            value={passwordValue}
+          />
+        </WrapInput>
+      </WrapUpperContents>
+      <WrapButton>
+        <ButtonLarge isDisabled={isButtonInactive} onClick={buttonClick}>
+          입력 완료
+        </ButtonLarge>
+      </WrapButton>
     </WrapContents>
   );
 };

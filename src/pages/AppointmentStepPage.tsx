@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import { TabBar } from '@/component/@share';
 import {
@@ -8,7 +8,12 @@ import {
 } from '@/component/@share/template';
 import { RedirectPage } from '@/pages';
 import { TAB_ITEMS } from '@/pages/data';
-import { viewRoom, ViewRoomResponse, registerSchedule } from '@/util/api';
+import {
+  viewRoom,
+  ViewRoomResponse,
+  registerSchedule,
+  modifySchedule,
+} from '@/util/api';
 import { useRecoilValue } from 'recoil';
 import {
   calendarState,
@@ -26,6 +31,10 @@ export const AppointmentStepPage = () => {
   const params = useParams();
   const [roomInfo, setRoomInfo] = useState<ViewRoomResponse>();
 
+  // 이전에 선택한 값이 있는지 판별하기 위함.
+  // appointment step에 이동이 발생했을 때만 선택한 값이 있다고 판별한다.
+  const prevCalendarDataExist = useRef(false);
+
   const calendar = useRecoilValue(calendarState);
   const timeBlock = useRecoilValue(timeTableState);
   const dateList = useRecoilValue(dateListState);
@@ -35,7 +44,7 @@ export const AppointmentStepPage = () => {
 
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
 
-  useMemo(() => {
+  useEffect(() => {
     if (roomInfo?.dateOnly) {
       return setSelectedDates(
         calendar
@@ -45,16 +54,18 @@ export const AppointmentStepPage = () => {
     }
   }, [calendar]);
 
-  useMemo(() => {
-    selectedDates.splice(0);
-    return timeBlock.map((itemList, timeIndex) => {
+  useEffect(() => {
+    // 시간도 선택할 수 있는 경우 (2023-08-29를 2023-08-29 09:00)과 같이 형태를 변경
+    const dateWithTime: string[] = [];
+    timeBlock.map((itemList, timeIndex) => {
       itemList.filter((item, dateIndex) => {
         const date = dateList[dateIndex] + ' ' + timeList[timeIndex];
 
-        item && selectedDates.push(date);
+        item && dateWithTime.push(date);
       });
-      getDatesAsc(selectedDates);
+      getDatesAsc(dateWithTime);
     });
+    !roomInfo?.dateOnly && setSelectedDates(dateWithTime);
   }, [timeBlock]);
 
   const preventRefresh = (e: BeforeUnloadEvent) => {
@@ -89,13 +100,37 @@ export const AppointmentStepPage = () => {
     navigate(`/result?code=${params.code}`);
   };
 
-  const handleButtonClick = () => {
-    if (step === '3') {
-      requestCreateUser();
+  const modifyUser = async (token: string) => {
+    const res = await modifySchedule(token, params.code ?? '', {
+      dates: selectedDates,
+    });
+
+    if (res) {
+      navigate(`/result?code=${params.code}`);
     } else {
       roomInfo?.dateOnly
         ? step && navigate(`/appointment/${params.code}?step=3`)
         : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
+    }
+  };
+
+  const handleButtonClick = () => {
+    const token = localStorage.getItem('token');
+    if (step === '3') {
+      prevCalendarDataExist.current = false;
+      requestCreateUser();
+    } else {
+      prevCalendarDataExist.current = true;
+
+      if (step === '1' && roomInfo?.dateOnly && token) {
+        modifyUser(token);
+      } else if (step === '2' && token) {
+        modifyUser(token);
+      } else {
+        roomInfo?.dateOnly
+          ? step && navigate(`/appointment/${params.code}?step=3`)
+          : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
+      }
     }
   };
 
@@ -110,6 +145,8 @@ export const AppointmentStepPage = () => {
           <PossibleDateTemplate
             buttonClick={handleButtonClick}
             selectableDates={roomInfo?.dates}
+            prevCalendarDataExist={prevCalendarDataExist.current}
+            isDateOnly={roomInfo?.dateOnly}
           />
         );
       case '2':
@@ -121,7 +158,12 @@ export const AppointmentStepPage = () => {
           />
         );
       case '3':
-        return <LoginMasterTemplate buttonClick={handleButtonClick} />;
+        return (
+          <LoginMasterTemplate
+            buttonClick={handleButtonClick}
+            isDateOnly={roomInfo?.dateOnly}
+          />
+        );
       default:
         return <RedirectPage />;
     }

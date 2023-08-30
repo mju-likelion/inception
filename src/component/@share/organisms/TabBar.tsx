@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { TabBarButton } from '@/component/@share/molecules';
 import { TabItem } from '@/types';
 
@@ -12,6 +12,7 @@ interface TabBarProps {
 export const TabBar = ({ onClick, tabItems }: TabBarProps) => {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].id);
   const path = useLocation().pathname;
+  const params = useParams();
 
   useEffect(() => {
     setActiveTab();
@@ -21,7 +22,7 @@ export const TabBar = ({ onClick, tabItems }: TabBarProps) => {
     switch (path) {
       case '/':
         return setSelectedTab(tabItems[0].id);
-      case '/appointment':
+      case `/appointment/${params.code}`:
         return setSelectedTab(tabItems[1].id);
       case '/login':
         return setSelectedTab(tabItems[1].id);
