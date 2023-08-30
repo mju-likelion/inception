@@ -25,7 +25,6 @@ export const PossibleDateTemplate = ({
   const [isActiveButton, setIsActiveButton] = useState(true);
   const calendarData = useRecoilValue(calendarState);
   const [dateList, setDateList] = useRecoilState(dateListState);
-  const [timeTable, setTimeTable] = useRecoilState(timeTableState);
 
   useEffect(() => {
     calendarData.every(function (date) {

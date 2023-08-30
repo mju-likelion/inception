@@ -8,7 +8,12 @@ import {
 } from '@/component/@share/template';
 import { RedirectPage } from '@/pages';
 import { TAB_ITEMS } from '@/pages/data';
-import { viewRoom, ViewRoomResponse, registerSchedule } from '@/util/api';
+import {
+  viewRoom,
+  ViewRoomResponse,
+  registerSchedule,
+  modifySchedule,
+} from '@/util/api';
 import { useRecoilValue } from 'recoil';
 import {
   calendarState,
@@ -95,15 +100,35 @@ export const AppointmentStepPage = () => {
     navigate(`/result?code=${params.code}`);
   };
 
+  const modifyUser = async (token: string) => {
+    const res = await modifySchedule(token, params.code ?? '', {
+      dates: selectedDates,
+    });
+
+    if (res) {
+      navigate(`/result?code=${params.code}`);
+    } else {
+      roomInfo?.dateOnly
+        ? step && navigate(`/appointment/${params.code}?step=3`)
+        : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
+    }
+  };
+
   const handleButtonClick = () => {
+    const token = localStorage.getItem('token');
     if (step === '3') {
       prevCalendarDataExist.current = false;
       requestCreateUser();
     } else {
       prevCalendarDataExist.current = true;
-      roomInfo?.dateOnly
-        ? step && navigate(`/appointment/${params.code}?step=3`)
-        : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
+
+      if (step === '2' && token) {
+        modifyUser(token);
+      } else {
+        roomInfo?.dateOnly
+          ? step && navigate(`/appointment/${params.code}?step=3`)
+          : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
+      }
     }
   };
 
