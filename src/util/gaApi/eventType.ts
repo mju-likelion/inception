@@ -21,4 +21,12 @@ export type TBinEvent =
       tPath: '/room-result';
       tRoomCode: string;
       tCount: number;
+    }
+  | {
+      eventName: 't_click';
+      tEventId: 201;
+      tPath: '/create-room' | '/vote-room' | '/search-room' | '/room-result';
+      tTarget: 'logo';
+      // tStep은 tPath가 /vote-room일 때만 존재
+      tStep?: 1 | 2 | 3 | null;
     };

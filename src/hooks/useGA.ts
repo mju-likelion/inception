@@ -25,5 +25,12 @@ export const useGAInitialize = () => {
 };
 
 export const useGaApi = () => {
-  return { gaApi };
+  const changePathnameToTPath = (pathname: string) => {
+    if (pathname.includes('/appointment')) return '/vote-room';
+    if (pathname.includes('/submit-code')) return '/search-room';
+    if (pathname.includes('/result')) return '/room-result';
+    return '/create-room';
+  };
+
+  return { changePathnameToTPath, gaApi };
 };
