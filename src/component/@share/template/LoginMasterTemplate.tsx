@@ -53,35 +53,37 @@ export const LoginMasterTemplate = ({ buttonClick, isDateOnly }: Props) => {
 
   return (
     <WrapContents>
-      <WrapUpperContents>
-        <TitleBox
-          total={isDateOnly ? 2 : 3}
-          step={isDateOnly ? 2 : 3}
-          title=""
-          content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
-        />
-        <WrapInput>
-          <Input
-            type="text"
-            placeholder="닉네임"
-            onKeyUp={activeEvent}
-            onChange={onChangeNickname}
-            value={nicknameValue}
+      <form onSubmit={handleSubmit}>
+        <WrapUpperContents>
+          <TitleBox
+            total={isDateOnly ? 2 : 3}
+            step={isDateOnly ? 2 : 3}
+            title=""
+            content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
           />
-          <Input
-            type="password"
-            placeholder="비밀번호"
-            onKeyUp={activeEvent}
-            onChange={onChangePassword}
-            value={passwordValue}
-          />
-        </WrapInput>
-      </WrapUpperContents>
-      <WrapButton>
-        <ButtonLarge isDisabled={isButtonInactive} onClick={buttonClick}>
-          입력 완료
-        </ButtonLarge>
-      </WrapButton>
+          <WrapInput>
+            <Input
+              type="text"
+              placeholder="닉네임"
+              onKeyUp={activeEvent}
+              onChange={onChangeNickname}
+              value={nicknameValue}
+            />
+            <Input
+              type="password"
+              placeholder="비밀번호"
+              onKeyUp={activeEvent}
+              onChange={onChangePassword}
+              value={passwordValue}
+            />
+          </WrapInput>
+        </WrapUpperContents>
+        <WrapButton>
+          <ButtonLarge isDisabled={isButtonInactive} onClick={buttonClick}>
+            입력 완료
+          </ButtonLarge>
+        </WrapButton>
+      </form>
     </WrapContents>
   );
 };
