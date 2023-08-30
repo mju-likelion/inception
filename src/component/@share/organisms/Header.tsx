@@ -35,6 +35,14 @@ export const Header = () => {
   };
 
   const openModal = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 202,
+      tPath: changePathnameToTPath(location.pathname),
+      tTarget: 'help',
+      tStep: stepParams ? (+stepParams as 1 | 2 | 3) : null,
+    });
+
     setModalOpen(true);
     document.body.style.overflow = 'hidden';
   };
