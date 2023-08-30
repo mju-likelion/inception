@@ -8,7 +8,7 @@ export type TBinEvent =
       eventName: 't_view';
       tEventId: 102;
       tPath: '/vote-room';
-      tStep: 1 | 2 | 3;
+      tStep: 1 | 2 | 3 | null;
     }
   | {
       eventName: 't_view';

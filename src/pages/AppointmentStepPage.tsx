@@ -25,6 +25,7 @@ import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
 import { getDatesAsc } from '@/util';
 import { toastState, currentToastType } from '@/store';
 import { useRecoilState } from 'recoil';
+import { useGaApi } from '@/hooks/useGA';
 
 export const AppointmentStepPage = () => {
   const [searchParams] = useSearchParams();
@@ -39,6 +40,7 @@ export const AppointmentStepPage = () => {
   // 이전에 선택한 값이 있는지 판별하기 위함.
   // appointment step에 이동이 발생했을 때만 선택한 값이 있다고 판별한다.
   const prevCalendarDataExist = useRef(false);
+  const { gaApi } = useGaApi();
 
   const calendar = useRecoilValue(calendarState);
   const timeBlock = useRecoilValue(timeTableState);
@@ -92,6 +94,15 @@ export const AppointmentStepPage = () => {
       window.removeEventListener('beforeunload', preventRefresh);
     };
   }, []);
+
+  useEffect(() => {
+    gaApi.sendEvent({
+      eventName: 't_view',
+      tEventId: 102,
+      tPath: '/vote-room',
+      tStep: step ? (+step as 1 | 2 | 3) : null,
+    });
+  }, [step]);
 
   const requestCreateUser = async () => {
     const res = await registerSchedule({
