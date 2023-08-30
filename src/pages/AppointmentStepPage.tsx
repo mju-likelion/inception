@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import { TabBar } from '@/component/@share';
 import {
@@ -32,8 +32,9 @@ export const AppointmentStepPage = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [roomInfo, setRoomInfo] = useState<ViewRoomResponse>();
-  const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
-  const [toastType, setToastType] = useRecoilState(currentToastType);
+  const token = localStorage.getItem((params.code ?? '') + 'token');
+  const [, setIsToastOpened] = useRecoilState(toastState);
+  const [, setToastType] = useRecoilState(currentToastType);
 
   // 이전에 선택한 값이 있는지 판별하기 위함.
   // appointment step에 이동이 발생했을 때만 선택한 값이 있다고 판별한다.
@@ -83,7 +84,7 @@ export const AppointmentStepPage = () => {
       setRoomInfo(res);
 
       window.addEventListener('beforeunload', preventRefresh);
-      if (step === '2' || step === '3') {
+      if (!token && (step === '2' || step === '3')) {
         navigate(`/appointment/${params.code}?step=1`);
       }
     })();
@@ -100,11 +101,14 @@ export const AppointmentStepPage = () => {
       dateOnly: roomInfo?.dateOnly ?? !!roomInfo?.dateOnly,
       dates: selectedDates,
     });
-    localStorage.setItem('token', res?.data.accessToken ?? '');
+    localStorage.setItem(
+      (params.code ?? '') + 'token',
+      res?.data.accessToken ?? ''
+    );
     navigate(`/result?code=${params.code}`);
   };
 
-  const modifyUser = async (token: string) => {
+  const modifySceduleByToken = async (token: string) => {
     const res = await modifySchedule(token, params.code ?? '', {
       dates: selectedDates,
     });
@@ -121,18 +125,24 @@ export const AppointmentStepPage = () => {
   };
 
   const handleButtonClick = () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem((params.code ?? '') + 'token');
     if (step === '3') {
       prevCalendarDataExist.current = false;
+      if (token) {
+        modifySceduleByToken(token);
+        //step 3에서 토큰이 이미 있다면, 이건 수정
+      }
       requestCreateUser();
     } else {
       prevCalendarDataExist.current = true;
 
-      if (step === '1' && roomInfo?.dateOnly && token) {
-        modifyUser(token);
-      } else if (step === '2' && token) {
-        modifyUser(token);
+      if (step === '2' && token) {
+        modifySceduleByToken(token);
       } else {
+        if (token && roomInfo?.dateOnly) {
+          modifySceduleByToken(token);
+          //이미 제출했고, 날짜만 지정한 상태에서 다시 1단계에 입장한다면 시간 수정도 로그인도 불필요하므로 바로 결과창으로 라우팅
+        }
         roomInfo?.dateOnly
           ? step && navigate(`/appointment/${params.code}?step=3`)
           : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
@@ -153,6 +163,7 @@ export const AppointmentStepPage = () => {
             selectableDates={roomInfo?.dates}
             prevCalendarDataExist={prevCalendarDataExist.current}
             isDateOnly={roomInfo?.dateOnly}
+            token={token ? token : ''}
           />
         );
       case '2':
@@ -161,6 +172,7 @@ export const AppointmentStepPage = () => {
             buttonClick={handleButtonClick}
             startTime={roomInfo?.startTime as string}
             endTime={roomInfo?.endTime as string}
+            token={token ? token : ''}
           />
         );
       case '3':
@@ -168,6 +180,7 @@ export const AppointmentStepPage = () => {
           <LoginMasterTemplate
             buttonClick={handleButtonClick}
             isDateOnly={roomInfo?.dateOnly}
+            token={token ? token : ''}
           />
         );
       default:

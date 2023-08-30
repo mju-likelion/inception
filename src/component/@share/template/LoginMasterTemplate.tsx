@@ -1,21 +1,30 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
+
 interface Props {
   buttonClick: () => void;
   isDateOnly?: boolean;
+  token: string;
 }
 
-export const LoginMasterTemplate = ({ buttonClick, isDateOnly }: Props) => {
+export const LoginMasterTemplate = ({
+  buttonClick,
+  isDateOnly,
+  token,
+}: Props) => {
   const [nicknameValue, setNicknameValue] = useRecoilState(signUpNickname);
   const [passwordValue, setPasswordValue] = useRecoilState(signUpPassword);
   const [isButtonInactive, setIsButtonInactive] = useState(true);
   const resetNickname = useResetRecoilState(signUpNickname);
   const resetPassword = useResetRecoilState(signUpPassword);
+
+  const navigate = useNavigate();
 
   const onChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNicknameValue(event.target.value);
@@ -29,6 +38,10 @@ export const LoginMasterTemplate = ({ buttonClick, isDateOnly }: Props) => {
   }, [nicknameValue, passwordValue]);
 
   useEffect(() => {
+    if (token) {
+      window.confirm('이미 제출한 기록이 있으므로 결과창으로 이동합니다.') &&
+        navigate(1);
+    }
     return () => {
       resetNickname();
       resetPassword();
@@ -52,12 +65,15 @@ export const LoginMasterTemplate = ({ buttonClick, isDateOnly }: Props) => {
     }
   };
 
+  // const onClick = (tab: string) => {}; 누가 작성했는지는 모르겠지만, 우선 주석 처리 해놓겠숩니당
+
   return (
     <WrapContents>
       <WrapUpperContents>
         <TitleBox
           total={isDateOnly ? 2 : 3}
-          step={isDateOnly ? 2 : 3}
+          step={token || isDateOnly ? 2 : 3}
+          //토큰이 있거나 날짜만 고르는 경우는 로그인 페이지가 2번째 스텝(물론 둘 다 있을 경우는 1번째 스텝이지만, AppointmentStepPage에서 modifier로직에 따라 step을 2로 고정)
           title=""
           content={'본인 확인을 위한 임시 닉네임과 비밀번호를 입력해주세요'}
         />
