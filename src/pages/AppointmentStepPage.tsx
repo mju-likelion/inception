@@ -122,7 +122,9 @@ export const AppointmentStepPage = () => {
     } else {
       prevCalendarDataExist.current = true;
 
-      if (step === '2' && token) {
+      if (step === '1' && roomInfo?.dateOnly && token) {
+        modifyUser(token);
+      } else if (step === '2' && token) {
         modifyUser(token);
       } else {
         roomInfo?.dateOnly
