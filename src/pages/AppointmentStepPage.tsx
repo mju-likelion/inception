@@ -104,7 +104,7 @@ export const AppointmentStepPage = () => {
     navigate(`/result?code=${params.code}`);
   };
 
-  const modifyUser = async (token: string) => {
+  const modifySceduleByToken = async (token: string) => {
     const res = await modifySchedule(token, params.code ?? '', {
       dates: selectedDates,
     });
@@ -123,7 +123,7 @@ export const AppointmentStepPage = () => {
     if (step === '3') {
       prevCalendarDataExist.current = false;
       if (token) {
-        modifyUser(token);
+        modifySceduleByToken(token);
         //step 3에서 토큰이 이미 있다면, 이건 수정
       }
       requestCreateUser();
@@ -131,10 +131,10 @@ export const AppointmentStepPage = () => {
       prevCalendarDataExist.current = true;
 
       if (step === '2' && token) {
-        modifyUser(token);
+        modifySceduleByToken(token);
       } else {
         if (token && roomInfo?.dateOnly) {
-          modifyUser(token);
+          modifySceduleByToken(token);
           //이미 제출했고, 날짜만 지정한 상태에서 다시 1단계에 입장한다면 시간 수정도 로그인도 불필요하므로 바로 결과창으로 라우팅
         }
         roomInfo?.dateOnly
