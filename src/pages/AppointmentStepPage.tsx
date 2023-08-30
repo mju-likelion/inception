@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import { TabBar } from '@/component/@share';
 import {
@@ -77,9 +77,9 @@ export const AppointmentStepPage = () => {
     (async () => {
       const res = await viewRoom({ id: params.code ?? '' });
       setRoomInfo(res);
-
+      const token = localStorage.getItem((params.code ?? '') + 'token');
       window.addEventListener('beforeunload', preventRefresh);
-      if (step === '2' || step === '3') {
+      if (!token && (step === '2' || step === '3')) {
         navigate(`/appointment/${params.code}?step=1`);
       }
     })();
@@ -96,7 +96,10 @@ export const AppointmentStepPage = () => {
       dateOnly: roomInfo?.dateOnly ?? !!roomInfo?.dateOnly,
       dates: selectedDates,
     });
-    localStorage.setItem('token', res?.data.accessToken ?? '');
+    localStorage.setItem(
+      (params.code ?? '') + 'token',
+      res?.data.accessToken ?? ''
+    );
     navigate(`/result?code=${params.code}`);
   };
 
@@ -115,7 +118,7 @@ export const AppointmentStepPage = () => {
   };
 
   const handleButtonClick = () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem((params.code ?? '') + 'token');
     if (step === '3') {
       prevCalendarDataExist.current = false;
       requestCreateUser();
