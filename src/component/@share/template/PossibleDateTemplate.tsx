@@ -111,7 +111,7 @@ export const PossibleDateTemplate = ({
           }}
           isDisabled={isActiveButton}
         >
-          다음으로
+          {token && isDateOnly ? '수정완료' : '다음으로'}
         </ButtonLarge>
       </Bottom>
     </Wrapper>

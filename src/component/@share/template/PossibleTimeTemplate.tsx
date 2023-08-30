@@ -56,7 +56,7 @@ export const PossibleTimeTemplate = ({
         </InformationBlock>
         <ButtonBlock>
           <ButtonLarge isDisabled={isActive} onClick={buttonClick}>
-            다음으로
+            {token ? '수정완료' : '다음으로'}
           </ButtonLarge>
         </ButtonBlock>
       </ContentBlock>
