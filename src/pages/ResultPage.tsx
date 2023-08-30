@@ -111,7 +111,7 @@ export const ResultPage = () => {
               fetchMostSelectedTimeForDate={fetchMostSelectedTimeForDate}
             />
             <GridFooter>
-              <ButtonSmall onClick={navigateModifyPage} isDisabled={!!token}>
+              <ButtonSmall onClick={navigateModifyPage} isDisabled={!token}>
                 일정 수정
               </ButtonSmall>
             </GridFooter>
