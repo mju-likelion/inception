@@ -10,9 +10,9 @@ Sentry.init({
     new Sentry.BrowserTracing({
       // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
       tracePropagationTargets: [
-        'localhost',
+        'https://local.gatherplz.com:3000',
         'https://gatherplz.com/',
-        process.env.REACT_APP_SENTRY_DSN as string,
+        process.env.REACT_APP_API_URL as string,
       ],
     }),
     new Sentry.Replay(),
