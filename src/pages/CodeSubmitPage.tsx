@@ -56,6 +56,14 @@ export const CodeSubmitPage = () => {
   };
 
   const handleButtonClick = async () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 220,
+      tPath: '/search-room',
+      tTarget: 'submit',
+      tRoomCode: code,
+    });
+
     // api 요청
     const res = await resultRoom({ id: code });
     if (!res) {
