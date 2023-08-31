@@ -88,6 +88,14 @@ export type TBinEvent =
     }
   | {
       eventName: 't_click';
+      tEventId: 209;
+      tPath: '/create-room';
+      tTarget: 'time_selector';
+      tType: 'start' | 'end';
+      tValue: string;
+    }
+  | {
+      eventName: 't_click';
       tEventId: 212;
       tPath: '/vote-room';
       tTarget: 'move_month';
