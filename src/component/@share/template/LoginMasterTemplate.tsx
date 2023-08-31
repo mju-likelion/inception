@@ -6,6 +6,7 @@ import { ButtonLarge } from '@/component/@share/atom';
 import { useState, useEffect } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
+import { useGaApi } from '@/hooks/useGA';
 
 interface Props {
   buttonClick: () => void;
@@ -25,6 +26,8 @@ export const LoginMasterTemplate = ({
   const resetPassword = useResetRecoilState(signUpPassword);
 
   const navigate = useNavigate();
+
+  const { gaApi } = useGaApi();
 
   const onChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNicknameValue(event.target.value);
@@ -65,6 +68,20 @@ export const LoginMasterTemplate = ({
     }
   };
 
+  const onClick =
+    (
+      inputType: 'username' | 'password'
+    ): React.MouseEventHandler<HTMLInputElement> =>
+    () => {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 217,
+        tPath: '/vote-room',
+        tTarget: 'input',
+        tType: inputType,
+      });
+    };
+
   // const onClick = (tab: string) => {}; 누가 작성했는지는 모르겠지만, 우선 주석 처리 해놓겠숩니당
 
   return (
@@ -84,6 +101,7 @@ export const LoginMasterTemplate = ({
             onKeyUp={activeEvent}
             onKeyDown={activeEnter}
             onChange={onChangeNickname}
+            onClick={onClick('username')}
             value={nicknameValue}
           />
           <Input
@@ -92,6 +110,7 @@ export const LoginMasterTemplate = ({
             onKeyUp={activeEvent}
             onKeyDown={activeEnter}
             onChange={onChangePassword}
+            onClick={onClick('password')}
             value={passwordValue}
           />
         </WrapInput>

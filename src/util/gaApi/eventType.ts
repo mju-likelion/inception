@@ -149,6 +149,13 @@ export type TBinEvent =
     }
   | {
       eventName: 't_click';
+      tEventId: 217;
+      tPath: '/vote-room';
+      tTarget: 'input';
+      tType: 'username' | 'password';
+    }
+  | {
+      eventName: 't_click';
       tEventId: 218;
       tPath: '/vote-room';
       tTarget: 'submit';
