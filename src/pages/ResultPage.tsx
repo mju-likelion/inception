@@ -163,11 +163,7 @@ export const ResultPage = () => {
         />
       )}
       {isToastOpened && toastType === 'schedule' && (
-        <Toast
-          status={'success'}
-          toastType={toastType}
-          descriptionActive="success"
-        />
+        <Toast status={'success'} toastType={toastType} />
       )}
       <Modal
         error="codeError"
