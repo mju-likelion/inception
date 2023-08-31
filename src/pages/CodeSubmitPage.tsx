@@ -21,10 +21,6 @@ export const CodeSubmitPage = () => {
     setCode(event.target.value.toUpperCase()); //입력코드 대문자 변환
   };
 
-  // const validateCode = () => {
-  //   code.length > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
-  // };
-
   const onClick = (tab: string) => {
     tab === TAB_ITEMS[0].id && navigate('/');
   };
