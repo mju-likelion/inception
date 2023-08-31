@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import { CheckBox } from '@/component/@share';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { timeTableState, dateListState, timeListState } from '@/store';
@@ -20,6 +20,20 @@ export const SelectAllButton = ({ children }: PropsWithChildren) => {
     );
     setTimeTable(newTimeTable);
   };
+
+  // 모든 시간 선택 후 하나라도 해제했을 때 체크박스 해제
+  // 모든 시간 타임 블럭에서 자체 선택 후 체크박스 활성화 하기
+
+  // 하나라도 false가 있으면 체크박스 해제, false 없으면 체크
+  useEffect(() => {
+    const booleanArr: boolean[] = [];
+    timeTable.map((itemList) =>
+      itemList.filter((item) => {
+        booleanArr.push(item);
+      })
+    );
+    booleanArr.includes(false) ? setCheckAllDate(false) : setCheckAllDate(true);
+  }, [timeTable]);
 
   return (
     <SelectAllButtonBlock>
