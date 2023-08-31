@@ -250,6 +250,13 @@ export type TBinEvent =
     }
   | {
       eventName: 't_click';
+      tEventId: 230;
+      tPath: '/create-room' | '/vote-room' | '/search-room' | '/room-result';
+      tTarget: 'info_modal_ok';
+      tCase: 'not_exist_room' | 'not_exist_user' | 'unknown_error';
+    }
+  | {
+      eventName: 't_click';
       tEventId: 233;
       tPath: '/vote-room';
       tTarget: 'time_block';
@@ -257,9 +264,23 @@ export type TBinEvent =
       tTimes: string;
     }
   | {
+      eventName: 't_click';
+      tEventId: 234;
+      tPath: '/create-room' | '/vote-room' | '/search-room' | '/room-result';
+      tTarget: 'info_modal_background';
+      tCase: 'not_exist_room' | 'not_exist_user' | 'unknown_error';
+    }
+  | {
       eventName: 't_show';
       tEventId: 301;
       tPath: '/create-room' | '/vote-room' | '/search-room' | '/room-result';
       tTarget: 'helper_modal';
       tStep: 0 | 1 | 2 | 3;
+    }
+  | {
+      eventName: 't_show';
+      tEventId: 302;
+      tPath: '/create-room' | '/vote-room' | '/search-room' | '/room-result';
+      tTarget: 'info_modal';
+      tCase: 'not_exist_room' | 'not_exist_user' | 'unknown_error';
     };
