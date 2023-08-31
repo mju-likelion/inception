@@ -6,6 +6,7 @@ import { timeTableState, dateListState, timeListState } from '@/store';
 import { useState } from 'react';
 import range from 'lodash/range';
 import { theme } from '@/globalStyle';
+import { useGaApi } from '@/hooks/useGA';
 
 export const SelectAllButton = ({ children }: PropsWithChildren) => {
   const [timeTable, setTimeTable] = useRecoilState(timeTableState);
@@ -14,7 +15,17 @@ export const SelectAllButton = ({ children }: PropsWithChildren) => {
   const [pastTime, setPastTime] = useState<number>(0);
   const [checkAllDate, setCheckAllDate] = useState(false);
 
+  const { gaApi } = useGaApi();
+
   const onClickAllDate = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 215,
+      tPath: '/vote-room',
+      tTarget: 'select_all',
+      tValue: !checkAllDate,
+    });
+
     const newTimeTable = range(timeList.length).map(() =>
       new Array(dateList.length).fill(!checkAllDate)
     );

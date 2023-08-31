@@ -133,6 +133,13 @@ export type TBinEvent =
     }
   | {
       eventName: 't_click';
+      tEventId: 215;
+      tPath: '/vote-room';
+      tTarget: 'select_all';
+      tValue: boolean;
+    }
+  | {
+      eventName: 't_click';
       tEventId: 221;
       tPath: '/room-result';
       tTarget: 'move_month';
