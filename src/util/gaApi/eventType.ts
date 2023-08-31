@@ -164,6 +164,12 @@ export type TBinEvent =
     }
   | {
       eventName: 't_click';
+      tEventId: 219;
+      tPath: '/search-room';
+      tTarget: 'input';
+    }
+  | {
+      eventName: 't_click';
       tEventId: 221;
       tPath: '/room-result';
       tTarget: 'move_month';

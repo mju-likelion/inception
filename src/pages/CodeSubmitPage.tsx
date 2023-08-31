@@ -31,6 +31,15 @@ export const CodeSubmitPage = () => {
     setCode(event.target.value.toUpperCase()); //입력코드 대문자 변환
   };
 
+  const onInputClick = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 219,
+      tPath: '/search-room',
+      tTarget: 'input',
+    });
+  };
+
   // const validateCode = () => {
   //   code.length > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
   // };
@@ -72,6 +81,7 @@ export const CodeSubmitPage = () => {
             <Input
               placeholder={'약속방 입장코드'}
               onChange={onChange}
+              onClick={onInputClick}
               /** @TODO keyUp과 keyDown을 구분할 필요가 있을지 */
               // onKeyUp={validateCode}
               onKeyDown={activeEnter}
