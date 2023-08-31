@@ -222,6 +222,20 @@ export type TBinEvent =
     }
   | {
       eventName: 't_click';
+      tEventId: 226;
+      tPath: '/room-result';
+      tTarget: 'copy_link';
+      tRoomCode: string;
+    }
+  | {
+      eventName: 't_click';
+      tEventId: 227;
+      tPath: '/room-result';
+      tTarget: 'copy_code';
+      tRoomCode: string;
+    }
+  | {
+      eventName: 't_click';
       tEventId: 233;
       tPath: '/vote-room';
       tTarget: 'time_block';

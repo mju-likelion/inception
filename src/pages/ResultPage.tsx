@@ -54,12 +54,28 @@ export const ResultPage = () => {
   };
 
   const copyUrl = (copyResult: ToastStatus) => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 226,
+      tPath: '/room-result',
+      tTarget: 'copy_link',
+      tRoomCode: code ?? '',
+    });
+
     setIsToastOpened(true);
     setUrlToastStatus(copyResult);
     setToastType('url');
   };
 
   const copyCode = (copyResult: ToastStatus) => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 227,
+      tPath: '/room-result',
+      tTarget: 'copy_code',
+      tRoomCode: code ?? '',
+    });
+
     setIsToastOpened(true);
     setCodeToastStatus(copyResult);
     setToastType('code');
