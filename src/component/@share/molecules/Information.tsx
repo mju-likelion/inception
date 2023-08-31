@@ -11,6 +11,7 @@ interface Props {
   isOnlyTitle?: boolean;
   enableCopy?: boolean;
   isLoading?: boolean;
+  onSectionClick?: () => void;
   clickButton?: (copyResult: ToastStatus) => void;
 }
 
@@ -19,6 +20,7 @@ export const Information = (props: Props) => {
     <InformationBlock
       $enableCopy={props.enableCopy || false}
       $isOnlyTitle={props.isOnlyTitle || false}
+      onClick={props.onSectionClick}
     >
       {props.isLoading ? <LoadingContent /> : <Content {...props} />}
     </InformationBlock>

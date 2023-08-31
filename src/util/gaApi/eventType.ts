@@ -200,6 +200,21 @@ export type TBinEvent =
     }
   | {
       eventName: 't_click';
+      tEventId: 224;
+      tPath: '/room-result';
+      tTarget: 'available_time';
+      tType:
+        | 'on_ready'
+        | 'exist'
+        | 'no_time'
+        | 'no_date_and_time'
+        | 'date_only'
+        | 'not_enough_voter'
+        | 'no_voter';
+      tCount?: number;
+    }
+  | {
+      eventName: 't_click';
       tEventId: 233;
       tPath: '/vote-room';
       tTarget: 'time_block';

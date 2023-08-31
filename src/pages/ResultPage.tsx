@@ -12,7 +12,7 @@ import { toastState, currentToastType } from '@/store';
 import { useRecoilState } from 'recoil';
 import { resultRoom, resultRoomByDate } from '@/util/api';
 import { appointmentResultData } from '@/store/atoms/Request';
-import { useResultTimeTitle, useResultTitle } from '@/hooks';
+import { TITLE, useResultTimeTitle, useResultTitle } from '@/hooks';
 import { Modal } from '@/component/@share/organisms/Modal';
 import { useGaApi } from '@/hooks/useGA';
 
@@ -92,6 +92,50 @@ export const ResultPage = () => {
     navigate('/submit-code');
   };
 
+  const onInformationSectionClick = (section: 'available_time') => () => {
+    type Type =
+      | 'on_ready'
+      | 'exist'
+      | 'no_time'
+      | 'no_date_and_time'
+      | 'date_only'
+      | 'not_enough_voter'
+      | 'no_voter'
+      | undefined;
+
+    const getType = (): Type => {
+      switch (timeInformationTitle) {
+        case TITLE.notClick:
+          return 'on_ready';
+        case TITLE.click:
+          return 'exist';
+        case TITLE.notOverlapTime:
+          return 'no_time';
+        case TITLE.notOverlapDate:
+          return 'no_date_and_time';
+        case TITLE.onlyDate:
+          return 'date_only';
+        case TITLE.notEnoughVotes:
+          return 'not_enough_voter';
+        case TITLE.notVoted:
+          return 'no_voter';
+        default:
+          return;
+      }
+    };
+
+    if (section === 'available_time') {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 224,
+        tPath: '/room-result',
+        tTarget: section,
+        tType: getType()!,
+        tCount: mostSelectedTime?.length,
+      });
+    }
+  };
+
   useEffect(() => {
     (async () => {
       let data;
@@ -144,6 +188,7 @@ export const ResultPage = () => {
                 content={mostSelectedTime?.join(', ')}
                 isOnlyTitle={!mostSelectedTime ? true : false}
                 isLoading={!isMostSelectedTimeFetched ? true : false}
+                onSectionClick={onInformationSectionClick('available_time')}
               />
               <Information
                 icon={People}
