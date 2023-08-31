@@ -194,6 +194,12 @@ export type TBinEvent =
     }
   | {
       eventName: 't_click';
+      tEventId: 223;
+      tPath: '/room-result';
+      tTarget: 'edit';
+    }
+  | {
+      eventName: 't_click';
       tEventId: 233;
       tPath: '/vote-room';
       tTarget: 'time_block';

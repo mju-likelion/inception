@@ -66,6 +66,13 @@ export const ResultPage = () => {
   };
 
   const navigateModifyPage = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 223,
+      tPath: '/room-result',
+      tTarget: 'edit',
+    });
+
     navigate(`/appointment/${code}?step=1`);
   };
 
