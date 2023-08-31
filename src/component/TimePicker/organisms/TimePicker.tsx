@@ -82,6 +82,14 @@ export const TimePicker = () => {
   };
 
   const handleCheck = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 210,
+      tPath: '/create-room',
+      tTarget: 'date_only',
+      tValue: !isChecked,
+    });
+
     setIsChecked(!isChecked);
     setIsDisabled(!isDisabled);
     openPicker && setOpenPicker('');

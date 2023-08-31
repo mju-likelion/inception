@@ -15,7 +15,7 @@ export const TitleCheck = ({
 }: PropsWithChildren<TitleCheckProps>) => {
   return (
     <Container onClick={onClick}>
-      <CheckBox isChecked={isChecked} onClick={onClick} />
+      <CheckBox isChecked={isChecked} />
       <Body $color="gray2">{children}</Body>
     </Container>
   );

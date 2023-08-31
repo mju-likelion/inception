@@ -3,7 +3,7 @@ import { ReactComponent as CheckSvg } from '@/assets/images/Check.svg';
 
 interface CheckBoxProp {
   isChecked: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const CheckBox = ({ isChecked, onClick }: CheckBoxProp) => {
