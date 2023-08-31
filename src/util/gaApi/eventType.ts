@@ -140,6 +140,23 @@ export type TBinEvent =
     }
   | {
       eventName: 't_click';
+      tEventId: 216;
+      tPath: '/vote-room';
+      tTarget: 'next';
+      tStep: 1 | 2 | null;
+      tRoomCode: string;
+      tType: 'create' | 'edit';
+    }
+  | {
+      eventName: 't_click';
+      tEventId: 218;
+      tPath: '/vote-room';
+      tTarget: 'submit';
+      tRoomCode: string;
+      tType: 'create' | 'edit';
+    }
+  | {
+      eventName: 't_click';
       tEventId: 221;
       tPath: '/room-result';
       tTarget: 'move_month';

@@ -138,6 +138,15 @@ export const AppointmentStepPage = () => {
   const handleButtonClick = () => {
     const token = localStorage.getItem((params.code ?? '') + 'token');
     if (step === '3') {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 218,
+        tPath: '/vote-room',
+        tTarget: 'submit',
+        tRoomCode: params.code ?? '',
+        tType: token ? 'edit' : 'create',
+      });
+
       prevCalendarDataExist.current = false;
       if (token) {
         modifySceduleByToken(token);
@@ -145,6 +154,16 @@ export const AppointmentStepPage = () => {
       }
       requestCreateUser();
     } else {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 216,
+        tPath: '/vote-room',
+        tTarget: 'next',
+        tStep: step ? (+step as 1 | 2) : null,
+        tRoomCode: params.code ?? '',
+        tType: token ? 'edit' : 'create',
+      });
+
       prevCalendarDataExist.current = true;
 
       if (step === '2' && token) {
