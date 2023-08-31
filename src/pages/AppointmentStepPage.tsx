@@ -142,10 +142,11 @@ export const AppointmentStepPage = () => {
         if (token && roomInfo?.dateOnly) {
           modifySceduleByToken(token);
           //이미 제출했고, 날짜만 지정한 상태에서 다시 1단계에 입장한다면 시간 수정도 로그인도 불필요하므로 바로 결과창으로 라우팅
+        } else {
+          roomInfo?.dateOnly
+            ? step && navigate(`/appointment/${params.code}?step=3`)
+            : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
         }
-        roomInfo?.dateOnly
-          ? step && navigate(`/appointment/${params.code}?step=3`)
-          : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
       }
     }
   };
