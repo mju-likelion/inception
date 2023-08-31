@@ -236,6 +236,20 @@ export type TBinEvent =
     }
   | {
       eventName: 't_click';
+      tEventId: 228;
+      tPath: '/create-room' | '/vote-room' | '/search-room' | '/room-result';
+      tTarget: 'helper_modal_ok';
+      tStep: 0 | 1 | 2 | 3;
+    }
+  | {
+      eventName: 't_click';
+      tEventId: 229;
+      tPath: '/create-room' | '/vote-room' | '/search-room' | '/room-result';
+      tTarget: 'helper_modal_background';
+      tStep: 0 | 1 | 2 | 3;
+    }
+  | {
+      eventName: 't_click';
       tEventId: 233;
       tPath: '/vote-room';
       tTarget: 'time_block';

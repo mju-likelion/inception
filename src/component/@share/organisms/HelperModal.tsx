@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { ButtonLarge } from '@/component/@share/atom';
 import { ProgressBarModal, HelperTitleBox } from '@/component/@share/molecules';
+import { useGaApi } from '@/hooks/useGA';
+import { useLocation } from 'react-router-dom';
 
 interface HelperModalProps {
   step: 0 | 1 | 2 | 3;
@@ -29,6 +31,9 @@ export const HelperModal = ({
   isOpen,
   onCloseModal,
 }: HelperModalProps) => {
+  const location = useLocation();
+  const { changePathnameToTPath, gaApi } = useGaApi();
+
   const onSetHelpText = () => {
     const result = [];
     for (let i = 0; i < 3; i++) {
@@ -46,17 +51,40 @@ export const HelperModal = ({
 
     return result;
   };
+
+  const handleClose = (target: 'ok' | 'background') => () => {
+    if (target === 'ok') {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 228,
+        tPath: changePathnameToTPath(location.pathname),
+        tTarget: 'helper_modal_ok',
+        tStep: step,
+      });
+    } else if (target === 'background') {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 229,
+        tPath: changePathnameToTPath(location.pathname),
+        tTarget: 'helper_modal_background',
+        tStep: step,
+      });
+    }
+
+    onCloseModal();
+  };
+
   return (
     <>
       {isOpen ? (
-        <ModalBackdrop onClick={onCloseModal}>
+        <ModalBackdrop onClick={handleClose('background')}>
           <ModalBlock onClick={(e) => e.stopPropagation()}>
             <TopBlock>
               <ProgressBarModal total={3} step={step} />
               <TitleBoxBlock>{onSetHelpText()}</TitleBoxBlock>
             </TopBlock>
             <ButtonBlock>
-              <ButtonLarge onClick={onCloseModal}>알겠어요</ButtonLarge>
+              <ButtonLarge onClick={handleClose('ok')}>알겠어요</ButtonLarge>
             </ButtonBlock>
           </ModalBlock>
         </ModalBackdrop>
