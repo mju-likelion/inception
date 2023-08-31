@@ -255,4 +255,11 @@ export type TBinEvent =
       tTarget: 'time_block';
       tPageIndex: number;
       tTimes: string;
+    }
+  | {
+      eventName: 't_show';
+      tEventId: 301;
+      tPath: '/create-room' | '/vote-room' | '/search-room' | '/room-result';
+      tTarget: 'helper_modal';
+      tStep: 0 | 1 | 2 | 3;
     };

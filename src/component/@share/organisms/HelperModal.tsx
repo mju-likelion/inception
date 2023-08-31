@@ -3,6 +3,7 @@ import { ButtonLarge } from '@/component/@share/atom';
 import { ProgressBarModal, HelperTitleBox } from '@/component/@share/molecules';
 import { useGaApi } from '@/hooks/useGA';
 import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 interface HelperModalProps {
   step: 0 | 1 | 2 | 3;
@@ -33,6 +34,18 @@ export const HelperModal = ({
 }: HelperModalProps) => {
   const location = useLocation();
   const { changePathnameToTPath, gaApi } = useGaApi();
+
+  useEffect(() => {
+    if (isOpen) {
+      gaApi.sendEvent({
+        eventName: 't_show',
+        tEventId: 301,
+        tPath: changePathnameToTPath(location.pathname),
+        tTarget: 'helper_modal',
+        tStep: step,
+      });
+    }
+  }, [isOpen]);
 
   const onSetHelpText = () => {
     const result = [];
