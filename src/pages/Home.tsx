@@ -65,6 +65,13 @@ export const Home = () => {
   };
 
   const handleButtonClick = async () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 211,
+      tPath: '/create-room',
+      tTarget: 'create_room',
+    });
+
     setIsRoomCreate(false);
     const res = await createRoom({
       dates: dates,
