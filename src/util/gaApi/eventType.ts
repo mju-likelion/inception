@@ -147,4 +147,12 @@ export type TBinEvent =
       tTarget: 'calendar_date';
       tDate: string;
       tIsEveryoneSelecting: boolean;
+    }
+  | {
+      eventName: 't_click';
+      tEventId: 233;
+      tPath: '/vote-room';
+      tTarget: 'time_block';
+      tPageIndex: number;
+      tTimes: string;
     };
