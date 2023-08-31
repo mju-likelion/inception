@@ -3,6 +3,9 @@ import { ButtonLarge } from '@/component/@share/atom';
 import { ModalTitleBox } from '../molecules/ModalTitleBox';
 import { ModalIcon } from '../atom/ModalIcon';
 import { ModalDimmed } from '../atom/ModalDimmed';
+import { useGaApi } from '@/hooks/useGA';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 interface ModalProps {
   error: string;
@@ -11,6 +14,31 @@ interface ModalProps {
 }
 
 export const Modal = ({ error, isOpen, onCloseModal }: ModalProps) => {
+  const location = useLocation();
+  const { changePathnameToTPath, gaApi } = useGaApi();
+
+  const getErrorTypeForGa = () => {
+    if (error === 'codeError') {
+      return 'not_exist_room';
+    }
+    if (error === 'loginError') {
+      return 'not_exist_user';
+    }
+    return 'unknown_error';
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      gaApi.sendEvent({
+        eventName: 't_show',
+        tEventId: 302,
+        tPath: changePathnameToTPath(location.pathname),
+        tTarget: 'info_modal',
+        tCase: getErrorTypeForGa(),
+      });
+    }
+  }, [isOpen]);
+
   const onSetModalText = () => {
     const filterArray = ERROR_TEXT.filter((checkParameter) => {
       return checkParameter.errorType === error
@@ -27,17 +55,39 @@ export const Modal = ({ error, isOpen, onCloseModal }: ModalProps) => {
     );
   };
 
+  const handleClose = (target: 'ok' | 'background') => () => {
+    if (target === 'ok') {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 230,
+        tPath: changePathnameToTPath(location.pathname),
+        tTarget: 'info_modal_ok',
+        tCase: getErrorTypeForGa(),
+      });
+    } else if (target === 'background') {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 234,
+        tPath: changePathnameToTPath(location.pathname),
+        tTarget: 'info_modal_background',
+        tCase: getErrorTypeForGa(),
+      });
+    }
+
+    onCloseModal();
+  };
+
   return (
     <>
       {isOpen && (
-        <ModalDimmed onClick={onCloseModal}>
-          <WrapModal>
+        <ModalDimmed onClick={handleClose('background')}>
+          <WrapModal onClick={(e) => e.stopPropagation()}>
             <ModalIconBox>
               <ModalIcon value={error} />
             </ModalIconBox>
             <TitleBox>{onSetModalText()}</TitleBox>
             <ButtonBlock>
-              <ButtonLarge onClick={onCloseModal}>확인</ButtonLarge>
+              <ButtonLarge onClick={handleClose('ok')}>확인</ButtonLarge>
             </ButtonBlock>
           </WrapModal>
         </ModalDimmed>

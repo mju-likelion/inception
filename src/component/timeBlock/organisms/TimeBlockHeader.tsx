@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import { SelectDate, DateList } from '@/component/timeBlock/molecules';
+import { useGaApi } from '@/hooks/useGA';
 
 interface HeaderProps {
   page: number;
@@ -8,8 +9,33 @@ interface HeaderProps {
 }
 
 export const TimeBlockHeader = ({ page, setPage, activeDate }: HeaderProps) => {
-  const onClickBackButton = () => setPage((page) => page - 1);
-  const onClickNextButton = () => setPage((page) => page + 1);
+  const { gaApi } = useGaApi();
+
+  const onClickBackButton = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 214,
+      tPath: '/vote-room',
+      tTarget: 'move_time_block',
+      tPageIndex: page,
+      tDirection: 'prev',
+    });
+
+    setPage((page) => page - 1);
+  };
+
+  const onClickNextButton = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 214,
+      tPath: '/vote-room',
+      tTarget: 'move_time_block',
+      tPageIndex: page,
+      tDirection: 'next',
+    });
+
+    setPage((page) => page + 1);
+  };
 
   return (
     <TimeBlockHeaderBlock>
