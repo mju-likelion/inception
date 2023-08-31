@@ -81,6 +81,13 @@ export type TBinEvent =
     }
   | {
       eventName: 't_click';
+      tEventId: 208;
+      tPath: '/create-room';
+      tTarget: 'calendar_date';
+      tDates: string;
+    }
+  | {
+      eventName: 't_click';
       tEventId: 212;
       tPath: '/vote-room';
       tTarget: 'move_month';
@@ -90,10 +97,25 @@ export type TBinEvent =
     }
   | {
       eventName: 't_click';
+      tEventId: 213;
+      tPath: '/vote-room';
+      tTarget: 'calendar_date';
+      tDates: string;
+    }
+  | {
+      eventName: 't_click';
       tEventId: 221;
       tPath: '/room-result';
       tTarget: 'move_month';
       tFrom: number;
       tTo: number;
       tDirection: 'prev' | 'next';
+    }
+  | {
+      eventName: 't_click';
+      tEventId: 222;
+      tPath: '/room-result';
+      tTarget: 'calendar_date';
+      tDate: string;
+      tIsEveryoneSelecting: boolean;
     };
