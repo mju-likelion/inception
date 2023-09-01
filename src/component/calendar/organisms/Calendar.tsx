@@ -473,7 +473,15 @@ const ResultMode = ({
   }, [promiseResultData]);
 
   useEffect(() => {
-    setDateRange(resolvePromiseResult(calendarData));
+    const data = resolvePromiseResult(calendarData);
+    setDateRange(data);
+
+    const changeCheckLimitDate = checkLimitDate(
+      currentDate,
+      data.minDate,
+      data.maxDate
+    );
+    setDateRangeLimit(changeCheckLimitDate);
   }, [calendarData]);
 
   return (
