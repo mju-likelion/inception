@@ -44,6 +44,7 @@ export const SelectAllButton = ({ children }: PropsWithChildren) => {
       setTimeTable(updateTimeTable);
     } else {
       setTimeTable(newTimeTable);
+      console.log('그럼일단여기겠지?');
     }
     setCheckAllDate(!checkAllDate);
   };
@@ -66,9 +67,10 @@ export const SelectAllButton = ({ children }: PropsWithChildren) => {
         booleanArr.push(item);
       })
     );
+    console.log(booleanArr);
 
     // 지난 시간이 존재하는 경우 지난 시간의 갯수와 false의 갯수가 일치하지 않는 경우 setCheckAllDate 값 false
-    if (pastTime + 1 > 0) {
+    if (pastTime !== 0 && pastTime + 1 > 0) {
       const PastTimecount = booleanArr.filter((date) => date === false).length;
       PastTimecount === pastTime + 1
         ? setCheckAllDate(true)
