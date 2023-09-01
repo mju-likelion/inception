@@ -1,4 +1,5 @@
 import { Axios } from '@/util/axios';
+import * as Sentry from '@sentry/react';
 
 export interface RegisterScheduleRequest {
   roomCode: string;
@@ -25,6 +26,8 @@ export const registerSchedule = async (
     return token;
   } catch (e) {
     if (e instanceof Error) {
+      Sentry.captureException(`약속을 등록하는데 실패했대요 ㅠㅠ ${e}`);
+      window.alert('registerSchedule Error');
       throw new Error('registerSchedule Error', e);
     }
   }
@@ -56,7 +59,8 @@ export const modifySchedule = async (
     return res;
   } catch (e) {
     if (e instanceof Error) {
-      console.log(e);
+      window.alert('modify schedule Error');
+      Sentry.captureException(`일정을 수정하는데 실패했대요 ㅠㅠ ${e}`);
     }
   }
 };
