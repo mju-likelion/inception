@@ -39,8 +39,12 @@ export const ButtonSmall = ({
 
 const Button = styled.button`
   ${({ theme }) => theme.typographies.body3};
-  width: 92px;
+  display: flex;
   height: 40px;
+  padding: 8px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   border: 1px solid ${({ theme }) => theme.colors.gray1};
   border-radius: 50px;
   color: ${({ theme }) => theme.colors.gray1};
@@ -49,19 +53,19 @@ const Button = styled.button`
     &:hover {
       background-color: ${({ theme }) => theme.colors.gray4};
       color: ${({ theme }) => theme.colors.gray2};
-      border: none;
+      border: 1px solid ${({ theme }) => theme.colors.gray4};
     }
   }
 
   &:active {
     background-color: ${({ theme }) => theme.colors.gray4};
     color: ${({ theme }) => theme.colors.gray2};
-    border: none;
+    border: 1px solid ${({ theme }) => theme.colors.gray4};
   }
 
   &:disabled {
     background-color: ${({ theme }) => theme.colors.gray5};
     color: ${({ theme }) => theme.colors.gray3};
-    border: none;
+    border: 1px solid ${({ theme }) => theme.colors.gray5};
   }
 `;
