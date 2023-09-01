@@ -42,7 +42,7 @@ export const TimeBlock = ({ active, onClick, disabled }: TimeBlockProps) => {
       {disabled ? (
         <>
           <DisabledTimeBlock onClick={handleDisabledBlock} />
-          {isToastOpened && (
+          {isToastOpened && toastType === 'timeBlock' && (
             <Toast
               status={'error'}
               toastType={toastType}
