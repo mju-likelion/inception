@@ -1,5 +1,5 @@
 import { Calendar } from '@/component';
-import { ButtonLarge, LoadingIcon } from '@/component/@share';
+import { ButtonLarge, LoadingIcon, ButtonSmall } from '@/component/@share';
 import { Information, ProgressBar } from '@/component/@share/molecules';
 import { styled } from 'styled-components';
 import CalendarIcon from '@/assets/images/Calendar.svg';
@@ -10,6 +10,7 @@ import { useRecoilValue } from 'recoil';
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { dateListState } from '@/store';
+import { useLocation, useNavigate } from 'react-router-dom';
 interface Props {
   buttonClick: () => void;
   prevCalendarDataExist: boolean;
@@ -39,6 +40,9 @@ export const PossibleDateTemplate = ({
   isDateOnly,
   token,
 }: Props) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const code = location.pathname.split('/')[2];
   const [isActiveButton, setIsActiveButton] = useState(true);
   const calendarData = useRecoilValue(calendarState);
   const [dateList, setDateList] = useRecoilState(dateListState);
@@ -68,6 +72,10 @@ export const PossibleDateTemplate = ({
       : startMonth;
   };
 
+  const navigateResultPage = () => {
+    navigate(`/result?code=${code}`);
+  };
+
   return (
     <Wrapper>
       <Header>
@@ -88,6 +96,13 @@ export const PossibleDateTemplate = ({
               selectableDates={selectableDates}
               prevCalendarDataExist={prevCalendarDataExist}
             />
+            {token && (
+              <GridFooter>
+                <ButtonSmall onClick={navigateResultPage}>
+                  결과 보러 가기
+                </ButtonSmall>
+              </GridFooter>
+            )}
             <Information
               icon={CalendarIcon}
               title="선택 가능 기간"
@@ -165,6 +180,17 @@ const LoadingContent = styled.div`
 
   @media ${({ theme }) => theme.size.web} {
     margin: 80px auto 0 auto;
+  }
+`;
+
+const GridFooter = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-bottom: 28px;
+  @media ${({ theme }) => theme.size.tablet} {
+    margin-bottom: 42px;
   }
 `;
 
