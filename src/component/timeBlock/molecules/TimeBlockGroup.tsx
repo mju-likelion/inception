@@ -26,7 +26,7 @@ export const TimeBlockGroup = ({
   const [timeTable, setTimeTable] = useRecoilState(timeTableState);
   const isMouseDown = useRecoilValue(isMouseDownState);
   const [previousTarget, setPreviousTarget] = useState<HTMLButtonElement>();
-  const [pastTime, setPastTime] = useState<number>(0);
+  const [pastTime, setPastTime] = useState<number>(-1);
 
   useEffect(() => {
     const newTimeTable = range(timeList.length)?.map(() =>
@@ -75,7 +75,7 @@ export const TimeBlockGroup = ({
         touchMoveDrag({ event, isMouseDown, previousTarget, setPreviousTarget })
       }
     >
-      {pastTime > 0 && page === 1
+      {pastTime + 1 > 0 && page === 1
         ? nowTimeTable.map((row, rowIndex) =>
             row.map((_, columnIndex) => (
               <TimeBlock

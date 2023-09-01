@@ -12,7 +12,7 @@ export const SelectAllButton = ({ children }: PropsWithChildren) => {
   const [timeTable, setTimeTable] = useRecoilState(timeTableState);
   const dateList = useRecoilValue(dateListState);
   const timeList = useRecoilValue(timeListState);
-  const [pastTime, setPastTime] = useState<number>(0);
+  const [pastTime, setPastTime] = useState<number>(-1);
   const [checkAllDate, setCheckAllDate] = useState(false);
 
   const { gaApi } = useGaApi();
@@ -31,7 +31,8 @@ export const SelectAllButton = ({ children }: PropsWithChildren) => {
     );
 
     //지난 시간이 존재하는 경우 지난 시간 제외하고 타임 테이블 세팅
-    if (pastTime > 0 && checkAllDate === false) {
+    if (pastTime + 1 > 0 && checkAllDate === false) {
+      console.log('하뭐지');
       const updateTimeTable = newTimeTable.map((row, rowIndex) =>
         row.map((_, columnIndex) => {
           if (columnIndex === 0 && rowIndex <= pastTime) {
@@ -44,7 +45,6 @@ export const SelectAllButton = ({ children }: PropsWithChildren) => {
       setTimeTable(updateTimeTable);
     } else {
       setTimeTable(newTimeTable);
-      console.log('그럼일단여기겠지?');
     }
     setCheckAllDate(!checkAllDate);
   };
@@ -67,10 +67,9 @@ export const SelectAllButton = ({ children }: PropsWithChildren) => {
         booleanArr.push(item);
       })
     );
-    console.log(booleanArr);
 
     // 지난 시간이 존재하는 경우 지난 시간의 갯수와 false의 갯수가 일치하지 않는 경우 setCheckAllDate 값 false
-    if (pastTime !== 0 && pastTime + 1 > 0) {
+    if (pastTime + 1 > 0) {
       const PastTimecount = booleanArr.filter((date) => date === false).length;
       PastTimecount === pastTime + 1
         ? setCheckAllDate(true)
