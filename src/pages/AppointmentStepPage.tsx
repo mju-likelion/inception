@@ -25,6 +25,7 @@ import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
 import { getDatesAsc } from '@/util';
 import { toastState, currentToastType } from '@/store';
 import { useRecoilState } from 'recoil';
+import { useGaApi } from '@/hooks/useGA';
 
 export const AppointmentStepPage = () => {
   const [searchParams] = useSearchParams();
@@ -39,6 +40,7 @@ export const AppointmentStepPage = () => {
   // 이전에 선택한 값이 있는지 판별하기 위함.
   // appointment step에 이동이 발생했을 때만 선택한 값이 있다고 판별한다.
   const prevCalendarDataExist = useRef(false);
+  const { gaApi } = useGaApi();
 
   const calendar = useRecoilValue(calendarState);
   const timeBlock = useRecoilValue(timeTableState);
@@ -93,6 +95,15 @@ export const AppointmentStepPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    gaApi.sendEvent({
+      eventName: 't_view',
+      tEventId: 102,
+      tPath: '/vote-room',
+      tStep: step ? (+step as 1 | 2 | 3) : null,
+    });
+  }, [step]);
+
   const requestCreateUser = async () => {
     const res = await registerSchedule({
       roomCode: params.code ?? '',
@@ -127,6 +138,15 @@ export const AppointmentStepPage = () => {
   const handleButtonClick = () => {
     const token = localStorage.getItem((params.code ?? '') + 'token');
     if (step === '3') {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 218,
+        tPath: '/vote-room',
+        tTarget: 'submit',
+        tRoomCode: params.code ?? '',
+        tType: token ? 'edit' : 'create',
+      });
+
       prevCalendarDataExist.current = false;
       if (token) {
         modifySceduleByToken(token);
@@ -134,6 +154,16 @@ export const AppointmentStepPage = () => {
       }
       requestCreateUser();
     } else {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 216,
+        tPath: '/vote-room',
+        tTarget: 'next',
+        tStep: step ? (+step as 1 | 2) : null,
+        tRoomCode: params.code ?? '',
+        tType: token ? 'edit' : 'create',
+      });
+
       prevCalendarDataExist.current = true;
 
       if (step === '2' && token) {
@@ -142,10 +172,11 @@ export const AppointmentStepPage = () => {
         if (token && roomInfo?.dateOnly) {
           modifySceduleByToken(token);
           //이미 제출했고, 날짜만 지정한 상태에서 다시 1단계에 입장한다면 시간 수정도 로그인도 불필요하므로 바로 결과창으로 라우팅
+        } else {
+          roomInfo?.dateOnly
+            ? step && navigate(`/appointment/${params.code}?step=3`)
+            : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
         }
-        roomInfo?.dateOnly
-          ? step && navigate(`/appointment/${params.code}?step=3`)
-          : step && navigate(`/appointment/${params.code}?step=${+step + 1}`);
       }
     }
   };

@@ -3,22 +3,41 @@ import { TabBar } from '@/component/@share/organisms';
 import { TitleBox } from '@/component/@share/molecules';
 import { Input } from '@/component/@share/atom';
 import { ButtonLarge } from '@/component/@share/atom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TAB_ITEMS } from '@/pages/data';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '@/component/@share/organisms/Modal';
 import { resultRoom } from '@/util/api';
+import { useGaApi } from '@/hooks/useGA';
 
 export const CodeSubmitPage = () => {
   const navigate = useNavigate();
   const [code, setCode] = useState('');
   const [buttonInactive, setButtonInactive] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const { gaApi } = useGaApi();
+
+  useEffect(() => {
+    gaApi.sendEvent({
+      eventName: 't_view',
+      tEventId: 103,
+      tPath: '/search-room',
+    });
+  }, []);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const code = event.target.value.toUpperCase();
     code.length > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
     setCode(event.target.value.toUpperCase()); //입력코드 대문자 변환
+  };
+
+  const onInputClick = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 219,
+      tPath: '/search-room',
+      tTarget: 'input',
+    });
   };
 
   const onClick = (tab: string) => {
@@ -33,6 +52,14 @@ export const CodeSubmitPage = () => {
   };
 
   const handleButtonClick = async () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 220,
+      tPath: '/search-room',
+      tTarget: 'submit',
+      tRoomCode: code,
+    });
+
     // api 요청
     const res = await resultRoom({ id: code });
     if (!res) {
@@ -58,6 +85,7 @@ export const CodeSubmitPage = () => {
             <Input
               placeholder={'약속방 입장코드'}
               onChange={onChange}
+              onClick={onInputClick}
               /** @TODO keyUp과 keyDown을 구분할 필요가 있을지 */
               // onKeyUp={validateCode}
               onKeyDown={activeEnter}

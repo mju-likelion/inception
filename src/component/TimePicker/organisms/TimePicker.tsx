@@ -12,6 +12,7 @@ import {
 } from '@/store';
 import { TimeListData } from '@/types';
 import { theme } from '@/globalStyle';
+import { useGaApi } from '@/hooks/useGA';
 
 export const TimePicker = () => {
   const startBoxRef = useRef<HTMLDivElement>(null);
@@ -23,6 +24,8 @@ export const TimePicker = () => {
   const [isError, setIsError] = useRecoilState(timeErrorState);
   const [isChecked, setIsChecked] = useRecoilState(titleCheckState);
   const [isDisabled, setIsDisabled] = useState(false);
+
+  const { gaApi } = useGaApi();
 
   useEffect(() => {
     window.addEventListener('mousedown', listOutSideClick);
@@ -41,6 +44,15 @@ export const TimePicker = () => {
   };
 
   const selectTime = (time: TimeListData) => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 209,
+      tPath: '/create-room',
+      tTarget: 'time_selector',
+      tType: openPicker as 'start' | 'end',
+      tValue: time,
+    });
+
     openPicker === 'start' ? setStartTime(time) : setEndTime(time);
     setOpenPicker('');
     checkError(time);
@@ -70,6 +82,14 @@ export const TimePicker = () => {
   };
 
   const handleCheck = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 210,
+      tPath: '/create-room',
+      tTarget: 'date_only',
+      tValue: !isChecked,
+    });
+
     setIsChecked(!isChecked);
     setIsDisabled(!isDisabled);
     openPicker && setOpenPicker('');
