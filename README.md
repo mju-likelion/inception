@@ -44,3 +44,19 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## HTTPS 설정
+
+서버 통신을 위해 https 설정이 필요합니다.
+macOS의 경우 homeBrew, Windows의 경우 choco가 필요합니다
+HTTPS 설정을 원할 경우 문의 바랍니다.
+
+```shell
+# package.json의 "start:https"를 아래와 같이 설정합니다.
+
+# macOS
+"HTTPS=true SSL_CRT_FILE=cert/cert.pem SSL_KEY_FILE=cert/cert-key.pem craco start",
+
+# window
+"set HTTPS=true&&set SSL_CRT_FILE=cert/cert.pem SSL_KEY_FILE=cert/cert-key.pem&&craco start",
+```
