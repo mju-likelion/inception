@@ -3,6 +3,8 @@ import styled from 'styled-components';
 interface PrivacyProps {
   firstContent: string;
   secondContent: string;
+  onFirstContentClick?: () => void;
+  onSecondContentClick?: () => void;
 }
 
 const PrivacyLink =
@@ -11,13 +13,19 @@ const PrivacyLink =
 const TermsOfUseLink =
   'https://gatherplz.notion.site/c04613ccc6cf418c8b008e924f7b4f17?pvs=4';
 
-export const Privacy = ({ firstContent, secondContent }: PrivacyProps) => {
+export const Privacy = ({
+  firstContent,
+  secondContent,
+  onFirstContentClick,
+  onSecondContentClick,
+}: PrivacyProps) => {
   return (
     <Container>
       <PrivacyContent
         href={PrivacyLink}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={onFirstContentClick}
       >
         {firstContent}
       </PrivacyContent>
@@ -25,6 +33,7 @@ export const Privacy = ({ firstContent, secondContent }: PrivacyProps) => {
         href={TermsOfUseLink}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={onSecondContentClick}
       >
         {secondContent}
       </PrivacyContent>

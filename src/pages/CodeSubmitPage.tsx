@@ -6,22 +6,38 @@ import { ButtonLarge } from '@/component/@share/atom';
 import { useEffect, useState } from 'react';
 import { TAB_ITEMS } from '@/pages/data';
 import { useNavigate } from 'react-router-dom';
+import { Modal } from '@/component/@share/organisms/Modal';
+import { resultRoom } from '@/util/api';
+import { useGaApi } from '@/hooks/useGA';
 
 export const CodeSubmitPage = () => {
-  const [value, setValue] = useState('');
-
-  const [buttonInactive, setButtonInactive] = useState(true);
-
   const navigate = useNavigate();
+  const [code, setCode] = useState('');
+  const [buttonInactive, setButtonInactive] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const { gaApi } = useGaApi();
+
+  useEffect(() => {
+    gaApi.sendEvent({
+      eventName: 't_view',
+      tEventId: 103,
+      tPath: '/search-room',
+    });
+  }, []);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-    setValue(event.target.value.toUpperCase()); //입력코드 대문자 변환
+    const code = event.target.value.toUpperCase();
+    code.length > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
+    setCode(event.target.value.toUpperCase()); //입력코드 대문자 변환
   };
 
-  const activeEvent = () => {
-    const index = value.length;
-    index > 5 ? setButtonInactive(false) : setButtonInactive(true); //코드자릿수 6자리 제한
+  const onInputClick = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 219,
+      tPath: '/search-room',
+      tTarget: 'input',
+    });
   };
 
   const onClick = (tab: string) => {
@@ -35,13 +51,23 @@ export const CodeSubmitPage = () => {
     }
   };
 
-  const handleButtonClick = () => {
-    navigate(`/result?code=${value}`);
-  };
+  const handleButtonClick = async () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 220,
+      tPath: '/search-room',
+      tTarget: 'submit',
+      tRoomCode: code,
+    });
 
-  useEffect(() => {
-    activeEvent();
-  }, [value]);
+    // api 요청
+    const res = await resultRoom({ id: code });
+    if (!res) {
+      setModalOpen(true);
+    } else {
+      navigate(`/result?code=${code}`);
+    }
+  };
 
   return (
     <>
@@ -57,11 +83,13 @@ export const CodeSubmitPage = () => {
 
           <WrapInput>
             <Input
-              placeholder={'약속방 입력 코드'}
+              placeholder={'약속방 입장코드'}
               onChange={onChange}
-              onKeyUp={activeEvent}
+              onClick={onInputClick}
+              /** @TODO keyUp과 keyDown을 구분할 필요가 있을지 */
+              // onKeyUp={validateCode}
               onKeyDown={activeEnter}
-              value={value}
+              value={code}
               maxLength={6}
             />
           </WrapInput>
@@ -72,6 +100,11 @@ export const CodeSubmitPage = () => {
           </ButtonLarge>
         </WrapButton>
       </WrapperContents>
+      <Modal
+        error="codeError"
+        isOpen={modalOpen}
+        onCloseModal={() => setModalOpen(false)}
+      />
     </>
   );
 };

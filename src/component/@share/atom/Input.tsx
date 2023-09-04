@@ -4,6 +4,7 @@ interface Props {
   type?: React.HTMLInputTypeAttribute;
   placeholder?: string;
   onKeyUp?: React.KeyboardEventHandler<HTMLInputElement>;
+  onClick?: React.MouseEventHandler<HTMLInputElement>;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   value: string;
   maxLength?: number;
@@ -14,6 +15,7 @@ export const Input = ({
   type,
   placeholder,
   onChange,
+  onClick,
   onKeyUp,
   value,
   maxLength,
@@ -25,6 +27,7 @@ export const Input = ({
       placeholder={placeholder}
       onKeyUp={onKeyUp}
       onChange={onChange}
+      onClick={onClick}
       value={value}
       maxLength={maxLength}
       onKeyDown={onKeyDown}

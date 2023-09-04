@@ -4,6 +4,7 @@ import { Logo, Helper } from '@/component/@share/atom';
 import { useEffect, useState } from 'react';
 import { HelperModal } from './HelperModal';
 import { useLocation } from 'react-router-dom';
+import { useGaApi } from '@/hooks/useGA';
 
 export const Header = () => {
   const location = useLocation();
@@ -12,6 +13,7 @@ export const Header = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [step, setStep] = useState<0 | 1 | 2 | 3>(1);
+  const { changePathnameToTPath, gaApi } = useGaApi();
 
   useEffect(() => {
     if (location.pathname === '/') setStep(1);
@@ -20,7 +22,27 @@ export const Header = () => {
     else setStep(0);
   }, [location]);
 
+  const onLogoClick = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 201,
+      tPath: changePathnameToTPath(location.pathname),
+      tTarget: 'logo',
+      tStep: stepParams ? (+stepParams as 1 | 2 | 3) : null,
+    });
+
+    navigate('/');
+  };
+
   const openModal = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 202,
+      tPath: changePathnameToTPath(location.pathname),
+      tTarget: 'help',
+      tStep: stepParams ? (+stepParams as 1 | 2 | 3) : null,
+    });
+
     setModalOpen(true);
     document.body.style.overflow = 'hidden';
   };
@@ -29,11 +51,12 @@ export const Header = () => {
     setModalOpen(false);
     document.body.style.overflow = 'unset';
   };
+
   return (
     <>
       <HeaderBox>
         <InnerBox>
-          <Logo onClick={() => navigate('/')} />
+          <Logo onClick={onLogoClick} />
           <Helper onClick={openModal} />
         </InnerBox>
       </HeaderBox>

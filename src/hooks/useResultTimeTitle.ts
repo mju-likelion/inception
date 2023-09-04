@@ -37,7 +37,7 @@ export const useResultTimeTitle = (
   return TITLE['notClick'];
 };
 
-const TITLE = {
+export const TITLE = {
   notClick: '겹치는 시간을 확인하려면 날짜를 선택하세요',
   click: '선택한 날짜에서 모두가 겹치는 시간이에요',
   notOverlapTime: '선택한 날짜에서 모두가 겹치는 시간이 없어요',

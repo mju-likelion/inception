@@ -3,6 +3,9 @@ import { ButtonLarge } from '@/component/@share/atom';
 import { ModalTitleBox } from '../molecules/ModalTitleBox';
 import { ModalIcon } from '../atom/ModalIcon';
 import { ModalDimmed } from '../atom/ModalDimmed';
+import { useGaApi } from '@/hooks/useGA';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 interface ModalProps {
   error: string;
@@ -10,7 +13,90 @@ interface ModalProps {
   onCloseModal: () => void;
 }
 
-const errorText = [
+export const Modal = ({ error, isOpen, onCloseModal }: ModalProps) => {
+  const location = useLocation();
+  const { changePathnameToTPath, gaApi } = useGaApi();
+
+  const getErrorTypeForGa = () => {
+    if (error === 'codeError') {
+      return 'not_exist_room';
+    }
+    if (error === 'loginError') {
+      return 'not_exist_user';
+    }
+    return 'unknown_error';
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      gaApi.sendEvent({
+        eventName: 't_show',
+        tEventId: 302,
+        tPath: changePathnameToTPath(location.pathname),
+        tTarget: 'info_modal',
+        tCase: getErrorTypeForGa(),
+      });
+    }
+  }, [isOpen]);
+
+  const onSetModalText = () => {
+    const filterArray = ERROR_TEXT.filter((checkParameter) => {
+      return checkParameter.errorType === error
+        ? checkParameter.errorType
+        : checkParameter.errorType === 'theOtherError';
+    });
+
+    //에러타입을 키로, 맞는 객체를 찾아와서 배열을 만들어줘
+    return (
+      <ModalTitleBox
+        title={filterArray[0].title}
+        content={filterArray[0].content}
+      />
+    );
+  };
+
+  const handleClose = (target: 'ok' | 'background') => () => {
+    if (target === 'ok') {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 230,
+        tPath: changePathnameToTPath(location.pathname),
+        tTarget: 'info_modal_ok',
+        tCase: getErrorTypeForGa(),
+      });
+    } else if (target === 'background') {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 234,
+        tPath: changePathnameToTPath(location.pathname),
+        tTarget: 'info_modal_background',
+        tCase: getErrorTypeForGa(),
+      });
+    }
+
+    onCloseModal();
+  };
+
+  return (
+    <>
+      {isOpen && (
+        <ModalDimmed onClick={handleClose('background')}>
+          <WrapModal onClick={(e) => e.stopPropagation()}>
+            <ModalIconBox>
+              <ModalIcon value={error} />
+            </ModalIconBox>
+            <TitleBox>{onSetModalText()}</TitleBox>
+            <ButtonBlock>
+              <ButtonLarge onClick={handleClose('ok')}>확인</ButtonLarge>
+            </ButtonBlock>
+          </WrapModal>
+        </ModalDimmed>
+      )}
+    </>
+  );
+};
+
+const ERROR_TEXT = [
   {
     errorType: 'codeError',
     title: '존재하지 않는 약속방입니다',
@@ -28,46 +114,6 @@ const errorText = [
     content: '잠시 후에 다시 시도해주세요',
   },
 ];
-
-export const Modal = ({ error, isOpen, onCloseModal }: ModalProps) => {
-  const onSetModalText = () => {
-    const result = [];
-
-    function errorCheck(checkParameter: any) {
-      return checkParameter.errorType === error
-        ? checkParameter.errorType
-        : checkParameter.errorType === 'theOtherError';
-    }
-
-    const filterArray = errorText.filter(errorCheck);
-    //에러타입을 키로, 맞는 객체를 찾아와서 배열을 만들어줘
-    result.push(
-      <ModalTitleBox
-        title={filterArray[0].title}
-        content={filterArray[0].content}
-      />
-    );
-    return result;
-  };
-
-  return (
-    <>
-      {isOpen && (
-        <ModalDimmed onClick={onCloseModal}>
-          <WrapModal>
-            <ModalIconBox>
-              <ModalIcon value={error} />
-            </ModalIconBox>
-            <TitleBox>{onSetModalText()}</TitleBox>
-            <ButtonBlock>
-              <ButtonLarge onClick={onCloseModal}>확인</ButtonLarge>
-            </ButtonBlock>
-          </WrapModal>
-        </ModalDimmed>
-      )}
-    </>
-  );
-};
 
 const WrapModal = styled.div`
   display: flex;

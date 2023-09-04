@@ -18,7 +18,13 @@ import {
   mergeEnableTimesToDates,
   resolvePromiseResult,
 } from '@/util';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { styled } from 'styled-components';
 import padStart from 'lodash/padStart';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -27,6 +33,7 @@ import { getDatesToCalendarData } from '@/util/getDatesToCalendarData';
 import { appointmentResultData } from '@/store/atoms/Request';
 import { FetchMostSelectedTimeForDate } from '@/pages';
 import { timeTableState } from '@/store';
+import { useGaApi } from '@/hooks/useGA';
 
 interface CalendarProps {
   viewType: ViewType;
@@ -216,6 +223,11 @@ const CreateMode = ({
 
   const isMouseDown = useRef(false);
   const currentTouchTargetText = useRef<string>();
+  // ga 전용 코드
+  const currentSelectingDates = useRef<CalendarData[]>([]);
+
+  const { gaApi } = useGaApi();
+
   const setCurrentTouchTargetText = (text: string) => {
     currentTouchTargetText.current = text;
   };
@@ -225,17 +237,40 @@ const CreateMode = ({
     currentTouchTargetText.current = date.split('-')[2];
     const changedCalendar = changedDateColor(calendar, date, 'create');
     setCalendar(changedCalendar);
+
+    // ga 전용 코드
+    currentSelectingDates.current.push(
+      changedCalendar.find((d) => d.date === date)!
+    );
   };
 
   const handleMouseUp = () => {
     isMouseDown.current = false;
     currentTouchTargetText.current = undefined;
+
+    // ga 전용 코드
+    // mouseUp 이 간헐적으로 한 번씩 더 터져서 if 문 처리
+    if (currentSelectingDates.current.length) {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 208,
+        tPath: '/create-room',
+        tTarget: 'calendar_date',
+        tDates: JSON.stringify(currentSelectingDates.current),
+      });
+      currentSelectingDates.current = [];
+    }
   };
 
   const handleMouseEnter = (date: string) => {
     if (!isMouseDown.current) return;
     const changedCalendar = changedDateColor(calendar, date, 'create');
     setCalendar(changedCalendar);
+
+    // ga 전용 코드
+    currentSelectingDates.current.push(
+      changedCalendar.find((d) => d.date === date)!
+    );
   };
 
   const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -249,6 +284,16 @@ const CreateMode = ({
 
   const handleChangeCalendar = (type: 'prev' | 'next') => {
     const date = new Date(+currentDate[0], +currentDate[1] - 1); // Date 객체에선 month는 제로베이스임
+
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 207,
+      tPath: '/create-room',
+      tTarget: 'move_month',
+      tFrom: date.getMonth() + 1,
+      tTo: type === 'prev' ? date.getMonth() : date.getMonth() + 2,
+      tDirection: type,
+    });
 
     date.setMonth(type === 'prev' ? date.getMonth() - 1 : date.getMonth() + 1);
 
@@ -329,8 +374,25 @@ const ResultMode = ({
     checkLimitDate(currentDate, dateRange.minDate, dateRange.maxDate)
   );
 
+  const highestVotedCount = useMemo(() => {
+    if (!calendarData) return 0;
+    return Math.max(...calendarData.map((item) => item.count!));
+  }, [calendarData]);
+
+  const { gaApi } = useGaApi();
+
   const handleChangeCalendar = (type: 'prev' | 'next') => {
     const date = new Date(+currentDate[0], +currentDate[1] - 1); // Date 객체에선 month는 제로베이스임
+
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 221,
+      tPath: '/room-result',
+      tTarget: 'move_month',
+      tFrom: date.getMonth() + 1,
+      tTo: type === 'prev' ? date.getMonth() : date.getMonth() + 2,
+      tDirection: type,
+    });
 
     date.setMonth(type === 'prev' ? date.getMonth() - 1 : date.getMonth() + 1);
 
@@ -365,21 +427,38 @@ const ResultMode = ({
     const changedCalendar = changedDateColor(calendar, date, 'result');
     setCalendar(changedCalendar);
 
-    const count = calendar.find((item) => item.date === date)?.count;
+    const clickedDateInfo = calendar.find((item) => item.date === date);
+    const count = clickedDateInfo?.count;
     if (count && count >= 2) {
       fetchMostSelectedTimeForDate?.(date);
     }
+
+    // ga 전용 코드
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 222,
+      tPath: '/room-result',
+      tTarget: 'calendar_date',
+      tDate: JSON.stringify(clickedDateInfo!),
+      tIsEveryoneSelecting: highestVotedCount === count,
+    });
   };
 
   useEffect(() => {
-    setCalendar(
-      getCalendarData(
-        dateRange.minDate[0],
-        dateRange.minDate[1],
-        'result',
-        calendarData
-      )
+    const calendar = getCalendarData(
+      dateRange.minDate[0],
+      dateRange.minDate[1],
+      'result',
+      calendarData
     );
+    setCalendar(calendar);
+
+    // currentMonth가 선택가능한 날짜의 월보다 작을 때 currentMonth 업데이트
+    const currentMonth = currentDate.join('-');
+    const calendarMonth = calendar.map((item) => item.date)[0].slice(0, 7);
+    if (new Date(currentMonth) < new Date(calendarMonth)) {
+      setCurrentDate(calendarMonth.split('-'));
+    }
   }, [dateRange, calendarData]);
 
   useEffect(() => {
@@ -394,7 +473,15 @@ const ResultMode = ({
   }, [promiseResultData]);
 
   useEffect(() => {
-    setDateRange(resolvePromiseResult(calendarData));
+    const data = resolvePromiseResult(calendarData);
+    setDateRange(data);
+
+    const changeCheckLimitDate = checkLimitDate(
+      currentDate,
+      data.minDate,
+      data.maxDate
+    );
+    setDateRangeLimit(changeCheckLimitDate);
   }, [calendarData]);
 
   return (
@@ -450,6 +537,11 @@ const SelectMode = ({
 
   const isMouseDown = useRef(false);
   const currentTouchTargetText = useRef<string>();
+  // ga 전용 코드
+  const currentSelectingDates = useRef<CalendarData[]>([]);
+
+  const { gaApi } = useGaApi();
+
   const setCurrentTouchTargetText = (text: string) => {
     currentTouchTargetText.current = text;
   };
@@ -461,11 +553,29 @@ const SelectMode = ({
     setCalendar(changedCalendar);
     // 캘린더 날짜 변경에 따라 타임 테이블 초기화
     setTimeTable([]);
+
+    // ga 전용 코드
+    currentSelectingDates.current.push(
+      changedCalendar.find((d) => d.date === date)!
+    );
   };
 
   const handleMouseUp = () => {
     isMouseDown.current = false;
     currentTouchTargetText.current = undefined;
+
+    // ga 전용 코드
+    // mouseUp 이 간헐적으로 한 번씩 더 터져서 if 문 처리
+    if (currentSelectingDates.current.length) {
+      gaApi.sendEvent({
+        eventName: 't_click',
+        tEventId: 213,
+        tPath: '/vote-room',
+        tTarget: 'calendar_date',
+        tDates: JSON.stringify(currentSelectingDates.current),
+      });
+      currentSelectingDates.current = [];
+    }
   };
 
   const handleMouseEnter = (date: string) => {
@@ -474,6 +584,11 @@ const SelectMode = ({
     setCalendar(changedCalendar);
     // 캘린더 날짜 변경에 따라 타임 테이블 초기화
     setTimeTable([]);
+
+    // ga 전용 코드
+    currentSelectingDates.current.push(
+      changedCalendar.find((d) => d.date === date)!
+    );
   };
 
   const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -487,6 +602,16 @@ const SelectMode = ({
 
   const handleChangeCalendar = (type: 'prev' | 'next') => {
     const date = new Date(+currentDate[0], +currentDate[1] - 1); // Date 객체에선 month는 제로베이스임
+
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 212,
+      tPath: '/vote-room',
+      tTarget: 'move_month',
+      tFrom: date.getMonth() + 1,
+      tTo: type === 'prev' ? date.getMonth() : date.getMonth() + 2,
+      tDirection: type,
+    });
 
     date.setMonth(type === 'prev' ? date.getMonth() - 1 : date.getMonth() + 1);
 

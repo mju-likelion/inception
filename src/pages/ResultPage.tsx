@@ -12,8 +12,9 @@ import { toastState, currentToastType } from '@/store';
 import { useRecoilState } from 'recoil';
 import { resultRoom, resultRoomByDate } from '@/util/api';
 import { appointmentResultData } from '@/store/atoms/Request';
-import { useResultTimeTitle, useResultTitle } from '@/hooks';
+import { TITLE, useResultTimeTitle, useResultTitle } from '@/hooks';
 import { Modal } from '@/component/@share/organisms/Modal';
+import { useGaApi } from '@/hooks/useGA';
 
 export type FetchMostSelectedTimeForDate = (date: string) => Promise<void>;
 
@@ -21,6 +22,9 @@ export const ResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const code = new URLSearchParams(location.search).get('code');
+  // disabled상태를 판단하기 위한 로컬스토로지 토큰을 가져옵니다.
+  const token = localStorage.getItem((code ?? '') + 'token');
+  const { gaApi } = useGaApi();
 
   // 약속 정보
   const [appointmentData, setAppointmentData] = useRecoilState(
@@ -50,18 +54,41 @@ export const ResultPage = () => {
   };
 
   const copyUrl = (copyResult: ToastStatus) => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 226,
+      tPath: '/room-result',
+      tTarget: 'copy_link',
+      tRoomCode: code ?? '',
+    });
+
     setIsToastOpened(true);
     setUrlToastStatus(copyResult);
     setToastType('url');
   };
 
   const copyCode = (copyResult: ToastStatus) => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 227,
+      tPath: '/room-result',
+      tTarget: 'copy_code',
+      tRoomCode: code ?? '',
+    });
+
     setIsToastOpened(true);
     setCodeToastStatus(copyResult);
     setToastType('code');
   };
 
   const navigateModifyPage = () => {
+    gaApi.sendEvent({
+      eventName: 't_click',
+      tEventId: 223,
+      tPath: '/room-result',
+      tTarget: 'edit',
+    });
+
     navigate(`/appointment/${code}?step=1`);
   };
 
@@ -81,6 +108,59 @@ export const ResultPage = () => {
     navigate('/submit-code');
   };
 
+  const onInformationSectionClick =
+    (section: 'available_time' | 'voted_people') => () => {
+      type Type =
+        | 'on_ready'
+        | 'exist'
+        | 'no_time'
+        | 'no_date_and_time'
+        | 'date_only'
+        | 'not_enough_voter'
+        | 'no_voter'
+        | undefined;
+
+      const getType = (): Type => {
+        switch (timeInformationTitle) {
+          case TITLE.notClick:
+            return 'on_ready';
+          case TITLE.click:
+            return 'exist';
+          case TITLE.notOverlapTime:
+            return 'no_time';
+          case TITLE.notOverlapDate:
+            return 'no_date_and_time';
+          case TITLE.onlyDate:
+            return 'date_only';
+          case TITLE.notEnoughVotes:
+            return 'not_enough_voter';
+          case TITLE.notVoted:
+            return 'no_voter';
+          default:
+            return;
+        }
+      };
+
+      if (section === 'available_time') {
+        gaApi.sendEvent({
+          eventName: 't_click',
+          tEventId: 224,
+          tPath: '/room-result',
+          tTarget: section,
+          tType: getType()!,
+          tCount: mostSelectedTime?.length,
+        });
+      } else if (section === 'voted_people') {
+        gaApi.sendEvent({
+          eventName: 't_click',
+          tEventId: 225,
+          tPath: '/room-result',
+          tTarget: section,
+          tCount: appointmentData.votingUsers.length,
+        });
+      }
+    };
+
   useEffect(() => {
     (async () => {
       let data;
@@ -95,6 +175,19 @@ export const ResultPage = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    if (appointmentData) {
+      gaApi.sendEvent({
+        eventName: 't_view',
+        tEventId: 104,
+        tPath: '/room-result',
+        // TODO: 추후 code 가 없을 경우도 대비해야 함
+        tRoomCode: code!,
+        tCount: appointmentData.votingUsers.length,
+      });
+    }
+  }, [appointmentData]);
+
   return (
     <>
       <TabBar onClick={handleTabNavigate} tabItems={TAB_ITEMS} />
@@ -102,14 +195,16 @@ export const ResultPage = () => {
         <ResultPageBlock>
           <ContentBlock>
             <TitleBoxBlock>
-              <TitleBox title={title} content={subTitle} />
+              <TitleBox title={title} content={subTitle} total={3} />
             </TitleBoxBlock>
             <Calendar
               viewType="result"
               fetchMostSelectedTimeForDate={fetchMostSelectedTimeForDate}
             />
             <GridFooter>
-              <ButtonSmall onClick={navigateModifyPage}>일정 수정</ButtonSmall>
+              <ButtonSmall onClick={navigateModifyPage} isDisabled={!token}>
+                일정 수정
+              </ButtonSmall>
             </GridFooter>
             <InformationBlock>
               <Information
@@ -118,11 +213,13 @@ export const ResultPage = () => {
                 content={mostSelectedTime?.join(', ')}
                 isOnlyTitle={!mostSelectedTime ? true : false}
                 isLoading={!isMostSelectedTimeFetched ? true : false}
+                onSectionClick={onInformationSectionClick('available_time')}
               />
               <Information
                 icon={People}
                 title="제출한 사람"
                 content={appointmentData.votingUsers.join(', ')}
+                onSectionClick={onInformationSectionClick('voted_people')}
               />
               <Information
                 title="약속방 링크"
@@ -157,6 +254,9 @@ export const ResultPage = () => {
           toastType={toastType}
           descriptionActive="error"
         />
+      )}
+      {isToastOpened && toastType === 'schedule' && (
+        <Toast status={'success'} toastType={toastType} />
       )}
       <Modal
         error="codeError"

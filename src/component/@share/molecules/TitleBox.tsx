@@ -14,13 +14,13 @@ export const TitleBox = ({
   title,
   content,
   defaultColor = 'black',
-  total = 3,
+  total,
   step,
 }: TitleBoxProps) => {
   return (
     <Container title={title}>
       {step ? (
-        <ProgressBar total={total} step={step} />
+        <ProgressBar total={total ? total : 3} step={step} />
       ) : (
         <Title $color={defaultColor}>{title}</Title>
       )}

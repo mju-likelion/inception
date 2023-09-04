@@ -11,12 +11,15 @@ interface Props {
   buttonClick: () => void;
   startTime: string;
   endTime: string;
+  token?: string;
+  //한번이라도 제출했으면 로그인 넘어가니까 토탈이 2입니다
 }
 
 export const PossibleTimeTemplate = ({
   buttonClick,
   startTime,
   endTime,
+  token,
 }: Props) => {
   const [isActive, setIsActive] = useState(true);
   const [isMouseDown, setIsMouseDown] = useRecoilState(isMouseDownState);
@@ -29,7 +32,11 @@ export const PossibleTimeTemplate = ({
     <TimePageBlock onMouseUp={mouseUp} onTouchEnd={mouseUp}>
       <ContentBlock>
         <TitleBoxBlock>
-          <TitleBox content="가능한 시간들을 선택해주세요" step={2} />
+          <TitleBox
+            content="가능한 시간들을 선택해주세요"
+            step={2}
+            total={token ? 2 : 3}
+          />
         </TitleBoxBlock>
         {startTime ? (
           <TimeBox
@@ -49,7 +56,7 @@ export const PossibleTimeTemplate = ({
         </InformationBlock>
         <ButtonBlock>
           <ButtonLarge isDisabled={isActive} onClick={buttonClick}>
-            다음으로
+            {token ? '수정완료' : '다음으로'}
           </ButtonLarge>
         </ButtonBlock>
       </ContentBlock>

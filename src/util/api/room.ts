@@ -1,4 +1,5 @@
 import { Axios } from '@/util/axios';
+import * as Sentry from '@sentry/react';
 
 export interface CreateRoomRequest {
   dates: string[]; // '2023-07-07,2023-07-08' | ['2023-07-07', '2023-07-08']
@@ -27,6 +28,8 @@ export const createRoom = async (
     return res;
   } catch (e) {
     if (e instanceof Error) {
+      window.alert('createRoom Error');
+      Sentry.captureException(`방을 생성하는데 실패했대요 ㅠㅠ ${e}`);
       throw new Error('createRoom Error', e);
     }
   }
@@ -51,6 +54,8 @@ export const viewRoom = async ({
 }: ViewRoomRequest): Promise<ViewRoomResponse | undefined> => {
   try {
     if (!id) {
+      Sentry.captureException('id is null or empty value');
+      window.alert('id is null or empty value');
       throw Error('id is null or empty value');
     }
 
@@ -58,6 +63,7 @@ export const viewRoom = async ({
     return res.data as ViewRoomResponse;
   } catch (e) {
     if (e instanceof Error) {
+      Sentry.captureException(`방을 조회(입장)하는데 실패했대요 ㅠㅠ ${e}`);
       throw new Error('viewRoom Error', e);
     }
   }
@@ -85,7 +91,8 @@ export const resultRoom = async ({ id }: ResultRoomRequest) => {
     return res.data as ResultRoomResponse;
   } catch (e) {
     if (e instanceof Error) {
-      console.log(e);
+      window.alert('result view error');
+      Sentry.captureException(`결과를 조회하는데 실패했대요 ㅠㅠ ${e}`);
     }
   }
 };
@@ -114,6 +121,8 @@ export const resultRoomByDate = async ({
     return res.data as ResultRoomByDateResponse;
   } catch (e) {
     if (e instanceof Error) {
+      Sentry.captureException(e);
+      window.alert('resultRoomByDate Error');
       throw new Error('resultRoomByDate Error', e);
     }
   }
