@@ -2,7 +2,6 @@ import { isMouseDownState } from '@/store/atoms';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { useWindowResize } from '@/hooks';
-import { devices } from '@/globalStyle';
 import { Toast } from '@/component/@share';
 import { toastState, currentToastType } from '@/store/atoms';
 
@@ -16,6 +15,8 @@ export const TimeBlock = ({ active, onClick, disabled }: TimeBlockProps) => {
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
   const [toastType, setToastType] = useRecoilState(currentToastType);
   const [isMouseDown, setIsMouseDown] = useRecoilState(isMouseDownState);
+  const isTouchDevice =
+    navigator.maxTouchPoints || 'ontouchstart' in document.documentElement;
 
   const windowSize = useWindowResize();
 
@@ -25,7 +26,7 @@ export const TimeBlock = ({ active, onClick, disabled }: TimeBlockProps) => {
   };
 
   const mouseDown = () => {
-    if (!isMouseDown && windowSize.width >= devices.web) {
+    if (!isMouseDown && !isTouchDevice) {
       onClick();
     }
     setIsMouseDown(true);
@@ -55,7 +56,7 @@ export const TimeBlock = ({ active, onClick, disabled }: TimeBlockProps) => {
           $isActive={active}
           onPointerDown={() => mouseDown()}
           onPointerEnter={() => mouseEnter()}
-          onClick={() => windowSize.width < devices.web && onClick()}
+          onClick={() => isTouchDevice && onClick()}
         />
       )}
     </>
