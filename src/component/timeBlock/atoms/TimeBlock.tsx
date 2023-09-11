@@ -1,8 +1,6 @@
 import { isMouseDownState } from '@/store/atoms';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { useWindowResize } from '@/hooks';
-import { devices } from '@/globalStyle';
 import { Toast } from '@/component/@share';
 import { toastState, currentToastType } from '@/store/atoms';
 
@@ -16,8 +14,8 @@ export const TimeBlock = ({ active, onClick, disabled }: TimeBlockProps) => {
   const [isToastOpened, setIsToastOpened] = useRecoilState(toastState);
   const [toastType, setToastType] = useRecoilState(currentToastType);
   const [isMouseDown, setIsMouseDown] = useRecoilState(isMouseDownState);
-
-  const windowSize = useWindowResize();
+  const isTouchDevice =
+    navigator.maxTouchPoints || 'ontouchstart' in document.documentElement;
 
   const handleDisabledBlock = () => {
     setIsToastOpened(true);
@@ -25,7 +23,7 @@ export const TimeBlock = ({ active, onClick, disabled }: TimeBlockProps) => {
   };
 
   const mouseDown = () => {
-    if (!isMouseDown && windowSize.width >= devices.web) {
+    if (!isMouseDown && !isTouchDevice) {
       onClick();
     }
     setIsMouseDown(true);
@@ -55,7 +53,7 @@ export const TimeBlock = ({ active, onClick, disabled }: TimeBlockProps) => {
           $isActive={active}
           onPointerDown={() => mouseDown()}
           onPointerEnter={() => mouseEnter()}
-          onClick={() => windowSize.width < devices.web && onClick()}
+          onClick={() => isTouchDevice && onClick()}
         />
       )}
     </>
@@ -69,7 +67,7 @@ const TimeBlockAtom = styled.button<{ $isActive: boolean }>`
   border-radius: 8px;
   background-color: ${({ $isActive, theme }) =>
     $isActive ? theme.colors.mint1 : theme.colors.gray5};
-  @media (hover: hover) {
+  @media (hover: hover) and (pointer: fine) {
     &:hover {
       background-color: ${({ theme }) => theme.colors.mint2};
     }
