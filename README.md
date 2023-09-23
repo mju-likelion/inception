@@ -1,62 +1,62 @@
-# Getting Started with Create React App
+![OG](https://github.com/mju-likelion/inception/assets/63037629/829282ce-7bba-45bf-8660-4a9a2cf18549)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ⏱️ 모여봐요
 
-## Available Scripts
+[모여봐요](https://gatherplz.com/)는 모임을 위한 날짜, 인원, 시간을 자동으로 취합하는 웹서비스로,
 
-In the project directory, you can run:
+친구들에게 묻고 답할 필요 없이 내 일정만 입력하여 모임의 약속 일정을 쉽게 잡을 수 있는 서비스입니다.
 
-### `yarn start`
+[모여봐요에서 약속을 만들어보세요!](https://gatherplz.com/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# 📷 Feature
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 약속 방 생성하기
 
-### `yarn test`
+이미지 일정한 크기, 비율로 만들기
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![약속방 생성](https://github.com/mju-likelion/inception/assets/63037629/bea7d6f1-c5b7-45f2-89b0-7ef1a9f0e5bc)
 
-### `yarn build`
+## 일정 등록하기 - 날짜 선택
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![가용 날짜 선택](https://github.com/mju-likelion/inception/assets/63037629/9dafbdd6-3265-4fa9-9f9f-6a5fc00885af)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 일정 등록하기 - 시간 선택
 
-### `yarn eject`
+![가용 시간 선택](https://github.com/mju-likelion/inception/assets/63037629/c557ab9a-e96e-4ab1-88f7-49f8266eaf1c)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 로그인
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![로그인](https://github.com/mju-likelion/inception/assets/63037629/e68b6c55-1930-42f9-b359-6641597ace33)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 약속방 코드 입력
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![약속방 코드](https://github.com/mju-likelion/inception/assets/63037629/3ba3d64b-0ba8-4c69-897f-1eabb85efe1f)
 
-## Learn More
+## 일정 결과
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![일정 결과](https://github.com/mju-likelion/inception/assets/63037629/7e332dc5-b8a7-4db8-8025-d36929aed01a)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-## HTTPS 설정
+# 🛠️ Tech Stack
 
-서버 통신을 위해 https 설정이 필요합니다.
-macOS의 경우 homeBrew, Windows의 경우 choco가 필요합니다
-HTTPS 설정을 원할 경우 문의 바랍니다.
+`React`, `TypeScript`, `StyledComponent`, `Recoil`, `Axios`, `yarn`
+
+`Google Analytics`
+
+도식화된 구조 이미지 만들기
+
+# ⚙️ How To Start
 
 ```shell
-# package.json의 "start:https"를 아래와 같이 설정합니다.
+// 처음 프로젝트를 실행할 경우
+yarn install
 
-# macOS
-"HTTPS=true SSL_CRT_FILE=cert/cert.pem SSL_KEY_FILE=cert/cert-key.pem craco start",
+// 프로젝트 시작
+yarn start:https
 
-# window
-"set HTTPS=true&&set SSL_CRT_FILE=cert/cert.pem SSL_KEY_FILE=cert/cert-key.pem&&craco start",
+// api key 발급 및 https 환경 구성이 필요합니다. 개발 환경 설정 시 발생하는 문제점은 채널톡을 통해 문의주세요
 ```
+
+# 👩‍💻 Team
+팀 구성 만들기
