@@ -1,62 +1,45 @@
-# Getting Started with Create React App
+![logo](https://github.com/mju-likelion/inception/assets/63037629/829282ce-7bba-45bf-8660-4a9a2cf18549)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ⏱️ 모여봐요
 
-## Available Scripts
+[모여봐요](https://gatherplz.com/)는 모임을 위한 날짜, 인원, 시간을 자동으로 취합하는 웹서비스로,
 
-In the project directory, you can run:
+친구들에게 묻고 답할 필요 없이 내 일정만 입력하여 모임의 약속 일정을 쉽게 잡을 수 있는 서비스입니다.
 
-### `yarn start`
+[모여봐요에서 약속을 만들어보세요!](https://gatherplz.com/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# 📷 어떻게 사용해요?
+![001](https://github.com/mju-likelion/inception/assets/63037629/c8f6038f-31ac-4579-93e0-9432f77b59fb)
+![002](https://github.com/mju-likelion/inception/assets/63037629/eedf3225-5a63-48a9-9835-e4a04e6c66aa)
+![003](https://github.com/mju-likelion/inception/assets/63037629/d8529642-40f1-41f3-8534-c457346bc178)
+![004](https://github.com/mju-likelion/inception/assets/63037629/ae773189-2689-495d-80aa-099ebfe77f6d)
+![005](https://github.com/mju-likelion/inception/assets/63037629/cc0d16dd-9c13-493d-a33b-d3eb91b4ab8f)
+![006](https://github.com/mju-likelion/inception/assets/63037629/5ff09917-f19f-4025-9b17-b121861ddcd9)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `yarn test`
+# 🛠️ 이런 기술을 썼어요
+## 🌏 Web
+![web](https://github.com/mju-likelion/inception/assets/63037629/f36a8d6b-e2bb-4f77-b0eb-e523bd7b428c)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-## HTTPS 설정
-
-서버 통신을 위해 https 설정이 필요합니다.
-macOS의 경우 homeBrew, Windows의 경우 choco가 필요합니다
-HTTPS 설정을 원할 경우 문의 바랍니다.
-
+# ⚙️ 어떻게 실행해요?
+## 🌏 Web
 ```shell
-# package.json의 "start:https"를 아래와 같이 설정합니다.
+// 시작 전
+api key 발급 및 https 환경 구성이 필요합니다. 개발 환경 설정 시 발생하는 문제점은 채널톡을 통해 문의주세요
 
-# macOS
-"HTTPS=true SSL_CRT_FILE=cert/cert.pem SSL_KEY_FILE=cert/cert-key.pem craco start",
+// 처음 프로젝트를 실행할 경우
+yarn install
 
-# window
-"set HTTPS=true&&set SSL_CRT_FILE=cert/cert.pem SSL_KEY_FILE=cert/cert-key.pem&&craco start",
+// 프로젝트 시작
+yarn start:https
+
+// 개발 페이지 접속
+https://local.gatherplz.com:3000/
 ```
+
+# 👩‍💻 우리가 만들었어요
+![만든이](https://github.com/mju-likelion/inception/assets/63037629/f55d58dd-9f97-490b-95ed-9d93fbff3b2d)
+<a href='https://www.instagram.com/gather_plz'>
+  <img src='https://cdn.icon-icons.com/icons2/2699/PNG/512/instagram_logo_icon_170643.png' alt='모여봐요인스타' width="180px" height="90px" />
+</a>
