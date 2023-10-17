@@ -8,55 +8,36 @@
 
 [모여봐요에서 약속을 만들어보세요!](https://gatherplz.com/)
 
-# 📷 Feature
-
-## 약속 방 생성하기
-
-이미지 일정한 크기, 비율로 만들기
-
-![약속방 생성](https://github.com/mju-likelion/inception/assets/63037629/bea7d6f1-c5b7-45f2-89b0-7ef1a9f0e5bc)
-
-## 일정 등록하기 - 날짜 선택
-
-![가용 날짜 선택](https://github.com/mju-likelion/inception/assets/63037629/9dafbdd6-3265-4fa9-9f9f-6a5fc00885af)
+# 📷 어떻게 사용해요?
+![001](https://github.com/mju-likelion/inception/assets/63037629/c8f6038f-31ac-4579-93e0-9432f77b59fb)
+![002](https://github.com/mju-likelion/inception/assets/63037629/0892b44c-5b41-4f9e-8939-ff6ae47d86ad)
+![003](https://github.com/mju-likelion/inception/assets/63037629/d8529642-40f1-41f3-8534-c457346bc178)
+![004](https://github.com/mju-likelion/inception/assets/63037629/ae773189-2689-495d-80aa-099ebfe77f6d)
+![005](https://github.com/mju-likelion/inception/assets/63037629/cc0d16dd-9c13-493d-a33b-d3eb91b4ab8f)
+![006](https://github.com/mju-likelion/inception/assets/63037629/5ff09917-f19f-4025-9b17-b121861ddcd9)
 
 
-## 일정 등록하기 - 시간 선택
+# 🛠️ 이런 기술을 썼어요
 
-![가용 시간 선택](https://github.com/mju-likelion/inception/assets/63037629/c557ab9a-e96e-4ab1-88f7-49f8266eaf1c)
-
-## 로그인
-
-![로그인](https://github.com/mju-likelion/inception/assets/63037629/e68b6c55-1930-42f9-b359-6641597ace33)
-
-## 약속방 코드 입력
-
-![약속방 코드](https://github.com/mju-likelion/inception/assets/63037629/3ba3d64b-0ba8-4c69-897f-1eabb85efe1f)
-
-## 일정 결과
-
-![일정 결과](https://github.com/mju-likelion/inception/assets/63037629/7e332dc5-b8a7-4db8-8025-d36929aed01a)
-
-
-# 🛠️ Tech Stack
-
-`React`, `TypeScript`, `StyledComponent`, `Recoil`, `Axios`, `yarn`
-
-`Google Analytics`
-
-도식화된 구조 이미지 만들기
+## 🌏 Web
+![web](https://github.com/mju-likelion/inception/assets/63037629/f36a8d6b-e2bb-4f77-b0eb-e523bd7b428c)
 
 # ⚙️ How To Start
 
 ```shell
+// 시작 전
+api key 발급 및 https 환경 구성이 필요합니다. 개발 환경 설정 시 발생하는 문제점은 채널톡을 통해 문의주세요
+
 // 처음 프로젝트를 실행할 경우
 yarn install
 
 // 프로젝트 시작
 yarn start:https
 
-// api key 발급 및 https 환경 구성이 필요합니다. 개발 환경 설정 시 발생하는 문제점은 채널톡을 통해 문의주세요
+// 개발 페이지 접속
+https://local.gatherplz.com:3000/
 ```
 
-# 👩‍💻 Team
+# 👩‍💻 소개해요
 팀 구성 만들기
+[![instagram](https://github.com/mju-likelion/inception/assets/63037629/46e91e26-a50f-4702-bac3-5ee22e99ba45)](https://www.instagram.com/gather_plz)
