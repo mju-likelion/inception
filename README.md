@@ -40,4 +40,6 @@ https://local.gatherplz.com:3000/
 
 # 👩‍💻 우리가 만들었어요
 ![만든이](https://github.com/mju-likelion/inception/assets/63037629/f55d58dd-9f97-490b-95ed-9d93fbff3b2d)
-[![instagram](https://cdn.icon-icons.com/icons2/2699/PNG/512/instagram_logo_icon_170643.png)](https://www.instagram.com/gather_plz)
+<a href='https://www.instagram.com/gather_plz'>
+  <img src='https://cdn.icon-icons.com/icons2/2699/PNG/512/instagram_logo_icon_170643.png' alt='모여봐요인스타' width="180px" height="90px" />
+</a>
