@@ -10,7 +10,7 @@
 
 # 📷 어떻게 사용해요?
 ![001](https://github.com/mju-likelion/inception/assets/63037629/c8f6038f-31ac-4579-93e0-9432f77b59fb)
-![002](https://github.com/mju-likelion/inception/assets/63037629/0892b44c-5b41-4f9e-8939-ff6ae47d86ad)
+![002](https://github.com/mju-likelion/inception/assets/63037629/eedf3225-5a63-48a9-9835-e4a04e6c66aa)
 ![003](https://github.com/mju-likelion/inception/assets/63037629/d8529642-40f1-41f3-8534-c457346bc178)
 ![004](https://github.com/mju-likelion/inception/assets/63037629/ae773189-2689-495d-80aa-099ebfe77f6d)
 ![005](https://github.com/mju-likelion/inception/assets/63037629/cc0d16dd-9c13-493d-a33b-d3eb91b4ab8f)
