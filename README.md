@@ -1,4 +1,4 @@
-![OG](https://github.com/mju-likelion/inception/assets/63037629/829282ce-7bba-45bf-8660-4a9a2cf18549)
+![logo](https://github.com/mju-likelion/inception/assets/63037629/829282ce-7bba-45bf-8660-4a9a2cf18549)
 
 # ⏱️ 모여봐요
 
@@ -18,12 +18,12 @@
 
 
 # 🛠️ 이런 기술을 썼어요
-
 ## 🌏 Web
 ![web](https://github.com/mju-likelion/inception/assets/63037629/f36a8d6b-e2bb-4f77-b0eb-e523bd7b428c)
 
-# ⚙️ How To Start
 
+# ⚙️ 어떻게 실행해요?
+## 🌏 Web
 ```shell
 // 시작 전
 api key 발급 및 https 환경 구성이 필요합니다. 개발 환경 설정 시 발생하는 문제점은 채널톡을 통해 문의주세요
@@ -38,6 +38,6 @@ yarn start:https
 https://local.gatherplz.com:3000/
 ```
 
-# 👩‍💻 소개해요
-팀 구성 만들기
+# 👩‍💻 우리가 만들었어요
+![만든이](https://github.com/mju-likelion/inception/assets/63037629/f55d58dd-9f97-490b-95ed-9d93fbff3b2d)
 [![instagram](https://cdn.icon-icons.com/icons2/2699/PNG/512/instagram_logo_icon_170643.png)](https://www.instagram.com/gather_plz)
