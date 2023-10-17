@@ -40,4 +40,4 @@ https://local.gatherplz.com:3000/
 
 # 👩‍💻 소개해요
 팀 구성 만들기
-[![instagram](https://github.com/mju-likelion/inception/assets/63037629/46e91e26-a50f-4702-bac3-5ee22e99ba45)](https://www.instagram.com/gather_plz)
+[![instagram](https://cdn.icon-icons.com/icons2/2699/PNG/512/instagram_logo_icon_170643.png)](https://www.instagram.com/gather_plz)
