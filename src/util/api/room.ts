@@ -23,16 +23,29 @@ export interface CreateRoomResponse {
 export const createRoom = async (
   params: CreateRoomRequest
 ): Promise<CreateRoomResponse | undefined> => {
-  try {
-    const res = (await Axios.post('/api/rooms', params)) as CreateRoomResponse;
-    return res;
-  } catch (e) {
-    if (e instanceof Error) {
-      window.alert('createRoom Error');
-      Sentry.captureException(`방을 생성하는데 실패했대요 ㅠㅠ ${e}`);
-      throw new Error('createRoom Error', e);
-    }
-  }
+  console.log(params);
+  const mockData: CreateRoomResponse = {
+    data: {
+      code: '',
+      createdAt: '',
+      dateOnly: false,
+      dates: '',
+      startTime: [''],
+      endTime: '',
+      updatedAt: '',
+    },
+  };
+  return await mockData;
+  // try {
+  //   const res = (await Axios.post('/api/rooms', params)) as CreateRoomResponse;
+  //   return res;
+  // } catch (e) {
+  //   if (e instanceof Error) {
+  //     window.alert('createRoom Error');
+  //     Sentry.captureException(`방을 생성하는데 실패했대요 ㅠㅠ ${e}`);
+  //     throw new Error('createRoom Error', e);
+  //   }
+  // }
 };
 
 export interface ViewRoomRequest {
@@ -52,21 +65,32 @@ export interface ViewRoomResponse {
 export const viewRoom = async ({
   id,
 }: ViewRoomRequest): Promise<ViewRoomResponse | undefined> => {
-  try {
-    if (!id) {
-      Sentry.captureException('id is null or empty value');
-      window.alert('id is null or empty value');
-      throw Error('id is null or empty value');
-    }
+  console.log(id);
+  const mockData: ViewRoomResponse = {
+    code: '',
+    dates: [''],
+    dateOnly: false,
+    startTime: '',
+    endTime: '',
+    createdAt: '',
+    updatedAt: '',
+  };
+  return await mockData;
+  // try {
+  //   if (!id) {
+  //     Sentry.captureException('id is null or empty value');
+  //     window.alert('id is null or empty value');
+  //     throw Error('id is null or empty value');
+  //   }
 
-    const res = await Axios.get(`/api/rooms/${id}`);
-    return res.data as ViewRoomResponse;
-  } catch (e) {
-    if (e instanceof Error) {
-      Sentry.captureException(`방을 조회(입장)하는데 실패했대요 ㅠㅠ ${e}`);
-      throw new Error('viewRoom Error', e);
-    }
-  }
+  //   const res = await Axios.get(`/api/rooms/${id}`);
+  //   return res.data as ViewRoomResponse;
+  // } catch (e) {
+  //   if (e instanceof Error) {
+  //     Sentry.captureException(`방을 조회(입장)하는데 실패했대요 ㅠㅠ ${e}`);
+  //     throw new Error('viewRoom Error', e);
+  //   }
+  // }
 };
 
 export interface ResultRoomRequest {
@@ -85,16 +109,31 @@ export interface ResultRoomResponse {
   votingUsers: string[];
 }
 
-export const resultRoom = async ({ id }: ResultRoomRequest) => {
-  try {
-    const res = await Axios.get(`/api/rooms/${id}/result`);
-    return res.data as ResultRoomResponse;
-  } catch (e) {
-    if (e instanceof Error) {
-      window.alert('result view error');
-      Sentry.captureException(`결과를 조회하는데 실패했대요 ㅠㅠ ${e}`);
-    }
-  }
+export const resultRoom = async ({
+  id,
+}: ResultRoomRequest): Promise<ResultRoomResponse | undefined> => {
+  console.log(id);
+  const mockData: ResultRoomResponse = {
+    code: '',
+    dateOnly: false,
+    dates: [''],
+    startTime: '',
+    endTime: '',
+    createdAt: '',
+    updatedAt: '',
+    enableTimes: { '09:00': 1 },
+    votingUsers: [''],
+  };
+  return await mockData;
+  // try {
+  //   const res = await Axios.get(`/api/rooms/${id}/result`);
+  //   return res.data as ResultRoomResponse;
+  // } catch (e) {
+  //   if (e instanceof Error) {
+  //     window.alert('result view error');
+  //     Sentry.captureException(`결과를 조회하는데 실패했대요 ㅠㅠ ${e}`);
+  //   }
+  // }
 };
 
 export interface ResultRoomByDateRequest {
@@ -115,15 +154,27 @@ export interface ResultRoomByDateResponse {
 export const resultRoomByDate = async ({
   id,
   date,
-}: ResultRoomByDateRequest) => {
-  try {
-    const res = await Axios.get(`/api/rooms/${id}/result/${date}`);
-    return res.data as ResultRoomByDateResponse;
-  } catch (e) {
-    if (e instanceof Error) {
-      Sentry.captureException(e);
-      window.alert('resultRoomByDate Error');
-      throw new Error('resultRoomByDate Error', e);
-    }
-  }
+}: ResultRoomByDateRequest): Promise<ResultRoomByDateResponse | undefined> => {
+  console.log(id, date);
+  const mockData: ResultRoomByDateResponse = {
+    code: '',
+    selectedDate: '',
+    dateOnly: false,
+    startTime: '',
+    endTime: '',
+    votingUsers: [''],
+    everyoneSelectedTimes: [''],
+  };
+  return await mockData;
+
+  // try {
+  //   const res = await Axios.get(`/api/rooms/${id}/result/${date}`);
+  //   return res.data as ResultRoomByDateResponse;
+  // } catch (e) {
+  //   if (e instanceof Error) {
+  //     Sentry.captureException(e);
+  //     window.alert('resultRoomByDate Error');
+  //     throw new Error('resultRoomByDate Error', e);
+  //   }
+  // }
 };

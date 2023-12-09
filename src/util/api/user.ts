@@ -18,19 +18,27 @@ export interface RegisterScheduleResponse {
 export const registerSchedule = async (
   userSchedule: RegisterScheduleRequest
 ): Promise<RegisterScheduleResponse | undefined> => {
-  try {
-    const token = (await Axios.post(
-      '/api/users',
-      userSchedule
-    )) as RegisterScheduleResponse;
-    return token;
-  } catch (e) {
-    if (e instanceof Error) {
-      Sentry.captureException(`약속을 등록하는데 실패했대요 ㅠㅠ ${e}`);
-      window.alert('registerSchedule Error');
-      throw new Error('registerSchedule Error', e);
-    }
-  }
+  console.log(userSchedule);
+  const mockData: RegisterScheduleResponse = {
+    data: {
+      accessToken: '',
+    },
+  };
+  return await mockData;
+
+  // try {
+  //   const token = (await Axios.post(
+  //     '/api/users',
+  //     userSchedule
+  //   )) as RegisterScheduleResponse;
+  //   return token;
+  // } catch (e) {
+  //   if (e instanceof Error) {
+  //     Sentry.captureException(`약속을 등록하는데 실패했대요 ㅠㅠ ${e}`);
+  //     window.alert('registerSchedule Error');
+  //     throw new Error('registerSchedule Error', e);
+  //   }
+  // }
 };
 
 export interface ModifyScheduleRequest {
@@ -52,15 +60,27 @@ export const modifySchedule = async (
   id: string,
   modifyData: ModifyScheduleRequest
 ): Promise<ModifyScheduleResponse | undefined> => {
-  try {
-    const res = (await Axios.patch(`/api/users/${id}`, modifyData, {
-      headers: { Authorization: `Bearer ${token}` },
-    })) as ModifyScheduleResponse;
-    return res;
-  } catch (e) {
-    if (e instanceof Error) {
-      window.alert('modify schedule Error');
-      Sentry.captureException(`일정을 수정하는데 실패했대요 ㅠㅠ ${e}`);
-    }
-  }
+  console.log(token, id, modifyData);
+  const mockData: ModifyScheduleResponse = {
+    id: '',
+    username: '',
+    password: '',
+    enableTimes: [''],
+    roomId: '',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+  return await mockData;
+
+  // try {
+  //   const res = (await Axios.patch(`/api/users/${id}`, modifyData, {
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   })) as ModifyScheduleResponse;
+  //   return res;
+  // } catch (e) {
+  //   if (e instanceof Error) {
+  //     window.alert('modify schedule Error');
+  //     Sentry.captureException(`일정을 수정하는데 실패했대요 ㅠㅠ ${e}`);
+  //   }
+  // }
 };
