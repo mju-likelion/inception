@@ -195,10 +195,6 @@ const getCountOfMostSelectedDate = (dateOfResult: SelectedDate[]) => {
     date.count >= maxCount && (maxCount = date.count);
   }
 
-  // const mostSelectedDates =
-  //   dateOfResult.filter((item) => item.count === maxCount) ?? [];
-
-  // return mostSelectedDates;
   return maxCount;
 };
 
