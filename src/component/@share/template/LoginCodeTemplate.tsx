@@ -31,10 +31,18 @@ export const LoginCodeTemplate = ({ buttonClick }: Props) => {
       ? setIsButtonInactive(false)
       : setIsButtonInactive(true);
   };
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    buttonClick();
+
+  const activeEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (
+      event.key === 'Enter' &&
+      nicknameValue.length >= 1 &&
+      passwordValue.length >= 1
+    ) {
+      event.preventDefault();
+      buttonClick();
+    }
   };
+
   const tabItems: TabItem[] = [
     {
       id: 'default',
@@ -52,33 +60,33 @@ export const LoginCodeTemplate = ({ buttonClick }: Props) => {
     <>
       <TabBar onClick={onClick} tabItems={tabItems} />
       <WrapContents>
-        <form onSubmit={handleSubmit}>
-          <WrapUpperContents>
-            <TitleBox content="생성한 약속방에서 입력한 닉네임과 비밀번호를 입력해주세요" />
+        <WrapUpperContents>
+          <TitleBox content="생성한 약속방에서 입력한 닉네임과 비밀번호를 입력해주세요" />
 
-            <WrapInput>
-              <Input
-                type="text"
-                placeholder="닉네임"
-                onKeyUp={activeEvent}
-                onChange={onChangeNickname}
-                value={nicknameValue}
-              />
-              <Input
-                type="password"
-                placeholder="비밀번호"
-                onKeyUp={activeEvent}
-                onChange={onChangePassword}
-                value={passwordValue}
-              />
-            </WrapInput>
-          </WrapUpperContents>
-          <WrapButton>
-            <ButtonLarge isDisabled={isButtonInactive} onClick={buttonClick}>
-              완료
-            </ButtonLarge>
-          </WrapButton>
-        </form>
+          <WrapInput>
+            <Input
+              type="text"
+              placeholder="닉네임"
+              onKeyUp={activeEvent}
+              onKeyDown={activeEnter}
+              onChange={onChangeNickname}
+              value={nicknameValue}
+            />
+            <Input
+              type="password"
+              placeholder="비밀번호"
+              onKeyUp={activeEvent}
+              onKeyDown={activeEnter}
+              onChange={onChangePassword}
+              value={passwordValue}
+            />
+          </WrapInput>
+        </WrapUpperContents>
+        <WrapButton>
+          <ButtonLarge isDisabled={isButtonInactive} onClick={buttonClick}>
+            완료
+          </ButtonLarge>
+        </WrapButton>
       </WrapContents>
     </>
   );
