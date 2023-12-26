@@ -41,7 +41,7 @@ export const pages = createBrowserRouter([
         element: <AppointmentStepPage />,
       },
       {
-        path: 'result', // ex) localhost:3000/result
+        path: 'result', // ex) localhost:3000/result?code=ABCDEF
         element: <ResultPage />,
       },
       {

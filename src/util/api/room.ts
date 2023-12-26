@@ -99,19 +99,8 @@ export interface ResultRoomResponse {
 export const resultRoom = async ({
   id,
 }: ResultRoomRequest): Promise<ResultRoomResponse | undefined> => {
-  console.log(id);
-  const mockData: ResultRoomResponse = {
-    code: '',
-    dateOnly: false,
-    dates: [''],
-    startTime: '',
-    endTime: '',
-    createdAt: '',
-    updatedAt: '',
-    enableTimes: { '09:00': 1 },
-    votingUsers: [''],
-  };
-  return await mockData;
+  const mockData = mockupBackend.getAppointmentResult({ id });
+  return (await mockData) as ResultRoomResponse;
   // try {
   //   const res = await Axios.get(`/api/rooms/${id}/result`);
   //   return res.data as ResultRoomResponse;
@@ -142,17 +131,8 @@ export const resultRoomByDate = async ({
   id,
   date,
 }: ResultRoomByDateRequest): Promise<ResultRoomByDateResponse | undefined> => {
-  console.log(id, date);
-  const mockData: ResultRoomByDateResponse = {
-    code: '',
-    selectedDate: '',
-    dateOnly: false,
-    startTime: '',
-    endTime: '',
-    votingUsers: [''],
-    everyoneSelectedTimes: [''],
-  };
-  return await mockData;
+  const mockData = mockupBackend.getAppointmentResult({ id, date });
+  return (await mockData) as ResultRoomByDateResponse;
 
   // try {
   //   const res = await Axios.get(`/api/rooms/${id}/result/${date}`);

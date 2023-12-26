@@ -3,6 +3,9 @@ import {
   CreateRoomResponse,
   GetRoomDataRequest,
   GetRoomDataResponse,
+  ResultRoomByDateResponse,
+  ResultRoomRequest,
+  ResultRoomResponse,
 } from './room';
 
 export * from './room';
@@ -12,8 +15,8 @@ interface Appointment {
   code: string; // "X97JID"
   dateOnly: boolean;
   dates: string[]; //[ "2023-08-31", "2023-09-01"]
-  startTime?: string; // "09:00"
-  endTime?: string; // "15:00"
+  startTime: string | undefined; // "09:00"
+  endTime: string | undefined; // "15:00"
   votingUsers: string[]; // ["유저1", "유저2"]
   enableTimes: { [key: string]: number }; // "2023-08-31": 3 || "2023-07-20 15:00": 5,
   createdAt: string;
@@ -64,6 +67,7 @@ export const mockupBackend = {
       },
     };
   },
+
   getRoomData: (param: GetRoomDataRequest): GetRoomDataResponse => {
     const room = (window as unknown as Mockup).appointment[param.id];
     const response: GetRoomDataResponse = room;
@@ -73,6 +77,48 @@ export const mockupBackend = {
     if (!response) {
       throw new Error(`${param.id}에 해당하는 방 정보가 없습니다.`);
     }
+
+    return response;
+  },
+
+  getAppointmentResult: (param: {
+    id: string;
+    date?: string;
+  }): ResultRoomResponse | ResultRoomByDateResponse => {
+    const appointment = (window as unknown as Mockup).appointment[param.id];
+    let response: ResultRoomResponse | ResultRoomByDateResponse;
+
+    if (!appointment) {
+      throw new Error(`${param.id}에 해당하는 약속 정보가 없습니다.`);
+    }
+
+    /** date 없으면 약속방 결과 조회 */
+    if (!param.date) {
+      response = appointment;
+      console.log('getAppointmentResult', response);
+
+      return response;
+    }
+
+    /** 약속방 내 특정 날짜 결과 조회 */
+    const keys = Object.keys(appointment.enableTimes).filter(
+      (time) => time.split(' ')[0] === param.date
+    );
+    const everyoneSelectedTimes = keys.filter(
+      (key) => appointment.enableTimes[key] === appointment.votingUsers.length
+    );
+
+    response = {
+      code: appointment.code,
+      selectedDate: param.date,
+      dateOnly: appointment.dateOnly,
+      votingUsers: appointment.votingUsers,
+      startTime: appointment.startTime,
+      endTime: appointment.endTime,
+      everyoneSelectedTimes: everyoneSelectedTimes,
+    };
+
+    console.log('getAppointmentResult', response);
 
     return response;
   },
