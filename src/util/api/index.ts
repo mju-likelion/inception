@@ -26,9 +26,13 @@ interface Mockup extends Window {
   user: { [key: string]: User };
 }
 
+(window as any).appointment = {};
+(window as any).user = {};
+
 export const mockupBackend = {
   createRoom: (param: CreateRoomRequest): CreateRoomResponse => {
-    const code = Math.random().toString(16).substring(2, 6);
+    console.log('createRoom', param);
+    const code = Math.random().toString(16).substring(2, 8).toUpperCase();
     const appointment: Appointment = {
       code,
       dates: param.dates,

@@ -9,10 +9,10 @@ import {
 import { RedirectPage } from '@/pages';
 import { TAB_ITEMS } from '@/pages/data';
 import {
-  viewRoom,
-  ViewRoomResponse,
+  GetRoomDataResponse,
   registerSchedule,
   modifySchedule,
+  getRoomData,
 } from '@/util/api';
 import { useRecoilValue } from 'recoil';
 import {
@@ -32,7 +32,7 @@ export const AppointmentStepPage = () => {
   const step = searchParams.get('step');
   const navigate = useNavigate();
   const params = useParams();
-  const [roomInfo, setRoomInfo] = useState<ViewRoomResponse>();
+  const [roomInfo, setRoomInfo] = useState<GetRoomDataResponse>();
   const token = localStorage.getItem((params.code ?? '') + 'token');
   const [, setIsToastOpened] = useRecoilState(toastState);
   const [, setToastType] = useRecoilState(currentToastType);
@@ -82,7 +82,7 @@ export const AppointmentStepPage = () => {
 
   useEffect(() => {
     (async () => {
-      const res = await viewRoom({ id: params.code ?? '' });
+      const res = await getRoomData({ id: params.code ?? '' });
       setRoomInfo(res);
 
       window.addEventListener('beforeunload', preventRefresh);

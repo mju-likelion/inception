@@ -44,11 +44,11 @@ export const createRoom = async (
   // }
 };
 
-export interface ViewRoomRequest {
+export interface GetRoomDataRequest {
   id: string;
 }
 
-export interface ViewRoomResponse {
+export interface GetRoomDataResponse {
   code: string; // 'NXGC2U'
   dates: string[]; // ['2023-07-07', '2023-07-08']
   dateOnly: boolean; // true: 날짜, false: 날짜+시간
@@ -58,11 +58,11 @@ export interface ViewRoomResponse {
   updatedAt: string; // '2023-07-18T17:42:57.324Z'
 }
 
-export const viewRoom = async ({
+export const getRoomData = async ({
   id,
-}: ViewRoomRequest): Promise<ViewRoomResponse | undefined> => {
+}: GetRoomDataRequest): Promise<GetRoomDataResponse | undefined> => {
   console.log(id);
-  const mockData: ViewRoomResponse = {
+  const mockData: GetRoomDataResponse = {
     code: '',
     dates: [''],
     dateOnly: false,
