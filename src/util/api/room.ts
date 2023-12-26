@@ -11,31 +11,33 @@ export interface CreateRoomRequest {
 export interface CreateRoomResponse {
   data: {
     code: string;
-    dates: string;
+    dates: string[];
     dateOnly: boolean;
-    startTime: string[] | undefined;
+    startTime: string | undefined;
     endTime: string | undefined;
     createdAt: string;
     updatedAt: string;
   };
 }
 
+/** 방 신규 생성 api */
 export const createRoom = async (
   params: CreateRoomRequest
 ): Promise<CreateRoomResponse | undefined> => {
-  console.log(params);
-  const mockData: CreateRoomResponse = {
+  console.log('createRoom', params);
+  /** createRoom의 응답은 code를 제외하고 다른 데이터는 요청 데이터를 재활용한다. */
+  const 방생성_목업: CreateRoomResponse = {
     data: {
-      code: '',
-      createdAt: '',
-      dateOnly: false,
-      dates: '',
-      startTime: [''],
-      endTime: '',
-      updatedAt: '',
+      code: 'XXJIRH',
+      dateOnly: params.dateOnly,
+      dates: params.dates,
+      startTime: params.startTime,
+      endTime: params.endTime,
+      createdAt: '2023-12-26T20:01:00.277Z',
+      updatedAt: '2023-12-26T20:01:00.277Z',
     },
   };
-  return await mockData;
+  return await 방생성_목업;
   // try {
   //   const res = (await Axios.post('/api/rooms', params)) as CreateRoomResponse;
   //   return res;
