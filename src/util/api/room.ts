@@ -61,16 +61,7 @@ export interface GetRoomDataResponse {
 export const getRoomData = async ({
   id,
 }: GetRoomDataRequest): Promise<GetRoomDataResponse | undefined> => {
-  console.log(id);
-  const mockData: GetRoomDataResponse = {
-    code: '',
-    dates: [''],
-    dateOnly: false,
-    startTime: '',
-    endTime: '',
-    createdAt: '',
-    updatedAt: '',
-  };
+  const mockData = mockupBackend.getRoomData({ id });
   return await mockData;
   // try {
   //   if (!id) {

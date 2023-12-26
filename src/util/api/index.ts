@@ -1,4 +1,9 @@
-import { CreateRoomRequest, CreateRoomResponse } from './room';
+import {
+  CreateRoomRequest,
+  CreateRoomResponse,
+  GetRoomDataRequest,
+  GetRoomDataResponse,
+} from './room';
 
 export * from './room';
 export * from './user';
@@ -58,5 +63,17 @@ export const mockupBackend = {
         updatedAt: appointment.updatedAt,
       },
     };
+  },
+  getRoomData: (param: GetRoomDataRequest): GetRoomDataResponse => {
+    const room = (window as unknown as Mockup).appointment[param.id];
+    const response: GetRoomDataResponse = room;
+
+    console.log('getRoomData', room);
+
+    if (!response) {
+      throw new Error(`${param.id}에 해당하는 방 정보가 없습니다.`);
+    }
+
+    return response;
   },
 };
