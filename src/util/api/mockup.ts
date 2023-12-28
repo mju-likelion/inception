@@ -16,7 +16,7 @@ interface Appointment {
   startTime: string | undefined; // "09:00"
   endTime: string | undefined; // "15:00"
   votingUsers: string[]; // ["유저1", "유저2"]
-  enableTimes: { [key: string]: number }; // "2023-08-31": 3 || "2023-07-20 15:00": 5,
+  enableTimes: { [key: string]: number }; // "2023-08-31": 3,
   createdAt: string;
   updatedAt: string;
 }
@@ -107,15 +107,16 @@ export const mockupBackend = {
       MOCKUP_KEY.Appointment
     )?.[param.id];
 
+    const storedUsers: { [key: string]: User } = localStorageUtil.getData(
+      MOCKUP_KEY.User
+    );
+
     let response: ResultRoomResponse | ResultRoomByDateResponse;
 
     if (!appointment) {
       throw new Error(`${param.id}에 해당하는 약속 정보가 없습니다.`);
     }
 
-    const storedUsers: { [key: string]: User } = localStorageUtil.getData(
-      MOCKUP_KEY.User
-    );
     /** 투표받은 날짜 집계 */
     const enableTimes = appointment.votingUsers.reduce((map, value) => {
       const mergeDate = storedUsers[`${param.id}_${value}`].dates.reduce(
@@ -128,7 +129,6 @@ export const mockupBackend = {
         },
         [] as string[]
       );
-      console.log(mergeDate);
 
       mergeDate.forEach((value) => {
         if (map[value]) {
@@ -150,11 +150,29 @@ export const mockupBackend = {
     }
 
     /** 약속방 내 특정 날짜 결과 조회 */
-    const keys = Object.keys(appointment.enableTimes).filter(
-      (time) => time.split(' ')[0] === param.date
+    const countSelectedTimes = appointment.votingUsers.reduce(
+      (dateTimes, user) => {
+        const dates = storedUsers[`${param.id}_${user}`].dates;
+        dates.forEach((dateTime) => {
+          if (dateTimes[dateTime]) {
+            dateTimes[dateTime] += 1;
+          } else {
+            dateTimes[dateTime] = 1;
+          }
+        });
+        return dateTimes;
+      },
+      {} as { [key: string]: number }
     );
-    const everyoneSelectedTimes = keys.filter(
-      (key) => appointment.enableTimes[key] === appointment.votingUsers.length
+
+    const everyoneSelectedTimes = Object.entries(countSelectedTimes).reduce(
+      (arr, [key, value]) => {
+        if (value === appointment.votingUsers.length) {
+          return arr.concat(key.split(' ')[1]);
+        }
+        return arr;
+      },
+      [] as string[]
     );
 
     response = {
