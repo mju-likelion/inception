@@ -169,10 +169,11 @@ export const mockupBackend = {
     }
     localStorageUtil.setData(MOCKUP_KEY.User, storedUser);
 
-    // 약속 투표유저에 유저 추가
+    // 약속 투표자에 유저 추가
     const storedAppointment: { [key: string]: Appointment } =
       localStorageUtil.getData(MOCKUP_KEY.Appointment);
     storedAppointment[newUser.roomCode].votingUsers.push(newUser.name);
+    localStorageUtil.setData(MOCKUP_KEY.Appointment, storedAppointment);
 
     const response: RegisterScheduleResponse = {
       data: { accessToken: `${newUser.id}` },
