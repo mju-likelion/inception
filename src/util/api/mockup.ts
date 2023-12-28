@@ -116,7 +116,23 @@ export const mockupBackend = {
 
     /** date 없으면 약속방 결과 조회 */
     if (!param.date) {
-      response = appointment;
+      const storedUsers: { [key: string]: User } = localStorageUtil.getData(
+        MOCKUP_KEY.User
+      );
+
+      /** 투표받은 날짜 집계 */
+      const enableTimes = appointment.votingUsers.reduce((map, value) => {
+        storedUsers[`${param.id}_${value}`].dates.forEach((value) => {
+          if (map[value]) {
+            map[value] += 1;
+          } else {
+            map[value] = 1;
+          }
+        });
+        return map;
+      }, {} as { [key: string]: number });
+
+      response = { ...appointment, enableTimes };
       console.log('getAppointmentResult', response);
 
       return response;
