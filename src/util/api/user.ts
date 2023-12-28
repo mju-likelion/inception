@@ -1,5 +1,6 @@
 import { Axios } from '@/util/axios';
 import * as Sentry from '@sentry/react';
+import { mockupBackend } from './mockup';
 
 export interface RegisterScheduleRequest {
   roomCode: string;
@@ -18,12 +19,9 @@ export interface RegisterScheduleResponse {
 export const registerSchedule = async (
   userSchedule: RegisterScheduleRequest
 ): Promise<RegisterScheduleResponse | undefined> => {
-  console.log(userSchedule);
-  const mockData: RegisterScheduleResponse = {
-    data: {
-      accessToken: '',
-    },
-  };
+  const mockData: RegisterScheduleResponse =
+    mockupBackend.registerSchedule(userSchedule);
+
   return await mockData;
 
   // try {

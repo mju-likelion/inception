@@ -6,6 +6,7 @@ import {
   ResultRoomByDateResponse,
   ResultRoomResponse,
 } from './room';
+import { RegisterScheduleRequest, RegisterScheduleResponse } from './user';
 
 /** 약속방 정보 */
 interface Appointment {
@@ -22,9 +23,11 @@ interface Appointment {
 
 /** 유저 정보 */
 interface User {
-  roomCodes: string[]; // ["A12345", "B12345"]
+  id: string; // roomCode_name
+  roomCode: string; // "A12345"
   name: string;
   password: string;
+  dates: string[];
 }
 
 const enum MOCKUP_KEY {
@@ -96,13 +99,15 @@ export const mockupBackend = {
     return response;
   },
 
+  /** @TODO 집계 관련 함수 제작하기 */
   getAppointmentResult: (param: {
     id: string;
     date?: string;
   }): ResultRoomResponse | ResultRoomByDateResponse => {
-    const appointment = localStorageUtil.getData(MOCKUP_KEY.Appointment)?.[
-      param.id
-    ];
+    const appointment: Appointment = localStorageUtil.getData(
+      MOCKUP_KEY.Appointment
+    )?.[param.id];
+
     let response: ResultRoomResponse | ResultRoomByDateResponse;
 
     if (!appointment) {
@@ -136,6 +141,42 @@ export const mockupBackend = {
     };
 
     console.log('getAppointmentResult', response);
+
+    return response;
+  },
+
+  registerSchedule: (
+    param: RegisterScheduleRequest
+  ): RegisterScheduleResponse => {
+    console.log(param);
+
+    const newUser: User = {
+      id: `${param.roomCode}_${param.username}`,
+      name: param.username,
+      password: param.password,
+      roomCode: param.roomCode,
+      dates: param.dates,
+    };
+
+    // user등록
+    let storedUser: { [key: string]: User } = localStorageUtil.getData(
+      MOCKUP_KEY.User
+    );
+    if (storedUser) {
+      storedUser[newUser.id] = newUser;
+    } else {
+      storedUser = { [newUser.id]: newUser };
+    }
+    localStorageUtil.setData(MOCKUP_KEY.User, storedUser);
+
+    // 약속 투표유저에 유저 추가
+    const storedAppointment: { [key: string]: Appointment } =
+      localStorageUtil.getData(MOCKUP_KEY.Appointment);
+    storedAppointment[newUser.roomCode].votingUsers.push(newUser.name);
+
+    const response: RegisterScheduleResponse = {
+      data: { accessToken: `${newUser.id}` },
+    };
 
     return response;
   },

@@ -82,8 +82,6 @@ export const LoginMasterTemplate = ({
       });
     };
 
-  // const onClick = (tab: string) => {}; 누가 작성했는지는 모르겠지만, 우선 주석 처리 해놓겠숩니당
-
   return (
     <WrapContents>
       <WrapUpperContents>
