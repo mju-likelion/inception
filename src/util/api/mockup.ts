@@ -99,7 +99,6 @@ export const mockupBackend = {
     return response;
   },
 
-  /** @TODO 집계 관련 함수 제작하기 */
   getAppointmentResult: (param: {
     id: string;
     date?: string;
@@ -114,27 +113,39 @@ export const mockupBackend = {
       throw new Error(`${param.id}에 해당하는 약속 정보가 없습니다.`);
     }
 
+    const storedUsers: { [key: string]: User } = localStorageUtil.getData(
+      MOCKUP_KEY.User
+    );
+    /** 투표받은 날짜 집계 */
+    const enableTimes = appointment.votingUsers.reduce((map, value) => {
+      const mergeDate = storedUsers[`${param.id}_${value}`].dates.reduce(
+        (arr, dateTime) => {
+          const date = dateTime.split(' ')[0];
+          if (arr.includes(date)) {
+            return arr;
+          }
+          return arr.concat(date);
+        },
+        [] as string[]
+      );
+      console.log(mergeDate);
+
+      mergeDate.forEach((value) => {
+        if (map[value]) {
+          map[value] += 1;
+        } else {
+          map[value] = 1;
+        }
+      });
+      return map;
+    }, {} as { [key: string]: number });
+
+    appointment.enableTimes = enableTimes;
+
     /** date 없으면 약속방 결과 조회 */
     if (!param.date) {
-      const storedUsers: { [key: string]: User } = localStorageUtil.getData(
-        MOCKUP_KEY.User
-      );
-
-      /** 투표받은 날짜 집계 */
-      const enableTimes = appointment.votingUsers.reduce((map, value) => {
-        storedUsers[`${param.id}_${value}`].dates.forEach((value) => {
-          if (map[value]) {
-            map[value] += 1;
-          } else {
-            map[value] = 1;
-          }
-        });
-        return map;
-      }, {} as { [key: string]: number });
-
-      response = { ...appointment, enableTimes };
+      response = appointment;
       console.log('getAppointmentResult', response);
-
       return response;
     }
 
