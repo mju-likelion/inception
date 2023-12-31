@@ -40,6 +40,8 @@ export const registerSchedule = async (
 };
 
 export interface ModifyScheduleRequest {
+  token: string;
+  id: string;
   dates: string[]; // ["2023-07-20 15:00", "2023-07-21 15:00"]
 }
 
@@ -54,20 +56,9 @@ export interface ModifyScheduleResponse {
 }
 
 export const modifySchedule = async (
-  token: string,
-  id: string,
-  modifyData: ModifyScheduleRequest
+  param: ModifyScheduleRequest
 ): Promise<ModifyScheduleResponse | undefined> => {
-  console.log(token, id, modifyData);
-  const mockData: ModifyScheduleResponse = {
-    id: '',
-    username: '',
-    password: '',
-    enableTimes: [''],
-    roomId: '',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
+  const mockData: ModifyScheduleResponse = mockupBackend.modifySchedule(param);
   return await mockData;
 
   // try {

@@ -6,7 +6,12 @@ import {
   ResultRoomByDateResponse,
   ResultRoomResponse,
 } from './room';
-import { RegisterScheduleRequest, RegisterScheduleResponse } from './user';
+import {
+  ModifyScheduleRequest,
+  ModifyScheduleResponse,
+  RegisterScheduleRequest,
+  RegisterScheduleResponse,
+} from './user';
 
 /** 약속방 정보 */
 interface Appointment {
@@ -222,6 +227,20 @@ export const mockupBackend = {
 
     const response: RegisterScheduleResponse = {
       data: { accessToken: `${newUser.id}` },
+    };
+
+    return response;
+  },
+
+  modifySchedule: (param: ModifyScheduleRequest): ModifyScheduleResponse => {
+    const response: ModifyScheduleResponse = {
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      enableTimes: [''],
+      id: '',
+      password: '',
+      roomId: '',
+      username: '',
     };
 
     return response;
