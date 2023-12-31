@@ -40,7 +40,7 @@ export const registerSchedule = async (
 };
 
 export interface ModifyScheduleRequest {
-  token: string;
+  token: string; // `${roomId}token${accessToken}`
   id: string;
   dates: string[]; // ["2023-07-20 15:00", "2023-07-21 15:00"]
 }
