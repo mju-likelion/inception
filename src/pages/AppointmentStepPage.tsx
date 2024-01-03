@@ -120,7 +120,9 @@ export const AppointmentStepPage = () => {
   };
 
   const modifySceduleByToken = async (token: string) => {
-    const res = await modifySchedule(token, params.code ?? '', {
+    const res = await modifySchedule({
+      token: token,
+      id: params.code ?? '',
       dates: selectedDates,
     });
 

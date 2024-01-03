@@ -1,3 +1,4 @@
+import { uniqueId } from 'lodash';
 import {
   CreateRoomRequest,
   CreateRoomResponse,
@@ -6,7 +7,12 @@ import {
   ResultRoomByDateResponse,
   ResultRoomResponse,
 } from './room';
-import { RegisterScheduleRequest, RegisterScheduleResponse } from './user';
+import {
+  ModifyScheduleRequest,
+  ModifyScheduleResponse,
+  RegisterScheduleRequest,
+  RegisterScheduleResponse,
+} from './user';
 
 /** 약속방 정보 */
 interface Appointment {
@@ -28,6 +34,7 @@ interface User {
   name: string;
   password: string;
   dates: string[];
+  token: string;
 }
 
 const enum MOCKUP_KEY {
@@ -195,12 +202,14 @@ export const mockupBackend = {
   ): RegisterScheduleResponse => {
     console.log(param);
 
+    const userId = `${param.roomCode}_${param.username}`;
     const newUser: User = {
-      id: `${param.roomCode}_${param.username}`,
+      id: userId,
       name: param.username,
       password: param.password,
       roomCode: param.roomCode,
       dates: param.dates,
+      token: userId,
     };
 
     // user등록
@@ -221,9 +230,63 @@ export const mockupBackend = {
     localStorageUtil.setData(MOCKUP_KEY.Appointment, storedAppointment);
 
     const response: RegisterScheduleResponse = {
-      data: { accessToken: `${newUser.id}` },
+      data: { accessToken: userId },
     };
 
+    return response;
+  },
+
+  modifySchedule: (param: ModifyScheduleRequest): ModifyScheduleResponse => {
+    const storedUser: { [key: string]: User } = localStorageUtil.getData(
+      MOCKUP_KEY.User
+    );
+
+    const findedUser = Object.values(storedUser).find(
+      (user) => user.token === param.token
+    );
+
+    if (!findedUser) {
+      throw Error(`유저를 찾을 수 없습니다.`);
+    }
+
+    // user 업데이트
+    findedUser.dates = param.dates;
+    storedUser[findedUser.id] = findedUser;
+    localStorageUtil.setData(MOCKUP_KEY.User, storedUser);
+
+    // 방 약속 날짜 업데이트
+    const storedAppointment = localStorageUtil.getData(MOCKUP_KEY.Appointment);
+    const 약속방에_있는_유저_리스트 = Object.values(storedUser).filter(
+      (user) => user.roomCode === param.id
+    );
+    const updatedAppointmentDates = 약속방에_있는_유저_리스트.reduce(
+      (mapper, user) => {
+        user.dates.forEach((date) => {
+          if (!mapper[date.split(' ')[0]]) {
+            mapper[date.split(' ')[0]] = true;
+          }
+        });
+        return mapper;
+      },
+      {} as { [key: string]: boolean }
+    );
+    (storedAppointment[findedUser.roomCode] as Appointment).dates = Object.keys(
+      updatedAppointmentDates
+    );
+    console.log(updatedAppointmentDates);
+
+    /** 현재 reponse는 쓰지 않고 있다. */
+    const response: ModifyScheduleResponse = {
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      enableTimes: findedUser.dates,
+      id: findedUser.id,
+      password: findedUser.password,
+      roomId: findedUser.roomCode,
+      username: findedUser.name,
+    };
+
+    console.log(response);
     return response;
   },
 };
