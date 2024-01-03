@@ -1,7 +1,7 @@
 import { TimeBox } from '@/component/timeBlock/template';
-import { Information, TitleBox } from '@/component/@share/molecules';
+import { Information, TitleBox } from '@/component/uikit/molecules';
 import calendar from '@/assets/images/Calendar.svg';
-import { ButtonLarge, LoadingIcon } from '@/component/@share';
+import { ButtonLarge, LoadingIcon } from '@/component/uikit';
 import { styled } from 'styled-components';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';

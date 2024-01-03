@@ -1,6 +1,6 @@
 import { Calendar } from '@/component';
-import { ButtonLarge, LoadingIcon, ButtonSmall } from '@/component/@share';
-import { Information, ProgressBar } from '@/component/@share/molecules';
+import { ButtonLarge, LoadingIcon, ButtonSmall } from '@/component/uikit';
+import { Information, ProgressBar } from '@/component/uikit/molecules';
 import { styled } from 'styled-components';
 import CalendarIcon from '@/assets/images/Calendar.svg';
 import { getMaxDate, getMinDate } from '@/util';

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Information, TitleBox } from '@/component/@share/molecules';
+import { Information, TitleBox } from '@/component/uikit/molecules';
 import { Calendar } from '@/component';
-import { ButtonSmall, LoadingIcon, TabBar, Toast } from '@/component/@share';
+import { ButtonSmall, LoadingIcon, TabBar, Toast } from '@/component/uikit';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
@@ -13,7 +13,7 @@ import { useRecoilState } from 'recoil';
 import { resultRoom, resultRoomByDate } from '@/util/api';
 import { appointmentResultData } from '@/store/atoms/Request';
 import { TITLE, useResultTimeTitle, useResultTitle } from '@/hooks';
-import { Modal } from '@/component/@share/organisms/Modal';
+import { Modal } from '@/component/uikit/organisms/Modal';
 import { useGaApi } from '@/hooks/useGA';
 
 export type FetchMostSelectedTimeForDate = (date: string) => Promise<void>;

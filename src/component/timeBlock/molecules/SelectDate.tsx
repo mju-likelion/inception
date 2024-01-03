@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { dateListState } from '@/store/atoms';
 import { DuringDate } from '@/component/timeBlock/atoms/DuringDate';
-import { BackButton, NextButton } from '@/component/@share/atom';
+import { BackButton, NextButton } from '@/component/uikit/atom';
 
 interface DateListProps {
   page: number;

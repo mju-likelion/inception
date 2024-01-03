@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { TabBar } from '@/component/@share/organisms';
-import { TitleBox } from '@/component/@share/molecules';
-import { Input } from '@/component/@share/atom';
-import { ButtonLarge } from '@/component/@share/atom';
+import { TabBar } from '@/component/uikit/organisms';
+import { TitleBox } from '@/component/uikit/molecules';
+import { Input } from '@/component/uikit/atom';
+import { ButtonLarge } from '@/component/uikit/atom';
 import { useState, useEffect } from 'react';
 import { TabItem } from '@/types';
 interface Props {

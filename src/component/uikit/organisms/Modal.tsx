@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ButtonLarge } from '@/component/@share/atom';
+import { ButtonLarge } from '@/component/uikit/atom';
 import { ModalTitleBox } from '../molecules/ModalTitleBox';
 import { ModalIcon } from '../atom/ModalIcon';
 import { ModalDimmed } from '../atom/ModalDimmed';

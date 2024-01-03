@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Dot, Line } from '@/component/@share/atom';
+import { Dot, Line } from '@/component/uikit/atom';
 import { Fragment } from 'react';
 interface ProgressBarProps {
   total: number;

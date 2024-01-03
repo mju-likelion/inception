@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { PropsWithChildren, useEffect } from 'react';
-import { CheckBox } from '@/component/@share';
+import { CheckBox } from '@/component/uikit';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { timeTableState, dateListState, timeListState } from '@/store';
 import { useState } from 'react';

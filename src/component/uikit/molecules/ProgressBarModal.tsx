@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DotModal, LineModal, Check } from '@/component/@share/atom';
+import { DotModal, LineModal, Check } from '@/component/uikit/atom';
 import { Fragment } from 'react';
 interface ProgressBarModalProps {
   step: number;
