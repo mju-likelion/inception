@@ -1,6 +1,9 @@
 import styled from 'styled-components';
-import { ButtonLarge } from '@/component/uikit/atom';
-import { ProgressBarModal, HelperTitleBox } from '@/component/uikit/molecules';
+import {
+  ProgressBarModal,
+  HelperTitleBox,
+  ButtonLarge,
+} from '@/component/uikit';
 import { useGaApi } from '@/hooks/useGA';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';

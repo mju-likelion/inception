@@ -1,12 +1,8 @@
 import styled from 'styled-components';
-import { TabBar } from '@/component/uikit/organisms';
-import { TitleBox } from '@/component/uikit/molecules';
-import { Input } from '@/component/uikit/atom';
-import { ButtonLarge } from '@/component/uikit/atom';
+import { TabBar, TitleBox, Input, ButtonLarge, Modal } from '@/component/uikit';
 import { useEffect, useState } from 'react';
 import { TAB_ITEMS } from '@/pages/data';
 import { useNavigate } from 'react-router-dom';
-import { Modal } from '@/component/uikit/organisms/Modal';
 import { resultRoom } from '@/util/api';
 import { useGaApi } from '@/hooks/useGA';
 

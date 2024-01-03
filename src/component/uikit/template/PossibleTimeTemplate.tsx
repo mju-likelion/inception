@@ -1,5 +1,5 @@
 import { TimeBox } from '@/component/timeBlock/template';
-import { Information, TitleBox } from '@/component/uikit/molecules';
+import { Information, TitleBox } from '@/component/uikit';
 import calendar from '@/assets/images/Calendar.svg';
 import { ButtonLarge, LoadingIcon } from '@/component/uikit';
 import { styled } from 'styled-components';

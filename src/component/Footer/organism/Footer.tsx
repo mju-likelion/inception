@@ -8,7 +8,7 @@ import { useWindowResize } from '@/hooks';
 import { ToastStatus } from '@/types/Toast';
 import { useRecoilState } from 'recoil';
 import { currentToastType, toastState } from '@/store';
-import { SquareButton } from '@/component/uikit/atom/SquareButton';
+import { SquareButton } from '@/component/uikit';
 import { useGaApi } from '@/hooks/useGA';
 import { useLocation, useSearchParams } from 'react-router-dom';
 

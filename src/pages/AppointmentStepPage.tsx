@@ -5,7 +5,7 @@ import {
   LoginMasterTemplate,
   PossibleDateTemplate,
   PossibleTimeTemplate,
-} from '@/component/uikit/template';
+} from '@/component/uikit';
 import { RedirectPage } from '@/pages';
 import { TAB_ITEMS } from '@/pages/data';
 import {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation, useParams } from 'react-router-dom';
-import { TabBarButton } from '@/component/uikit/molecules';
+import { TabBarButton } from '@/component/uikit';
 import { TabItem } from '@/types';
 
 interface TabBarProps {
