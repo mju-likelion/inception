@@ -1,5 +1,5 @@
-import { ResultRoomResponse } from '@/util/api';
 import { RecoilState, atom } from 'recoil';
+import { ResultRoomResponse } from '@/util/api';
 
 export const appointmentResultData: RecoilState<ResultRoomResponse> = atom({
   key: 'appointmentResultData',

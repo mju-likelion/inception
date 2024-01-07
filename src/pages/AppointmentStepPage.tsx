@@ -1,30 +1,30 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
-import { TabBar } from '@/component/@share';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import {
+  TabBar,
   LoginMasterTemplate,
   PossibleDateTemplate,
   PossibleTimeTemplate,
-} from '@/component/@share/template';
+} from '@/component/@uikit';
 import { RedirectPage } from '@/pages';
 import { TAB_ITEMS } from '@/pages/data';
 import {
-  viewRoom,
-  ViewRoomResponse,
+  GetRoomDataResponse,
   registerSchedule,
   modifySchedule,
+  getRoomData,
 } from '@/util/api';
-import { useRecoilValue } from 'recoil';
 import {
   calendarState,
   dateListState,
   timeListState,
   timeTableState,
+  toastState,
+  currentToastType,
 } from '@/store';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
 import { getDatesAsc } from '@/util';
-import { toastState, currentToastType } from '@/store';
-import { useRecoilState } from 'recoil';
 import { useGaApi } from '@/hooks/useGA';
 
 export const AppointmentStepPage = () => {
@@ -32,7 +32,7 @@ export const AppointmentStepPage = () => {
   const step = searchParams.get('step');
   const navigate = useNavigate();
   const params = useParams();
-  const [roomInfo, setRoomInfo] = useState<ViewRoomResponse>();
+  const [roomInfo, setRoomInfo] = useState<GetRoomDataResponse>();
   const token = localStorage.getItem((params.code ?? '') + 'token');
   const [, setIsToastOpened] = useRecoilState(toastState);
   const [, setToastType] = useRecoilState(currentToastType);
@@ -82,7 +82,7 @@ export const AppointmentStepPage = () => {
 
   useEffect(() => {
     (async () => {
-      const res = await viewRoom({ id: params.code ?? '' });
+      const res = await getRoomData({ id: params.code ?? '' });
       setRoomInfo(res);
 
       window.addEventListener('beforeunload', preventRefresh);
@@ -120,7 +120,9 @@ export const AppointmentStepPage = () => {
   };
 
   const modifySceduleByToken = async (token: string) => {
-    const res = await modifySchedule(token, params.code ?? '', {
+    const res = await modifySchedule({
+      token: token,
+      id: params.code ?? '',
       dates: selectedDates,
     });
 

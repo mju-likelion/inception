@@ -1,5 +1,5 @@
-import { theme } from '@/globalStyle';
 import { styled } from 'styled-components';
+import { theme } from '@/globalStyle';
 
 interface CopyRightProps {
   content: string;

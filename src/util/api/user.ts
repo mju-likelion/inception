@@ -1,5 +1,6 @@
-import { Axios } from '@/util/axios';
 import * as Sentry from '@sentry/react';
+import { Axios } from '@/util/axios';
+import { mockupBackend } from './mockup';
 
 export interface RegisterScheduleRequest {
   roomCode: string;
@@ -18,22 +19,29 @@ export interface RegisterScheduleResponse {
 export const registerSchedule = async (
   userSchedule: RegisterScheduleRequest
 ): Promise<RegisterScheduleResponse | undefined> => {
-  try {
-    const token = (await Axios.post(
-      '/api/users',
-      userSchedule
-    )) as RegisterScheduleResponse;
-    return token;
-  } catch (e) {
-    if (e instanceof Error) {
-      Sentry.captureException(`약속을 등록하는데 실패했대요 ㅠㅠ ${e}`);
-      window.alert('registerSchedule Error');
-      throw new Error('registerSchedule Error', e);
-    }
-  }
+  const mockData: RegisterScheduleResponse =
+    mockupBackend.registerSchedule(userSchedule);
+
+  return await mockData;
+
+  // try {
+  //   const token = (await Axios.post(
+  //     '/api/users',
+  //     userSchedule
+  //   )) as RegisterScheduleResponse;
+  //   return token;
+  // } catch (e) {
+  //   if (e instanceof Error) {
+  //     Sentry.captureException(`약속을 등록하는데 실패했대요 ㅠㅠ ${e}`);
+  //     window.alert('registerSchedule Error');
+  //     throw new Error('registerSchedule Error', e);
+  //   }
+  // }
 };
 
 export interface ModifyScheduleRequest {
+  token: string; // `${roomId}token${accessToken}`
+  id: string;
   dates: string[]; // ["2023-07-20 15:00", "2023-07-21 15:00"]
 }
 
@@ -48,19 +56,20 @@ export interface ModifyScheduleResponse {
 }
 
 export const modifySchedule = async (
-  token: string,
-  id: string,
-  modifyData: ModifyScheduleRequest
+  param: ModifyScheduleRequest
 ): Promise<ModifyScheduleResponse | undefined> => {
-  try {
-    const res = (await Axios.patch(`/api/users/${id}`, modifyData, {
-      headers: { Authorization: `Bearer ${token}` },
-    })) as ModifyScheduleResponse;
-    return res;
-  } catch (e) {
-    if (e instanceof Error) {
-      window.alert('modify schedule Error');
-      Sentry.captureException(`일정을 수정하는데 실패했대요 ㅠㅠ ${e}`);
-    }
-  }
+  const mockData: ModifyScheduleResponse = mockupBackend.modifySchedule(param);
+  return await mockData;
+
+  // try {
+  //   const res = (await Axios.patch(`/api/users/${id}`, modifyData, {
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   })) as ModifyScheduleResponse;
+  //   return res;
+  // } catch (e) {
+  //   if (e instanceof Error) {
+  //     window.alert('modify schedule Error');
+  //     Sentry.captureException(`일정을 수정하는데 실패했대요 ㅠㅠ ${e}`);
+  //   }
+  // }
 };

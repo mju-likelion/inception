@@ -1,16 +1,15 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { styled } from 'styled-components';
 import { Mail, Privacy, CopyRight } from '@/component/Footer/atoms';
 import { OrganizationInfo } from '@/component/Footer/data';
-import { Toast } from '@/component/@share';
 import { devices } from '@/globalStyle';
 import { useWindowResize } from '@/hooks';
 import { ToastStatus } from '@/types/Toast';
-import { useRecoilState } from 'recoil';
 import { currentToastType, toastState } from '@/store';
-import { SquareButton } from '@/component/@share/atom/SquareButton';
+import { SquareButton, Toast } from '@/component/@uikit';
 import { useGaApi } from '@/hooks/useGA';
-import { useLocation, useSearchParams } from 'react-router-dom';
 
 export const Footer = () => {
   const windowSize = useWindowResize();

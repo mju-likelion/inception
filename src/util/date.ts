@@ -1,6 +1,6 @@
 /* date = 일자 데이터, day = 요일 데이터 */
-import { ActiveStatus, CalendarData, SelectedDate, ViewType } from '@/types';
 import padStart from 'lodash/padStart';
+import { ActiveStatus, CalendarData, SelectedDate, ViewType } from '@/types';
 
 /** 월별 캘린더 기본 정보를 반환한다. */
 export const getCalendarData = (
@@ -195,10 +195,6 @@ const getCountOfMostSelectedDate = (dateOfResult: SelectedDate[]) => {
     date.count >= maxCount && (maxCount = date.count);
   }
 
-  // const mostSelectedDates =
-  //   dateOfResult.filter((item) => item.count === maxCount) ?? [];
-
-  // return mostSelectedDates;
   return maxCount;
 };
 

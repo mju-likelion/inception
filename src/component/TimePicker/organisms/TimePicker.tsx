@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { TitleCheck } from '@/component/@share';
+import { TitleCheck } from '@/component/@uikit';
 import { TimeSelectionBox } from '@/component/TimePicker';
 
 import {
