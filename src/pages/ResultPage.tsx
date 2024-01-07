@@ -9,7 +9,7 @@ import {
   Information,
   TitleBox,
   Modal,
-} from '@/component/uikit';
+} from '@/component/@uikit';
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';

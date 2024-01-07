@@ -1,5 +1,5 @@
 import { css, styled } from 'styled-components';
-import { ButtonSmall } from '@/component/uikit';
+import { ButtonSmall } from '@/component/@uikit';
 import { theme } from '@/globalStyle';
 import { LoadingIcon } from '../atom';
 import { ToastStatus } from '@/types/Toast';

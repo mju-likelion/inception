@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { NextButton, BackButton } from '@/component/uikit';
+import { NextButton, BackButton } from '@/component/@uikit';
 import { DateRangeLimit } from '@/types';
 
 interface Props {

@@ -5,7 +5,7 @@ import { ReactComponent as DoorSvgForDesktop } from '@/assets/images/RedirectDoo
 import { ReactComponent as NotFound } from '@/assets/images/ErrorState404.svg';
 import { ReactComponent as InternalServerError } from '@/assets/images/ErrorState500.svg';
 
-import { ButtonLarge } from '@/component/uikit';
+import { ButtonLarge } from '@/component/@uikit';
 import { devices } from '@/globalStyle';
 import { useWindowResize } from '@/hooks';
 import { useNavigate } from 'react-router-dom';

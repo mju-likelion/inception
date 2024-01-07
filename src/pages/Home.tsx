@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { TabBar, TitleBox, ButtonLarge, LoadingIcon } from '@/component/uikit';
+import { TabBar, TitleBox, ButtonLarge, LoadingIcon } from '@/component/@uikit';
 import { Calendar, TimePicker } from '@/component';
 import { TAB_ITEMS } from '@/pages/data';
 import { theme } from '@/globalStyle';

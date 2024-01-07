@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
-import { TabBar } from '@/component/uikit';
+import { TabBar } from '@/component/@uikit';
 import {
   LoginMasterTemplate,
   PossibleDateTemplate,
   PossibleTimeTemplate,
-} from '@/component/uikit';
+} from '@/component/@uikit';
 import { RedirectPage } from '@/pages';
 import { TAB_ITEMS } from '@/pages/data';
 import {

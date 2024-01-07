@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Count, GridItem } from '@/component/calendar/atom';
+import { Count, GridItem } from '@/component/Calendar/atom';
 import { CalendarData, ViewType } from '@/types';
 import { styled } from 'styled-components';
 

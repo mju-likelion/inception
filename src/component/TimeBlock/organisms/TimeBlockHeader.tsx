@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { SelectDate, DateList } from '@/component/timeBlock/molecules';
+import { SelectDate, DateList } from '@/component/TimeBlock/molecules';
 import { useGaApi } from '@/hooks/useGA';
 
 interface HeaderProps {

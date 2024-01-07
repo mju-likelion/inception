@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { dateListState } from '@/store/atoms';
-import { DuringDate } from '@/component/timeBlock/atoms/DuringDate';
-import { BackButton, NextButton } from '@/component/uikit';
+import { DuringDate } from '@/component/TimeBlock/atoms/DuringDate';
+import { BackButton, NextButton } from '@/component/@uikit';
 
 interface DateListProps {
   page: number;

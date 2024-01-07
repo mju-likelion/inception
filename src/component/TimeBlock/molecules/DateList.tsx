@@ -1,4 +1,4 @@
-import { Dates } from '@/component/timeBlock/atoms';
+import { Dates } from '@/component/TimeBlock/atoms';
 import { useRecoilValue } from 'recoil';
 import { dateListState } from '@/store/atoms';
 import { styled } from 'styled-components';

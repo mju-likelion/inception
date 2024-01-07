@@ -1,5 +1,11 @@
 import styled from 'styled-components';
-import { TabBar, TitleBox, Input, ButtonLarge, Modal } from '@/component/uikit';
+import {
+  TabBar,
+  TitleBox,
+  Input,
+  ButtonLarge,
+  Modal,
+} from '@/component/@uikit';
 import { useEffect, useState } from 'react';
 import { TAB_ITEMS } from '@/pages/data';
 import { useNavigate } from 'react-router-dom';

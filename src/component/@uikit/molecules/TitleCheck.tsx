@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
-import { CheckBox } from '@/component/uikit';
+import { CheckBox } from '@/component/@uikit';
 import { theme } from '@/globalStyle';
 
 interface TitleCheckProps {

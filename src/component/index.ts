@@ -1,3 +1,3 @@
-export * from './calendar';
-export * from './timeBlock';
+export * from './Calendar';
+export * from './TimeBlock';
 export * from './TimePicker';

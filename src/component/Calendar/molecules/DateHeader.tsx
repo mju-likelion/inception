@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { GridItem } from '@/component/calendar/atom';
+import { GridItem } from '@/component/Calendar/atom';
 import { styled } from 'styled-components';
 import { theme } from '@/globalStyle';
 

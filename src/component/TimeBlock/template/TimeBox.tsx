@@ -1,11 +1,11 @@
 import { styled } from 'styled-components';
-import { ErrorMessage } from '@/component/timeBlock/atoms/ErrorMessage';
+import { ErrorMessage } from '@/component/TimeBlock/atoms/ErrorMessage';
 import {
   TimeBlockGroup,
   TimeList,
   SelectAllButton,
-} from '@/component/timeBlock/molecules';
-import { TimeBlockHeader } from '@/component/timeBlock/organisms';
+} from '@/component/TimeBlock/molecules';
+import { TimeBlockHeader } from '@/component/TimeBlock/organisms';
 import { useEffect, useState } from 'react';
 
 interface TimeBoxProps {

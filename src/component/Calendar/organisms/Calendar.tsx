@@ -2,7 +2,7 @@ import {
   CalendarHeader,
   Date as DateComponent,
   DateHeader,
-} from '@/component/calendar/molecules';
+} from '@/component/Calendar/molecules';
 import {
   ActiveStatus,
   CalendarData,

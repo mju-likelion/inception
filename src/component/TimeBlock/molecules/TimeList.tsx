@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Time } from '@/component/timeBlock/atoms';
+import { Time } from '@/component/TimeBlock/atoms';
 import { styled } from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { timeListState } from '@/store';

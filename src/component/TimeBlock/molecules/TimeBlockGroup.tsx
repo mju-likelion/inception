@@ -6,7 +6,7 @@ import {
   timeTableState,
   isMouseDownState,
 } from '@/store/atoms';
-import { TimeBlock } from '@/component/timeBlock/atoms';
+import { TimeBlock } from '@/component/TimeBlock/atoms';
 import { getPaginationDate, getPaginationTable } from '@/util';
 import { useEffect, useState } from 'react';
 import range from 'lodash/range';
