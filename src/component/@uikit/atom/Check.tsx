@@ -1,5 +1,5 @@
+import { styled } from 'styled-components';
 import { ReactComponent as CheckSVG } from '@/assets/images/Check.svg';
-import styled from 'styled-components';
 
 interface CheckProps {
   $isActive: boolean;

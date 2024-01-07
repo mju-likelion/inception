@@ -1,5 +1,5 @@
+import { styled } from 'styled-components';
 import { theme } from '@/globalStyle';
-import styled from 'styled-components';
 
 interface Props {
   spinnerType?: 'whiteSpinner' | 'mintSpinner' | 'graySpinner';

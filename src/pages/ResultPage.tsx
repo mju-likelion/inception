@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { styled } from 'styled-components';
 import { Calendar } from '@/component';
 import {
   ButtonSmall,
@@ -13,10 +15,8 @@ import {
 import Time from '@/assets/images/Time.svg';
 import People from '@/assets/images/People.svg';
 import { TAB_ITEMS } from '@/pages/data';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastStatus } from '@/types/Toast';
 import { toastState, currentToastType } from '@/store';
-import { useRecoilState } from 'recoil';
 import { resultRoom, resultRoomByDate } from '@/util/api';
 import { appointmentResultData } from '@/store/atoms/Request';
 import { TITLE, useResultTimeTitle, useResultTitle } from '@/hooks';

@@ -1,10 +1,9 @@
-import styled from 'styled-components';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Logo, Helper } from '@/component/@uikit';
 import { useEffect, useState } from 'react';
-import { HelperModal } from './HelperModal';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { styled } from 'styled-components';
+import { Logo, Helper } from '@/component/@uikit';
 import { useGaApi } from '@/hooks/useGA';
+import { HelperModal } from './HelperModal';
 
 export const Header = () => {
   const location = useLocation();

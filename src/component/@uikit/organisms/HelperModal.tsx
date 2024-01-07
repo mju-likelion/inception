@@ -1,12 +1,12 @@
-import styled from 'styled-components';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { styled } from 'styled-components';
 import {
   ProgressBarModal,
   HelperTitleBox,
   ButtonLarge,
 } from '@/component/@uikit';
 import { useGaApi } from '@/hooks/useGA';
-import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 
 interface HelperModalProps {
   step: 0 | 1 | 2 | 3;

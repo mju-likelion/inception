@@ -1,4 +1,6 @@
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { styled } from 'styled-components';
 import {
   TabBar,
   TitleBox,
@@ -6,9 +8,7 @@ import {
   ButtonLarge,
   Modal,
 } from '@/component/@uikit';
-import { useEffect, useState } from 'react';
 import { TAB_ITEMS } from '@/pages/data';
-import { useNavigate } from 'react-router-dom';
 import { resultRoom } from '@/util/api';
 import { useGaApi } from '@/hooks/useGA';
 

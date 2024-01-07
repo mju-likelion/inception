@@ -1,11 +1,10 @@
-import styled from 'styled-components';
-import { ReactComponent as SuccessIcon } from '@/assets/images/Success.svg';
-import { ReactComponent as ErrorIcon } from '@/assets/images/Error.svg';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
+import { styled, css } from 'styled-components';
+import { ReactComponent as SuccessIcon } from '@/assets/images/Success.svg';
+import { ReactComponent as ErrorIcon } from '@/assets/images/Error.svg';
 import { toastState } from '@/store';
 import { theme } from '@/globalStyle';
-import { css } from 'styled-components';
 import { ToastType, ToastStatus, DescriptionActiveStatus } from '@/types/Toast';
 import { getToastMessage, getToastDescription } from '@/util';
 

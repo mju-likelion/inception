@@ -1,5 +1,5 @@
-import { CalendarData } from '@/types';
 import { RecoilState, atom } from 'recoil';
+import { CalendarData } from '@/types';
 
 export const calendarState: RecoilState<CalendarData[]> = atom({
   key: 'calendarState',

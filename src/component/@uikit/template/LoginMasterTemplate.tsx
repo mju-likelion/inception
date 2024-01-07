@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { TitleBox, Input, ButtonLarge } from '@/component/@uikit';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
+import { styled } from 'styled-components';
+import { TitleBox, Input, ButtonLarge } from '@/component/@uikit';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
 import { useGaApi } from '@/hooks/useGA';
 

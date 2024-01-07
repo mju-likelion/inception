@@ -1,6 +1,5 @@
-import { ActiveStatus } from '@/types';
-import { useEffect } from 'react';
 import { styled } from 'styled-components';
+import { ActiveStatus } from '@/types';
 
 interface Props {
   count: number;

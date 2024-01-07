@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { TabBar, TitleBox, Input, ButtonLarge } from '@/component/@uikit';
 import { useState, useEffect } from 'react';
+import { styled } from 'styled-components';
+import { TabBar, TitleBox, Input, ButtonLarge } from '@/component/@uikit';
 import { TabItem } from '@/types';
 interface Props {
   buttonClick: () => void;

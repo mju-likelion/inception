@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
-import { TabBar } from '@/component/@uikit';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import {
+  TabBar,
   LoginMasterTemplate,
   PossibleDateTemplate,
   PossibleTimeTemplate,
@@ -14,17 +15,16 @@ import {
   modifySchedule,
   getRoomData,
 } from '@/util/api';
-import { useRecoilValue } from 'recoil';
 import {
   calendarState,
   dateListState,
   timeListState,
   timeTableState,
+  toastState,
+  currentToastType,
 } from '@/store';
 import { signUpNickname, signUpPassword } from '@/store/atoms/Login';
 import { getDatesAsc } from '@/util';
-import { toastState, currentToastType } from '@/store';
-import { useRecoilState } from 'recoil';
 import { useGaApi } from '@/hooks/useGA';
 
 export const AppointmentStepPage = () => {

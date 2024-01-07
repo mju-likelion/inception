@@ -1,3 +1,13 @@
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { styled } from 'styled-components';
+import padStart from 'lodash/padStart';
 import {
   CalendarHeader,
   Date as DateComponent,
@@ -18,16 +28,6 @@ import {
   mergeEnableTimesToDates,
   resolvePromiseResult,
 } from '@/util';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { styled } from 'styled-components';
-import padStart from 'lodash/padStart';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { calendarState } from '@/store/atoms';
 import { getDatesToCalendarData } from '@/util/getDatesToCalendarData';
 import { appointmentResultData } from '@/store/atoms/Request';

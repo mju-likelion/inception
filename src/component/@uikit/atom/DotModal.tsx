@@ -1,6 +1,6 @@
+import { styled } from 'styled-components';
 import { ReactComponent as DotSVG } from '@/assets/images/DotModal.svg';
 import { ReactComponent as CheckSVG } from '@/assets/images/Check.svg';
-import styled from 'styled-components';
 
 interface DotModalProps {
   $isActive: boolean;

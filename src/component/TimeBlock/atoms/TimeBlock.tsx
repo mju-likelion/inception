@@ -1,8 +1,7 @@
-import { isMouseDownState } from '@/store/atoms';
 import { useRecoilState } from 'recoil';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { Toast } from '@/component/@uikit';
-import { toastState, currentToastType } from '@/store/atoms';
+import { isMouseDownState, toastState, currentToastType } from '@/store/atoms';
 
 interface TimeBlockProps {
   active: boolean;

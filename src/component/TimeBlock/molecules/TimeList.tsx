@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { Time } from '@/component/TimeBlock/atoms';
-import { styled } from 'styled-components';
 import { useRecoilState } from 'recoil';
+import { styled } from 'styled-components';
+import { Time } from '@/component/TimeBlock/atoms';
 import { timeListState } from '@/store';
 
 interface TimeListProps {

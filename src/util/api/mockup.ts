@@ -1,4 +1,3 @@
-import { uniqueId } from 'lodash';
 import {
   CreateRoomRequest,
   CreateRoomResponse,

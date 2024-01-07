@@ -1,6 +1,6 @@
-import { theme } from '@/globalStyle';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { theme } from '@/globalStyle';
 import { ToastStatus } from '@/types/Toast';
 
 interface MailProps {

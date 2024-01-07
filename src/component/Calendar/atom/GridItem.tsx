@@ -1,7 +1,7 @@
-import { theme } from '@/globalStyle';
-import { ActiveStatus, ViewType } from '@/types';
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { css, styled } from 'styled-components';
+import { theme } from '@/globalStyle';
+import { ActiveStatus, ViewType } from '@/types';
 
 interface Props {
   disabled?: boolean;

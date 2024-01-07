@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { ErrorMessage } from '@/component/TimeBlock/atoms/ErrorMessage';
 import {
@@ -6,7 +7,6 @@ import {
   SelectAllButton,
 } from '@/component/TimeBlock/molecules';
 import { TimeBlockHeader } from '@/component/TimeBlock/organisms';
-import { useEffect, useState } from 'react';
 
 interface TimeBoxProps {
   onSetActiveButton: React.Dispatch<React.SetStateAction<boolean>>;

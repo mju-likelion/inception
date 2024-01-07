@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import { GridItem } from '@/component/Calendar/atom';
 import { styled } from 'styled-components';
+import { GridItem } from '@/component/Calendar/atom';
 import { theme } from '@/globalStyle';
 
 export const DateHeader = () => {

@@ -1,11 +1,10 @@
+import { Outlet } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 import { InitStyle, theme, GlobalFont } from '@/globalStyle';
-import { Outlet } from 'react-router-dom';
 import { Header } from '@/component/@uikit';
 import { Footer } from '@/component/Footer';
-// import { ScrollToTop } from '@/util';
 import { useScrollToTop } from '@/hooks';
-import { RecoilRoot } from 'recoil';
 import { useGAInitialize } from '@/hooks/useGA';
 
 /**@Note 모든 페이지에 적용할 설정 및 컴포넌트를 지정한다. */

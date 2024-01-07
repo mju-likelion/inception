@@ -1,5 +1,5 @@
+import { styled } from 'styled-components';
 import { getDateTypeToString } from '@/util';
-import styled from 'styled-components';
 interface DuringDateProps {
   start: string;
   end: string;

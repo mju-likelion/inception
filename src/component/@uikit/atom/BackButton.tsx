@@ -1,5 +1,5 @@
+import { styled } from 'styled-components';
 import { ReactComponent as BackSVG } from '@/assets/images/Back.svg';
-import styled from 'styled-components';
 
 type BackProp = {
   isDisabled: boolean;

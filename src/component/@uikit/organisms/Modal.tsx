@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { styled } from 'styled-components';
 import { ButtonLarge } from '@/component/@uikit';
+import { useGaApi } from '@/hooks/useGA';
 import { ModalTitleBox } from '../molecules/ModalTitleBox';
 import { ModalIcon } from '../atom/ModalIcon';
 import { ModalDimmed } from '../atom/ModalDimmed';
-import { useGaApi } from '@/hooks/useGA';
-import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 
 interface ModalProps {
   error: string;

@@ -1,5 +1,5 @@
+import { styled } from 'styled-components';
 import { ReactComponent as NextSVG } from '@/assets/images/Next.svg';
-import styled from 'styled-components';
 
 type NextProp = {
   isDisabled: boolean;

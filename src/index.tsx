@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom/client';
+import * as Sentry from '@sentry/react';
 import { RouterProvider } from 'react-router-dom';
 import { pages } from '@/pages';
 import reportWebVitals from '@/reportWebVitals';
-import * as Sentry from '@sentry/react';
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,

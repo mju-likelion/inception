@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { DotModal, LineModal, Check } from '@/component/@uikit';
 import { Fragment } from 'react';
+import { styled } from 'styled-components';
+import { DotModal, LineModal, Check } from '@/component/@uikit';
 interface ProgressBarModalProps {
   step: number;
   total: number;
