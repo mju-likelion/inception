@@ -1,5 +1,4 @@
-import { DefaultTheme, RuleSet } from 'styled-components';
-import { css } from 'styled-components';
+import { DefaultTheme, RuleSet, css } from 'styled-components';
 
 /** @Note theme에 color요소를 추가한다면 여기에 타입을 추가해주세요 */
 export type Colors = {
