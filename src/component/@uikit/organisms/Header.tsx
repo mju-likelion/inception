@@ -15,10 +15,18 @@ export const Header = () => {
   const { changePathnameToTPath, gaApi } = useGaApi();
 
   useEffect(() => {
-    if (location.pathname === '/') setStep(1);
-    else if (stepParams === '1' || stepParams === '2') setStep(2);
-    else if (stepParams === '3') setStep(3);
-    else setStep(0);
+    if (location.pathname === '/') {
+      setStep(1);
+      return;
+    }
+
+    if (stepParams === '1' || stepParams === '2') {
+      setStep(2);
+    } else if (stepParams === '3') {
+      setStep(3);
+    } else {
+      setStep(0);
+    }
   }, [location]);
 
   const onLogoClick = () => {

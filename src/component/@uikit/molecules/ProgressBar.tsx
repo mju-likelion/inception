@@ -7,7 +7,7 @@ interface ProgressBarProps {
 }
 
 export const ProgressBar = ({ total, step }: ProgressBarProps) => {
-  const result = Array.from({ length: total }, (_, index) => (
+  const progressStep = Array.from({ length: total }, (_, index) => (
     <Fragment key={index}>
       <Line isActive={step > index} />
       <Dot isActive={step > index} />
@@ -17,7 +17,7 @@ export const ProgressBar = ({ total, step }: ProgressBarProps) => {
   return (
     <Container>
       <Dot isActive={true} />
-      {result}
+      {progressStep}
     </Container>
   );
 };
