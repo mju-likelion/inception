@@ -8,50 +8,35 @@ interface Props {
 export const LoadingIcon = ({ spinnerType = 'mintSpinner' }: Props) => {
   switch (spinnerType) {
     case 'mintSpinner':
-      return <MintSpinner />;
+      return (
+        <SpinnerIcon backgroundColor={'#E5E5EA'} spinnerColor={'#50E3C0'} />
+      );
     case 'whiteSpinner':
-      return <WhiteSpinner />;
+      return <SpinnerIcon backgroundColor={'#C1FBED'} spinnerColor={'white'} />;
     case 'graySpinner':
-      return <GraySpinner />;
+      return (
+        <SpinnerIcon
+          backgroundColor={theme.colors.gray4}
+          spinnerColor={theme.colors.gray3}
+        />
+      );
     default:
       return <h1>{spinnerType}에 맞는 스피너가 없습니다.</h1>;
   }
 };
 
-const MintSpinner = () => {
+interface SpinnerIconProps {
+  backgroundColor: string;
+  spinnerColor: string;
+}
+const SpinnerIcon = ({ backgroundColor, spinnerColor }: SpinnerIconProps) => {
   return (
     <>
       <WrapBg>
-        <SpinnerBackground color={'#E5E5EA'} />
+        <SpinnerBackground color={backgroundColor} />
       </WrapBg>
       <WrapSpinner>
-        <Spinner color={'#50E3C0'} />
-      </WrapSpinner>
-    </>
-  );
-};
-
-const WhiteSpinner = () => {
-  return (
-    <>
-      <WrapBg>
-        <SpinnerBackground color="#C1FBED" />
-      </WrapBg>
-      <WrapSpinner>
-        <Spinner color={'white'} />
-      </WrapSpinner>
-    </>
-  );
-};
-
-const GraySpinner = () => {
-  return (
-    <>
-      <WrapBg>
-        <SpinnerBackground color={theme.colors.gray4} />
-      </WrapBg>
-      <WrapSpinner>
-        <Spinner color={theme.colors.gray3} />
+        <Spinner color={spinnerColor} />
       </WrapSpinner>
     </>
   );

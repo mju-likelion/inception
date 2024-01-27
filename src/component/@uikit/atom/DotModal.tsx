@@ -13,9 +13,7 @@ export const DotModal = ({ isActive, isPass }: DotModalProps) => {
 
 const MintCheckSVG = styled(CheckSVG)<{ $isActive: boolean }>`
   path {
-    fill: ${({ $isActive }) =>
-      $isActive
-        ? ({ theme }) => theme.colors.mint1
-        : ({ theme }) => theme.colors.mint2};
+    fill: ${({ $isActive, theme }) =>
+      $isActive ? theme.colors.mint1 : theme.colors.mint2};
   }
 `;
