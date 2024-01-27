@@ -19,7 +19,7 @@ export const ButtonSmall = ({
   isDisabled,
 }: PropsWithChildren<Props>) => {
   const handleCopy = (copyResult: ToastStatus) => {
-    onCopy && onCopy(copyResult);
+    onCopy?.(copyResult);
   };
   return copyContent ? (
     <CopyToClipboard

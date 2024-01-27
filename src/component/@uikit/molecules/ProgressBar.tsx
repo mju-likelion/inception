@@ -12,8 +12,8 @@ export const ProgressBar = ({ total, step }: ProgressBarProps) => {
     for (let i = 1; i < total; i++) {
       result.push(
         <Fragment key={i}>
-          <Line $isActive={step > i} />
-          <Dot $isActive={step > i} />
+          <Line isActive={step > i} />
+          <Dot isActive={step > i} />
         </Fragment>
       );
     }
@@ -23,7 +23,7 @@ export const ProgressBar = ({ total, step }: ProgressBarProps) => {
 
   return (
     <Container>
-      <Dot $isActive={true} />
+      <Dot isActive={true} />
       {onProgressRender()}
     </Container>
   );

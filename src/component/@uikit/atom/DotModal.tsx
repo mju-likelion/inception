@@ -3,12 +3,12 @@ import { ReactComponent as DotSVG } from '@/assets/images/DotModal.svg';
 import { ReactComponent as CheckSVG } from '@/assets/images/Check.svg';
 
 interface DotModalProps {
-  $isActive: boolean;
-  $isPass: boolean;
+  isActive: boolean;
+  isPass: boolean;
 }
 
-export const DotModal = ({ $isActive, $isPass }: DotModalProps) => {
-  return <>{$isPass ? <MintCheckSVG $isActive={$isActive} /> : <DotSVG />}</>;
+export const DotModal = ({ isActive, isPass }: DotModalProps) => {
+  return <>{isPass ? <MintCheckSVG $isActive={isActive} /> : <DotSVG />}</>;
 };
 
 const MintCheckSVG = styled(CheckSVG)<{ $isActive: boolean }>`
