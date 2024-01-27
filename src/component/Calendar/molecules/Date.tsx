@@ -40,7 +40,7 @@ const DateComponent = ({
   };
 
   const onMouseEnter = (date: string) => {
-    handleMouseEnter && handleMouseEnter(date);
+    handleMouseEnter?.(date);
   };
 
   return (
@@ -86,15 +86,12 @@ export { DateComponent as Date };
 
 const blankGrid = (calendarData: CalendarData[]) => {
   if (calendarData.length <= 0) return [];
-
   const startDay = new Date(calendarData[0].date).getDay();
-  const blankGrids = [];
+  const BlankGridComponents = Array.from({ length: startDay }, (_, index) => (
+    <GridItem key={index} disabled />
+  ));
 
-  for (let i = 0; i < startDay; i++) {
-    blankGrids.push(<GridItem key={i} disabled />);
-  }
-
-  return blankGrids;
+  return BlankGridComponents;
 };
 
 const Wrapper = styled.div`

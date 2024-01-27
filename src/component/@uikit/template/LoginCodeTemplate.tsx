@@ -19,10 +19,6 @@ export const LoginCodeTemplate = ({ buttonClick }: Props) => {
     setPasswordValue(event.target.value);
   };
 
-  useEffect(() => {
-    activeEvent();
-  }, [nicknameValue, passwordValue]);
-
   const activeEvent = () => {
     nicknameValue.length >= 1 && passwordValue.length >= 1
       ? setIsButtonInactive(false)
@@ -51,11 +47,13 @@ export const LoginCodeTemplate = ({ buttonClick }: Props) => {
     },
   ];
 
-  const onClick = (tab: string) => {};
+  useEffect(() => {
+    activeEvent();
+  }, [nicknameValue, passwordValue]);
 
   return (
     <>
-      <TabBar onClick={onClick} tabItems={tabItems} />
+      <TabBar tabItems={tabItems} />
       <WrapContents>
         <WrapUpperContents>
           <TitleBox content="생성한 약속방에서 입력한 닉네임과 비밀번호를 입력해주세요" />

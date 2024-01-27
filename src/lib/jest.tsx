@@ -18,5 +18,3 @@ const renderWithStyledComponent = (
 ) => render(ui, { wrapper: Wrapper, ...options });
 
 export { renderWithStyledComponent as render };
-
-export * from '@testing-library/react';

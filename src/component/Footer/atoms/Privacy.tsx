@@ -7,10 +7,10 @@ interface PrivacyProps {
   onSecondContentClick?: () => void;
 }
 
-const PrivacyLink =
+const PRIVACY_LINK =
   'https://gatherplz.notion.site/d5d9382a071b4b7d93d2fd2931ce6d63';
 
-const TermsOfUseLink =
+const TERMS_OF_USE_LINK =
   'https://gatherplz.notion.site/c04613ccc6cf418c8b008e924f7b4f17?pvs=4';
 
 export const Privacy = ({
@@ -22,7 +22,7 @@ export const Privacy = ({
   return (
     <Container>
       <PrivacyContent
-        href={PrivacyLink}
+        href={PRIVACY_LINK}
         target="_blank"
         rel="noopener noreferrer"
         onClick={onFirstContentClick}
@@ -30,7 +30,7 @@ export const Privacy = ({
         {firstContent}
       </PrivacyContent>
       <PrivacyContent
-        href={TermsOfUseLink}
+        href={TERMS_OF_USE_LINK}
         target="_blank"
         rel="noopener noreferrer"
         onClick={onSecondContentClick}

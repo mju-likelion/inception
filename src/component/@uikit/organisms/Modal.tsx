@@ -27,30 +27,15 @@ export const Modal = ({ error, isOpen, onCloseModal }: ModalProps) => {
     return 'unknown_error';
   };
 
-  useEffect(() => {
-    if (isOpen) {
-      gaApi.sendEvent({
-        eventName: 't_show',
-        tEventId: 302,
-        tPath: changePathnameToTPath(location.pathname),
-        tTarget: 'info_modal',
-        tCase: getErrorTypeForGa(),
-      });
-    }
-  }, [isOpen]);
-
   const onSetModalText = () => {
-    const filterArray = ERROR_TEXT.filter((checkParameter) => {
-      return checkParameter.errorType === error
-        ? checkParameter.errorType
-        : checkParameter.errorType === 'theOtherError';
-    });
+    const findErrorType =
+      ERROR_TEXT.find((erorrData) => erorrData.errorType === error) ??
+      ERROR_TEXT[2];
 
-    //에러타입을 키로, 맞는 객체를 찾아와서 배열을 만들어줘
     return (
       <ModalTitleBox
-        title={filterArray[0].title}
-        content={filterArray[0].content}
+        title={findErrorType.title}
+        content={findErrorType.content}
       />
     );
   };
@@ -76,6 +61,18 @@ export const Modal = ({ error, isOpen, onCloseModal }: ModalProps) => {
 
     onCloseModal();
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      gaApi.sendEvent({
+        eventName: 't_show',
+        tEventId: 302,
+        tPath: changePathnameToTPath(location.pathname),
+        tTarget: 'info_modal',
+        tCase: getErrorTypeForGa(),
+      });
+    }
+  }, [isOpen]);
 
   return (
     <>

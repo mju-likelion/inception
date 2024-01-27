@@ -7,28 +7,21 @@ interface ProgressBarModalProps {
 }
 
 export const ProgressBarModal = ({ step, total }: ProgressBarModalProps) => {
-  const onProgressRender = () => {
-    const result = [];
-    for (let i = 1; i < total; i++) {
-      result.push(
-        <Fragment key={i}>
-          <LineModal $isPass={step > i} />
-          <DotModal $isActive={step === i + 1} $isPass={step > i} />
-        </Fragment>
-      );
-    }
-
-    return result;
-  };
+  const prgressStep = Array.from({ length: total }, (_, index) => (
+    <Fragment key={index}>
+      <LineModal isPass={step > index} />
+      <DotModal isActive={step === index + 1} isPass={step > index} />
+    </Fragment>
+  ));
 
   return (
     <Container>
-      {step === 0 ? (
-        <DotModal $isActive={false} $isPass={false} />
+      {step <= 0 ? (
+        <DotModal isActive={false} isPass={false} />
       ) : (
-        <Check $isActive={step === 1} />
+        <Check isActive={step === 1} />
       )}
-      {onProgressRender()}
+      {prgressStep}
     </Container>
   );
 };

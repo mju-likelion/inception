@@ -14,7 +14,7 @@ interface HelperModalProps {
   onCloseModal: () => void;
 }
 
-const helpText = [
+const HELP_TEXT = [
   {
     title: '약속방을 생성합니다',
     content: '친구들이 날짜를 선택할 수 있는 약속 날짜의 범위를 정해주세요.',
@@ -50,24 +50,6 @@ export const HelperModal = ({
     }
   }, [isOpen]);
 
-  const onSetHelpText = () => {
-    const result = [];
-    for (let i = 0; i < 3; i++) {
-      result.push(
-        <HelperTitleBox
-          key={i}
-          title={helpText[i].title}
-          content={helpText[i].content}
-          $isActive={step === i + 1}
-          $isPass={step > i}
-          defaultColor={step === 0 ? 'gray1' : 'gray3'}
-        />
-      );
-    }
-
-    return result;
-  };
-
   const handleClose = (target: 'ok' | 'background') => () => {
     if (target === 'ok') {
       gaApi.sendEvent({
@@ -90,21 +72,34 @@ export const HelperModal = ({
     onCloseModal();
   };
 
+  const helpText = Array.from({ length: 3 }, (_, index) => (
+    <HelperTitleBox
+      key={index}
+      title={HELP_TEXT[index].title}
+      content={HELP_TEXT[index].content}
+      isActive={step === index + 1}
+      isPass={step > index}
+      defaultColor={step === 0 ? 'gray1' : 'gray3'}
+    />
+  ));
+
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <>
-      {isOpen ? (
-        <ModalBackdrop onClick={handleClose('background')}>
-          <ModalBlock onClick={(e) => e.stopPropagation()}>
-            <TopBlock>
-              <ProgressBarModal total={3} step={step} />
-              <TitleBoxBlock>{onSetHelpText()}</TitleBoxBlock>
-            </TopBlock>
-            <ButtonBlock>
-              <ButtonLarge onClick={handleClose('ok')}>알겠어요</ButtonLarge>
-            </ButtonBlock>
-          </ModalBlock>
-        </ModalBackdrop>
-      ) : null}
+      <ModalBackdrop onClick={handleClose('background')}>
+        <ModalBlock onClick={(e) => e.stopPropagation()}>
+          <TopBlock>
+            <ProgressBarModal total={3} step={step} />
+            <TitleBoxBlock>{helpText}</TitleBoxBlock>
+          </TopBlock>
+          <ButtonBlock>
+            <ButtonLarge onClick={handleClose('ok')}>알겠어요</ButtonLarge>
+          </ButtonBlock>
+        </ModalBlock>
+      </ModalBackdrop>
     </>
   );
 };

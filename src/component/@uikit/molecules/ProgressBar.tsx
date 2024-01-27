@@ -7,24 +7,17 @@ interface ProgressBarProps {
 }
 
 export const ProgressBar = ({ total, step }: ProgressBarProps) => {
-  const onProgressRender = () => {
-    const result = [];
-    for (let i = 1; i < total; i++) {
-      result.push(
-        <Fragment key={i}>
-          <Line $isActive={step > i} />
-          <Dot $isActive={step > i} />
-        </Fragment>
-      );
-    }
-
-    return result;
-  };
+  const progressStep = Array.from({ length: total }, (_, index) => (
+    <Fragment key={index}>
+      <Line isActive={step > index} />
+      <Dot isActive={step > index} />
+    </Fragment>
+  ));
 
   return (
     <Container>
-      <Dot $isActive={true} />
-      {onProgressRender()}
+      <Dot isActive={true} />
+      {progressStep}
     </Container>
   );
 };
