@@ -34,21 +34,6 @@ export const LoginMasterTemplate = ({
     setPasswordValue(event.target.value);
   };
 
-  useEffect(() => {
-    activeEvent();
-  }, [nicknameValue, passwordValue]);
-
-  useEffect(() => {
-    if (token) {
-      window.confirm('이미 제출한 기록이 있으므로 결과창으로 이동합니다.') &&
-        navigate(1);
-    }
-    return () => {
-      resetNickname();
-      resetPassword();
-    };
-  }, []);
-
   const activeEvent = () => {
     nicknameValue.length >= 1 && passwordValue.length >= 1
       ? setIsButtonInactive(false)
@@ -79,6 +64,21 @@ export const LoginMasterTemplate = ({
         tType: inputType,
       });
     };
+
+  useEffect(() => {
+    activeEvent();
+  }, [nicknameValue, passwordValue]);
+
+  useEffect(() => {
+    if (token) {
+      window.confirm('이미 제출한 기록이 있으므로 결과창으로 이동합니다.') &&
+        navigate(1);
+    }
+    return () => {
+      resetNickname();
+      resetPassword();
+    };
+  }, []);
 
   return (
     <WrapContents>

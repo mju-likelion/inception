@@ -40,26 +40,26 @@ export const GridItem = ({
       isTouchEvent.current = false;
       return;
     }
-    handleMouseDown && handleMouseDown(buttonRef.current);
+    handleMouseDown?.(buttonRef.current);
   };
 
   // mouseDown !== touchStart
   const onTouchStart = () => {
     isTouchEvent.current = true;
-    handleMouseDown && handleMouseDown(buttonRef.current);
+    handleMouseDown?.(buttonRef.current);
   };
 
   const onFocus = () => {
+    let activeState = getGridColor(dateOptions?.activeStatus);
+    if (dateOptions?.activeStatus === 'active') {
+      activeState = 'mint2';
+    } else if (dateOptions?.activeStatus === 'default') {
+      activeState = 'gray3';
+    }
+
     // result 모드에선 포커스 발생 조건 및 색상이 다르다.
     if (dateOptions?.viewType === 'result') {
-      setColor(() => {
-        if (dateOptions?.activeStatus === 'active') {
-          return 'mint2';
-        } else if (dateOptions?.activeStatus === 'default') {
-          return 'gray3';
-        }
-        return getGridColor(dateOptions?.activeStatus);
-      });
+      setColor(activeState);
     }
   };
 
