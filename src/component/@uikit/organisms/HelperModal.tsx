@@ -50,17 +50,6 @@ export const HelperModal = ({
     }
   }, [isOpen]);
 
-  const helpText = Array.from({ length: 3 }, (_, index) => (
-    <HelperTitleBox
-      key={index}
-      title={HELP_TEXT[index].title}
-      content={HELP_TEXT[index].content}
-      isActive={step === index + 1}
-      isPass={step > index}
-      defaultColor={step === 0 ? 'gray1' : 'gray3'}
-    />
-  ));
-
   const handleClose = (target: 'ok' | 'background') => () => {
     if (target === 'ok') {
       gaApi.sendEvent({
@@ -83,21 +72,34 @@ export const HelperModal = ({
     onCloseModal();
   };
 
+  const helpText = Array.from({ length: 3 }, (_, index) => (
+    <HelperTitleBox
+      key={index}
+      title={HELP_TEXT[index].title}
+      content={HELP_TEXT[index].content}
+      isActive={step === index + 1}
+      isPass={step > index}
+      defaultColor={step === 0 ? 'gray1' : 'gray3'}
+    />
+  ));
+
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <>
-      {isOpen ? (
-        <ModalBackdrop onClick={handleClose('background')}>
-          <ModalBlock onClick={(e) => e.stopPropagation()}>
-            <TopBlock>
-              <ProgressBarModal total={3} step={step} />
-              <TitleBoxBlock>{helpText}</TitleBoxBlock>
-            </TopBlock>
-            <ButtonBlock>
-              <ButtonLarge onClick={handleClose('ok')}>알겠어요</ButtonLarge>
-            </ButtonBlock>
-          </ModalBlock>
-        </ModalBackdrop>
-      ) : null}
+      <ModalBackdrop onClick={handleClose('background')}>
+        <ModalBlock onClick={(e) => e.stopPropagation()}>
+          <TopBlock>
+            <ProgressBarModal total={3} step={step} />
+            <TitleBoxBlock>{helpText}</TitleBoxBlock>
+          </TopBlock>
+          <ButtonBlock>
+            <ButtonLarge onClick={handleClose('ok')}>알겠어요</ButtonLarge>
+          </ButtonBlock>
+        </ModalBlock>
+      </ModalBackdrop>
     </>
   );
 };
