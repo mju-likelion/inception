@@ -87,7 +87,7 @@ export const ResultPage = () => {
     setToastType('code');
   };
 
-  const navigateModifyPage = () => {
+  const navigateSelectDatePage = () => {
     gaApi.sendEvent({
       eventName: 't_click',
       tEventId: 223,
@@ -208,8 +208,8 @@ export const ResultPage = () => {
               fetchMostSelectedTimeForDate={fetchMostSelectedTimeForDate}
             />
             <GridFooter>
-              <ButtonSmall onClick={navigateModifyPage} isDisabled={!token}>
-                일정 수정
+              <ButtonSmall onClick={navigateSelectDatePage}>
+                {token ? '일정 수정' : '일정 입력하기'}
               </ButtonSmall>
             </GridFooter>
             <InformationBlock>
